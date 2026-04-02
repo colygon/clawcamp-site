@@ -12,19 +12,55 @@
   .workshop-hero .event-tag { margin-bottom: 12px; display: inline-block; }
   .workshop-subtitle { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
   .workshop-desc { font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
+
   .meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 48px; }
   .meta-card { border: 1px solid var(--sand); border-radius: 8px; padding: 20px; }
   .meta-card-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
   .meta-card-value { font-size: 15px; line-height: 1.5; }
+
   .content-block { padding: 0 48px; max-width: 800px; margin-bottom: 40px; }
   .content-block h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 16px; }
   .content-block h2 em { font-style: normal; color: var(--rust); }
+
   .bullet-list { list-style: none; margin: 0; }
   .bullet-list li { font-size: 15px; color: var(--muted); line-height: 1.6; padding: 6px 0 6px 18px; position: relative; }
   .bullet-list li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 50%; background: var(--rust); }
+  .bullet-list li strong { color: var(--ink); font-weight: 600; }
+
+  /* Schedule table */
+  .schedule-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .schedule-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-align: left;
+    padding: 10px 0;
+    border-bottom: 2px solid var(--sand);
+  }
+  .schedule-table td {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid var(--cream);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .schedule-table td:first-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    white-space: nowrap;
+    width: 140px;
+  }
+  .schedule-table td strong { color: var(--ink); font-weight: 600; }
+
+  /* Steps */
   .steps-section { padding: 0 48px; max-width: 800px; }
   .steps-section h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 24px; }
   .steps-section h2 em { font-style: normal; color: var(--rust); }
+
   .step { display: grid; grid-template-columns: 56px 1fr; gap: 20px; padding: 28px 0; border-bottom: 1px solid var(--cream); }
   .step:last-child { border-bottom: none; }
   .step-number { font-size: 32px; font-weight: 800; color: var(--rust); line-height: 1; }
@@ -32,15 +68,75 @@
   .step-title { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
   .step-duration { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
   .step-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
-  .step-tip { font-size: 13px; color: var(--moss); background: var(--moss-light); border-radius: 6px; padding: 10px 14px; margin-top: 8px; line-height: 1.5; }
+
+  .step-instructions { list-style: none; margin: 0 0 12px; counter-reset: instr; }
+  .step-instructions li { font-size: 14px; color: var(--ink); line-height: 1.6; padding: 4px 0 4px 28px; position: relative; counter-increment: instr; }
+  .step-instructions li::before {
+    content: counter(instr) '.';
+    position: absolute;
+    left: 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    font-weight: 500;
+  }
+
+  .code-block {
+    background: var(--cream);
+    border: 1px solid var(--sand);
+    border-radius: 6px;
+    padding: 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--ink);
+    overflow-x: auto;
+    margin-bottom: 8px;
+    line-height: 1.6;
+    white-space: pre;
+  }
+  .code-block code { font-family: inherit; font-size: inherit; }
+  .code-comment { color: var(--muted); }
+
+  .step-tip {
+    font-size: 13px;
+    color: var(--gold);
+    background: var(--gold-light);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    line-height: 1.5;
+    border-left: 3px solid var(--gold);
+  }
+  .step-tip strong { font-weight: 600; }
+
+  .step-checkpoint {
+    font-size: 13px;
+    color: var(--moss);
+    background: var(--moss-light);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    line-height: 1.5;
+    border-left: 3px solid var(--moss);
+  }
+  .step-checkpoint strong { font-weight: 600; }
+
+  .outcome-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+  .outcome-card { border: 1px solid var(--sand); border-radius: 8px; padding: 16px 18px; }
+  .outcome-card p { font-size: 14px; color: var(--muted); line-height: 1.5; }
+
   .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); text-decoration: none; padding: 48px 48px 0; transition: color 0.15s; }
   .back-link:hover { color: var(--ink); }
+
   .spacer { height: 48px; }
+
   @media (max-width: 768px) {
     .workshop-hero, .content-block, .steps-section, .back-link { padding-left: 20px; padding-right: 20px; }
     .meta-grid { grid-template-columns: 1fr; }
     .step { grid-template-columns: 40px 1fr; gap: 12px; }
     .step-number { font-size: 24px; }
+    .outcome-grid { grid-template-columns: 1fr; }
+    .schedule-table td:first-child { width: auto; }
   }
 </style>
 </head>
@@ -54,121 +150,308 @@
   <h1>Agent<br><em>Lifecycle</em></h1>
   <div class="header-meta">
     <p>Advanced</p>
-    <p>Advanced</p>
     <p>~70 Minutes</p>
   </div>
 </header>
 
 <div class="workshop-hero">
   <span class="event-tag tag-flagship">Advanced</span>
-  <h2 class="workshop-subtitle">Continuous Improvement Through Fine-Tuning</h2>
-  <p class="workshop-desc">Your agent shipped. Now make it better. Learn the full agent lifecycle: capture interaction data, evaluate performance, fine-tune on your domain, and redeploy &mdash; creating agents that improve every week.</p>
+  <h2 class="workshop-subtitle">Improving Agents Over Time &mdash; Data &rarr; Fine-Tune &rarr; Redeploy</h2>
+  <p class="workshop-desc">Capture Runs. Curate Data. Fine-Tune Models. Ship Better Agents.</p>
+  <p class="workshop-desc">Learn the full agent improvement lifecycle: capture good and bad agent runs, curate a training dataset, fine-tune or distill a model on Nebius, and redeploy behind the same workflow. All running on Nebius Serverless + Token Factory &mdash; no infrastructure changes needed to go from prototype to fine-tuned production model.</p>
+
   <div class="meta-grid">
     <div class="meta-card">
       <div class="meta-card-label">Who It's For</div>
-      <div class="meta-card-value">Teams with deployed agents ready to move beyond prompt engineering</div>
+      <div class="meta-card-value">Teams with deployed agents ready to move beyond prompt engineering into systematic model improvement</div>
     </div>
     <div class="meta-card">
-      <div class="meta-card-label">Value</div>
-      <div class="meta-card-value">Systematic agent improvement instead of ad-hoc prompt tweaking</div>
+      <div class="meta-card-label">What You Get</div>
+      <div class="meta-card-value">A complete data capture &rarr; fine-tune &rarr; redeploy pipeline running on Nebius infrastructure</div>
     </div>
     <div class="meta-card">
-      <div class="meta-card-label">Takeaway</div>
-      <div class="meta-card-value">A fine-tuning pipeline that captures data, trains, and redeploys automatically</div>
+      <div class="meta-card-label">Time Required</div>
+      <div class="meta-card-value">~70 minutes from raw agent logs to a fine-tuned model in production</div>
     </div>
   </div>
 </div>
 
+<!-- What You'll Build -->
+<div class="content-block">
+  <h2>What You'll <em>Build</em></h2>
+  <ul class="bullet-list">
+    <li>A <strong>data capture pipeline</strong> that logs agent runs with quality labels</li>
+    <li>A <strong>curated fine-tuning dataset</strong> from real agent interactions</li>
+    <li>A <strong>fine-tuned model</strong> deployed on Token Factory behind your existing workflow</li>
+  </ul>
+</div>
+
+<!-- What We'll Cover -->
+<div class="content-block">
+  <h2>What We'll <em>Cover</em></h2>
+  <ul class="bullet-list">
+    <li><strong>Logging agent runs</strong> &mdash; what to capture, how to label good vs. bad outputs</li>
+    <li><strong>Dataset curation</strong> &mdash; filtering, formatting, and quality control for fine-tuning</li>
+    <li><strong>Fine-tuning on Nebius</strong> &mdash; model selection, training configuration, evaluation</li>
+    <li><strong>Distillation</strong> &mdash; using a large model's outputs to train a smaller, cheaper model</li>
+    <li><strong>Redeployment</strong> &mdash; swap the fine-tuned model into your workflow without changing code</li>
+    <li><strong>Monitoring</strong> &mdash; tracking whether the fine-tuned model actually improves outcomes</li>
+  </ul>
+</div>
+
+<!-- Schedule -->
+<div class="content-block">
+  <h2><em>Schedule</em></h2>
+  <table class="schedule-table">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Topic</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>12:00 &ndash; 12:30</td>
+        <td><strong>The Agent Improvement Lifecycle</strong> &mdash; Why fine-tuning beats prompt engineering, and how the data &rarr; train &rarr; deploy loop works</td>
+      </tr>
+      <tr>
+        <td>12:30 &ndash; 1:15</td>
+        <td><strong>Data Capture &amp; Dataset Curation</strong> &mdash; Instrument logging, label runs, build a training dataset</td>
+      </tr>
+      <tr>
+        <td>1:15 &ndash; 2:00</td>
+        <td><strong>Fine-Tune &amp; Deploy</strong> &mdash; Launch a fine-tuning job on Nebius, evaluate, deploy to Token Factory</td>
+      </tr>
+      <tr>
+        <td>2:00 &ndash; 2:30</td>
+        <td><strong>Distillation, Monitoring &amp; Next Steps</strong> &mdash; Distill large models into small ones, set up monitoring, plan the next cycle</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Prerequisites -->
 <div class="content-block">
   <h2><em>Prerequisites</em></h2>
   <ul class="bullet-list">
-    <li>Running OpenClaw agent (complete Local Install or Agent Inference first)</li>
-    <li>Basic ML concepts (training, evaluation, fine-tuning)</li>
-    <li>Nebius AI Cloud account with GPU access</li>
+    <li>Laptop with a <strong>browser</strong> and <strong>terminal access</strong></li>
+    <li>A <strong>Nebius AI Cloud account</strong> with Token Factory access</li>
+    <li>An <strong>existing agent workflow</strong> (or complete <a href="/curriculum/local-install" style="color: var(--rust); text-decoration: underline;">Workshop 1</a> first)</li>
   </ul>
 </div>
 
-<div class="content-block">
-  <h2>Learning <em>Outcomes</em></h2>
-  <ul class="bullet-list">
-    <li>Set up interaction data capture</li>
-    <li>Design evaluation criteria for your use case</li>
-    <li>Run fine-tuning jobs on Nebius GPU infrastructure</li>
-    <li>Deploy improved models alongside baseline</li>
-    <li>Automate the improvement loop</li>
-  </ul>
-</div>
-
+<!-- Step-by-Step Guide -->
 <div class="steps-section">
   <h2>Step-by-Step <em>Guide</em></h2>
 
+  <!-- Step 1 -->
   <div class="step">
     <div class="step-number">1</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Set Up Data Capture</span>
+        <span class="step-title">Set Up Your Agent Stack</span>
         <span class="step-duration">10 min</span>
       </div>
-      <p class="step-desc">Log agent interactions with structured metadata. Every request-response pair becomes a potential training example. Configure what to capture: user queries, agent responses, tool calls, latency, and user feedback signals.</p>
-      <div class="step-tip">Start capturing data early &mdash; even before you plan to fine-tune. The more data you have, the better your first fine-tune will be.</div>
+      <p class="step-desc">Deploy OpenClaw on Nebius Serverless with Token Factory &mdash; or use your existing setup.</p>
+
+      <ol class="step-instructions">
+        <li>If you already have an OpenClaw endpoint, verify it is running</li>
+        <li>If starting fresh, deploy a new endpoint using the command below (see Workshop 1 for full setup details)</li>
+        <li>Confirm the endpoint is healthy and processing requests</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Verify existing endpoint (if you have one)</span>
+nebius msp serverless v1alpha1 endpoint get-by-name --name openclaw-agent</code></div>
+
+      <div class="code-block"><code><span class="code-comment"># Or deploy fresh (see Workshop 1 for full setup)</span>
+nebius msp serverless v1alpha1 endpoint create \
+  --name openclaw-lifecycle \
+  --container-image openclaw:latest \
+  --container-template-resources-platform cpu-d3 \
+  --container-template-resources-preset 4vcpu-16gb \
+  --port 8080 \
+  --username admin \
+  --password "$(openssl rand -hex 32)" \
+  --network-id <span class="code-comment">&lt;your-network-id&gt;</span> \
+  --parent-id <span class="code-comment">&lt;your-project-id&gt;</span></code></div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Your OpenClaw agent is running and processing requests on Nebius Serverless.</div>
     </div>
   </div>
 
+  <!-- Step 2 -->
   <div class="step">
     <div class="step-number">2</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Design Evaluation Criteria</span>
+        <span class="step-title">Add Run Logging</span>
         <span class="step-duration">10 min</span>
       </div>
-      <p class="step-desc">Define what "better" means for your specific use case. Create a rubric that measures the dimensions that matter: accuracy, helpfulness, latency, cost, safety, or domain-specific criteria.</p>
-      <ul class="bullet-list">
-        <li>Build an evaluation dataset from real interactions</li>
-        <li>Define pass/fail criteria for each dimension</li>
-        <li>Set a baseline score with your current model</li>
-      </ul>
+      <p class="step-desc">Instrument your agent to log every run &mdash; inputs, outputs, tool calls, and timing &mdash; in a structured format.</p>
+
+      <ol class="step-instructions">
+        <li>Add a logging middleware to your agent that captures each interaction</li>
+        <li>Log the full message history, tool calls, and final output</li>
+        <li>Include timing data (latency per step) and token counts</li>
+        <li>Store logs in JSONL format for easy processing later</li>
+      </ol>
+
+      <div class="step-tip"><strong>Tip:</strong> Log everything at first &mdash; you can filter later. It's much harder to add logging retroactively.</div>
+      <div class="step-tip" style="margin-top: 6px;"><strong>Tip:</strong> Use JSONL (one JSON object per line) &mdash; it's the easiest format to process and filter.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Running your agent produces a JSONL log file with full interaction details for each run.</div>
     </div>
   </div>
 
+  <!-- Step 3 -->
   <div class="step">
     <div class="step-number">3</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Prepare Training Data</span>
-        <span class="step-duration">15 min</span>
+        <span class="step-title">Label and Score Runs</span>
+        <span class="step-duration">10 min</span>
       </div>
-      <p class="step-desc">Filter, clean, and format captured interactions into training-ready datasets. Not all interactions are good training examples &mdash; select the ones where the agent performed well or where you have corrected responses.</p>
+      <p class="step-desc">Go through captured runs and label them as good, bad, or needs-improvement.</p>
+
+      <ol class="step-instructions">
+        <li>Review 20&ndash;30 agent runs from your logs</li>
+        <li>Score each run: <strong>1</strong> (bad), <strong>2</strong> (acceptable), <strong>3</strong> (good)</li>
+        <li>For bad runs, note what went wrong (wrong tool call, bad extraction, hallucination)</li>
+        <li>For good runs, note what made them good (correct output, efficient tool use)</li>
+      </ol>
+
+      <div class="step-tip"><strong>Tip:</strong> You don't need thousands of examples. 50&ndash;100 high-quality labeled runs can dramatically improve a model.</div>
+      <div class="step-tip" style="margin-top: 6px;"><strong>Tip:</strong> Focus on runs where the model almost got it right &mdash; those are the most valuable for fine-tuning.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You have 30+ labeled runs with quality scores and notes on what went right/wrong.</div>
     </div>
   </div>
 
+  <!-- Step 4 -->
   <div class="step">
     <div class="step-number">4</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Run Fine-Tuning Job</span>
-        <span class="step-duration">20 min</span>
+        <span class="step-title">Curate the Fine-Tuning Dataset</span>
+        <span class="step-duration">15 min</span>
       </div>
-      <p class="step-desc">Launch a training job on Nebius GPU infrastructure. Fine-tune the base model on your domain-specific data. Monitor training metrics and watch for overfitting.</p>
-      <div class="step-tip">Start with a small dataset (100&ndash;500 examples) and short training runs. You can always iterate.</div>
+      <p class="step-desc">Transform your labeled runs into a fine-tuning dataset in chat completion format.</p>
+
+      <ol class="step-instructions">
+        <li>Filter to only good runs (score 3) and corrected versions of bad runs</li>
+        <li>Format each example as a chat completion (system + user + assistant messages)</li>
+        <li>Remove any PII or sensitive data from the training examples</li>
+        <li>Split into training (90%) and evaluation (10%) sets</li>
+      </ol>
+
+      <div class="step-tip"><strong>Tip:</strong> Quality over quantity &mdash; 50 perfect examples beat 500 noisy ones.</div>
+      <div class="step-tip" style="margin-top: 6px;"><strong>Tip:</strong> Include the tool call format in your training data so the model learns your specific tool schema.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You have a training JSONL file and an eval JSONL file, both in chat completion format.</div>
     </div>
   </div>
 
+  <!-- Step 5 -->
   <div class="step">
     <div class="step-number">5</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Deploy &amp; Compare</span>
+        <span class="step-title">Fine-Tune on Nebius</span>
         <span class="step-duration">15 min</span>
       </div>
-      <p class="step-desc">Deploy the fine-tuned model alongside your baseline. Run A/B tests to compare performance on your evaluation criteria. If the new model wins, promote it. If not, iterate on your training data.</p>
-      <ul class="bullet-list">
-        <li>Deploy fine-tuned model as a new endpoint</li>
-        <li>Route a percentage of traffic to the new model</li>
-        <li>Compare evaluation scores between baseline and fine-tuned</li>
-        <li>Promote the winner and repeat the cycle</li>
-      </ul>
+      <p class="step-desc">Launch a fine-tuning job on Nebius using your curated dataset. Fine-tune a Llama model to specialize on your workflow.</p>
+
+      <ol class="step-instructions">
+        <li>Upload your training and eval datasets to Nebius</li>
+        <li>Configure the fine-tuning job: base model, learning rate, epochs</li>
+        <li>Launch the job and monitor progress</li>
+        <li>Evaluate the fine-tuned model against the base model on your eval set</li>
+      </ol>
+
+      <div class="step-tip"><strong>Tip:</strong> Start with Llama 3.1 8B for fast iteration. Move to 70B once you've validated the approach.</div>
+      <div class="step-tip" style="margin-top: 6px;"><strong>Tip:</strong> 2&ndash;3 epochs is usually enough. More epochs can lead to overfitting on small datasets.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Your fine-tuning job completes and the eval shows improvement over the base model.</div>
     </div>
   </div>
+
+  <!-- Step 6 -->
+  <div class="step">
+    <div class="step-number">6</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Deploy the Fine-Tuned Model</span>
+        <span class="step-duration">10 min</span>
+      </div>
+      <p class="step-desc">Deploy your fine-tuned model on Token Factory and swap it into your existing agent workflow &mdash; no code changes needed.</p>
+
+      <ol class="step-instructions">
+        <li>Deploy the fine-tuned model to a Token Factory endpoint</li>
+        <li>Update your OpenClaw configuration to point at the new model</li>
+        <li>Run the same test cases through both models to compare</li>
+        <li>Switch traffic to the fine-tuned model</li>
+      </ol>
+
+      <div class="step-tip"><strong>Tip:</strong> The beauty of this architecture: swap model names in your config, everything else stays the same.</div>
+      <div class="step-tip" style="margin-top: 6px;"><strong>Tip:</strong> Keep the base model endpoint active for A/B testing and fallback.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Your agent is running on the fine-tuned model and producing better results than the base model.</div>
+    </div>
+  </div>
+
+  <!-- Step 7 -->
+  <div class="step">
+    <div class="step-number">7</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Monitor and Iterate</span>
+        <span class="step-duration">10 min</span>
+      </div>
+      <p class="step-desc">Set up monitoring to track whether your fine-tuned model actually improves outcomes over time.</p>
+
+      <ol class="step-instructions">
+        <li>Set up automated quality checks on agent outputs</li>
+        <li>Track key metrics: accuracy, latency, cost per run, error rate</li>
+        <li>Plan a schedule for the next data capture &rarr; fine-tune cycle (weekly or monthly)</li>
+        <li>Document the process so your team can run it independently</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Check endpoint metrics</span>
+nebius msp serverless v1alpha1 endpoint get $ENDPOINT_ID</code></div>
+
+      <div class="code-block"><code><span class="code-comment"># View recent logs</span>
+nebius msp serverless v1alpha1 endpoint logs $ENDPOINT_ID</code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> The first fine-tune is the biggest improvement. Each subsequent cycle gives smaller but compounding gains.</div>
+      <div class="step-tip" style="margin-top: 6px;"><strong>Tip:</strong> Distillation shortcut: use a large model (70B or GPT-4) to generate &ldquo;perfect&rdquo; outputs, then fine-tune a small model (7B or 8B) on those outputs. Same quality, 10x cheaper inference.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You have monitoring in place, a documented process, and a plan for the next fine-tuning cycle.</div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- You Leave With -->
+<div class="content-block">
+  <h2>You Leave <em>With</em></h2>
+  <div class="outcome-grid">
+    <div class="outcome-card">
+      <p><strong>A data capture pipeline</strong> for agent runs</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>A curated fine-tuning dataset</strong> from real interactions</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>A fine-tuned model</strong> running on Token Factory</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>A redeployment workflow</strong> that swaps models without downtime</p>
+    </div>
+  </div>
+  <ul class="bullet-list" style="margin-top: 16px;">
+    <li><strong>Monitoring queries</strong> to track improvement over time</li>
+  </ul>
 </div>
 
 <div class="spacer"></div>

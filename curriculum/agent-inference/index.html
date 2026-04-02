@@ -24,7 +24,7 @@
   .bullet-list li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 50%; background: var(--rust); }
   .schedule-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
   .schedule-table td { padding: 12px 16px 12px 0; border-bottom: 1px solid var(--cream); font-size: 14px; vertical-align: top; }
-  .schedule-table td:first-child { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); white-space: nowrap; width: 100px; }
+  .schedule-table td:first-child { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); white-space: nowrap; width: 140px; }
   .steps-section { padding: 0 48px; max-width: 800px; }
   .steps-section h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 24px; }
   .steps-section h2 em { font-style: normal; color: var(--rust); }
@@ -35,9 +35,15 @@
   .step-title { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
   .step-duration { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
   .step-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
-  .code-block { background: var(--cream); border: 1px solid var(--sand); border-radius: 6px; padding: 14px 18px; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--ink); overflow-x: auto; margin-bottom: 8px; line-height: 1.6; }
+  .step-instructions { list-style: none; margin: 0 0 12px; counter-reset: instruction; }
+  .step-instructions li { font-size: 14px; color: var(--muted); line-height: 1.6; padding: 4px 0 4px 24px; position: relative; counter-increment: instruction; }
+  .step-instructions li::before { content: counter(instruction) '.'; position: absolute; left: 0; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--rust); font-weight: 500; }
+  .code-block { background: var(--cream); border: 1px solid var(--sand); border-radius: 6px; padding: 14px 18px; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--ink); overflow-x: auto; margin-bottom: 8px; line-height: 1.6; white-space: pre; }
   .code-block code { font-family: inherit; font-size: inherit; }
-  .step-tip { font-size: 13px; color: var(--moss); background: var(--moss-light); border-radius: 6px; padding: 10px 14px; margin-top: 8px; line-height: 1.5; }
+  .step-tip { font-size: 13px; color: #8B6914; background: #FFF8E1; border-left: 3px solid #D4A017; border-radius: 0 6px 6px 0; padding: 10px 14px; margin-top: 10px; line-height: 1.5; }
+  .step-tip strong { color: #8B6914; font-weight: 600; }
+  .step-checkpoint { font-size: 13px; color: #2E6B3A; background: #E8F5E9; border-left: 3px solid #4CAF50; border-radius: 0 6px 6px 0; padding: 10px 14px; margin-top: 10px; line-height: 1.5; }
+  .step-checkpoint strong { color: #2E6B3A; font-weight: 600; }
   .info-box { border: 1px solid var(--sand); border-radius: 8px; padding: 20px; background: var(--cream); margin: 12px 0; }
   .info-box-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
   .info-box p { font-size: 13px; color: var(--muted); line-height: 1.6; }
@@ -70,158 +76,289 @@
 
 <div class="workshop-hero">
   <span class="event-tag tag-tour">Beginner</span>
-  <h2 class="workshop-subtitle">Deploy Agents on Nebius Serverless</h2>
-  <p class="workshop-desc">Learn how OpenClaw separates orchestration from inference. Deploy production agents on Nebius infrastructure using Token Factory for pay-per-token GPU access &mdash; no GPU rental needed.</p>
+  <h2 class="workshop-subtitle">Nebius Serverless + Token Factory &mdash; Production Agent Deployment</h2>
+  <p class="workshop-desc">Deploy OpenClaw on Nebius Serverless (CPU-only) and connect it to Token Factory for inference. No Mac Minis, no local installs, no security headaches &mdash; a single serverless endpoint replaces $1,000 in hardware, and you can run 100 agents for the same cost. You'll choose the right open model, configure structured outputs for reliable tool calling, and optimize cost and latency.</p>
   <div class="meta-grid">
     <div class="meta-card">
       <div class="meta-card-label">Who It's For</div>
-      <div class="meta-card-value">Developers ready to deploy agents beyond localhost</div>
+      <div class="meta-card-value">Developers ready to deploy production agents without managing GPU infrastructure</div>
     </div>
     <div class="meta-card">
       <div class="meta-card-label">Value</div>
-      <div class="meta-card-value">Production deployment without managing GPU infrastructure</div>
+      <div class="meta-card-value">Replace $1,000 in hardware with a serverless endpoint that costs pennies and scales to hundreds of agents</div>
     </div>
     <div class="meta-card">
       <div class="meta-card-label">Takeaway</div>
-      <div class="meta-card-value">A live, serverless AI agent on Nebius with Token Factory billing</div>
+      <div class="meta-card-value">A live OpenClaw agent on Nebius Serverless with Token Factory inference and structured tool calling</div>
     </div>
   </div>
 </div>
 
 <div class="content-block">
-  <h2><em>Prerequisites</em></h2>
+  <h2>What You'll <em>Build</em></h2>
   <ul class="bullet-list">
-    <li>Nebius AI Cloud account</li>
-    <li>Token Factory API credentials</li>
-    <li>Nebius CLI installed</li>
-    <li>Basic terminal / shell skills</li>
-    <li>Optional: Docker</li>
+    <li>An OpenClaw agent deployed on Nebius Serverless (CPU-only, no GPU needed)</li>
+    <li>Connected to Token Factory endpoints for fast, cheap open-model inference</li>
+    <li>A working tool-calling workflow with structured outputs (JSON mode)</li>
   </ul>
 </div>
 
 <div class="content-block">
-  <h2>Learning <em>Outcomes</em></h2>
+  <h2>What We'll <em>Cover</em></h2>
   <ul class="bullet-list">
-    <li>Understand CPU vs GPU agent patterns</li>
-    <li>Deploy to Nebius Serverless</li>
-    <li>Configure Token Factory for pay-per-token inference</li>
-    <li>Manage secrets with MysteryBox</li>
-    <li>Connect messaging channels (Telegram, WhatsApp, Discord, Signal)</li>
+    <li>Why serverless beats local: a Mac Mini costs $1,000, exposes your network, and runs one agent &mdash; a serverless endpoint costs pennies and scales to hundreds</li>
+    <li>How Nebius Serverless works: deploy containers without managing VMs or clusters</li>
+    <li>Token Factory basics: OpenAI-compatible API, model catalog, per-token pricing</li>
+    <li>Choosing the right model: Llama 3.1, Mistral, DeepSeek &mdash; tradeoffs for agents</li>
+    <li>Structured outputs and JSON mode for reliable tool calling</li>
+    <li>Cost and latency optimization: batching, model selection, endpoint configuration</li>
   </ul>
 </div>
 
 <div class="content-block">
   <h2>Workshop <em>Schedule</em></h2>
   <table class="schedule-table">
-    <tr><td>0:00&ndash;0:05</td><td>Deployment Paths Overview</td></tr>
-    <tr><td>0:05&ndash;0:15</td><td>Local + Docker Approaches</td></tr>
-    <tr><td>0:15&ndash;0:30</td><td>GPU Serverless (Nebius)</td></tr>
-    <tr><td>0:30&ndash;0:50</td><td>CPU Serverless + Production Hardening</td></tr>
-    <tr><td>0:50&ndash;0:55</td><td>Troubleshooting &amp; Checklist</td></tr>
-    <tr><td>0:55&ndash;1:00</td><td>Live Q&amp;A</td></tr>
+    <tr><td>12:00&ndash;12:30</td><td>Architecture Overview: Serverless + Token Factory</td></tr>
+    <tr><td>12:30&ndash;1:15</td><td>Hands-On: Deploy OpenClaw on Serverless</td></tr>
+    <tr><td>1:15&ndash;2:00</td><td>Build a Tool-Calling Workflow</td></tr>
+    <tr><td>2:00&ndash;2:30</td><td>Optimization &amp; Cost Analysis</td></tr>
   </table>
+</div>
+
+<div class="content-block">
+  <h2><em>Prerequisites</em></h2>
+  <ul class="bullet-list">
+    <li>Laptop with a browser and terminal access</li>
+    <li>A Nebius AI Cloud account (we'll help you set one up if needed)</li>
+    <li>Basic comfort with command-line tools</li>
+  </ul>
 </div>
 
 <div class="steps-section">
   <h2>Step-by-Step <em>Guide</em></h2>
 
+  <!-- Step 1 -->
   <div class="step">
     <div class="step-number">1</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Understand the Architecture</span>
+        <span class="step-title">Install the Nebius CLI</span>
         <span class="step-duration">5 min</span>
       </div>
-      <p class="step-desc">OpenClaw separates the Gateway (CPU, orchestration) from inference (GPU, Token Factory). The Gateway handles agent logic on cheap CPU compute. Token Factory handles LLM inference on GPU &mdash; you pay per token, not per hour.</p>
-      <div class="step-tip">Key insight: Agent logic is ~20% of the work. Infrastructure is ~80%. This architecture lets you focus on the 20%.</div>
+      <p class="step-desc">Install and configure the Nebius AI Cloud CLI.</p>
+      <ol class="step-instructions">
+        <li>Download and install the Nebius CLI from the official docs</li>
+        <li>Run the login flow to authenticate with your Nebius account</li>
+        <li>Verify your project ID is set correctly</li>
+      </ol>
+      <div class="code-block"><code># Install Nebius CLI (macOS)
+curl -sSL https://storage.eu-north1.nebius.cloud/cli/install.sh | bash
+
+# Login to your account
+nebius auth login
+
+# Verify your config
+cat ~/.nebius/config.yaml</code></div>
+      <div class="step-tip"><strong>Tip:</strong> If you don't have a Nebius account yet, sign up at nebius.com &mdash; mentors can help you get set up.</div>
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Running <code>nebius iam whoami</code> returns your user info without errors.</div>
     </div>
   </div>
 
+  <!-- Step 2 -->
   <div class="step">
     <div class="step-number">2</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Get Your Credentials</span>
-        <span class="step-duration">5 min</span>
+        <span class="step-title">Get Your Network and Subnet IDs</span>
+        <span class="step-duration">3 min</span>
       </div>
-      <p class="step-desc">Sign up for Nebius AI Cloud and get your Token Factory API key. You'll need both for the deployment.</p>
-      <ul class="bullet-list">
-        <li>Create a Nebius AI Cloud account</li>
-        <li>Generate a Token Factory API key from the dashboard</li>
-        <li>Install the Nebius CLI</li>
-      </ul>
+      <p class="step-desc">Look up the network and subnet IDs you'll need to deploy your serverless endpoint.</p>
+      <ol class="step-instructions">
+        <li>List your VPC networks to find the network ID</li>
+        <li>Get the default subnet ID within that network</li>
+        <li>Save both IDs &mdash; you'll use them in the next step</li>
+      </ol>
+      <div class="code-block"><code># List networks
+nebius vpc network list
+
+# Get default subnet ID
+nebius vpc subnet get-by-name --name default-subnet \
+  --format jsonpath='{.metadata.id}'</code></div>
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You have a network ID and subnet ID saved for the next step.</div>
     </div>
   </div>
 
+  <!-- Step 3 -->
   <div class="step">
     <div class="step-number">3</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Choose Your Deployment Path</span>
-        <span class="step-duration">5 min</span>
+        <span class="step-title">Deploy OpenClaw on Serverless</span>
+        <span class="step-duration">10 min</span>
       </div>
-      <p class="step-desc">OpenClaw supports four deployment approaches. This workshop focuses on CPU Serverless (Path 4) for production.</p>
-      <ul class="bullet-list">
-        <li><strong>Path 1:</strong> Local npm + Token Factory (dev/testing)</li>
-        <li><strong>Path 2:</strong> Docker container (reproducible)</li>
-        <li><strong>Path 3:</strong> GPU Serverless on Nebius (private inference)</li>
-        <li><strong>Path 4:</strong> CPU Serverless + Token Factory (production, this workshop)</li>
-      </ul>
+      <p class="step-desc">Create a serverless endpoint running OpenClaw. CPU-only container &mdash; no GPU needed for the agent orchestrator.</p>
+      <ol class="step-instructions">
+        <li>Generate an auth token for your endpoint</li>
+        <li>Create the serverless endpoint using the Nebius CLI</li>
+        <li>Wait ~30 seconds for the endpoint to become active</li>
+        <li>Retrieve the public IP to test connectivity</li>
+      </ol>
+      <div class="code-block"><code># Generate auth token
+export AUTH_TOKEN=$(openssl rand -hex 32)
+
+# Deploy OpenClaw on Serverless
+nebius msp serverless v1alpha1 endpoint create \
+  --name openclaw-agent \
+  --container-image openclaw:latest \
+  --container-template-resources-platform cpu-d3 \
+  --container-template-resources-preset 4vcpu-16gb \
+  --port 8080 \
+  --username admin \
+  --password "$AUTH_TOKEN" \
+  --network-id &lt;your-network-id&gt; \
+  --parent-id &lt;your-project-id&gt;
+
+# Get endpoint ID
+export ENDPOINT_ID=$(nebius msp serverless v1alpha1 endpoint get-by-name \
+  --name openclaw-agent --format jsonpath='{.metadata.id}')
+
+# Get public IP
+export ENDPOINT_IP=$(nebius msp serverless v1alpha1 endpoint get $ENDPOINT_ID \
+  --format jsonpath='{.status.public_endpoints[0]}')</code></div>
+      <div class="step-tip"><strong>Tip:</strong> CPU-only is intentional &mdash; OpenClaw is the orchestrator, not the model. Token Factory handles inference on GPUs.</div>
+      <div class="step-tip"><strong>Tip:</strong> The 4vcpu-16gb preset is plenty for most agent workloads. Scale up later if needed.</div>
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> <code>curl http://$ENDPOINT_IP:8080/health</code> returns a 200 response.</div>
     </div>
   </div>
 
+  <!-- Step 4 -->
   <div class="step">
     <div class="step-number">4</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Deploy to Nebius Serverless</span>
-        <span class="step-duration">15 min</span>
+        <span class="step-title">Connect to Token Factory</span>
+        <span class="step-duration">5 min</span>
       </div>
-      <p class="step-desc">Deploy the pre-built container image to Nebius Serverless. This gives you an always-on agent endpoint with auto-scaling.</p>
-      <div class="info-box">
-        <div class="info-box-label">Deployment Config</div>
-        <p>Image: <code>ghcr.io/colygon/openclaw-serverless:latest</code></p>
-        <p>Platform: <code>cpu-e2</code> (or <code>cpu-d3</code> for EU West)</p>
-        <p>Resources: <code>2vCPU / 8GB RAM</code> minimum</p>
-        <p>Ports: <code>8080</code> (health) + <code>18789</code> (WebSocket)</p>
-      </div>
-      <div class="step-tip">Both ports must be explicitly exposed. The EXPOSE directive alone is not sufficient &mdash; configure them in the Nebius console.</div>
+      <p class="step-desc">Get your Token Factory API key and configure OpenClaw to use it for inference.</p>
+      <ol class="step-instructions">
+        <li>Go to Token Factory in the Nebius console and create an API key</li>
+        <li>Set the API key and endpoint URL in your OpenClaw config</li>
+        <li>Choose a model from the catalog (we recommend starting with Llama 3.1 70B)</li>
+        <li>Test a basic completion to verify the connection</li>
+      </ol>
+      <div class="code-block"><code># Set Token Factory credentials in OpenClaw
+export TF_API_KEY=&lt;your-token-factory-api-key&gt;
+
+# Test the connection directly
+curl https://api.studio.nebius.com/v1/chat/completions \
+  -H "Authorization: Bearer $TF_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "meta-llama/Meta-Llama-3.1-70B-Instruct",
+    "messages": [{"role": "user", "content": "Hello, world!"}],
+    "max_tokens": 100
+  }'</code></div>
+      <div class="step-tip"><strong>Tip:</strong> Token Factory uses an OpenAI-compatible API &mdash; if your code works with OpenAI, it works with TF.</div>
+      <div class="step-tip"><strong>Tip:</strong> Start with Llama 3.1 70B for a good balance of quality and cost. Try DeepSeek for coding tasks.</div>
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> The curl command returns a valid chat completion response from Token Factory.</div>
     </div>
   </div>
 
+  <!-- Step 5 -->
   <div class="step">
     <div class="step-number">5</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Connect Channels</span>
+        <span class="step-title">Configure Structured Outputs</span>
         <span class="step-duration">10 min</span>
       </div>
-      <p class="step-desc">Wire up your deployed agent to messaging platforms. OpenClaw supports multi-platform connectivity out of the box.</p>
-      <ul class="bullet-list">
-        <li>Telegram &mdash; via Bot API token</li>
-        <li>WhatsApp &mdash; via Business API</li>
-        <li>Discord &mdash; via bot token</li>
-        <li>Signal &mdash; via Signal CLI</li>
-      </ul>
+      <p class="step-desc">Set up JSON mode and structured outputs so your agent can reliably call tools and parse responses.</p>
+      <ol class="step-instructions">
+        <li>Enable JSON mode in your Token Factory requests</li>
+        <li>Define a tool schema for your use case (e.g., email actions, database queries)</li>
+        <li>Configure OpenClaw to use structured outputs for tool calling</li>
+        <li>Test that the model returns valid JSON matching your schema</li>
+      </ol>
+      <div class="code-block"><code># Example: structured output for tool calling
+curl https://api.studio.nebius.com/v1/chat/completions \
+  -H "Authorization: Bearer $TF_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "meta-llama/Meta-Llama-3.1-70B-Instruct",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Classify this email: Meeting tomorrow at 3pm"
+      }
+    ],
+    "response_format": {"type": "json_object"},
+    "max_tokens": 200
+  }'</code></div>
+      <div class="step-tip"><strong>Tip:</strong> JSON mode forces the model to output valid JSON &mdash; no more parsing errors in your agent loop.</div>
+      <div class="step-tip"><strong>Tip:</strong> For complex tool schemas, test with a few examples before wiring into the full workflow.</div>
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Your agent returns valid JSON that matches your tool schema on 5 consecutive test runs.</div>
     </div>
   </div>
 
+  <!-- Step 6 -->
   <div class="step">
     <div class="step-number">6</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Production Hardening</span>
-        <span class="step-duration">10 min</span>
+        <span class="step-title">Build Your Agent Workflow</span>
+        <span class="step-duration">15 min</span>
       </div>
-      <p class="step-desc">Secure your deployment for production use. Set up secrets management, health checks, and monitoring.</p>
-      <ul class="bullet-list">
-        <li>Store secrets with MysteryBox (Nebius secrets manager)</li>
-        <li>Configure health check endpoints</li>
-        <li>Set up basic monitoring and alerting</li>
-        <li>Test failure scenarios and recovery</li>
-      </ul>
+      <p class="step-desc">Wire everything together into a real business workflow.</p>
+      <ol class="step-instructions">
+        <li>Pick a use case from the examples or bring your own</li>
+        <li>Configure the agent loop: receive input &rarr; call model &rarr; execute tool &rarr; return result</li>
+        <li>Test with real-world data (sample emails, documents, etc.)</li>
+        <li>Iterate on prompts and tool schemas until results are reliable</li>
+      </ol>
+      <div class="step-tip"><strong>Tip:</strong> Start with a simple workflow and add complexity. A 3-tool agent beats a 10-tool agent that breaks.</div>
+      <div class="step-tip"><strong>Tip:</strong> Use the mentor chat for prompt engineering help.</div>
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Your agent handles 3 different inputs correctly end-to-end without manual intervention.</div>
     </div>
   </div>
+
+  <!-- Step 7 -->
+  <div class="step">
+    <div class="step-number">7</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Cost Analysis &amp; Production Planning</span>
+        <span class="step-duration">10 min</span>
+      </div>
+      <p class="step-desc">Benchmark costs, compare models, and plan your production deployment.</p>
+      <ol class="step-instructions">
+        <li>Run your workflow 10 times and note the token usage</li>
+        <li>Calculate monthly cost at your expected volume</li>
+        <li>Compare with GPT-4 / Claude API pricing for the same workload</li>
+        <li>Document your configuration for production deployment</li>
+      </ol>
+      <div class="code-block"><code># Check endpoint logs
+nebius msp serverless v1alpha1 endpoint logs $ENDPOINT_ID
+
+# View endpoint status
+nebius msp serverless v1alpha1 endpoint get $ENDPOINT_ID</code></div>
+      <div class="step-tip"><strong>Tip:</strong> Most agent workflows cost 60&ndash;80% less on Token Factory vs. closed APIs.</div>
+      <div class="step-tip"><strong>Tip:</strong> Save your CLI commands in a deploy script for easy redeployment.</div>
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You have a working agent, a cost estimate, and a deploy script you can run again anytime.</div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="content-block">
+  <h2>You Leave <em>With</em></h2>
+  <ul class="bullet-list">
+    <li>A live OpenClaw agent running on Nebius Serverless</li>
+    <li>Token Factory API keys and configured endpoints</li>
+    <li>A tool-calling workflow with structured JSON outputs</li>
+    <li>Cost estimates for running agents 24/7 on open models</li>
+    <li>CLI commands to redeploy, update, and monitor your agent</li>
+  </ul>
 </div>
 
 <div class="spacer"></div>

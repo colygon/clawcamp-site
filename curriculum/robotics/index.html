@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Robotics Workshop — ClawCamp</title>
+<title>OpenClaw + Robotics with Solo CLI — ClawCamp</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/shared.css">
@@ -22,6 +22,9 @@
   .bullet-list { list-style: none; margin: 0; }
   .bullet-list li { font-size: 15px; color: var(--muted); line-height: 1.6; padding: 6px 0 6px 18px; position: relative; }
   .bullet-list li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 50%; background: var(--rust); }
+  .schedule-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+  .schedule-table td { padding: 12px 16px 12px 0; border-bottom: 1px solid var(--cream); font-size: 14px; vertical-align: top; }
+  .schedule-table td:first-child { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); white-space: nowrap; width: 140px; }
   .steps-section { padding: 0 48px; max-width: 800px; }
   .steps-section h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 24px; }
   .steps-section h2 em { font-style: normal; color: var(--rust); }
@@ -32,10 +35,26 @@
   .step-title { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
   .step-duration { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
   .step-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
-  .step-tip { font-size: 13px; color: var(--moss); background: var(--moss-light); border-radius: 6px; padding: 10px 14px; margin-top: 8px; line-height: 1.5; }
+  .step-instructions { list-style: none; margin: 0 0 12px; counter-reset: instruction; }
+  .step-instructions li { font-size: 14px; color: var(--muted); line-height: 1.6; padding: 4px 0 4px 24px; position: relative; counter-increment: instruction; }
+  .step-instructions li::before { content: counter(instruction) '.'; position: absolute; left: 0; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--rust); font-weight: 500; }
+  .code-block { background: var(--cream); border: 1px solid var(--sand); border-radius: 6px; padding: 14px 18px; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--ink); overflow-x: auto; margin-bottom: 8px; line-height: 1.6; white-space: pre; }
+  .code-block code { font-family: inherit; font-size: inherit; }
+  .step-tip { font-size: 13px; color: #8B6914; background: #FFF8E1; border-left: 3px solid #D4A017; border-radius: 0 6px 6px 0; padding: 10px 14px; margin-top: 10px; line-height: 1.5; }
+  .step-tip strong { color: #8B6914; font-weight: 600; }
+  .step-tip a { color: #8B6914; text-decoration: underline; }
+  .step-tip a:hover { color: #6B5210; }
+  .step-checkpoint { font-size: 13px; color: #2E6B3A; background: #E8F5E9; border-left: 3px solid #4CAF50; border-radius: 0 6px 6px 0; padding: 10px 14px; margin-top: 10px; line-height: 1.5; }
+  .step-checkpoint strong { color: #2E6B3A; font-weight: 600; }
   .hardware-note { border: 1.5px solid var(--gold); border-radius: 8px; padding: 20px; background: var(--gold-light); margin: 24px 0; }
   .hardware-note-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold); margin-bottom: 6px; }
   .hardware-note p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .info-box { border: 1px solid var(--sand); border-radius: 8px; padding: 20px; background: var(--cream); margin: 12px 0; }
+  .info-box-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
+  .info-box p, .info-box li { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .info-box code { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--ink); }
+  .info-box a { color: var(--rust); text-decoration: underline; }
+  .info-box a:hover { color: var(--ink); }
   .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); text-decoration: none; padding: 48px 48px 0; transition: color 0.15s; }
   .back-link:hover { color: var(--ink); }
   .spacer { height: 48px; }
@@ -54,7 +73,7 @@
 <a href="/curriculum" class="back-link">&larr; Back to Workshop Library</a>
 
 <header class="page-header">
-  <h1>Robotics with<br><em>Solo CLI</em></h1>
+  <h1>OpenClaw + Robotics with<br><em>Solo CLI</em></h1>
   <div class="header-meta">
     <p>Hardware</p>
     <p>Intermediate</p>
@@ -64,119 +83,319 @@
 
 <div class="workshop-hero">
   <span class="event-tag tag-workshop">Intermediate</span>
-  <h2 class="workshop-subtitle">Control Real Robots with OpenClaw</h2>
-  <p class="workshop-desc">Bridge AI and physical hardware. Use OpenClaw's Solo CLI to teleoperate robots, record actions, train vision-language models, and deploy learned behaviors to real hardware.</p>
+  <h2 class="workshop-subtitle">Calibrate. Teleoperate. Train. Infer. All From One CLI.</h2>
+  <p class="workshop-desc">Use Solo CLI to work with real robotic hardware &mdash; SO-101, Koch, LeKiwi, OpenDroid (Realman R1D2), Unitree G1, and Booster. Calibrate arms, teleoperate, record training datasets, and train vision-language-action (VLA) models like ACT, Pi0, SmolVLA, and GROOT N1.5 on Nebius GPUs. Then deploy your trained policy behind Nebius Serverless + Token Factory for cloud-based inference. Motors are already set up &mdash; you start with calibration and go.</p>
   <div class="meta-grid">
     <div class="meta-card">
       <div class="meta-card-label">Who It's For</div>
-      <div class="meta-card-value">Developers curious about embodied AI and robotics</div>
+      <div class="meta-card-value">Developers curious about embodied AI and hands-on robotics with real hardware</div>
     </div>
     <div class="meta-card">
       <div class="meta-card-label">Value</div>
-      <div class="meta-card-value">Hands-on experience with real robot hardware and AI control</div>
+      <div class="meta-card-value">Full loop from teleoperation to autonomous execution &mdash; calibrate, record, train, and deploy a VLA model</div>
     </div>
     <div class="meta-card">
       <div class="meta-card-label">Takeaway</div>
-      <div class="meta-card-value">A trained robot behavior deployed from demonstration data</div>
+      <div class="meta-card-value">A trained VLA policy running autonomous inference on Nebius Serverless, with video proof</div>
     </div>
   </div>
 
   <div class="hardware-note">
     <div class="hardware-note-label">Hardware Note</div>
-    <p>Robot hardware is provided at in-person ClawCamp events. For remote participants, simulation environments are available. Check your local camp's equipment list.</p>
+    <p>Robot hardware (SO-101, Koch arms) is provided at in-person ClawCamp events. Motors are already set up &mdash; you start at calibration. Check your local camp's equipment list for available platforms.</p>
   </div>
+</div>
+
+<div class="content-block">
+  <h2>What You'll <em>Build</em></h2>
+  <ul class="bullet-list">
+    <li>A calibrated and teleoperated robotic arm (SO-101 or Koch) using Solo CLI</li>
+    <li>A recorded training dataset from your own teleoperation sessions</li>
+    <li>A trained VLA policy (ACT, Pi0, or SmolVLA) deployed on Nebius for inference</li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h2>What We'll <em>Cover</em></h2>
+  <ul class="bullet-list">
+    <li><a href="https://github.com/GetSoloTech/solo-cli" target="_blank">Solo CLI</a>: one tool for calibration, teleoperation, recording, training, and inference</li>
+    <li>Supported robots: SO-101, Koch, LeKiwi, OpenDroid (<a href="https://develop.realman-robotics.com/en/robot/quickUseManual/" target="_blank">Realman R1D2</a>), <a href="https://huggingface.co/docs/lerobot/en/unitree_g1" target="_blank">Unitree G1</a>, <a href="https://www.booster.tech/open-source/" target="_blank">Booster</a></li>
+    <li>VLA models: <a href="https://tonyzhaozh.github.io/aloha/" target="_blank">ACT</a>, <a href="https://www.pi.website/blog/pi0" target="_blank">Pi0</a>, Pi0Fast, Pi05, <a href="https://huggingface.co/blog/smolvla" target="_blank">SmolVLA</a>, <a href="https://research.nvidia.com/labs/gear/gr00t-n1_5/" target="_blank">GROOT N1.5</a>, <a href="https://arxiv.org/pdf/2510.10274" target="_blank">X-VLA</a> &mdash; what they are, when to use each, and how to train them</li>
+    <li>Recording imitation learning datasets with <code>solo robo --record</code> and the <a href="https://github.com/huggingface/lerobot" target="_blank">LeRobot framework</a></li>
+    <li>Training VLA policies on Nebius GPUs via Token Factory</li>
+    <li>Deploying trained models on Nebius Serverless for cloud-based robotic inference</li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h2>Supported <em>Robots</em></h2>
+  <ul class="bullet-list">
+    <li><a href="https://huggingface.co/docs/lerobot/en/so101" target="_blank">SO-101</a> &mdash; affordable 6-DOF arm, great for getting started</li>
+    <li><a href="https://huggingface.co/docs/lerobot/en/koch" target="_blank">Koch</a> &mdash; leader/follower arm pair for teleoperation</li>
+    <li><a href="https://huggingface.co/docs/lerobot/en/lekiwi" target="_blank">LeKiwi</a> &mdash; mobile base with arm (<a href="https://wiki.seeedstudio.com/lerobot_lekiwi/" target="_blank">assembly guide</a>)</li>
+    <li><a href="https://develop.realman-robotics.com/en/robot/quickUseManual/" target="_blank">OpenDroid (Realman R1D2)</a> &mdash; dual-arm humanoid platform</li>
+    <li><a href="https://huggingface.co/docs/lerobot/en/unitree_g1" target="_blank">Unitree G1</a> &mdash; full-body humanoid (<a href="https://github.com/unitreerobotics/unitree_sdk2_python" target="_blank">SDK</a>, <a href="https://github.com/GetSoloTech/unitree-g1-replay" target="_blank">Replay</a>, <a href="https://github.com/unitreerobotics/unitree_sim_isaaclab" target="_blank">IsaacLab</a>, <a href="https://github.com/NVlabs/GR00T-WholeBodyControl" target="_blank">GROOT Wholebody</a>)</li>
+    <li><a href="https://www.booster.tech/open-source/" target="_blank">Booster</a> &mdash; open-source robotic platform</li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h2>VLA <em>Models</em></h2>
+  <ul class="bullet-list">
+    <li><strong>ACT</strong> &mdash; fast to train, great for single-task policies. <a href="https://tonyzhaozh.github.io/aloha/" target="_blank">Paper</a> | <a href="https://github.com/tonyzhaozh/act" target="_blank">Code</a> | <a href="https://huggingface.co/docs/lerobot/en/act" target="_blank">LeRobot docs</a></li>
+    <li><strong>SmolVLA</strong> &mdash; more capable, good for multi-task learning. <a href="https://huggingface.co/blog/smolvla" target="_blank">Docs</a></li>
+    <li><strong>Pi0 / Pi0Fast / Pi05</strong> &mdash; Physical Intelligence foundation models. <a href="https://www.pi.website/blog/pi0" target="_blank">Paper</a> | <a href="https://github.com/Physical-Intelligence/openpi" target="_blank">Code</a> | <a href="https://huggingface.co/docs/lerobot/en/pi0" target="_blank">LeRobot docs</a></li>
+    <li><strong>GROOT N1.5</strong> &mdash; NVIDIA's VLA model. <a href="https://research.nvidia.com/labs/gear/gr00t-n1_5/" target="_blank">Paper</a> | <a href="https://github.com/NVIDIA/Isaac-GR00T" target="_blank">Code</a> | <a href="https://huggingface.co/docs/lerobot/en/groot" target="_blank">LeRobot docs</a></li>
+    <li><strong>X-VLA</strong> &mdash; cross-embodiment VLA. <a href="https://arxiv.org/pdf/2510.10274" target="_blank">Paper</a> | <a href="https://huggingface.co/docs/lerobot/en/xvla" target="_blank">LeRobot docs</a></li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h2>Workshop <em>Schedule</em></h2>
+  <table class="schedule-table">
+    <tr><td>12:00&ndash;12:30</td><td>Solo CLI Setup &amp; Robot Calibration</td></tr>
+    <tr><td>12:30&ndash;1:15</td><td>Record Data &amp; Understand VLA Models</td></tr>
+    <tr><td>1:15&ndash;2:00</td><td>Train &amp; Deploy Your VLA Model</td></tr>
+    <tr><td>2:00&ndash;2:30</td><td>Advanced Patterns &amp; Show-and-Tell</td></tr>
+  </table>
 </div>
 
 <div class="content-block">
   <h2><em>Prerequisites</em></h2>
   <ul class="bullet-list">
-    <li>OpenClaw installed (complete Local Install first)</li>
-    <li>Basic Python knowledge</li>
-    <li>Interest in robotics (no prior robotics experience needed)</li>
-    <li>Hardware provided at in-person events</li>
-  </ul>
-</div>
-
-<div class="content-block">
-  <h2>Learning <em>Outcomes</em></h2>
-  <ul class="bullet-list">
-    <li>Teleoperate a robot via Solo CLI</li>
-    <li>Record demonstration episodes for training</li>
-    <li>Train a VLA (Vision-Language-Action) model on your demos</li>
-    <li>Deploy trained behaviors to real hardware</li>
+    <li>Laptop with Python 3.12+ and terminal access</li>
+    <li>A Nebius AI Cloud account</li>
+    <li>Basic comfort with Python and CLI tools</li>
   </ul>
 </div>
 
 <div class="steps-section">
   <h2>Step-by-Step <em>Guide</em></h2>
 
+  <!-- Step 1 -->
   <div class="step">
     <div class="step-number">1</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Set Up Solo CLI</span>
-        <span class="step-duration">10 min</span>
+        <span class="step-title">Install Solo CLI &amp; Nebius CLI</span>
+        <span class="step-duration">5 min</span>
       </div>
-      <p class="step-desc">Install and configure the Solo CLI &mdash; OpenClaw's robotics interface. Solo CLI connects your local environment to robot hardware (or simulation) and provides the teleoperation and recording tools.</p>
-      <div class="step-tip">Solo CLI works with both real hardware and simulation. If you're working remotely, the simulator provides the same API.</div>
+      <p class="step-desc">Install Solo CLI for robotics operations and the Nebius CLI for cloud deployment.</p>
+      <ol class="step-instructions">
+        <li>Clone and install Solo CLI from source (recommended for hackathons), or install from PyPI</li>
+        <li>Run the interactive setup to configure your hardware and preferences</li>
+        <li>Install the Nebius CLI and authenticate</li>
+      </ol>
+      <div class="code-block"><code># Install Solo CLI from source (recommended for hackathons)
+git clone https://github.com/GetSoloTech/solo-cli.git
+cd solo-cli
+uv pip install -e .
+
+# Or install from PyPI
+uv pip install solo-cli
+
+# Run interactive setup
+solo setup
+
+# Install Nebius CLI
+curl -sSL https://storage.eu-north1.nebius.cloud/cli/install.sh | bash
+nebius auth login</code></div>
+      <div class="step-tip"><strong>Tip:</strong> Solo CLI requires Python 3.12+. If you're on an older version, use <code>uv python install 3.12</code> first.</div>
+      <div class="step-tip"><strong>Tip:</strong> The <code>solo setup</code> command saves your config to <code>~/.solo/config.json</code> &mdash; it remembers your hardware and preferences.</div>
+      <div class="step-tip"><strong>Tip:</strong> Full Solo CLI docs: <a href="https://github.com/GetSoloTech/solo-cli/blob/main/solo/commands/robots/lerobot/README.md" target="_blank">Solo CLI README</a>. LeRobot framework (used under the hood): <a href="https://github.com/huggingface/lerobot" target="_blank">github.com/huggingface/lerobot</a></div>
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Running <code>solo status</code> shows your system info and <code>nebius iam whoami</code> returns your user info.</div>
     </div>
   </div>
 
+  <!-- Step 2 -->
   <div class="step">
     <div class="step-number">2</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Teleoperate</span>
-        <span class="step-duration">15 min</span>
+        <span class="step-title">Calibrate Your Robot</span>
+        <span class="step-duration">10 min</span>
       </div>
-      <p class="step-desc">Take manual control of a robot arm. Learn the control interface &mdash; position, grip, speed &mdash; and practice executing tasks like pick-and-place, stacking, or sorting. This is how you'll generate training data.</p>
+      <p class="step-desc">Connect to your robotic arm and run calibration. Motors are already set up &mdash; just calibrate the coordinate system. Available robots: SO-101, Koch, LeKiwi, and more.</p>
+      <ol class="step-instructions">
+        <li>Run the calibration command to set workspace boundaries for all joints</li>
+        <li>Move each joint to its limit when prompted</li>
+        <li>Test teleoperation &mdash; move the follower arm with the leader arm</li>
+      </ol>
+      <div class="code-block"><code># Calibrate all joints (motors are already set up)
+solo robo --calibrate all
+
+# Test teleoperation — move the arm with the leader arm
+solo robo --teleop</code></div>
+      <div class="step-tip"><strong>Tip:</strong> Motors are already set up &mdash; skip motor setup and go straight to calibration.</div>
+      <div class="step-tip"><strong>Tip:</strong> During calibration, move each joint to its limit when prompted. This sets the workspace boundaries.</div>
+      <div class="step-tip"><strong>Tip:</strong> Robot docs: <a href="https://huggingface.co/docs/lerobot/en/so101" target="_blank">SO-101</a> | <a href="https://huggingface.co/docs/lerobot/en/koch" target="_blank">Koch</a> | <a href="https://huggingface.co/docs/lerobot/en/lekiwi" target="_blank">LeKiwi</a> (<a href="https://wiki.seeedstudio.com/lerobot_lekiwi/" target="_blank">assembly</a>) | <a href="https://develop.realman-robotics.com/en/robot/quickUseManual/" target="_blank">OpenDroid quick start</a></div>
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Calibration completes without errors and you can teleoperate the arm smoothly.</div>
     </div>
   </div>
 
+  <!-- Step 3 -->
   <div class="step">
     <div class="step-number">3</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Record Episodes</span>
+        <span class="step-title">Record Training Data</span>
         <span class="step-duration">15 min</span>
       </div>
-      <p class="step-desc">Capture demonstration data while teleoperating. Each "episode" is a complete task execution &mdash; the robot's camera feed, joint positions, and your control inputs are all recorded as training data for the VLA model.</p>
-      <ul class="bullet-list">
-        <li>Record 10&ndash;20 episodes of the same task</li>
-        <li>Vary your approach slightly each time for robustness</li>
-        <li>Review and discard any failed episodes</li>
-      </ul>
+      <p class="step-desc">Teleoperate the arm to perform a task and record episodes as training data for your VLA model. Each episode captures the camera feed, joint positions, and your control inputs.</p>
+      <ol class="step-instructions">
+        <li>Start recording &mdash; Solo CLI will guide you through each episode</li>
+        <li>Perform the task (pick-and-place, stacking, etc.) 10&ndash;20 times with slight variations</li>
+        <li>Replay a recorded episode to check data quality</li>
+      </ol>
+      <div class="code-block"><code># Record teleoperation episodes (with guided prompts)
+solo robo --record
+
+# Skip prompts and use saved settings
+solo robo --record -y
+
+# Replay a recorded episode to check data quality
+solo robo --replay</code></div>
+      <div class="step-tip"><strong>Tip:</strong> Aim for 10&ndash;20 episodes for a basic task. Consistency matters more than volume.</div>
+      <div class="step-tip"><strong>Tip:</strong> Include slight variations (object positions, angles) so the model generalizes.</div>
+      <div class="step-tip"><strong>Tip:</strong> LeRobot GitHub (dataset format &amp; tools): <a href="https://github.com/huggingface/lerobot" target="_blank">github.com/huggingface/lerobot</a></div>
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You have 10+ recorded episodes and replay shows clean, consistent trajectories.</div>
     </div>
   </div>
 
+  <!-- Step 4 -->
   <div class="step">
     <div class="step-number">4</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Train VLA Model</span>
-        <span class="step-duration">20 min</span>
+        <span class="step-title">Deploy Inference Infrastructure on Nebius</span>
+        <span class="step-duration">10 min</span>
       </div>
-      <p class="step-desc">Fine-tune a Vision-Language-Action model on your recorded demonstrations. The VLA model learns to map visual observations and language instructions to robot actions &mdash; turning your demonstrations into a generalizable policy.</p>
-      <div class="step-tip">VLA models learn from surprisingly few demonstrations. 10&ndash;20 high-quality episodes is often enough for simple tasks.</div>
+      <p class="step-desc">Set up Nebius Serverless and Token Factory for training and deploying your VLA model.</p>
+      <ol class="step-instructions">
+        <li>Look up your subnet ID</li>
+        <li>Deploy the orchestrator on Nebius Serverless</li>
+        <li>Set your Token Factory API key for GPU inference</li>
+      </ol>
+      <div class="code-block"><code># Get subnet
+export SUBNET_ID=$(nebius vpc subnet get-by-name \
+  --name default-subnet --format jsonpath='{.metadata.id}')
+
+# Deploy orchestrator on Serverless
+export AUTH_TOKEN=$(openssl rand -hex 32)
+nebius msp serverless v1alpha1 endpoint create \
+  --name openclaw-robotics \
+  --container-image openclaw:robotics \
+  --container-template-resources-platform cpu-d3 \
+  --container-template-resources-preset 4vcpu-16gb \
+  --port 8080 \
+  --username admin \
+  --password "$AUTH_TOKEN" \
+  --network-id &lt;your-network-id&gt; \
+  --parent-id &lt;your-project-id&gt;
+
+# Set Token Factory key for GPU inference
+export TF_API_KEY=&lt;your-token-factory-api-key&gt;</code></div>
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Your serverless endpoint is active and Token Factory API key is configured.</div>
     </div>
   </div>
 
+  <!-- Step 5 -->
   <div class="step">
     <div class="step-number">5</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Deploy to Hardware</span>
+        <span class="step-title">Train Your VLA Model</span>
         <span class="step-duration">15 min</span>
       </div>
-      <p class="step-desc">Push the trained model back to the robot. Watch it execute the task autonomously based on what it learned from your demonstrations. Test with variations to see how well the policy generalizes.</p>
-      <ul class="bullet-list">
-        <li>Load the trained model onto the robot controller</li>
-        <li>Give a natural language task instruction</li>
-        <li>Observe autonomous execution</li>
-        <li>Iterate: record more demos for failure cases</li>
-      </ul>
+      <p class="step-desc">Train a vision-language-action model on your recorded dataset. Solo CLI handles the configuration &mdash; just pick a model and go.</p>
+      <ol class="step-instructions">
+        <li>Run the training command &mdash; Solo CLI will prompt you to choose a model</li>
+        <li>Monitor the loss curve for convergence</li>
+        <li>Training saves a model checkpoint you'll use for inference</li>
+      </ol>
+      <div class="code-block"><code># Train a VLA policy (Solo CLI handles the config)
+solo robo --train
+
+# Skip prompts with saved settings
+solo robo --train -y</code></div>
+      <div class="step-tip"><strong>Tip:</strong> <strong>ACT</strong> trains in minutes and works great for single-task policies. <a href="https://tonyzhaozh.github.io/aloha/" target="_blank">Paper</a> | <a href="https://github.com/tonyzhaozh/act" target="_blank">Code</a> | <a href="https://huggingface.co/docs/lerobot/en/act" target="_blank">LeRobot docs</a></div>
+      <div class="step-tip"><strong>Tip:</strong> <strong>SmolVLA</strong> is more capable but takes longer to train &mdash; good for multi-task learning. <a href="https://huggingface.co/blog/smolvla" target="_blank">Docs</a></div>
+      <div class="step-tip"><strong>Tip:</strong> <strong>Pi0 / Pi0Fast / Pi05</strong> &mdash; Physical Intelligence foundation models. <a href="https://www.pi.website/blog/pi0" target="_blank">Paper</a> | <a href="https://github.com/Physical-Intelligence/openpi" target="_blank">Code</a> | <a href="https://huggingface.co/docs/lerobot/en/pi0" target="_blank">LeRobot docs</a></div>
+      <div class="step-tip"><strong>Tip:</strong> <strong>GROOT N1.5</strong> &mdash; NVIDIA's VLA model. <a href="https://research.nvidia.com/labs/gear/gr00t-n1_5/" target="_blank">Paper</a> | <a href="https://github.com/NVIDIA/Isaac-GR00T" target="_blank">Code</a> | <a href="https://huggingface.co/docs/lerobot/en/groot" target="_blank">LeRobot docs</a></div>
+      <div class="step-tip"><strong>Tip:</strong> <strong>X-VLA</strong> &mdash; cross-embodiment VLA. <a href="https://arxiv.org/pdf/2510.10274" target="_blank">Paper</a> | <a href="https://huggingface.co/docs/lerobot/en/xvla" target="_blank">LeRobot docs</a></div>
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Training completes and the loss curve shows convergence. Your model checkpoint is saved.</div>
     </div>
   </div>
+
+  <!-- Step 6 -->
+  <div class="step">
+    <div class="step-number">6</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Run Autonomous Inference</span>
+        <span class="step-duration">10 min</span>
+      </div>
+      <p class="step-desc">Deploy your trained model and watch the arm execute the learned task autonomously &mdash; no human input required.</p>
+      <ol class="step-instructions">
+        <li>Run the inference command with your trained model</li>
+        <li>Watch the robot execute the task it learned from your demonstrations</li>
+        <li>If the model doesn't generalize well, record more episodes and retrain</li>
+      </ol>
+      <div class="code-block"><code># Run inference with your trained model
+solo robo --inference
+
+# Skip prompts
+solo robo --inference -y</code></div>
+      <div class="step-tip"><strong>Tip:</strong> The first autonomous run is the magic moment &mdash; watch the arm do what you taught it without any human input.</div>
+      <div class="step-tip"><strong>Tip:</strong> If the model doesn't generalize well, record 10 more episodes with more position variety and retrain.</div>
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Your robot arm executes the learned task autonomously from your trained VLA model.</div>
+    </div>
+  </div>
+
+  <!-- Step 7 -->
+  <div class="step">
+    <div class="step-number">7</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Record Your Demo &amp; Explore More Robots</span>
+        <span class="step-duration">10 min</span>
+      </div>
+      <p class="step-desc">Record a video of your robot performing autonomously, then explore other available platforms.</p>
+      <ol class="step-instructions">
+        <li>Film a video of the full loop: teleoperation, then autonomous execution</li>
+        <li>Check your Solo CLI status and saved models</li>
+        <li>Save your Nebius deployment config for future use</li>
+        <li>Try other robot platforms if time allows</li>
+      </ol>
+      <div class="code-block"><code># Check Solo CLI status and model info
+solo status
+
+# List downloaded models
+solo list
+
+# Save your Nebius deployment config
+nebius msp serverless v1alpha1 endpoint get $ENDPOINT_ID \
+  --format yaml > robotics-deploy.yaml</code></div>
+      <div class="step-tip"><strong>Tip:</strong> The best demos show the full loop: teleoperation &rarr; training &rarr; autonomous execution.</div>
+      <div class="step-tip"><strong>Tip:</strong> Other robots to explore: <a href="https://huggingface.co/docs/lerobot/en/lekiwi" target="_blank">LeKiwi</a>, <a href="https://develop.realman-robotics.com/en/robot/quickUseManual/" target="_blank">OpenDroid R1D2</a>, <a href="https://huggingface.co/docs/lerobot/en/unitree_g1" target="_blank">Unitree G1</a>, <a href="https://www.booster.tech/open-source/" target="_blank">Booster</a></div>
+      <div class="step-tip"><strong>Tip:</strong> Unitree G1 extras: <a href="https://github.com/unitreerobotics/unitree_sdk2_python" target="_blank">SDK</a>, <a href="https://github.com/GetSoloTech/unitree-g1-replay" target="_blank">Replay</a>, <a href="https://github.com/unitreerobotics/unitree_sim_isaaclab" target="_blank">IsaacLab</a>, <a href="https://github.com/NVlabs/GR00T-WholeBodyControl" target="_blank">GROOT Wholebody</a></div>
+      <div class="step-tip"><strong>Tip:</strong> All VLA model LeRobot implementations: <a href="https://huggingface.co/docs/lerobot/en/act" target="_blank">ACT</a>, <a href="https://huggingface.co/docs/lerobot/en/pi0" target="_blank">Pi0</a>, Pi0Fast, Pi05, <a href="https://huggingface.co/docs/lerobot/en/groot" target="_blank">GROOT</a>, <a href="https://huggingface.co/docs/lerobot/en/xvla" target="_blank">X-VLA</a>, <a href="https://huggingface.co/blog/smolvla" target="_blank">SmolVLA</a></div>
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You have a video of autonomous execution and your model + config saved for future use.</div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="content-block">
+  <h2>You Leave <em>With</em></h2>
+  <ul class="bullet-list">
+    <li>A calibrated robotic arm you can teleoperate from Solo CLI</li>
+    <li>A recorded dataset of teleoperation episodes</li>
+    <li>A trained VLA model (ACT or SmolVLA) that can replay tasks autonomously</li>
+    <li>Inference running on Nebius Serverless + Token Factory</li>
+    <li>Video of your robot performing a learned task to show your team</li>
+  </ul>
 </div>
 
 <div class="spacer"></div>
@@ -188,7 +407,7 @@
   </div>
   <div class="cta-band-actions">
     <a href="/curriculum" class="btn-dark">Workshop Library &rarr;</a>
-    <a href="/schedule" class="btn-outline">Oakland Schedule</a>
+    <a href="/curriculum" class="btn-outline">All Workshops</a>
   </div>
 </div>
 

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agents. Payments. OpenClaw. — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .event-hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 48px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .event-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(196,84,10,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--rust);
+    margin-bottom: 16px;
+  }
+  .hero-title {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.04em;
+    margin-bottom: 24px;
+  }
+  .hero-title span { color: var(--rust); }
+  .hero-subtitle {
+    font-size: 18px;
+    color: rgba(245,242,236,0.7);
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 32px;
+  }
+  .hero-details {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .hero-detail {
+    font-size: 14px;
+    color: rgba(245,242,236,0.65);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-detail strong { color: var(--paper); }
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 24px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .btn-hero-primary {
+    background: var(--rust);
+    color: white;
+  }
+  .btn-hero-primary:hover { background: #a8420a; }
+  .btn-hero-discord {
+    background: #5865F2;
+    color: white;
+  }
+  .btn-hero-discord:hover { background: #4752C4; }
+
+  .event-section {
+    padding: 64px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--rust);
+    margin-bottom: 12px;
+  }
+  .section-heading {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .section-heading em { font-style: normal; color: var(--rust); }
+  .section-intro {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 40px;
+  }
+  .section-border { border-top: 1px solid var(--sand); }
+
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .detail-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .detail-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .detail-value {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.4;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--rust);
+    text-decoration: none;
+    padding: 20px 48px;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .event-hero { padding: 64px 20px 48px; }
+    .event-section { padding: 48px 20px; }
+    .back-link { padding: 16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<a href="/events" class="back-link">&larr; All Events</a>
+
+<!-- Hero -->
+<div class="event-hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Community &middot; April 2, 2026 &middot; 90+ Going</div>
+    <h1 class="hero-title">Agents. Payments.<br><span>OpenClaw.</span></h1>
+    <p class="hero-subtitle">Agentic standards, payment systems, and maybe a product launch. Drinks by ampersend.ai.</p>
+    <div class="hero-details">
+      <span class="hero-detail">&#128197; <strong>Thursday, April 2, 2026</strong></span>
+      <span class="hero-detail">&#128205; <strong>The House by Edge &amp; Node</strong> &mdash; 103 Montgomery St, San Francisco</span>
+    </div>
+    <div class="hero-actions">
+      <a href="https://luma.com/fhauricn" target="_blank" class="btn-hero btn-hero-primary">RSVP on Luma &rarr;</a>
+      <a href="https://discord.gg/haAtnsyE3W" target="_blank" class="btn-hero btn-hero-discord">Join the Discord</a>
+    </div>
+  </div>
+</div>
+
+<!-- About This Event -->
+<div class="event-section">
+  <div class="section-label">About This Event</div>
+  <h2 class="section-heading">Agentic Standards &amp; <em>Payments</em></h2>
+  <p class="section-intro">A community gathering at the intersection of AI agents, payment infrastructure, and the OpenClaw ecosystem. Come for the conversations about agentic standards and payment systems &mdash; stay for the possible product launch and drinks courtesy of ampersend.ai.</p>
+  <p style="font-size:15px;color:var(--muted);line-height:1.6;max-width:600px;">With 90+ attendees already confirmed, this is one of the hottest community events of the week. Whether you're building in payments, working on agent protocols, or just want to connect with the builder community, this is the place to be.</p>
+</div>
+
+<!-- Details -->
+<div class="event-section section-border">
+  <div class="section-label">Details</div>
+  <h2 class="section-heading">Event <em>Info</em></h2>
+
+  <div class="details-grid">
+    <div class="detail-card">
+      <div class="detail-label">Date</div>
+      <div class="detail-value">Thursday, April 2, 2026</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-label">Location</div>
+      <div class="detail-value">The House by Edge &amp; Node<br>103 Montgomery St, San Francisco</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-label">Type</div>
+      <div class="detail-value">Community</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-label">Attendance</div>
+      <div class="detail-value">90+ Going</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA Band -->
+<div class="cta-band">
+  <div>
+    <h3>Don't Miss Out</h3>
+    <p>RSVP now and join the ClawCamp community on Discord to connect with other builders.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="https://discord.gg/haAtnsyE3W" target="_blank" class="btn-dark">Join Discord &rarr;</a>
+    <a href="https://luma.com/fhauricn" target="_blank" class="btn-outline">RSVP on Luma</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

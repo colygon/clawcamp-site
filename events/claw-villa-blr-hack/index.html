@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claw Villa BLR Hack — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .event-hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 48px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .event-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(196,84,10,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--rust);
+    margin-bottom: 16px;
+  }
+  .hero-title {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.04em;
+    margin-bottom: 24px;
+  }
+  .hero-title span { color: var(--rust); }
+  .hero-subtitle {
+    font-size: 18px;
+    color: rgba(245,242,236,0.7);
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 32px;
+  }
+  .hero-details {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .hero-detail {
+    font-size: 14px;
+    color: rgba(245,242,236,0.65);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-detail strong { color: var(--paper); }
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 24px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .btn-hero-primary {
+    background: var(--rust);
+    color: white;
+  }
+  .btn-hero-primary:hover { background: #a8420a; }
+  .btn-hero-secondary {
+    border: 1px solid rgba(245,242,236,0.3);
+    color: var(--paper);
+  }
+  .btn-hero-secondary:hover { border-color: var(--paper); }
+  .btn-hero-discord {
+    background: #5865F2;
+    color: white;
+  }
+  .btn-hero-discord:hover { background: #4752C4; }
+
+  .event-section {
+    padding: 64px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--rust);
+    margin-bottom: 12px;
+  }
+  .section-heading {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .section-heading em { font-style: normal; color: var(--rust); }
+  .section-intro {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 40px;
+  }
+  .section-border { border-top: 1px solid var(--sand); }
+
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .detail-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .detail-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .detail-value {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.4;
+  }
+  .status-full {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: #fef0e5;
+    color: var(--rust);
+    font-weight: 500;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--rust);
+    text-decoration: none;
+    padding: 20px 48px;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .event-hero { padding: 64px 20px 48px; }
+    .event-section { padding: 48px 20px; }
+    .back-link { padding: 16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<a href="/events" class="back-link">&larr; All Events</a>
+
+<!-- Hero -->
+<div class="event-hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Community &middot; April 4, 2026 &middot; Event Full</div>
+    <h1 class="hero-title">Claw Villa<br><span>BLR Hack</span></h1>
+    <p class="hero-subtitle">Immersive villa hacking experience for Bangalore builders. Ship the best AI agents. Exclusive &mdash; 69 hackers only.</p>
+    <div class="hero-details">
+      <span class="hero-detail">&#128197; <strong>Saturday, April 4, 2026</strong></span>
+      <span class="hero-detail">&#128205; <strong>Zo House Bangalore (Whitefield)</strong> &mdash; Bengaluru, Karnataka, India</span>
+      <span class="hero-detail">&#9201; <strong>11:00 AM &ndash; 4:00 PM IST</strong></span>
+    </div>
+    <div class="hero-actions">
+      <a href="https://luma.com/claw-villa-hack" target="_blank" class="btn-hero btn-hero-primary">View on Luma &rarr;</a>
+      <a href="https://discord.gg/haAtnsyE3W" target="_blank" class="btn-hero btn-hero-discord">Join the Discord</a>
+    </div>
+  </div>
+</div>
+
+<!-- About This Event -->
+<div class="event-section">
+  <div class="section-label">About This Event</div>
+  <h2 class="section-heading">Villa Hacking in <em>Bangalore</em></h2>
+  <p class="section-intro">Claw Villa BLR Hack is an exclusive, immersive hacking experience at Zo House in Whitefield, Bangalore. Limited to just 69 hackers, this event brings together the best builders in the Bangalore AI community to ship AI agents in a villa setting.</p>
+  <p style="font-size:15px;color:var(--muted);line-height:1.6;max-width:600px;">The goal is simple: build and ship the best AI agents you can. With a tight, curated group of builders in an inspiring environment, expect deep focus, collaboration, and demos that push boundaries.</p>
+</div>
+
+<!-- Details -->
+<div class="event-section section-border">
+  <div class="section-label">Details</div>
+  <h2 class="section-heading">Event <em>Info</em></h2>
+
+  <div class="details-grid">
+    <div class="detail-card">
+      <div class="detail-label">Date</div>
+      <div class="detail-value">Saturday, April 4, 2026</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-label">Time</div>
+      <div class="detail-value">11:00 AM &ndash; 4:00 PM IST</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-label">Location</div>
+      <div class="detail-value">Zo House Bangalore (Whitefield)<br>Bengaluru, Karnataka, India</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-label">Type</div>
+      <div class="detail-value">Community</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-label">Organizer</div>
+      <div class="detail-value">Agent Hack</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-label">Status</div>
+      <div class="detail-value"><span class="status-full">Event Full</span><br><span style="font-size:13px;color:var(--muted);font-weight:400;">69 spots &middot; 40+ going</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA Band -->
+<div class="cta-band">
+  <div>
+    <h3>Join the ClawCamp Community</h3>
+    <p>This event is full, but you can still connect with builders on Discord and stay updated on future events.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="https://discord.gg/haAtnsyE3W" target="_blank" class="btn-dark">Join Discord &rarr;</a>
+    <a href="https://luma.com/claw-villa-hack" target="_blank" class="btn-outline">View on Luma</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

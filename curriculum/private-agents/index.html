@@ -8,39 +8,287 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/shared.css">
 <style>
-  .workshop-hero { padding: 48px 48px 0; max-width: 800px; }
+  /* Workshop detail styles */
+  .workshop-hero {
+    padding: 48px 48px 0;
+    max-width: 800px;
+  }
   .workshop-hero .event-tag { margin-bottom: 12px; display: inline-block; }
-  .workshop-subtitle { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
-  .workshop-desc { font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
-  .meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 48px; }
-  .meta-card { border: 1px solid var(--sand); border-radius: 8px; padding: 20px; }
-  .meta-card-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
-  .meta-card-value { font-size: 15px; line-height: 1.5; }
-  .content-block { padding: 0 48px; max-width: 800px; margin-bottom: 40px; }
-  .content-block h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 16px; }
+  .workshop-subtitle {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .workshop-desc {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .meta-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .meta-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .meta-card-value {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .content-block {
+    padding: 0 48px;
+    max-width: 800px;
+    margin-bottom: 40px;
+  }
+  .content-block h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
   .content-block h2 em { font-style: normal; color: var(--rust); }
-  .bullet-list { list-style: none; margin: 0; }
-  .bullet-list li { font-size: 15px; color: var(--muted); line-height: 1.6; padding: 6px 0 6px 18px; position: relative; }
-  .bullet-list li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 50%; background: var(--rust); }
-  .steps-section { padding: 0 48px; max-width: 800px; }
-  .steps-section h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 24px; }
+
+  .bullet-list {
+    list-style: none;
+    margin: 0;
+  }
+  .bullet-list li {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+    padding: 6px 0 6px 18px;
+    position: relative;
+  }
+  .bullet-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 13px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--rust);
+  }
+  .bullet-list li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Schedule table */
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+  }
+  .schedule-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-align: left;
+    padding: 10px 0;
+    border-bottom: 2px solid var(--sand);
+  }
+  .schedule-table td {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid var(--cream);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .schedule-table td:first-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    white-space: nowrap;
+    width: 140px;
+  }
+  .schedule-table td strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Steps */
+  .steps-section {
+    padding: 0 48px;
+    max-width: 800px;
+  }
+  .steps-section h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
   .steps-section h2 em { font-style: normal; color: var(--rust); }
-  .step { display: grid; grid-template-columns: 56px 1fr; gap: 20px; padding: 28px 0; border-bottom: 1px solid var(--cream); }
+
+  .step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 20px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--cream);
+  }
   .step:last-child { border-bottom: none; }
-  .step-number { font-size: 32px; font-weight: 800; color: var(--rust); line-height: 1; }
-  .step-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
-  .step-title { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
-  .step-duration { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
-  .step-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
-  .step-tip { font-size: 13px; color: var(--moss); background: var(--moss-light); border-radius: 6px; padding: 10px 14px; margin-top: 8px; line-height: 1.5; }
-  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); text-decoration: none; padding: 48px 48px 0; transition: color 0.15s; }
+  .step-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--rust);
+    line-height: 1;
+  }
+  .step-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .step-title {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .step-duration {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .step-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .step-instructions {
+    list-style: none;
+    margin: 0 0 12px;
+    counter-reset: instr;
+  }
+  .step-instructions li {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.6;
+    padding: 4px 0 4px 28px;
+    position: relative;
+    counter-increment: instr;
+  }
+  .step-instructions li::before {
+    content: counter(instr) '.';
+    position: absolute;
+    left: 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    font-weight: 500;
+  }
+
+  .code-block {
+    background: var(--cream);
+    border: 1px solid var(--sand);
+    border-radius: 6px;
+    padding: 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--ink);
+    overflow-x: auto;
+    margin-bottom: 8px;
+    line-height: 1.6;
+    white-space: pre;
+  }
+  .code-block code {
+    font-family: inherit;
+    font-size: inherit;
+  }
+  .code-comment {
+    color: var(--muted);
+  }
+
+  .step-tip {
+    font-size: 13px;
+    color: var(--gold);
+    background: var(--gold-light);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    line-height: 1.5;
+    border-left: 3px solid var(--gold);
+  }
+  .step-tip strong {
+    font-weight: 600;
+  }
+
+  .step-checkpoint {
+    font-size: 13px;
+    color: var(--moss);
+    background: var(--moss-light);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    line-height: 1.5;
+    border-left: 3px solid var(--moss);
+  }
+  .step-checkpoint strong {
+    font-weight: 600;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 48px 48px 0;
+    transition: color 0.15s;
+  }
   .back-link:hover { color: var(--ink); }
+
+  /* You Leave With section */
+  .outcome-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .outcome-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .outcome-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
   .spacer { height: 48px; }
+
   @media (max-width: 768px) {
     .workshop-hero, .content-block, .steps-section, .back-link { padding-left: 20px; padding-right: 20px; }
     .meta-grid { grid-template-columns: 1fr; }
     .step { grid-template-columns: 40px 1fr; gap: 12px; }
     .step-number { font-size: 24px; }
+    .outcome-grid { grid-template-columns: 1fr; }
+    .schedule-table td:first-child { width: auto; }
   }
 </style>
 </head>
@@ -61,117 +309,379 @@
 
 <div class="workshop-hero">
   <span class="event-tag tag-workshop">Intermediate</span>
-  <h2 class="workshop-subtitle">Zero-Retention Inference for Sensitive Workflows</h2>
-  <p class="workshop-desc">Process sensitive documents &mdash; legal briefs, medical records, financial reports &mdash; with fully isolated inference. No data leaves your infrastructure. Compliance-ready from day one.</p>
+  <h2 class="workshop-subtitle">Your Data Never Leaves. Your Endpoints Never Share. Your Agents Stay Private.</h2>
+  <p class="workshop-desc">Deploy OpenClaw on Nebius Serverless and connect it to dedicated Token Factory endpoints with zero data retention. Your prompts and documents are never stored at rest. Optional dedicated endpoints give you isolation and stable latency for sensitive workloads &mdash; legal, finance, healthcare, HR.</p>
+
   <div class="meta-grid">
     <div class="meta-card">
       <div class="meta-card-label">Who It's For</div>
-      <div class="meta-card-value">Teams handling sensitive data who need AI without data exposure</div>
+      <div class="meta-card-value">Teams handling sensitive data who need AI without data exposure &mdash; legal, finance, healthcare, HR</div>
     </div>
     <div class="meta-card">
-      <div class="meta-card-label">Value</div>
-      <div class="meta-card-value">AI capabilities without compliance risk</div>
+      <div class="meta-card-label">What You Get</div>
+      <div class="meta-card-value">A private OpenClaw agent on Nebius Serverless with dedicated zero-retention Token Factory endpoints</div>
     </div>
     <div class="meta-card">
-      <div class="meta-card-label">Takeaway</div>
-      <div class="meta-card-value">A private inference pipeline that processes documents with zero data retention</div>
+      <div class="meta-card-label">Time Required</div>
+      <div class="meta-card-value">~55 minutes from start to a compliance-ready private agent stack</div>
     </div>
   </div>
 </div>
 
+<!-- What You'll Build -->
+<div class="content-block">
+  <h2>What You'll <em>Build</em></h2>
+  <ul class="bullet-list">
+    <li>A <strong>private OpenClaw agent</strong> on Nebius Serverless processing confidential documents</li>
+    <li><strong>Dedicated Token Factory endpoints</strong> with zero data retention enabled</li>
+    <li>An <strong>end-to-end workflow</strong> where no data is stored at rest at any point</li>
+  </ul>
+</div>
+
+<!-- What We'll Cover -->
+<div class="content-block">
+  <h2>What We'll <em>Cover</em></h2>
+  <ul class="bullet-list">
+    <li><strong>Zero-retention inference</strong> &mdash; what it means, how it works, what guarantees you get</li>
+    <li><strong>Dedicated vs. shared endpoints</strong> &mdash; isolation, latency stability, and compliance tradeoffs</li>
+    <li><strong>Deploying OpenClaw on Serverless</strong> with private networking</li>
+    <li><strong>Processing sensitive documents</strong> &mdash; contracts, medical records, financial reports</li>
+    <li><strong>Audit logging and compliance documentation</strong> for your security team</li>
+    <li><strong>Cost model</strong> for dedicated endpoints vs. shared infrastructure</li>
+  </ul>
+</div>
+
+<!-- Schedule -->
+<div class="content-block">
+  <h2><em>Schedule</em></h2>
+  <table class="schedule-table">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Topic</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>12:00 &ndash; 12:30</td>
+        <td><strong>Zero-Retention Architecture Deep Dive</strong> &mdash; How zero retention works at the infrastructure level, dedicated vs. shared endpoints, compliance guarantees</td>
+      </tr>
+      <tr>
+        <td>12:30 &ndash; 1:15</td>
+        <td><strong>Hands-On: Deploy a Private Agent Stack</strong> &mdash; Nebius CLI, private networking, OpenClaw on Serverless, dedicated Token Factory endpoints</td>
+      </tr>
+      <tr>
+        <td>1:15 &ndash; 2:00</td>
+        <td><strong>Process Sensitive Documents</strong> &mdash; Build a document pipeline, process contracts/medical records/financial reports, verify zero data persistence</td>
+      </tr>
+      <tr>
+        <td>2:00 &ndash; 2:30</td>
+        <td><strong>Compliance Review &amp; Production Planning</strong> &mdash; Audit logging, architecture documentation, cost estimates, production rollout planning</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Prerequisites -->
 <div class="content-block">
   <h2><em>Prerequisites</em></h2>
   <ul class="bullet-list">
-    <li>Nebius AI Cloud account</li>
-    <li>Basic container knowledge</li>
-    <li>Understanding of data compliance requirements</li>
+    <li>Laptop with a <strong>browser</strong> and <strong>terminal</strong> access</li>
+    <li>A <strong>Nebius AI Cloud account</strong> (sign up at <a href="https://nebius.com" style="color: var(--rust); text-decoration: underline;">nebius.com</a>)</li>
+    <li>Familiarity with basic <strong>CLI tools</strong> and <strong>REST APIs</strong></li>
   </ul>
 </div>
 
-<div class="content-block">
-  <h2>Learning <em>Outcomes</em></h2>
-  <ul class="bullet-list">
-    <li>Deploy isolated inference endpoints</li>
-    <li>Configure zero-retention policies</li>
-    <li>Process sensitive documents safely</li>
-    <li>Audit and verify data handling</li>
-  </ul>
-</div>
-
+<!-- Step-by-Step Guide -->
 <div class="steps-section">
   <h2>Step-by-Step <em>Guide</em></h2>
 
+  <!-- Step 1 -->
   <div class="step">
     <div class="step-number">1</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Understand Zero-Retention</span>
+        <span class="step-title">Install the Nebius CLI</span>
         <span class="step-duration">5 min</span>
       </div>
-      <p class="step-desc">Learn how isolated inference differs from shared endpoints. In a zero-retention setup, no prompts, completions, or metadata are stored after the request completes. The inference endpoint processes and forgets.</p>
-      <div class="step-tip">This is critical for HIPAA, SOC 2, and GDPR compliance scenarios where data residency matters.</div>
+      <p class="step-desc">Install and configure the Nebius AI Cloud CLI for managing serverless endpoints and dedicated infrastructure.</p>
+
+      <ol class="step-instructions">
+        <li>Download and install the Nebius CLI using the install script</li>
+        <li>Authenticate with your Nebius AI Cloud account</li>
+        <li>Verify your configuration is correct</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Install Nebius CLI</span>
+curl -sSL https://storage.eu-north1.nebius.cloud/cli/install.sh | bash</code></div>
+
+      <div class="code-block"><code><span class="code-comment"># Login to your Nebius account</span>
+nebius auth login</code></div>
+
+      <div class="code-block"><code><span class="code-comment"># Verify your config</span>
+cat ~/.nebius/config.yaml</code></div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Running <code style="font-family: 'DM Mono', monospace; font-size: 12px; background: rgba(0,0,0,0.05); padding: 1px 5px; border-radius: 3px;">nebius iam whoami</code> returns your user info without errors.</div>
     </div>
   </div>
 
+  <!-- Step 2 -->
   <div class="step">
     <div class="step-number">2</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Deploy Private Endpoint</span>
-        <span class="step-duration">15 min</span>
+        <span class="step-title">Set Up Private Networking</span>
+        <span class="step-duration">5 min</span>
       </div>
-      <p class="step-desc">Spin up a dedicated Nebius GPU instance with no external logging. This instance runs inference in complete isolation &mdash; no shared tenancy, no data pipeline to third parties.</p>
-      <ul class="bullet-list">
-        <li>Provision a dedicated GPU instance on Nebius</li>
-        <li>Configure network isolation (no external egress for data)</li>
-        <li>Deploy the OpenClaw inference container</li>
-      </ul>
+      <p class="step-desc">Configure a VPC network and subnet for your private agent deployment. This keeps all traffic off the public internet.</p>
+
+      <ol class="step-instructions">
+        <li>List your existing VPC networks to confirm access</li>
+        <li>Get the subnet ID for your default subnet</li>
+        <li>Export it as an environment variable for later steps</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># List available networks</span>
+nebius vpc network list</code></div>
+
+      <div class="code-block"><code><span class="code-comment"># Get your subnet ID and export it</span>
+export SUBNET_ID=$(nebius vpc subnet get-by-name \
+  --name default-subnet --format jsonpath='{.metadata.id}')
+
+echo $SUBNET_ID</code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> Private networking ensures your agent traffic never traverses the public internet. This is a requirement for most compliance frameworks handling sensitive data.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You have <code style="font-family: 'DM Mono', monospace; font-size: 12px; background: rgba(0,0,0,0.05); padding: 1px 5px; border-radius: 3px;">SUBNET_ID</code> exported and ready for deployment.</div>
     </div>
   </div>
 
+  <!-- Step 3 -->
   <div class="step">
     <div class="step-number">3</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Configure Retention Policies</span>
+        <span class="step-title">Deploy OpenClaw on Serverless</span>
         <span class="step-duration">10 min</span>
       </div>
-      <p class="step-desc">Set TTL=0 and disable all telemetry. Configure the endpoint to purge request data immediately after response delivery.</p>
-      <ul class="bullet-list">
-        <li>Set data TTL to zero on all inference requests</li>
-        <li>Disable telemetry and usage logging</li>
-        <li>Configure ephemeral storage for inference scratch space</li>
-      </ul>
+      <p class="step-desc">Deploy the OpenClaw agent on a Nebius Serverless endpoint. This runs on CPU-only infrastructure &mdash; inference is handled by your dedicated Token Factory endpoint in the next step.</p>
+
+      <ol class="step-instructions">
+        <li>Generate a secure authentication token for your endpoint</li>
+        <li>Deploy OpenClaw using the Nebius serverless CLI</li>
+        <li>Retrieve and export the endpoint ID for later use</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Generate a secure auth token</span>
+export AUTH_TOKEN=$(openssl rand -hex 32)</code></div>
+
+      <div class="code-block"><code><span class="code-comment"># Deploy OpenClaw on Nebius Serverless</span>
+nebius msp serverless v1alpha1 endpoint create \
+  --name openclaw-private \
+  --container-image openclaw:latest \
+  --container-template-resources-platform cpu-d3 \
+  --container-template-resources-preset 4vcpu-16gb \
+  --port 8080 \
+  --username admin \
+  --password "$AUTH_TOKEN" \
+  --network-id <span class="code-comment">&lt;your-network-id&gt;</span> \
+  --parent-id <span class="code-comment">&lt;your-project-id&gt;</span></code></div>
+
+      <div class="code-block"><code><span class="code-comment"># Get your endpoint ID</span>
+export ENDPOINT_ID=$(nebius msp serverless v1alpha1 endpoint get-by-name \
+  --name openclaw-private --format jsonpath='{.metadata.id}')</code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> For production, consider disabling <code style="font-family: 'DM Mono', monospace; font-size: 12px;">--public</code> and using private networking only. Replace <code style="font-family: 'DM Mono', monospace; font-size: 12px;">&lt;your-network-id&gt;</code> and <code style="font-family: 'DM Mono', monospace; font-size: 12px;">&lt;your-project-id&gt;</code> with your actual Nebius resource IDs.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Your OpenClaw endpoint is active and responding to health checks.</div>
     </div>
   </div>
 
+  <!-- Step 4 -->
   <div class="step">
     <div class="step-number">4</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Process a Test Document</span>
-        <span class="step-duration">15 min</span>
+        <span class="step-title">Create a Dedicated Token Factory Endpoint</span>
+        <span class="step-duration">10 min</span>
       </div>
-      <p class="step-desc">Send a sensitive document through the pipeline and verify the end-to-end flow. Use a sample legal brief or financial document to test extraction, summarization, and analysis.</p>
+      <p class="step-desc">Set up a dedicated Token Factory endpoint with zero data retention. Isolated inference &mdash; your prompts never touch shared infrastructure.</p>
+
+      <ol class="step-instructions">
+        <li>Set your dedicated Token Factory API key and endpoint URL</li>
+        <li>Test the endpoint with a simple completion request</li>
+        <li>Verify zero-retention is enabled in the Nebius console</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Set your dedicated TF endpoint credentials</span>
+export TF_API_KEY=<span class="code-comment">&lt;your-dedicated-tf-api-key&gt;</span>
+export TF_ENDPOINT=https://<span class="code-comment">&lt;your-dedicated-endpoint&gt;</span>.nebius.com</code></div>
+
+      <div class="code-block"><code><span class="code-comment"># Test the zero-retention endpoint</span>
+curl $TF_ENDPOINT/v1/chat/completions \
+  -H "Authorization: Bearer $TF_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "meta-llama/Meta-Llama-3.1-70B-Instruct",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Test message - verify zero retention"
+      }
+    ],
+    "max_tokens": 50
+  }'</code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> Dedicated endpoints have stable latency because you are not sharing capacity with other users. Zero retention means your prompts and responses are never written to disk &mdash; they exist only in memory during processing.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Your dedicated endpoint returns completions and you have confirmed zero-retention is enabled in the console.</div>
     </div>
   </div>
 
+  <!-- Step 5 -->
   <div class="step">
     <div class="step-number">5</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Audit &amp; Verify</span>
-        <span class="step-duration">10 min</span>
+        <span class="step-title">Build a Private Document Pipeline</span>
+        <span class="step-duration">15 min</span>
       </div>
-      <p class="step-desc">Confirm no data persists after processing. Run audit checks to verify zero-retention compliance.</p>
-      <ul class="bullet-list">
-        <li>Inspect storage volumes for residual data</li>
-        <li>Check network logs for data egress</li>
-        <li>Verify TTL enforcement on the inference endpoint</li>
-        <li>Document your compliance posture</li>
-      </ul>
+      <p class="step-desc">Create an agent workflow that processes sensitive documents with full privacy guarantees. No data persists after processing.</p>
+
+      <ol class="step-instructions">
+        <li>Choose a document type: legal contracts, medical records, or financial reports</li>
+        <li>Configure the agent to extract key information from documents</li>
+        <li>Process sample documents through the pipeline</li>
+        <li>Verify that no data persists after processing</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Example: process a legal contract through the pipeline</span>
+curl -X POST http://localhost:8080/v1/process \
+  -H "Authorization: Bearer $AUTH_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "document_type": "legal_contract",
+    "file": "sample-nda.pdf",
+    "extraction": [
+      "parties",
+      "effective_date",
+      "termination_clause",
+      "obligations"
+    ]
+  }'</code></div>
+
+      <div class="code-block"><code><span class="code-comment"># Verify no data persists on the endpoint</span>
+curl http://localhost:8080/v1/storage/check \
+  -H "Authorization: Bearer $AUTH_TOKEN"
+<span class="code-comment"># Should return: {"stored_documents": 0, "cached_prompts": 0}</span></code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> Use the sample documents we provide, or bring your own (redacted) examples. The extraction pipeline is the same regardless of document type &mdash; the prompts change, not the architecture.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Your agent processes 3 sample documents and returns accurate extractions. No data remains on the endpoint after processing.</div>
     </div>
   </div>
+
+  <!-- Step 6 -->
+  <div class="step">
+    <div class="step-number">6</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Add Audit Logging</span>
+        <span class="step-duration">10 min</span>
+      </div>
+      <p class="step-desc">Set up audit logging so your security team can verify what happened without seeing the actual data. Good audit logs answer "who did what when" without revealing "what was in the document."</p>
+
+      <ol class="step-instructions">
+        <li>Enable structured logging on your OpenClaw endpoint</li>
+        <li>Configure log entries to include request IDs, timestamps, and operations &mdash; but not document contents</li>
+        <li>View logs through the Nebius CLI</li>
+        <li>Export a sample audit log for your compliance team</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># View endpoint logs</span>
+nebius msp serverless v1alpha1 endpoint logs $ENDPOINT_ID</code></div>
+
+      <div class="code-block"><code><span class="code-comment"># Check endpoint status and uptime</span>
+nebius msp serverless v1alpha1 endpoint get $ENDPOINT_ID</code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> Good audit logs answer "who did what when" without revealing "what was in the document." Log request IDs, timestamps, document types, and operations &mdash; never log document contents or extracted data.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You can pull audit logs that show processing activity without exposing document contents.</div>
+    </div>
+  </div>
+
+  <!-- Step 7 -->
+  <div class="step">
+    <div class="step-number">7</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Architecture Review &amp; Compliance Prep</span>
+        <span class="step-duration">10 min</span>
+      </div>
+      <p class="step-desc">Document your architecture for your security team and plan the production rollout. The key architecture: Serverless (CPU) &rarr; Dedicated TF Endpoint (zero retention) &rarr; no persistent storage.</p>
+
+      <ol class="step-instructions">
+        <li>Review the architecture: Serverless (CPU) &rarr; Dedicated TF Endpoint (zero retention) &rarr; no persistent storage</li>
+        <li>Document the data flow for your compliance team</li>
+        <li>Calculate costs for dedicated endpoints at your expected volume</li>
+        <li>Save your deployment scripts for repeatable production deployments</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Save your deployment configuration</span>
+cat &gt; deploy-private-agent.sh &lt;&lt;'EOF'
+#!/bin/bash
+set -euo pipefail
+
+<span class="code-comment"># Private Agent Deployment Script</span>
+<span class="code-comment"># Zero-retention OpenClaw on Nebius Serverless</span>
+
+export AUTH_TOKEN=$(openssl rand -hex 32)
+
+nebius msp serverless v1alpha1 endpoint create \
+  --name openclaw-private \
+  --container-image openclaw:latest \
+  --container-template-resources-platform cpu-d3 \
+  --container-template-resources-preset 4vcpu-16gb \
+  --port 8080 \
+  --username admin \
+  --password "$AUTH_TOKEN" \
+  --network-id $NETWORK_ID \
+  --parent-id $PROJECT_ID
+
+echo "Endpoint deployed. Auth token: $AUTH_TOKEN"
+EOF
+
+chmod +x deploy-private-agent.sh</code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> The key selling point for compliance: data is never stored at rest, inference happens on dedicated hardware, and you have full audit logs. Most compliance teams approve this architecture quickly because the guarantees are infrastructure-level, not policy-level.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You have a compliance-ready architecture doc, cost estimates, and a deploy script for production.</div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- You Leave With -->
+<div class="content-block">
+  <h2>You Leave <em>With</em></h2>
+  <div class="outcome-grid">
+    <div class="outcome-card">
+      <p><strong>A private agent</strong> processing documents with zero data retention</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>Dedicated Token Factory endpoints</strong> configured for your project</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>A compliance-ready architecture diagram</strong> for your security team</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>CLI scripts</strong> to deploy and manage private agents</p>
+    </div>
+  </div>
+  <ul class="bullet-list" style="margin-top: 16px;">
+    <li><strong>Cost estimates</strong> for dedicated vs. shared endpoint configurations</li>
+  </ul>
 </div>
 
 <div class="spacer"></div>

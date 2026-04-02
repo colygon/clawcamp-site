@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI for Good: Future of Education with OpenClaw — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .event-hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 48px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .event-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(196,84,10,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--rust);
+    margin-bottom: 16px;
+  }
+  .hero-title {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.04em;
+    margin-bottom: 24px;
+  }
+  .hero-title span { color: var(--rust); }
+  .hero-subtitle {
+    font-size: 18px;
+    color: rgba(245,242,236,0.7);
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 32px;
+  }
+  .hero-details {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .hero-detail {
+    font-size: 14px;
+    color: rgba(245,242,236,0.65);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-detail strong { color: var(--paper); }
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 24px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .btn-hero-primary {
+    background: var(--rust);
+    color: white;
+  }
+  .btn-hero-primary:hover { background: #a8420a; }
+  .btn-hero-discord {
+    background: #5865F2;
+    color: white;
+  }
+  .btn-hero-discord:hover { background: #4752C4; }
+
+  .event-section {
+    padding: 64px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--rust);
+    margin-bottom: 12px;
+  }
+  .section-heading {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .section-heading em { font-style: normal; color: var(--rust); }
+  .section-intro {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 40px;
+  }
+  .section-border { border-top: 1px solid var(--sand); }
+
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .detail-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .detail-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .detail-value {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.4;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--rust);
+    text-decoration: none;
+    padding: 20px 48px;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .event-hero { padding: 64px 20px 48px; }
+    .event-section { padding: 48px 20px; }
+    .back-link { padding: 16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<a href="/events" class="back-link">&larr; All Events</a>
+
+<!-- Hero -->
+<div class="event-hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Workshop &middot; March 28, 2026</div>
+    <h1 class="hero-title">AI for Good:<br><span>Future of Education</span><br>with OpenClaw</h1>
+    <p class="hero-subtitle">Build interactive education tools with OpenClaw. Explore AI tutors, skill benchmarking, and personalized learning. Hardware welcome (Raspberry Pis, etc).</p>
+    <div class="hero-details">
+      <span class="hero-detail">&#128197; <strong>Saturday, March 28, 2026</strong></span>
+      <span class="hero-detail">&#128205; <strong>Studio 45</strong> &mdash; 45 29th St, San Francisco, CA</span>
+      <span class="hero-detail">&#9201; <strong>9:30 AM &ndash; 1:30 PM</strong></span>
+    </div>
+    <div class="hero-actions">
+      <a href="https://luma.com/b1fukify" target="_blank" class="btn-hero btn-hero-primary">RSVP on Luma &rarr;</a>
+      <a href="https://discord.gg/haAtnsyE3W" target="_blank" class="btn-hero btn-hero-discord">Join the Discord</a>
+    </div>
+  </div>
+</div>
+
+<!-- About This Event -->
+<div class="event-section">
+  <div class="section-label">About This Event</div>
+  <h2 class="section-heading">Build the Future of <em>Education</em></h2>
+  <p class="section-intro">This hands-on workshop focuses on using OpenClaw to build interactive education tools. You'll explore AI-powered tutors, skill benchmarking systems, and personalized learning experiences.</p>
+  <p style="font-size:15px;color:var(--muted);line-height:1.6;max-width:600px;">Whether you're an educator, developer, or just curious about AI in education, this is your chance to prototype real tools that make a difference. Bring your own hardware &mdash; Raspberry Pis and other devices are welcome for on-device experimentation.</p>
+</div>
+
+<!-- Details -->
+<div class="event-section section-border">
+  <div class="section-label">Details</div>
+  <h2 class="section-heading">Event <em>Info</em></h2>
+
+  <div class="details-grid">
+    <div class="detail-card">
+      <div class="detail-label">Date</div>
+      <div class="detail-value">Saturday, March 28, 2026</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-label">Time</div>
+      <div class="detail-value">9:30 AM &ndash; 1:30 PM</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-label">Location</div>
+      <div class="detail-value">Studio 45<br>45 29th St, San Francisco, CA</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-label">Type</div>
+      <div class="detail-value">Workshop</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-label">Organizer</div>
+      <div class="detail-value">Worldwide Studios</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA Band -->
+<div class="cta-band">
+  <div>
+    <h3>Ready to Build?</h3>
+    <p>RSVP now and join the ClawCamp community on Discord to connect with other builders.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="https://discord.gg/haAtnsyE3W" target="_blank" class="btn-dark">Join Discord &rarr;</a>
+    <a href="https://luma.com/b1fukify" target="_blank" class="btn-outline">RSVP on Luma</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

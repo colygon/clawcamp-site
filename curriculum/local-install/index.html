@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Local Install Workshop — ClawCamp</title>
+<title>Install OpenClaw + Token Factory — ClawCamp</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/shared.css">
@@ -85,6 +85,46 @@
     border-radius: 50%;
     background: var(--rust);
   }
+  .bullet-list li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Schedule table */
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+  }
+  .schedule-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-align: left;
+    padding: 10px 0;
+    border-bottom: 2px solid var(--sand);
+  }
+  .schedule-table td {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid var(--cream);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .schedule-table td:first-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    white-space: nowrap;
+    width: 100px;
+  }
+  .schedule-table td strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
 
   /* Steps */
   .steps-section {
@@ -138,6 +178,29 @@
     margin-bottom: 12px;
   }
 
+  .step-instructions {
+    list-style: none;
+    margin: 0 0 12px;
+    counter-reset: instr;
+  }
+  .step-instructions li {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.6;
+    padding: 4px 0 4px 28px;
+    position: relative;
+    counter-increment: instr;
+  }
+  .step-instructions li::before {
+    content: counter(instr) '.';
+    position: absolute;
+    left: 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    font-weight: 500;
+  }
+
   .code-block {
     background: var(--cream);
     border: 1px solid var(--sand);
@@ -149,10 +212,14 @@
     overflow-x: auto;
     margin-bottom: 8px;
     line-height: 1.6;
+    white-space: pre;
   }
   .code-block code {
     font-family: inherit;
     font-size: inherit;
+  }
+  .code-comment {
+    color: var(--muted);
   }
 
   .step-tip {
@@ -163,6 +230,23 @@
     padding: 10px 14px;
     margin-top: 8px;
     line-height: 1.5;
+  }
+  .step-tip strong {
+    font-weight: 600;
+  }
+
+  .step-checkpoint {
+    font-size: 13px;
+    color: var(--gold);
+    background: var(--gold-light);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    line-height: 1.5;
+    border-left: 3px solid var(--gold);
+  }
+  .step-checkpoint strong {
+    font-weight: 600;
   }
 
   .back-link {
@@ -177,6 +261,24 @@
   }
   .back-link:hover { color: var(--ink); }
 
+  /* You Leave With section */
+  .outcome-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .outcome-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .outcome-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
   .spacer { height: 48px; }
 
   @media (max-width: 768px) {
@@ -184,6 +286,8 @@
     .meta-grid { grid-template-columns: 1fr; }
     .step { grid-template-columns: 40px 1fr; gap: 12px; }
     .step-number { font-size: 24px; }
+    .outcome-grid { grid-template-columns: 1fr; }
+    .schedule-table td:first-child { width: auto; }
   }
 </style>
 </head>
@@ -194,7 +298,7 @@
 <a href="/curriculum" class="back-link">&larr; Back to Workshop Library</a>
 
 <header class="page-header">
-  <h1>Local<br><em>Install</em></h1>
+  <h1>Install OpenClaw +<br><em>Token Factory</em></h1>
   <div class="header-meta">
     <p>Quick Start</p>
     <p>Beginner</p>
@@ -204,123 +308,235 @@
 
 <div class="workshop-hero">
   <span class="event-tag tag-tour">Beginner</span>
-  <h2 class="workshop-subtitle">From Zero to OpenClaw in 5 Minutes</h2>
-  <p class="workshop-desc">Get OpenClaw running locally via npm with full Token Factory integration. Ship your first AI agent in under five minutes.</p>
+  <h2 class="workshop-subtitle">From Zero to Running Agent in 5 Minutes. No Cloud, No GPU, No Docker.</h2>
+  <p class="workshop-desc">Install OpenClaw directly on your machine &mdash; no Docker, no cloud accounts, no infrastructure. Connect it to Token Factory for GPU-powered inference and have a running AI agent in minutes. This is the fastest path from zero to a working agent, and the foundation for every other deployment path.</p>
 
   <div class="meta-grid">
     <div class="meta-card">
       <div class="meta-card-label">Who It's For</div>
-      <div class="meta-card-value">First-time OpenClaw users who want a working agent fast</div>
+      <div class="meta-card-value">First-time OpenClaw users who want a working agent fast &mdash; no prior experience required</div>
     </div>
     <div class="meta-card">
-      <div class="meta-card-label">Value</div>
-      <div class="meta-card-value">Production-ready setup with zero config</div>
+      <div class="meta-card-label">What You Get</div>
+      <div class="meta-card-value">A local OpenClaw agent connected to Token Factory for GPU-powered inference</div>
     </div>
     <div class="meta-card">
-      <div class="meta-card-label">Takeaway</div>
-      <div class="meta-card-value">A running local OpenClaw agent connected to Token Factory</div>
+      <div class="meta-card-label">Time Required</div>
+      <div class="meta-card-value">~5 minutes from start to a running agent responding to your messages</div>
     </div>
   </div>
 </div>
 
+<!-- What You'll Build -->
+<div class="content-block">
+  <h2>What You'll <em>Build</em></h2>
+  <ul class="bullet-list">
+    <li>An <strong>OpenClaw agent</strong> running locally on your machine</li>
+    <li>Connected to <strong>Token Factory</strong> for GPU-powered inference (no local GPU needed)</li>
+    <li>Access via the <strong>Control UI dashboard</strong> and terminal <strong>TUI</strong></li>
+  </ul>
+</div>
+
+<!-- What We'll Cover -->
+<div class="content-block">
+  <h2>What We'll <em>Cover</em></h2>
+  <ul class="bullet-list">
+    <li><strong>What is OpenClaw</strong> &mdash; open-source AI agent platform with WebSocket gateway, channels, sessions, and tools</li>
+    <li><strong>What is Token Factory</strong> &mdash; Nebius managed inference API with 30+ open-source models</li>
+    <li><strong>Installing OpenClaw via npm</strong> &mdash; one command, no containers</li>
+    <li><strong>Configuring Token Factory</strong> &mdash; API key, model selection, and the OpenAI-compatible API</li>
+    <li><strong>Connecting via the dashboard</strong> (http://localhost:18789) and the <strong>TUI</strong></li>
+    <li><strong>Choosing models</strong> &mdash; GLM-5, DeepSeek-R1, MiniMax-M2.5 &mdash; tradeoffs explained</li>
+  </ul>
+</div>
+
+<!-- Schedule -->
+<div class="content-block">
+  <h2><em>Schedule</em></h2>
+  <table class="schedule-table">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Topic</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0:00 &ndash; 0:10</td>
+        <td><strong>What is OpenClaw?</strong> &mdash; Introduction to OpenClaw and how it separates agent orchestration from model inference</td>
+      </tr>
+      <tr>
+        <td>0:10 &ndash; 0:25</td>
+        <td><strong>Install &amp; Configure</strong> &mdash; npm install, Token Factory key, environment variables, openclaw init, start gateway</td>
+      </tr>
+      <tr>
+        <td>0:25 &ndash; 0:40</td>
+        <td><strong>Talk to Your Agent</strong> &mdash; Control UI dashboard, TUI, switch models, explore sessions</td>
+      </tr>
+      <tr>
+        <td>0:40 &ndash; 0:55</td>
+        <td><strong>Connect Channels &amp; Next Steps</strong> &mdash; Telegram/Discord/WhatsApp, preview other deployment paths</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Prerequisites -->
 <div class="content-block">
   <h2><em>Prerequisites</em></h2>
   <ul class="bullet-list">
-    <li>Node.js 18+</li>
-    <li>npm</li>
-    <li>Terminal / shell access</li>
-    <li>OpenClaw Token Factory API key</li>
+    <li>Laptop with <strong>Node.js 18+</strong> installed</li>
+    <li>A <strong>Token Factory API key</strong> (sign up at <a href="https://tokenfactory.nebius.com" style="color: var(--rust); text-decoration: underline;">tokenfactory.nebius.com</a>)</li>
+    <li>Basic comfort with the <strong>terminal</strong></li>
   </ul>
 </div>
 
-<div class="content-block">
-  <h2>Learning <em>Outcomes</em></h2>
-  <ul class="bullet-list">
-    <li>Install OpenClaw via npm</li>
-    <li>Configure Token Factory credentials</li>
-    <li>Launch your first agent</li>
-    <li>Understand the local dev workflow</li>
-  </ul>
-</div>
-
+<!-- Step-by-Step Guide -->
 <div class="steps-section">
   <h2>Step-by-Step <em>Guide</em></h2>
 
+  <!-- Step 1 -->
   <div class="step">
     <div class="step-number">1</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Install OpenClaw</span>
+        <span class="step-title">Get a Token Factory API Key</span>
         <span class="step-duration">2 min</span>
       </div>
-      <p class="step-desc">Install OpenClaw globally via npm and verify the installation.</p>
-      <div class="code-block"><code>npm install -g openclaw</code></div>
-      <div class="code-block"><code>openclaw --version</code></div>
-      <div class="step-tip">If you see a version number, you're good to go.</div>
+      <p class="step-desc">Sign up for Token Factory and create an API key for GPU-powered inference.</p>
+
+      <ol class="step-instructions">
+        <li>Go to <a href="https://tokenfactory.nebius.com" style="color: var(--rust); text-decoration: underline;">tokenfactory.nebius.com</a> and sign up (or log in)</li>
+        <li>Navigate to <strong>API Keys</strong> and create a new key</li>
+        <li>Copy the key &mdash; you'll need it in the next step</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># No commands needed &mdash; this is done in the browser</span>
+<span class="code-comment"># Save your key somewhere safe (you'll export it as an env var next)</span></code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> Token Factory offers 30+ open-source models including GLM-5, DeepSeek-R1, and MiniMax-M2.5. You pay per token &mdash; no GPU reservation needed.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You have a Token Factory API key starting with <code style="font-family: 'DM Mono', monospace; font-size: 12px; background: rgba(0,0,0,0.05); padding: 1px 5px; border-radius: 3px;">v1.</code></div>
     </div>
   </div>
 
+  <!-- Step 2 -->
   <div class="step">
     <div class="step-number">2</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Set Token Factory Key</span>
+        <span class="step-title">Install OpenClaw</span>
         <span class="step-duration">1 min</span>
       </div>
-      <p class="step-desc">Export your Token Factory API key as an environment variable. This connects your local agent to GPU inference without needing your own GPU.</p>
-      <div class="code-block"><code>export OPENCLAW_TOKEN_FACTORY_KEY=your-key-here</code></div>
-      <div class="step-tip">Get your key at the Token Factory dashboard. Free tier available.</div>
+      <p class="step-desc">Install OpenClaw globally via npm.</p>
+
+      <ol class="step-instructions">
+        <li>Open your terminal</li>
+        <li>Run the install command below</li>
+        <li>Verify the install with <code style="font-family: 'DM Mono', monospace; font-size: 13px;">openclaw --version</code></li>
+      </ol>
+
+      <div class="code-block"><code>npm install -g openclaw</code></div>
+      <div class="code-block"><code><span class="code-comment"># Verify</span>
+openclaw --version</code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> Requires Node.js 18 or higher. If you get a permissions error, try: <code style="font-family: 'DM Mono', monospace; font-size: 12px;">sudo npm install -g openclaw</code></div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Running <code style="font-family: 'DM Mono', monospace; font-size: 12px; background: rgba(0,0,0,0.05); padding: 1px 5px; border-radius: 3px;">openclaw --version</code> prints the version number.</div>
     </div>
   </div>
 
+  <!-- Step 3 -->
   <div class="step">
     <div class="step-number">3</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Launch Your Agent</span>
-        <span class="step-duration">1 min</span>
+        <span class="step-title">Configure &amp; Start the Gateway</span>
+        <span class="step-duration">2 min</span>
       </div>
-      <p class="step-desc">Start an agent with a single command. Choose your model &mdash; GLM-4-Plus is a great default for general tasks.</p>
-      <div class="code-block"><code>openclaw agent start --model glm-4-plus</code></div>
+      <p class="step-desc">Set your Token Factory credentials, initialize OpenClaw, and start the gateway.</p>
+
+      <ol class="step-instructions">
+        <li>Export your Token Factory API key and URL as environment variables</li>
+        <li>Set the inference model (we'll use GLM-5)</li>
+        <li>Set a gateway password for authentication</li>
+        <li>Initialize OpenClaw and start the gateway</li>
+      </ol>
+
+      <div class="code-block"><code>export TOKEN_FACTORY_API_KEY=<span class="code-comment">{your-token-factory-key}</span>
+export TOKEN_FACTORY_URL=https://api.tokenfactory.nebius.com/v1
+export INFERENCE_MODEL=zai-org/GLM-5
+export OPENCLAW_GATEWAY_TOKEN=<span class="code-comment">{your-password}</span></code></div>
+
+      <div class="code-block"><code>openclaw init
+openclaw gateway --bind loopback --auth token --token $OPENCLAW_GATEWAY_TOKEN</code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> Model IDs use Token Factory format: <code style="font-family: 'DM Mono', monospace; font-size: 12px;">zai-org/GLM-5</code> (not HuggingFace format like THUDM/GLM-4-9B-0414). The <code style="font-family: 'DM Mono', monospace; font-size: 12px;">--bind loopback</code> flag keeps the gateway accessible only from your machine.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Terminal shows <code style="font-family: 'DM Mono', monospace; font-size: 12px; background: rgba(0,0,0,0.05); padding: 1px 5px; border-radius: 3px;">listening on ws://127.0.0.1:18789</code></div>
     </div>
   </div>
 
+  <!-- Step 4 -->
   <div class="step">
     <div class="step-number">4</div>
     <div>
       <div class="step-header">
-        <span class="step-title">Test It</span>
-        <span class="step-duration">1 min</span>
+        <span class="step-title">Connect to Your Agent</span>
+        <span class="step-duration">2 min</span>
       </div>
-      <p class="step-desc">Open your browser and interact with your agent through the built-in web interface.</p>
-      <div class="code-block"><code>open http://localhost:18789</code></div>
-      <p class="step-desc">Send your first message. Your agent is live, connected to Token Factory inference, and ready to work.</p>
-    </div>
-  </div>
+      <p class="step-desc">Open the Control UI dashboard and send your first message.</p>
 
-  <div class="step">
-    <div class="step-number">5</div>
-    <div>
-      <div class="step-header">
-        <span class="step-title">Next Steps</span>
-      </div>
-      <p class="step-desc">Now that you have a running agent, explore what's next:</p>
-      <ul class="bullet-list">
-        <li>Build multi-agent workflows</li>
-        <li>Connect messaging channels (Telegram, Discord, Signal)</li>
-        <li>Deploy to the cloud with Nebius Serverless</li>
-        <li>Explore the Agent Inference workshop for production deployment</li>
-      </ul>
+      <ol class="step-instructions">
+        <li>Open <code style="font-family: 'DM Mono', monospace; font-size: 13px;">http://localhost:18789/#token={your-password}</code> in your browser</li>
+        <li>You should see the OpenClaw Control UI dashboard</li>
+        <li>Type a message and press Enter &mdash; the agent will respond using GLM-5 via Token Factory</li>
+        <li>Or connect via TUI in a new terminal (see command below)</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Open in browser</span>
+open http://localhost:18789</code></div>
+
+      <div class="code-block"><code><span class="code-comment"># Or connect via TUI (in a new terminal)</span>
+openclaw tui --url ws://localhost:18789 --token <span class="code-comment">{your-password}</span></code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> The dashboard shows sessions, usage, cron jobs, and agent settings. Try switching models: change <code style="font-family: 'DM Mono', monospace; font-size: 12px;">INFERENCE_MODEL</code> to <code style="font-family: 'DM Mono', monospace; font-size: 12px;">deepseek-ai/DeepSeek-R1-0528</code> and restart the gateway.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You received a response from your agent.</div>
     </div>
   </div>
 </div>
 
 <div class="spacer"></div>
 
+<!-- You Leave With -->
+<div class="content-block">
+  <h2>You Leave <em>With</em></h2>
+  <div class="outcome-grid">
+    <div class="outcome-card">
+      <p><strong>OpenClaw installed and running</strong> on your machine</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>A Token Factory API key</strong> configured for inference</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>The Control UI dashboard</strong> open in your browser</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>An understanding</strong> of how OpenClaw separates orchestration from inference</p>
+    </div>
+  </div>
+  <ul class="bullet-list" style="margin-top: 16px;">
+    <li><strong>Confidence to move forward</strong> &mdash; to Docker (Path 2) or Nebius Cloud (Paths 3&ndash;4)</li>
+  </ul>
+</div>
+
+<div class="spacer"></div>
+
 <div class="cta-band">
   <div>
-    <h3>Ready for production?</h3>
-    <p>Take the Agent Inference workshop to deploy your agent on Nebius Serverless.</p>
+    <h3>Ready to go deeper?</h3>
+    <p>Take the Agent Inference workshop to understand model selection and production deployment.</p>
   </div>
   <div class="cta-band-actions">
     <a href="/curriculum/agent-inference" class="btn-dark">Agent Inference &rarr;</a>

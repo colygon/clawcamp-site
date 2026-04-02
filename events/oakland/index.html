@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClawCamp Oakland — April 16, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  /* Hero */
+  .event-hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 48px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .event-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(196,84,10,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--rust);
+    margin-bottom: 16px;
+  }
+  .hero-title {
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 24px;
+  }
+  .hero-title span { color: var(--rust); }
+  .hero-subtitle {
+    font-size: 18px;
+    color: rgba(245,242,236,0.7);
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 32px;
+  }
+  .hero-details {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .hero-detail {
+    font-size: 14px;
+    color: rgba(245,242,236,0.65);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-detail strong { color: var(--paper); }
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 24px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .btn-hero-primary {
+    background: var(--rust);
+    color: white;
+  }
+  .btn-hero-primary:hover { background: #a8420a; }
+  .btn-hero-secondary {
+    border: 1px solid rgba(245,242,236,0.3);
+    color: var(--paper);
+  }
+  .btn-hero-secondary:hover { border-color: var(--paper); }
+  .btn-hero-discord {
+    background: #5865F2;
+    color: white;
+  }
+  .btn-hero-discord:hover { background: #4752C4; }
+
+  /* Venue gallery */
+  .venue-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+  .venue-gallery img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  /* Section shared */
+  .event-section {
+    padding: 64px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--rust);
+    margin-bottom: 12px;
+  }
+  .section-heading {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .section-heading em { font-style: normal; color: var(--rust); }
+  .section-intro {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 40px;
+  }
+
+  /* Speakers grid */
+  .speakers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .speaker-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.15s, transform 0.15s;
+  }
+  .speaker-card:hover {
+    box-shadow: 0 4px 16px rgba(15,14,11,0.06);
+    transform: translateY(-2px);
+  }
+  .speaker-photo {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    object-position: center top;
+    background: var(--cream);
+  }
+  .speaker-info {
+    padding: 16px 20px;
+  }
+  .speaker-name {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 2px;
+  }
+  .speaker-role {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .speaker-org {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--rust);
+    margin-top: 4px;
+  }
+
+  /* Schedule timeline */
+  .schedule-grid {
+    display: grid;
+    gap: 0;
+  }
+  .sched-item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--cream);
+  }
+  .sched-item:last-child { border-bottom: none; }
+  .sched-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    padding-top: 2px;
+  }
+  .sched-title {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .sched-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .sched-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 6px;
+  }
+  .sched-tag-break { background: var(--cream); color: var(--muted); }
+  .sched-tag-keynote { background: #fef0e5; color: var(--rust); }
+  .sched-tag-workshop { background: #e8f5e8; color: var(--moss); }
+  .sched-tag-vip { background: #fef0e5; color: var(--rust); }
+
+  /* Sponsors */
+  .sponsors-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+  .sponsor-tier-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 16px;
+    width: 100%;
+  }
+  .sponsor-logo {
+    height: 40px;
+    max-width: 160px;
+    object-fit: contain;
+    filter: brightness(0);
+    opacity: 0.7;
+    transition: opacity 0.15s;
+  }
+  .sponsor-logo:hover { opacity: 1; }
+
+  /* Tickets */
+  .ticket-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .ticket-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .ticket-card.vip { border-color: var(--rust); border-width: 1.5px; }
+  .ticket-tier {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .ticket-price {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .ticket-card.vip .ticket-price { color: var(--rust); }
+  .ticket-detail {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* Experience levels */
+  .levels-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  .level-badge {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 24px;
+    text-align: center;
+  }
+  .level-badge h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .level-badge p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .level-badge.beginner { border-left: 3px solid var(--moss); }
+  .level-badge.intermediate { border-left: 3px solid var(--gold); }
+  .level-badge.advanced { border-left: 3px solid var(--rust); }
+
+  /* Venue section */
+  .venue-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  .venue-text h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .venue-text p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .venue-map {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--sand);
+  }
+  .venue-map iframe {
+    width: 100%;
+    height: 300px;
+    border: 0;
+  }
+
+  /* Divider */
+  .section-border { border-top: 1px solid var(--sand); }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .event-hero { padding: 64px 20px 48px; }
+    .event-section { padding: 48px 20px; }
+    .venue-gallery { grid-template-columns: 1fr; }
+    .venue-gallery img { height: 180px; }
+    .speakers-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+    .speaker-photo { height: 180px; }
+    .sched-item { grid-template-columns: 1fr; gap: 4px; }
+    .sched-time { font-size: 12px; }
+    .venue-info { grid-template-columns: 1fr; }
+    .levels-row { grid-template-columns: 1fr; }
+    .ticket-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<!-- Hero -->
+<div class="event-hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Flagship Event &middot; April 16, 2026</div>
+    <h1 class="hero-title">ClawCamp<br><span>Oakland</span></h1>
+    <p class="hero-subtitle">A full day of workshops, speakers, panels, networking, and hands-on personal AI agent building. Beginners leave with their own working agents. Advanced attendees go deeper on multi-agent workflows, security, and token optimization.</p>
+    <div class="hero-details">
+      <span class="hero-detail">&#128197; <strong>Thursday, April 16, 2026</strong></span>
+      <span class="hero-detail">&#128205; <strong>STAK Space</strong> &mdash; 1920 Broadway, Oakland, CA</span>
+      <span class="hero-detail">&#9201; <strong>9:00 AM &ndash; 6:30 PM</strong></span>
+    </div>
+    <div class="hero-actions">
+      <a href="https://luma.com/clawcamp" target="_blank" class="btn-hero btn-hero-primary">RSVP on Luma &rarr;</a>
+      <a href="https://socialloop.ai/loops/ce9e08d6-4282-4d96-bbf0-eb51b4d1deca?utm_source=website&utm_medium=share&utm_campaign=general" target="_blank" class="btn-hero btn-hero-primary" style="background:#7c3aed;">RSVP on Social Loop &rarr;</a>
+      <a href="https://discord.gg/haAtnsyE3W" target="_blank" class="btn-hero btn-hero-discord">Join the Discord</a>
+      <a href="/schedule" class="btn-hero btn-hero-secondary">View Full Schedule</a>
+    </div>
+  </div>
+</div>
+
+<!-- Venue Gallery -->
+<div class="venue-gallery">
+  <img src="/images/venue/stak-lounge.webp" alt="STAK Space lounge area">
+  <img src="/images/venue/stak-event-room.jpg" alt="STAK Space event room">
+  <img src="/images/venue/stak-exterior.webp" alt="STAK Space exterior">
+</div>
+
+<!-- What to Expect -->
+<div class="event-section">
+  <div class="section-label">What to Expect</div>
+  <h2 class="section-heading">A Full Day of <em>Building</em></h2>
+  <p class="section-intro">ClawCamp Oakland is a hands-on, all-skill-levels event for anyone curious about personal AI agents. Workshops, expert speakers, build challenges, and community &mdash; all in one day.</p>
+
+  <div class="levels-row">
+    <div class="level-badge beginner">
+      <h4>Beginner</h4>
+      <p>Leave with your own personal AI agent and powerful skills to achieve almost any goal.</p>
+    </div>
+    <div class="level-badge intermediate">
+      <h4>Intermediate</h4>
+      <p>Dive deeper into agent management, multi-agent workflows, security, and token optimization.</p>
+    </div>
+    <div class="level-badge advanced">
+      <h4>Advanced</h4>
+      <p>Explore nuanced skills, push the boundaries of what agents can do, and support those just getting started.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Speakers -->
+<div class="event-section section-border">
+  <div class="section-label">Speakers &amp; Mentors</div>
+  <h2 class="section-heading">Who's <em>Speaking</em></h2>
+  <p class="section-intro">Industry leaders, builders, and researchers sharing real-world AI agent experience.</p>
+
+  <div class="speakers-grid">
+    <div class="speaker-card">
+      <img class="speaker-photo" src="/images/speakers/peter-danenberg.jpg" alt="Peter Danenberg">
+      <div class="speaker-info">
+        <div class="speaker-name">Peter Danenberg</div>
+        <div class="speaker-role">Senior Engineer</div>
+        <div class="speaker-org">Google DeepMind</div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <img class="speaker-photo" src="/images/speakers/akash-saraf.jpg" alt="Akash Saraf">
+      <div class="speaker-info">
+        <div class="speaker-name">Akash Saraf</div>
+        <div class="speaker-role">CEO</div>
+        <div class="speaker-org">The Agentic</div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <img class="speaker-photo" src="/images/speakers/marianne-bekker.jpg" alt="Marianne Bekker">
+      <div class="speaker-info">
+        <div class="speaker-name">Marianne Bekker</div>
+        <div class="speaker-role">Head of DevRel</div>
+        <div class="speaker-org">You.com</div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <img class="speaker-photo" src="/images/speakers/andrew-smith.jpg" alt="Andrew Smith">
+      <div class="speaker-info">
+        <div class="speaker-name">Andrew Smith</div>
+        <div class="speaker-role">Co-Founder &amp; CEO</div>
+        <div class="speaker-org">Efficient Frontier Labs</div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <img class="speaker-photo" src="/images/speakers/aditya-advani.jpg" alt="Aditya Advani">
+      <div class="speaker-info">
+        <div class="speaker-name">Aditya Advani</div>
+        <div class="speaker-role">Founder</div>
+        <div class="speaker-org">MoltPod</div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <img class="speaker-photo" src="/images/speakers/amit-badlani.jpg" alt="Amit Badlani">
+      <div class="speaker-info">
+        <div class="speaker-name">Amit Badlani</div>
+        <div class="speaker-role">Chief Product Officer, AI/ML</div>
+        <div class="speaker-org">Ex-NVIDIA</div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <img class="speaker-photo" src="/images/speakers/dan-lynch.jpg" alt="Dan Lynch">
+      <div class="speaker-info">
+        <div class="speaker-name">Dan Lynch</div>
+        <div class="speaker-role">CEO</div>
+        <div class="speaker-org">Constructive</div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <img class="speaker-photo" src="/images/speakers/brian-sparkes.jpg" alt="Brian Sparkes">
+      <div class="speaker-info">
+        <div class="speaker-name">Brian Sparkes</div>
+        <div class="speaker-role">CEO &amp; Founder</div>
+        <div class="speaker-org">Silicon Valley Ventures / STAK Ventures</div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <img class="speaker-photo" src="/images/speakers/colin-behring.jpg" alt="Colin Behring">
+      <div class="speaker-info">
+        <div class="speaker-name">Colin Behring</div>
+        <div class="speaker-role">CEO</div>
+        <div class="speaker-org">Behring Capital / STAK Ventures</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Schedule -->
+<div class="event-section section-border">
+  <div class="section-label">Day-of Schedule</div>
+  <h2 class="section-heading">April 16 <em>Timeline</em></h2>
+  <p class="section-intro">Full day from 9 AM to 6:30 PM. Workshops, talks, build challenges, and networking.</p>
+
+  <div class="schedule-grid">
+    <div class="sched-item">
+      <div class="sched-time">9:00 AM</div>
+      <div>
+        <div class="sched-title">Doors Open</div>
+        <div class="sched-desc">Check in, grab coffee, find your seat. Meet other campers.</div>
+        <span class="sched-tag sched-tag-break">Break</span>
+      </div>
+    </div>
+    <div class="sched-item">
+      <div class="sched-time">9:30 AM</div>
+      <div>
+        <div class="sched-title">Keynote</div>
+        <div class="sched-desc">Opening remarks and keynote address to kick off ClawCamp Oakland.</div>
+        <span class="sched-tag sched-tag-keynote">Keynote</span>
+      </div>
+    </div>
+    <div class="sched-item">
+      <div class="sched-time">10:00 AM</div>
+      <div>
+        <div class="sched-title">Panel</div>
+        <div class="sched-desc">Expert discussion on the state of personal AI agents, OpenClaw, and what's next for the builder community.</div>
+      </div>
+    </div>
+    <div class="sched-item">
+      <div class="sched-time">10:30 AM</div>
+      <div>
+        <div class="sched-title">Speaker &amp; Partner Presentations</div>
+        <div class="sched-desc">Short, focused talks from speakers and partner organizations. Real projects, real insights.</div>
+      </div>
+    </div>
+    <div class="sched-item">
+      <div class="sched-time">11:30 AM</div>
+      <div>
+        <div class="sched-title">Workshops &amp; Skills Building</div>
+        <div class="sched-desc">Hands-on breakout sessions. Install OpenClaw, build agents, explore multi-agent workflows, and learn from mentors. All skill levels.</div>
+        <span class="sched-tag sched-tag-workshop">Workshop</span>
+      </div>
+    </div>
+    <div class="sched-item">
+      <div class="sched-time">1:00 PM</div>
+      <div>
+        <div class="sched-title">Catered Lunch</div>
+        <div class="sched-desc">Lunch break and networking. VIP Floor access for VIP ticket holders, speakers, sponsors, and partners.</div>
+        <span class="sched-tag sched-tag-vip">VIP Floor</span>
+      </div>
+    </div>
+    <div class="sched-item">
+      <div class="sched-time">3:30 PM</div>
+      <div>
+        <div class="sched-title">Skills Competition</div>
+        <div class="sched-desc">Put your new skills to the test. Build challenges, live demos, and friendly competition with prizes.</div>
+      </div>
+    </div>
+    <div class="sched-item">
+      <div class="sched-time">5:00 PM</div>
+      <div>
+        <div class="sched-title">Award Presentations</div>
+        <div class="sched-desc">Recognition for competition winners, outstanding contributions, and community highlights.</div>
+      </div>
+    </div>
+    <div class="sched-item">
+      <div class="sched-time">5:30 PM</div>
+      <div>
+        <div class="sched-title">Networking</div>
+        <div class="sched-desc">Close out the day with open networking. Connect with speakers, sponsors, and fellow builders.</div>
+        <span class="sched-tag sched-tag-break">Social</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;">
+    <a href="/schedule" class="btn-outline">Full Schedule &amp; Tickets &rarr;</a>
+  </div>
+</div>
+
+<!-- Tickets -->
+<div class="event-section section-border">
+  <div class="section-label">Tickets</div>
+  <h2 class="section-heading">Get Your <em>Ticket</em></h2>
+  <p class="section-intro">Early bird tickets are free. Accessible tiers for everyone.</p>
+
+  <div class="ticket-grid">
+    <div class="ticket-card">
+      <div class="ticket-tier">Early Bird</div>
+      <div class="ticket-price">Free</div>
+      <div class="ticket-detail">First 200 tickets are free. Grab yours before they're gone.</div>
+    </div>
+    <div class="ticket-card">
+      <div class="ticket-tier">Runner Up</div>
+      <div class="ticket-price">$15</div>
+      <div class="ticket-detail">100 tickets at this tier.</div>
+    </div>
+    <div class="ticket-card">
+      <div class="ticket-tier">Filling Up</div>
+      <div class="ticket-price">$29</div>
+      <div class="ticket-detail">100 tickets at this tier.</div>
+    </div>
+    <div class="ticket-card">
+      <div class="ticket-tier">Last Call</div>
+      <div class="ticket-price">$50</div>
+      <div class="ticket-detail">Final full-price admission. Limited availability.</div>
+    </div>
+    <div class="ticket-card vip">
+      <div class="ticket-tier" style="color:var(--rust);">VIP Ticket</div>
+      <div class="ticket-price">$150</div>
+      <div class="ticket-detail">Includes catered lunch &amp; access to exclusive VIP Floor with premium amenities. Network with speakers, sponsors, and partners.</div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:12px;flex-wrap:wrap;">
+    <a href="https://luma.com/clawcamp" target="_blank" class="btn-rust">RSVP on Luma &rarr;</a>
+    <a href="https://socialloop.ai/loops/ce9e08d6-4282-4d96-bbf0-eb51b4d1deca?utm_source=website&utm_medium=share&utm_campaign=general" target="_blank" class="btn-dark">RSVP on Social Loop &rarr;</a>
+    <a href="https://discord.gg/haAtnsyE3W" target="_blank" class="btn-outline">Join the Discord</a>
+  </div>
+</div>
+
+<!-- Sponsors -->
+<div class="event-section section-border">
+  <div class="section-label">Sponsors &amp; Partners</div>
+  <h2 class="section-heading">Supported <em>By</em></h2>
+  <p class="section-intro">ClawCamp Oakland is made possible by these partners and sponsors.</p>
+
+  <div class="sponsors-row">
+    <img class="sponsor-logo" src="/images/sponsors/youcom-logo.png" alt="You.com">
+    <img class="sponsor-logo" src="/images/sponsors/apify-logo.png" alt="Apify">
+    <img class="sponsor-logo" src="/images/sponsors/theagentic-logo.png" alt="The Agentic">
+    <img class="sponsor-logo" src="/images/sponsors/blitzscaling-logo.png" alt="Blitzscaling Ventures">
+    <img class="sponsor-logo" src="/images/sponsors/fetchai-logo.svg" alt="Fetch.ai">
+    <img class="sponsor-logo" src="/images/sponsors/asi-one-logo.png" alt="ASI:One">
+    <img class="sponsor-logo" src="/images/sponsors/stakventures-logo.svg" alt="STAK Ventures">
+    <img class="sponsor-logo" src="/images/sponsors/aiify-logo.png" alt="Aiify.io">
+    <img class="sponsor-logo" src="/images/sponsors/hackersquad-logo.png" alt="HackerSquad">
+    <img class="sponsor-logo" src="/images/sponsors/donely-logo.png" alt="Donely.ai">
+    <img class="sponsor-logo" src="/images/sponsors/pitchfreaks-logo.png" alt="PitchFreaks">
+  </div>
+
+  <a href="/sponsors" class="btn-outline">Sponsorship Options &rarr;</a>
+</div>
+
+<!-- Venue -->
+<div class="event-section section-border">
+  <div class="section-label">The Venue</div>
+  <h2 class="section-heading">STAK <em>Space</em></h2>
+
+  <div class="venue-info">
+    <div class="venue-text">
+      <h3>1920 Broadway, Oakland, CA</h3>
+      <p>STAK Space is a modern event and community venue in the heart of downtown Oakland, right off the 19th Street BART station. Multiple floors with breakout rooms, stage, networking lounge, and outdoor space.</p>
+      <p>Hosted by <a href="https://aiify.io" style="color:var(--rust);">Aiify.io</a> / Steve Echtman</p>
+      <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="https://maps.google.com/?q=1920+Broadway+Oakland+CA" target="_blank" class="btn-outline">Get Directions &rarr;</a>
+      </div>
+    </div>
+    <div class="venue-map">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3152.5!2d-122.269!3d37.809!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDQ4JzMyLjQiTiAxMjLCsDE2JzA4LjQiVw!5e0!3m2!1sen!2sus!4v1" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Community CTA -->
+<div class="cta-band">
+  <div>
+    <h3>Join the ClawCamp Community</h3>
+    <p>Connect with builders before, during, and after the event. Ask questions, find teammates, share what you're working on.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="https://discord.gg/haAtnsyE3W" target="_blank" class="btn-dark">Join Discord &rarr;</a>
+    <a href="https://luma.com/clawcamp" target="_blank" class="btn-outline">RSVP on Luma</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

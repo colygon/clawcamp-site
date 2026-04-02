@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Build Night: OpenClaw in 20 Lines of Code — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .event-hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 48px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .event-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(196,84,10,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--rust);
+    margin-bottom: 16px;
+  }
+  .hero-title {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.04em;
+    margin-bottom: 24px;
+  }
+  .hero-title span { color: var(--rust); }
+  .hero-subtitle {
+    font-size: 18px;
+    color: rgba(245,242,236,0.7);
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 32px;
+  }
+  .hero-details {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .hero-detail {
+    font-size: 14px;
+    color: rgba(245,242,236,0.65);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-detail strong { color: var(--paper); }
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 24px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .btn-hero-primary {
+    background: var(--rust);
+    color: white;
+  }
+  .btn-hero-primary:hover { background: #a8420a; }
+  .btn-hero-discord {
+    background: #5865F2;
+    color: white;
+  }
+  .btn-hero-discord:hover { background: #4752C4; }
+
+  .event-section {
+    padding: 64px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--rust);
+    margin-bottom: 12px;
+  }
+  .section-heading {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .section-heading em { font-style: normal; color: var(--rust); }
+  .section-intro {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 40px;
+  }
+  .section-border { border-top: 1px solid var(--sand); }
+
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .detail-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .detail-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .detail-value {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.4;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--rust);
+    text-decoration: none;
+    padding: 20px 48px;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .event-hero { padding: 64px 20px 48px; }
+    .event-section { padding: 48px 20px; }
+    .back-link { padding: 16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<a href="/events" class="back-link">&larr; All Events</a>
+
+<!-- Hero -->
+<div class="event-hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Workshop &middot; April 2, 2026</div>
+    <h1 class="hero-title">Open Build Night:<br><span>OpenClaw in 20 Lines</span><br>of Code</h1>
+    <p class="hero-subtitle">Build a self-improving AI agent from scratch in 20 lines. Guided by Will Sentance (Codesmith founder, ranked #1 AI training company by Forbes 2026).</p>
+    <div class="hero-details">
+      <span class="hero-detail">&#128197; <strong>Thursday, April 2, 2026</strong></span>
+      <span class="hero-detail">&#128205; <strong>Studio 45</strong> &mdash; 45 29th St, San Francisco, CA</span>
+      <span class="hero-detail">&#9201; <strong>6:30 PM &ndash; 9:30 PM</strong></span>
+    </div>
+    <div class="hero-actions">
+      <a href="https://luma.com/0ow9dek5" target="_blank" class="btn-hero btn-hero-primary">RSVP on Luma &rarr;</a>
+      <a href="https://discord.gg/haAtnsyE3W" target="_blank" class="btn-hero btn-hero-discord">Join the Discord</a>
+    </div>
+  </div>
+</div>
+
+<!-- About This Event -->
+<div class="event-section">
+  <div class="section-label">About This Event</div>
+  <h2 class="section-heading">Build an Agent in <em>20 Lines</em></h2>
+  <p class="section-intro">This hands-on build night is your chance to create a self-improving AI agent from scratch &mdash; in just 20 lines of code. Guided by Will Sentance, founder of Codesmith (ranked #1 AI training company by Forbes 2026), you'll learn the core patterns that make agents work.</p>
+  <p style="font-size:15px;color:var(--muted);line-height:1.6;max-width:600px;">Presented in partnership with Civic, this workshop strips away the complexity and gets straight to the fundamentals. Whether you've never built an agent or you've shipped dozens, this session will sharpen your understanding of what makes agents tick &mdash; and give you a working prototype to take home.</p>
+</div>
+
+<!-- Details -->
+<div class="event-section section-border">
+  <div class="section-label">Details</div>
+  <h2 class="section-heading">Event <em>Info</em></h2>
+
+  <div class="details-grid">
+    <div class="detail-card">
+      <div class="detail-label">Date</div>
+      <div class="detail-value">Thursday, April 2, 2026</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-label">Time</div>
+      <div class="detail-value">6:30 PM &ndash; 9:30 PM</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-label">Location</div>
+      <div class="detail-value">Studio 45<br>45 29th St, San Francisco, CA</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-label">Type</div>
+      <div class="detail-value">Workshop</div>
+    </div>
+    <div class="detail-card">
+      <div class="detail-label">Organizer</div>
+      <div class="detail-value">Worldwide Studios &middot; Civic</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA Band -->
+<div class="cta-band">
+  <div>
+    <h3>Ready to Build?</h3>
+    <p>RSVP now and join the ClawCamp community on Discord to connect with other builders.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="https://discord.gg/haAtnsyE3W" target="_blank" class="btn-dark">Join Discord &rarr;</a>
+    <a href="https://luma.com/0ow9dek5" target="_blank" class="btn-outline">RSVP on Luma</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>
