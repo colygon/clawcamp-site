@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speakers &amp; Mentors — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .speaker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    padding-top: 48px;
+  }
+  .speaker-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.15s, transform 0.15s;
+  }
+  .speaker-card:hover {
+    box-shadow: 0 4px 16px rgba(15, 14, 11, 0.06);
+    transform: translateY(-2px);
+  }
+  .speaker-photo {
+    aspect-ratio: 1;
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .speaker-initials {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--sand);
+  }
+  .speaker-info {
+    padding: 20px 24px 24px;
+  }
+  .speaker-name {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .speaker-title {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .speaker-org {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--rust);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 8px;
+  }
+
+  .more-note {
+    text-align: center;
+    padding: 48px 0 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 768px) {
+    .speaker-grid {
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<header class="page-header">
+  <h1>Speakers &amp;<br><em>Mentors</em></h1>
+  <div class="header-meta">
+    <p>ClawCamp Oakland</p>
+    <p>April 16, 2026</p>
+    <p>STAK Space</p>
+  </div>
+</header>
+
+<div class="main">
+  <div class="speaker-grid">
+
+    <div class="speaker-card">
+      <div class="speaker-photo"><span class="speaker-initials">PD</span></div>
+      <div class="speaker-info">
+        <div class="speaker-name">Peter Danenberg</div>
+        <div class="speaker-title">Senior Engineer</div>
+        <div class="speaker-org">Google DeepMind</div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <div class="speaker-photo"><span class="speaker-initials">AS</span></div>
+      <div class="speaker-info">
+        <div class="speaker-name">Akash Saraf</div>
+        <div class="speaker-title">CEO</div>
+        <div class="speaker-org">The Agentic</div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <div class="speaker-photo"><span class="speaker-initials">MB</span></div>
+      <div class="speaker-info">
+        <div class="speaker-name">Marianne Bekker</div>
+        <div class="speaker-title">Head of DevRel</div>
+        <div class="speaker-org">You.com</div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <div class="speaker-photo"><span class="speaker-initials">AS</span></div>
+      <div class="speaker-info">
+        <div class="speaker-name">Andrew Smith</div>
+        <div class="speaker-title">Co-Founder &amp; CEO</div>
+        <div class="speaker-org">Efficient Frontier Labs</div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <div class="speaker-photo"><span class="speaker-initials">AA</span></div>
+      <div class="speaker-info">
+        <div class="speaker-name">Aditya Advani</div>
+        <div class="speaker-title">Founder</div>
+        <div class="speaker-org">MoltPod</div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <div class="speaker-photo"><span class="speaker-initials">AB</span></div>
+      <div class="speaker-info">
+        <div class="speaker-name">Amit Badlani</div>
+        <div class="speaker-title">Chief Product Officer, AI/ML</div>
+        <div class="speaker-org">Startup Advisor (Ex NVIDIA)</div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <div class="speaker-photo"><span class="speaker-initials">DL</span></div>
+      <div class="speaker-info">
+        <div class="speaker-name">Dan Lynch</div>
+        <div class="speaker-title">CEO</div>
+        <div class="speaker-org">Constructive</div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <div class="speaker-photo"><span class="speaker-initials">BS</span></div>
+      <div class="speaker-info">
+        <div class="speaker-name">Brian Sparkes</div>
+        <div class="speaker-title">CEO &amp; Founder</div>
+        <div class="speaker-org">Silicon Valley Ventures | STAK Ventures</div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <div class="speaker-photo"><span class="speaker-initials">CB</span></div>
+      <div class="speaker-info">
+        <div class="speaker-name">Colin Behring</div>
+        <div class="speaker-title">Chief Executive Officer</div>
+        <div class="speaker-org">Behring Capital | STAK Ventures</div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="more-note">More speakers to be announced. Check back for frequent updates.</p>
+</div>
+
+<div class="cta-band">
+  <div>
+    <h3>Want to speak at ClawCamp?</h3>
+    <p>We're looking for builders, founders, and practitioners to share their experience.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="mailto:events@clawcamp.us?subject=Speaker%20Application" class="btn-dark">Apply to Speak &rarr;</a>
+    <a href="/schedule" class="btn-outline">View Schedule</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

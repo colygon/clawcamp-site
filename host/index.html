@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Host a Camp — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .host-intro {
+    padding: 48px 48px 0;
+    max-width: 700px;
+  }
+  .host-intro p {
+    font-size: 18px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .content-block {
+    padding: 48px 48px 0;
+    max-width: 800px;
+  }
+  .content-block h2 {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  .content-block h2 em { font-style: normal; color: var(--rust); }
+  .content-block p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .content-block p strong { color: var(--ink); }
+
+  /* Perk list */
+  .perk-list {
+    list-style: none;
+    margin: 20px 0;
+  }
+  .perk-list li {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--cream);
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .perk-list li strong { color: var(--ink); }
+  .perk-icon {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    color: var(--rust);
+    text-align: center;
+  }
+
+  /* Ownership callout */
+  .ownership-callout {
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 32px;
+    margin: 24px 0;
+  }
+  .ownership-callout h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+  }
+  .ownership-callout .subline {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--rust);
+    margin-bottom: 16px;
+  }
+  .ownership-list {
+    list-style: none;
+  }
+  .ownership-list li {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.5;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--sand);
+    padding-left: 16px;
+    position: relative;
+  }
+  .ownership-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--moss);
+  }
+  .ownership-list li strong { color: var(--ink); }
+  .ownership-list li:last-child { border-bottom: none; }
+
+  /* Steps */
+  .steps-list {
+    list-style: none;
+    counter-reset: steps;
+    margin: 20px 0;
+  }
+  .steps-list li {
+    counter-increment: steps;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--cream);
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.5;
+    align-items: start;
+  }
+  .steps-list li::before {
+    content: counter(steps);
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--rust);
+    text-align: center;
+  }
+  .steps-list li strong { color: var(--ink); }
+
+  /* Contribute grid */
+  .contribute-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .contribute-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+  }
+  .contribute-card h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .contribute-card p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 0;
+  }
+
+  /* FAQ */
+  .faq-list {
+    margin: 20px 0;
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--cream);
+    padding: 20px 0;
+  }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .faq-a {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .spacer { height: 48px; }
+
+  @media (max-width: 768px) {
+    .host-intro, .content-block { padding-left: 20px; padding-right: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<header class="page-header">
+  <h1>Host Your<br><em>Own Camp</em></h1>
+  <div class="header-meta">
+    <p>Unit Head Program</p>
+    <p>Open to Everyone</p>
+    <p>Your Event, Your Way</p>
+  </div>
+</header>
+
+<div class="host-intro">
+  <p>You don't need permission. You don't need a budget. You need a space, a date, and the willingness to bring people together. Here's everything you need to know.</p>
+</div>
+
+<div class="content-block">
+  <h2>What You <em>Get</em></h2>
+  <ul class="perk-list">
+    <li><span class="perk-icon">&rarr;</span><span><strong>The ClawCamp brand.</strong> Use the name, logo, and brand assets for your event.</span></li>
+    <li><span class="perk-icon">&rarr;</span><span><strong>Global calendar listing.</strong> Your event is listed on clawcamp.ai and promoted to the network.</span></li>
+    <li><span class="perk-icon">&rarr;</span><span><strong>Curriculum library access.</strong> Download and remix example curricula from Counselors and Specialists around the world.</span></li>
+    <li><span class="perk-icon">&rarr;</span><span><strong>Network support.</strong> Connect with other organizers, get advice, and tap into the global sponsor relationships when available.</span></li>
+    <li><span class="perk-icon">&rarr;</span><span><strong>The playbook.</strong> A step-by-step guide to running a great camp, built from hundreds of events.</span></li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h2>What ClawCamp <em>Does Not Own</em></h2>
+  <div class="ownership-callout">
+    <h3>This is important. Read it.</h3>
+    <p class="subline">You own the rest</p>
+    <ul class="ownership-list">
+      <li><strong>Your revenue.</strong> Ticket sales, sponsorships, and donations from your event are yours. ClawCamp LLC makes no claim.</li>
+      <li><strong>Your attendee list.</strong> The people who come to your camp are your community.</li>
+      <li><strong>Your venue relationship.</strong> Your contracts are your contracts.</li>
+      <li><strong>Your IP.</strong> Any curriculum or content you create belongs to you (though we ask you to share it).</li>
+      <li><strong>Your sponsor relationships.</strong> You built them. They're yours.</li>
+    </ul>
+  </div>
+  <p>You are running your own event. ClawCamp provides the brand and the network. You own the rest.</p>
+</div>
+
+<div class="content-block">
+  <h2>The Quality <em>Bar</em></h2>
+  <p>The only thing we ask in return is that you run a good camp. What that means:</p>
+  <ul class="perk-list">
+    <li><span class="perk-icon">&check;</span><span>Events are educational, hands-on, and welcoming</span></li>
+    <li><span class="perk-icon">&check;</span><span>No pure sales pitches disguised as sessions</span></li>
+    <li><span class="perk-icon">&check;</span><span>A basic code of conduct is enforced: inclusive, safe, no harassment</span></li>
+    <li><span class="perk-icon">&check;</span><span>The ClawCamp name and logo are visible on your event page</span></li>
+  </ul>
+  <p>If your camp doesn't meet the quality bar, we'll reach out. Repeated issues can result in brand revocation.</p>
+</div>
+
+<div class="content-block">
+  <h2>How to <em>Apply</em></h2>
+  <ol class="steps-list">
+    <li><strong>Fill out the Unit Head application</strong> &mdash; tell us about yourself, your city, and the event you want to run</li>
+    <li><strong>We'll reach out within 5 business days</strong> to confirm your role and answer questions</li>
+    <li><strong>Sign the Host Agreement</strong> &mdash; a one-page document that protects you and ClawCamp</li>
+    <li><strong>List your event on the global calendar</strong> &mdash; submit your Luma link before publishing</li>
+    <li><strong>Run your camp</strong> &mdash; we'll promote it to the network</li>
+  </ol>
+  <div style="margin-top:24px;">
+    <a href="mailto:hello@clawcamp.ai?subject=Host%20Application" class="btn-rust">Apply to Host a Camp &rarr;</a>
+  </div>
+</div>
+
+<div class="content-block">
+  <h2>How You Can <em>Contribute</em></h2>
+  <p>Beyond hosting events, Unit Heads can:</p>
+  <div class="contribute-grid">
+    <div class="contribute-card">
+      <h4>Volunteer</h4>
+      <p>Help at a camp someone else is running</p>
+    </div>
+    <div class="contribute-card">
+      <h4>Teach</h4>
+      <p>Contribute a workshop session as an Activity Leader</p>
+    </div>
+    <div class="contribute-card">
+      <h4>Share</h4>
+      <p>Add your curriculum to the shared library</p>
+    </div>
+    <div class="contribute-card">
+      <h4>Sponsor</h4>
+      <p>Offer your venue as a Base Camp Host</p>
+    </div>
+    <div class="contribute-card">
+      <h4>Recruit</h4>
+      <p>Bring other great organizers into the network</p>
+    </div>
+  </div>
+</div>
+
+<div class="content-block">
+  <h2>Frequently Asked <em>Questions</em></h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">Do I have to use OpenClaw?</div>
+      <div class="faq-a">No. ClawCamp events can use any AI tools and frameworks. OpenClaw is a common focus of our workshops, but it is not required.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I charge for tickets?</div>
+      <div class="faq-a">Yes. Pricing is entirely up to you. Many camps are free; some charge a small fee to cover costs.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I get a stipend to run my event?</div>
+      <div class="faq-a">When sponsor funding is available, ClawCamp distributes $500 stipends to camp organizers. This is not guaranteed but is a goal of the network.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can multiple people run ClawCamp events in the same city?</div>
+      <div class="faq-a">Yes. There is no exclusivity by geography. Multiple organizers can run camps in the same city.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if my event is online?</div>
+      <div class="faq-a">Online events are fully supported. You will need a technical Specialist to manage the stream. Reach out and we can help connect you with one.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I call my event something else?</div>
+      <div class="faq-a">Your event can have its own name as long as it is clearly co-branded with ClawCamp (e.g. "BerlinAI &times; ClawCamp" or "ClawCamp Oakland").</div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="cta-band">
+  <div>
+    <h3>Ready to start?</h3>
+    <p>Apply to become a Unit Head and run a camp in your city.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="mailto:hello@clawcamp.ai?subject=Host%20Application" class="btn-dark">Apply Now &rarr;</a>
+    <a href="/formats" class="btn-outline">Explore Formats</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

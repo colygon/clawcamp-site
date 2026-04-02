@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .community-intro {
+    padding: 48px 48px 0;
+    max-width: 700px;
+  }
+  .community-intro p {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .role-section {
+    padding: 48px 48px 0;
+  }
+  .role-section-title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .role-section-title em { font-style: normal; color: var(--rust); }
+  .role-section-desc {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .role-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .role-card {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--cream);
+  }
+  .role-card:last-child { border-bottom: none; }
+
+  .role-name {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+  .role-best-for {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--rust);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 8px;
+  }
+  .role-desc {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* Curriculum policy */
+  .curriculum-section {
+    padding: 48px 48px 0;
+    max-width: 700px;
+  }
+  .curriculum-section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .curriculum-section p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .curriculum-bullets {
+    list-style: none;
+    margin: 16px 0;
+  }
+  .curriculum-bullets li {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+    padding: 6px 0 6px 18px;
+    position: relative;
+  }
+  .curriculum-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 13px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--rust);
+  }
+  .curriculum-bullets li strong { color: var(--ink); }
+
+  .spacer { height: 48px; }
+
+  @media (max-width: 768px) {
+    .community-intro, .role-section, .curriculum-section {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .role-card {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<header class="page-header">
+  <h1>The ClawCamp<br><em>Crew</em></h1>
+  <div class="header-meta">
+    <p>Roles &amp; Titles</p>
+    <p>How the Network Runs</p>
+  </div>
+</header>
+
+<div class="community-intro">
+  <p>ClawCamp runs on a clear role hierarchy &mdash; not a committee, not a DAO. One person owns each event. Roles are earned. Titles mean something. Here's how it works.</p>
+</div>
+
+<!-- Leadership -->
+<div class="role-section">
+  <h2 class="role-section-title"><em>Leadership</em></h2>
+  <p class="role-section-desc">These roles are held by the founding team of ClawCamp LLC. They set the vision, manage the brand, and support the global network.</p>
+
+  <div class="role-grid">
+    <div class="role-card">
+      <div>
+        <div class="role-name">Senior Camp Director</div>
+      </div>
+      <div class="role-desc">Sets global vision and quality standards. Approves new Area Directors. Owns the ClawCamp brand and LLC. Signs off on global sponsorships.</div>
+    </div>
+    <div class="role-card">
+      <div>
+        <div class="role-name">Associate Director</div>
+      </div>
+      <div class="role-desc">Manages a portfolio of regions or event types. Supports Area Directors. Handles escalations. Stewards the shared curriculum library.</div>
+    </div>
+    <div class="role-card">
+      <div>
+        <div class="role-name">Assistant Director</div>
+      </div>
+      <div class="role-desc">Supports Associate Directors. Coordinates cross-camp logistics. Manages global calendar and tooling (Luma, GitHub, website).</div>
+    </div>
+  </div>
+</div>
+
+<!-- Unit Heads -->
+<div class="role-section">
+  <h2 class="role-section-title">Unit <em>Heads</em></h2>
+  <p class="role-section-desc">Unit Heads are the organizers and leaders who run ClawCamp events in the field. They are the backbone of the network.</p>
+
+  <div class="role-grid">
+    <div class="role-card">
+      <div>
+        <div class="role-name">Area Director</div>
+        <div class="role-best-for">Deep local networks</div>
+      </div>
+      <div class="role-desc">Owns a city or region. Recruits and supports local Unit Heads. Ensures quality across all camps in their area. Primary sponsor contact at the local level.</div>
+    </div>
+    <div class="role-card">
+      <div>
+        <div class="role-name">Community Leader</div>
+        <div class="role-best-for">Community builders</div>
+      </div>
+      <div class="role-desc">Builds and manages the local attendee community. Handles chapter comms, email, and social. Drives repeat attendance and community culture.</div>
+    </div>
+    <div class="role-card">
+      <div>
+        <div class="role-name">Counselor</div>
+        <div class="role-best-for">Event producers</div>
+      </div>
+      <div class="role-desc">Hosts and runs individual camp events end-to-end &mdash; venue, agenda, speakers, day-of production. Leads whatever format the event takes: workshop, demo day, unconference, hackathon, or online event.</div>
+    </div>
+    <div class="role-card">
+      <div>
+        <div class="role-name">Specialist</div>
+        <div class="role-best-for">Subject matter experts</div>
+      </div>
+      <div class="role-desc">Owns a specific domain. Technical Specialists manage the AV and streaming infrastructure for online events. Curriculum Specialists develop and share workshop content. All Specialists contribute to the shared curriculum library.</div>
+    </div>
+    <div class="role-card">
+      <div>
+        <div class="role-name">Activity Leader</div>
+        <div class="role-best-for">Teachers &amp; founders</div>
+      </div>
+      <div class="role-desc">Runs a single session or activity within a camp &mdash; a workshop block, a Q&amp;A, a hands-on build session. Creates their own curriculum and shares it with the network.</div>
+    </div>
+    <div class="role-card">
+      <div>
+        <div class="role-name">Counselor in Training</div>
+        <div class="role-best-for">First-timers</div>
+      </div>
+      <div class="role-desc">Shadows a Counselor or Specialist at a minimum of two events before leading their own. Co-hosts but does not lead solo. The official on-ramp into the Unit Head program.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Curriculum Policy -->
+<div class="curriculum-section">
+  <h2>Curriculum Policy</h2>
+  <p>ClawCamp does not have a single official curriculum. We believe:</p>
+  <ul class="curriculum-bullets">
+    <li><strong>Anyone can create their own curriculum.</strong> Your workshop, your format, your content.</li>
+    <li><strong>We provide example curricula</strong> as starting points for common formats (OpenClaw setup, agent building, demo day hosting, etc.)</li>
+    <li><strong>Everyone is asked to share back.</strong> When you build something that works, add it to the shared library. The whole network gets better.</li>
+  </ul>
+  <div style="margin-top:20px;">
+    <a href="/curriculum" class="btn-outline">Curriculum Library &rarr;</a>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="cta-band">
+  <div>
+    <h3>Ready to join the crew?</h3>
+    <p>Whether you want to host, teach, or help &mdash; there's a role for you.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="/host" class="btn-dark">Host a Camp &rarr;</a>
+    <a href="mailto:hello@clawcamp.ai?subject=Join%20the%20Crew" class="btn-outline">Get in Touch</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

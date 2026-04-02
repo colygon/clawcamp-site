@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curriculum Library — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .coming-soon {
+    padding: 80px 48px 120px;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .coming-soon-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--rust);
+    background: var(--rust-light);
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+  .coming-soon h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .coming-soon h2 em { font-style: normal; color: var(--rust); }
+  .coming-soon p {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+  .coming-soon-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+
+  .preview-grid {
+    padding: 0 48px 80px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .preview-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 28px;
+    text-align: left;
+  }
+  .preview-card-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .preview-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .preview-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .coming-soon { padding: 60px 20px 80px; }
+    .preview-grid {
+      grid-template-columns: 1fr;
+      padding: 0 20px 60px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<header class="page-header">
+  <h1>Curriculum<br><em>Library</em></h1>
+  <div class="header-meta">
+    <p>Shared Resources</p>
+    <p>Open to All</p>
+  </div>
+</header>
+
+<div class="coming-soon">
+  <span class="coming-soon-badge">Coming Soon</span>
+  <h2>A shared library for the <em>global network</em></h2>
+  <p>ClawCamp's curriculum library is a collection of workshop guides, session templates, cheat sheets, and build challenges &mdash; created by Counselors and Specialists around the world and shared freely with the network.</p>
+  <p>Anyone can create their own curriculum. We provide example starting points for common formats. Everyone is asked to share back &mdash; the whole network gets better.</p>
+  <div class="coming-soon-actions">
+    <a href="mailto:hello@clawcamp.ai?subject=Curriculum%20Contribution" class="btn-dark">Contribute Yours &rarr;</a>
+    <a href="/formats" class="btn-outline">Explore Formats</a>
+  </div>
+</div>
+
+<div class="preview-grid">
+  <div class="preview-card">
+    <div class="preview-card-eyebrow">Workshop Template</div>
+    <h3>OpenClaw Setup</h3>
+    <p>Step-by-step guide for a 2&ndash;3 hour setup workshop. Installation, configuration, and first agent build.</p>
+  </div>
+  <div class="preview-card">
+    <div class="preview-card-eyebrow">Workshop Template</div>
+    <h3>Agent Deep Dive</h3>
+    <p>Advanced workshop template for multi-agent workflows, tool integration, and local model setup.</p>
+  </div>
+  <div class="preview-card">
+    <div class="preview-card-eyebrow">Event Playbook</div>
+    <h3>Unconference Guide</h3>
+    <p>The Dave Nielsen CloudCamp unconference format, adapted for ClawCamp. Voting, sessions, and facilitation.</p>
+  </div>
+</div>
+
+<div class="cta-band">
+  <div>
+    <h3>Have a curriculum to share?</h3>
+    <p>Built a great workshop or session guide? Share it with the global network.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="mailto:hello@clawcamp.ai?subject=Curriculum%20Contribution" class="btn-dark">Get in Touch &rarr;</a>
+    <a href="/host" class="btn-outline">Host a Camp</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

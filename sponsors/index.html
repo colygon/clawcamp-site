@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sponsors — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .sponsor-intro {
+    padding: 48px 48px 0;
+    max-width: 700px;
+  }
+  .sponsor-intro p {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  /* Audience */
+  .audience-section {
+    padding: 48px 48px 0;
+  }
+  .audience-section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+  .audience-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .audience-list li {
+    font-size: 15px;
+    color: var(--muted);
+    padding-left: 18px;
+    position: relative;
+  }
+  .audience-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--rust);
+  }
+
+  /* Tiers */
+  .tier-section {
+    padding: 64px 48px 0;
+  }
+  .tier-section-header {
+    margin-bottom: 12px;
+  }
+  .tier-section-header h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+  }
+  .tier-section-header h2 em { font-style: normal; color: var(--rust); }
+  .tier-section-header p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .tier-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+  }
+  .tier-card.featured {
+    border: 1.5px solid var(--rust);
+  }
+  .tier-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .tier-badge.moss { color: var(--moss); }
+  .tier-badge.gold { color: var(--gold); }
+  .tier-badge.rust { color: var(--rust); }
+  .tier-popular {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: var(--rust-light);
+    color: var(--rust);
+    padding: 3px 8px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .tier-name {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .tier-price {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .tier-perks {
+    list-style: none;
+    flex: 1;
+  }
+  .tier-perks li {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--cream);
+    padding-left: 12px;
+    position: relative;
+  }
+  .tier-perks li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+  }
+  .tier-card:nth-child(1) .tier-perks li::before { background: var(--moss); }
+  .tier-card:nth-child(2) .tier-perks li::before { background: var(--gold); }
+  .tier-card:nth-child(3) .tier-perks li::before { background: var(--rust); }
+  .tier-perks li strong { color: var(--ink); }
+  .tier-cta {
+    margin-top: 24px;
+  }
+
+  /* Add-ons table */
+  .addons-section {
+    padding: 64px 48px 0;
+  }
+  .addons-section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .addons-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .addons-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-align: left;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--sand);
+  }
+  .addons-table td {
+    font-size: 14px;
+    padding: 14px 16px 14px 0;
+    border-bottom: 1px solid var(--cream);
+    vertical-align: top;
+  }
+  .addons-table td:first-child {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .addons-table td:last-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .addons-table td:nth-child(2) {
+    color: var(--muted);
+  }
+
+  /* Ground rules */
+  .rules-section {
+    padding: 48px 48px 0;
+    max-width: 700px;
+  }
+  .rules-section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .rules-section p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* Current sponsors */
+  .current-section {
+    padding: 64px 48px 0;
+  }
+  .current-section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .sponsor-logo-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .sponsor-logo-card {
+    border: 1px solid var(--sand);
+    border-radius: 6px;
+    padding: 16px 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .sponsor-logo-card:hover {
+    background: var(--cream);
+    border-color: var(--ink);
+  }
+
+  /* Community Fund */
+  .fund-section {
+    padding: 64px 48px 0;
+  }
+  .fund-section h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .fund-section h2 em { font-style: normal; color: var(--rust); }
+  .fund-section > p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+  .fund-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .fund-card {
+    border-top: 3px solid var(--rust);
+    background: var(--cream);
+    border-radius: 0 0 8px 8px;
+    padding: 28px;
+  }
+  .fund-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .fund-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .sponsor-intro, .audience-section, .tier-section, .addons-section,
+    .rules-section, .current-section, .fund-section {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .tier-grid { grid-template-columns: 1fr; }
+    .fund-grid { grid-template-columns: 1fr; }
+    .addons-table { font-size: 13px; }
+    .addons-table td:first-child { white-space: normal; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<header class="page-header">
+  <h1>Sponsor<br><em>ClawCamp</em></h1>
+  <div class="header-meta">
+    <p>Activity-Based Sponsorship</p>
+    <p>Global Network</p>
+    <p>hello@clawcamp.ai</p>
+  </div>
+</header>
+
+<div class="sponsor-intro">
+  <p>ClawCamp reaches hands-on AI builders at the exact moment they're making decisions about their stack. Our events are educational by design &mdash; which means your sponsorship is embedded in learning, not just signage.</p>
+</div>
+
+<div class="audience-section">
+  <h2>Who Attends ClawCamp Events?</h2>
+  <ul class="audience-list">
+    <li>Developers building with AI tools and agents</li>
+    <li>Founders demoing early-stage AI products</li>
+    <li>Technical community leaders and organizers</li>
+    <li>Students and career-changers getting into AI</li>
+    <li>Engineers choosing their infrastructure stack</li>
+  </ul>
+</div>
+
+<div class="tier-section">
+  <div class="tier-section-header">
+    <h2>Activity <em>Tiers</em></h2>
+    <p>We don't call them "activations." We call them <strong>activities</strong> &mdash; because the best sponsor moments at ClawCamp are things your team actually does: teaching a workshop, handing out credits, hosting a build challenge.</p>
+  </div>
+
+  <div class="tier-grid">
+    <div class="tier-card">
+      <div class="tier-badge moss">Trailhead</div>
+      <div class="tier-name">Trailhead</div>
+      <div class="tier-price">$500 / camp</div>
+      <ul class="tier-perks">
+        <li><strong>Check-in Table</strong> &mdash; own the welcome moment, branded table, swag handoff</li>
+        <li><strong>Mess Hall Fuel</strong> &mdash; sponsor coffee, snacks, or drinks</li>
+        <li><strong>Trail Map Insert</strong> &mdash; one-pager in the camp guide</li>
+        <li><strong>Flagpole Credit</strong> &mdash; logo on event page, email invite, and livestream banner</li>
+      </ul>
+      <div class="tier-cta">
+        <a href="mailto:hello@clawcamp.ai?subject=Trailhead%20Sponsorship" class="btn-outline" style="width:100%;text-align:center;">Get in Touch</a>
+      </div>
+    </div>
+
+    <div class="tier-card featured">
+      <div class="tier-popular">Most Popular</div>
+      <div class="tier-badge gold">Bunkmate</div>
+      <div class="tier-name">Bunkmate</div>
+      <div class="tier-price">$1,500 / camp</div>
+      <ul class="tier-perks">
+        <li><strong>Workshop Bunk</strong> &mdash; host a 45-min hands-on session. You teach, builders build.</li>
+        <li><strong>Gear Drop</strong> &mdash; distribute a tool, credit, or hardware kit to every attendee</li>
+        <li><strong>Campfire Slot</strong> &mdash; 3-minute lightning talk at the opening or closing circle</li>
+        <li><strong>Bunkmate Badge</strong> &mdash; named sponsor on all camp comms</li>
+        <li><strong>Headcount Report</strong> &mdash; post-camp attendance and engagement summary</li>
+        <li><strong>Stream Credit</strong> &mdash; logo on the livestream if the camp is broadcast</li>
+      </ul>
+      <div class="tier-cta">
+        <a href="mailto:hello@clawcamp.ai?subject=Bunkmate%20Sponsorship" class="btn-dark" style="width:100%;text-align:center;">Become a Bunkmate</a>
+      </div>
+    </div>
+
+    <div class="tier-card">
+      <div class="tier-badge rust">Camp Director</div>
+      <div class="tier-name">Camp Director</div>
+      <div class="tier-price">$4,000 / camp</div>
+      <ul class="tier-perks">
+        <li><strong>Keynote Campfire</strong> &mdash; 20-min featured talk to the full camp</li>
+        <li><strong>Skills Track</strong> &mdash; own a full workshop track (2&ndash;3 sessions) on your tooling</li>
+        <li><strong>Challenge Tent</strong> &mdash; sponsor the build challenge or competition with your own prize</li>
+        <li><strong>Mess Hall Naming</strong> &mdash; your brand on the meal and snack break</li>
+        <li><strong>Basecamp Screen</strong> &mdash; branded AV during transitions and breaks</li>
+        <li><strong>Roster Access</strong> &mdash; opt-in attendee list for post-camp follow-up</li>
+        <li><strong>Director Badge</strong> &mdash; top billing on all camp assets</li>
+        <li><strong>Post-Camp Debrief</strong> &mdash; 30-minute call with ClawCamp team</li>
+      </ul>
+      <div class="tier-cta">
+        <a href="mailto:hello@clawcamp.ai?subject=Camp%20Director%20Sponsorship" class="btn-outline" style="width:100%;text-align:center;">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="addons-section">
+  <h2>A La Carte Add-ons</h2>
+  <table class="addons-table">
+    <thead>
+      <tr>
+        <th>Activity</th>
+        <th>Description</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Field Notes Sponsor</td>
+        <td>Your brand on the printed or digital camp notebook / cheat sheet</td>
+        <td>$250</td>
+      </tr>
+      <tr>
+        <td>Watering Hole</td>
+        <td>Sponsor an informal happy hour or social at end of camp</td>
+        <td>$500</td>
+      </tr>
+      <tr>
+        <td>Signal Fire</td>
+        <td>Dedicated shoutout in the post-camp recap email to the full list</td>
+        <td>$300</td>
+      </tr>
+      <tr>
+        <td>Expedition Grant</td>
+        <td>Fund travel or stipends for 1&ndash;3 speakers or campers</td>
+        <td>Custom</td>
+      </tr>
+      <tr>
+        <td>Base Camp Host</td>
+        <td>Offer your office or space as the venue, includes welcome remarks</td>
+        <td>In-kind</td>
+      </tr>
+      <tr>
+        <td>Chapter Founding Sponsor</td>
+        <td>Sponsor an ongoing city chapter &mdash; recurring branding across 6 camps</td>
+        <td>Custom</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="rules-section">
+  <h2>Ground Rules</h2>
+  <p>ClawCamp activities are educational by design. Sponsors show up as contributors &mdash; teachers, tool-providers, challenge-setters &mdash; not broadcasters. The best activities are the ones attendees remember learning from.</p>
+  <p style="margin-top:12px;">We reserve the right to decline activities that shift the vibe from camp to conference booth.</p>
+</div>
+
+<div class="current-section">
+  <h2>Current Sponsors &amp; Partners</h2>
+  <div class="sponsor-logo-grid">
+    <a class="sponsor-logo-card" href="https://you.com" target="_blank">you.com</a>
+    <a class="sponsor-logo-card" href="https://apify.com" target="_blank">Apify</a>
+    <span class="sponsor-logo-card">The Agentic</span>
+    <span class="sponsor-logo-card">Blitzscaling Ventures</span>
+    <a class="sponsor-logo-card" href="https://fetch.ai" target="_blank">Fetch.ai</a>
+    <span class="sponsor-logo-card">ASI:One</span>
+    <span class="sponsor-logo-card">STAK Ventures</span>
+    <a class="sponsor-logo-card" href="https://aiify.io" target="_blank">Aiify.io</a>
+    <span class="sponsor-logo-card">HackerSquad</span>
+    <a class="sponsor-logo-card" href="https://donely.ai" target="_blank">Donely.ai</a>
+    <span class="sponsor-logo-card">PitchFreaks</span>
+    <span class="sponsor-logo-card">MoltPod</span>
+    <span class="sponsor-logo-card">Efficient Frontier Labs</span>
+    <span class="sponsor-logo-card">Constructive</span>
+  </div>
+</div>
+
+<div class="fund-section">
+  <h2>ClawCamp <em>Community Fund</em></h2>
+  <p>Our north star &mdash; where sponsor dollars go beyond the event.</p>
+  <div class="fund-grid">
+    <div class="fund-card">
+      <h3>Global Chapters</h3>
+      <p>Seed funding for local ClawCamp organizers worldwide. Your support helps launch new chapters in new cities, funding local spaces for in-person connection.</p>
+    </div>
+    <div class="fund-card">
+      <h3>Developer Resources</h3>
+      <p>Workshops, community education, docs, and learning materials, free and open to the global community. Giving non-experts the tools to build safely.</p>
+    </div>
+    <div class="fund-card">
+      <h3>Open Source Grants</h3>
+      <p>Fund OpenClaw contributors and the open-source projects developers rely on. Sponsors aren't just showing up &mdash; they're helping keep the ecosystem running.</p>
+    </div>
+  </div>
+</div>
+
+<div class="cta-band" style="margin-top:64px;">
+  <div>
+    <h3>Interested in sponsoring?</h3>
+    <p>We'll send you the full sponsor menu and talk through the right fit for your team.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="mailto:hello@clawcamp.ai?subject=Sponsorship%20Inquiry" class="btn-dark">Contact Us &rarr;</a>
+    <a href="/events" class="btn-outline">View Events</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

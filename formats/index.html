@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formats — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .formats-intro {
+    padding: 48px 48px 0;
+    max-width: 700px;
+  }
+  .formats-intro p {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .format-list {
+    padding: 48px 48px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .format-card {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 32px;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--cream);
+  }
+  .format-card:first-child { padding-top: 0; }
+
+  .format-sidebar {
+    position: sticky;
+    top: 100px;
+    align-self: start;
+  }
+  .format-name {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .format-length {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    background: var(--cream);
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  .format-body h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+  .format-body h4:first-child { margin-top: 0; }
+  .format-body p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+  .format-body ul {
+    list-style: none;
+    margin-bottom: 8px;
+  }
+  .format-body ul li {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    padding: 4px 0 4px 16px;
+    position: relative;
+  }
+  .format-body ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 11px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--rust);
+  }
+  .format-body ol {
+    margin-bottom: 8px;
+    padding-left: 20px;
+  }
+  .format-body ol li {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    padding: 3px 0;
+  }
+
+  @media (max-width: 768px) {
+    .formats-intro { padding: 32px 20px 0; }
+    .format-list { padding: 32px 20px 60px; }
+    .format-card {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .format-sidebar {
+      position: static;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<header class="page-header">
+  <h1>Event<br><em>Formats</em></h1>
+  <div class="header-meta">
+    <p>6 Core Formats</p>
+    <p>Mix &amp; Match</p>
+    <p>Your Camp, Your Way</p>
+  </div>
+</header>
+
+<div class="formats-intro">
+  <p>ClawCamp is format-agnostic. Our network includes six core event formats. Organizers can run one format or combine several into a full-day camp.</p>
+</div>
+
+<div class="format-list">
+
+  <div class="format-card">
+    <div class="format-sidebar">
+      <div class="format-name">OpenClaw Setup Workshop</div>
+      <span class="format-length">2&ndash;3 hours</span>
+    </div>
+    <div class="format-body">
+      <h4>What it is</h4>
+      <p>A guided, hands-on session where attendees install and configure OpenClaw from scratch. Designed for developers who are new to OpenClaw or who want a clean setup in a structured environment.</p>
+      <h4>What attendees leave with</h4>
+      <ul>
+        <li>OpenClaw fully installed and configured</li>
+        <li>A working first agent or workflow</li>
+        <li>Access to shared curriculum notes and cheat sheets</li>
+      </ul>
+      <h4>What you need to run one</h4>
+      <ul>
+        <li>A Specialist or Activity Leader who knows the OpenClaw setup process</li>
+        <li>Tables, power strips, and reliable WiFi</li>
+        <li>Optional: sponsor gear drop (API credits, hardware)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="format-card">
+    <div class="format-sidebar">
+      <div class="format-name">OpenClaw Usage Deep Dive</div>
+      <span class="format-length">2&ndash;4 hours</span>
+    </div>
+    <div class="format-body">
+      <h4>What it is</h4>
+      <p>A more advanced workshop for developers who already have OpenClaw set up. Focus on specific use cases: building agents, connecting tools, running local models, integrating with APIs, or using inference infrastructure.</p>
+      <h4>What attendees leave with</h4>
+      <ul>
+        <li>A working project or prototype built during the session</li>
+        <li>Shared code and curriculum from the Counselor or Specialist</li>
+      </ul>
+      <h4>What you need to run one</h4>
+      <ul>
+        <li>A Specialist with deep OpenClaw experience</li>
+        <li>A defined build challenge or project prompt</li>
+        <li>Optional: competition element with sponsor prize</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="format-card">
+    <div class="format-sidebar">
+      <div class="format-name">Unconference</div>
+      <span class="format-length">4 hours</span>
+    </div>
+    <div class="format-body">
+      <h4>What it is</h4>
+      <p>An attendee-driven event format with no pre-set agenda. Topics are proposed and voted on at the start of the event. The best ideas get rooms. Sessions run in parallel. No panels, no slides required.</p>
+      <p>ClawCamp uses the Dave Nielsen CloudCamp unconference format, proven across 350+ events worldwide.</p>
+      <h4>How it works</h4>
+      <ol>
+        <li>Attendees write session ideas on cards or sticky notes</li>
+        <li>Ideas are pitched in 30 seconds each to the group</li>
+        <li>The group votes &mdash; top ideas get slots</li>
+        <li>Sessions run simultaneously in breakout spaces</li>
+        <li>Everyone is free to move between sessions (the Law of Two Feet)</li>
+      </ol>
+      <h4>What you need to run one</h4>
+      <ul>
+        <li>A large open space with breakout areas</li>
+        <li>A Counselor to facilitate the opening voting session</li>
+        <li>Sticky notes, markers, and a session board</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="format-card">
+    <div class="format-sidebar">
+      <div class="format-name">Demo Day</div>
+      <span class="format-length">2&ndash;3 hours</span>
+    </div>
+    <div class="format-body">
+      <h4>What it is</h4>
+      <p>Builders present what they've made to an audience of peers, sponsors, and community members. Short, focused demos. Real projects. Real feedback.</p>
+      <h4>Structure</h4>
+      <ul>
+        <li>5&ndash;7 minute demos per project</li>
+        <li>Optional Q&amp;A after each</li>
+        <li>Community vote or sponsor prize for best demo</li>
+        <li>Closing social / networking</li>
+      </ul>
+      <h4>What you need to run one</h4>
+      <ul>
+        <li>A Counselor to host and MC</li>
+        <li>An AV setup (projector or screen, mic)</li>
+        <li>Signup form for demo slots (open 1 week before)</li>
+        <li>Optional: sponsor prize or award</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="format-card">
+    <div class="format-sidebar">
+      <div class="format-name">Startup Showcase</div>
+      <span class="format-length">2&ndash;4 hours</span>
+    </div>
+    <div class="format-body">
+      <h4>What it is</h4>
+      <p>A curated demo day focused on early-stage AI startups. More structured than a casual demo day &mdash; presenters are selected in advance and given a standard format.</p>
+      <h4>Structure</h4>
+      <ul>
+        <li>8&ndash;10 minute founder presentations (problem, solution, demo, ask)</li>
+        <li>Judging panel or community vote</li>
+        <li>Awards and sponsor prizes</li>
+        <li>Networking reception</li>
+      </ul>
+      <h4>What you need to run one</h4>
+      <ul>
+        <li>A Counselor to curate and MC</li>
+        <li>An application process for presenters (open 2&ndash;3 weeks before)</li>
+        <li>Judges (optional: sponsor representatives, community leaders)</li>
+        <li>AV setup and networking space</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="format-card" style="border-bottom:none;">
+    <div class="format-sidebar">
+      <div class="format-name">Online Events</div>
+      <span class="format-length">Varies</span>
+    </div>
+    <div class="format-body">
+      <h4>What it is</h4>
+      <p>Any ClawCamp format &mdash; workshop, unconference, demo day &mdash; run virtually over a livestream or video call platform.</p>
+      <h4>What makes online ClawCamp events different</h4>
+      <ul>
+        <li>They reach a global audience &mdash; ClawCamp streams have hit 15,000 concurrent views</li>
+        <li>They require a dedicated technical Specialist for AV and streaming</li>
+        <li>They use interactive formats (live polls, chat Q&amp;A, breakout rooms) to maintain engagement</li>
+      </ul>
+      <h4>Typical platforms</h4>
+      <p>YouTube Live, Twitch, Zoom, StreamYard</p>
+      <h4>What you need to run one</h4>
+      <ul>
+        <li>A Counselor to host</li>
+        <li>A Specialist to manage the stream (required)</li>
+        <li>Platform account and streaming setup</li>
+        <li>Optional: branded overlays, sponsor screen credits</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<div class="cta-band">
+  <div>
+    <h3>Ready to run your own camp?</h3>
+    <p>Pick your format, find a space, and apply to join the network.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="/host" class="btn-dark">Host a Camp &rarr;</a>
+    <a href="/events" class="btn-outline">See Upcoming Events</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

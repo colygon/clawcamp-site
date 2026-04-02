@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schedule — ClawCamp Oakland</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding: 48px 48px 48px 168px;
+    max-width: 900px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 148px;
+    top: 48px;
+    bottom: 48px;
+    width: 2px;
+    background: var(--sand);
+  }
+
+  .schedule-block {
+    position: relative;
+    padding-bottom: 40px;
+  }
+  .schedule-block:last-child { padding-bottom: 0; }
+
+  .schedule-time {
+    position: absolute;
+    left: -120px;
+    top: 2px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    text-align: right;
+    width: 96px;
+  }
+
+  .schedule-dot {
+    position: absolute;
+    left: -24px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 2px var(--sand);
+  }
+  .dot-rust { background: var(--rust); box-shadow: 0 0 0 2px var(--rust); }
+  .dot-moss { background: var(--moss); box-shadow: 0 0 0 2px var(--moss); }
+  .dot-gold { background: var(--gold); box-shadow: 0 0 0 2px var(--gold); }
+
+  .schedule-content {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 20px 24px;
+    transition: box-shadow 0.15s;
+  }
+  .schedule-content:hover {
+    box-shadow: 0 2px 12px rgba(15, 14, 11, 0.05);
+  }
+  .schedule-break {
+    border: none;
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 16px 24px;
+  }
+
+  .schedule-title {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .schedule-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .schedule-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--rust);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 6px;
+  }
+
+  /* Tickets */
+  .tickets-section {
+    padding: 64px 48px;
+    border-top: 1px solid var(--sand);
+  }
+  .tickets-header {
+    margin-bottom: 32px;
+  }
+  .tickets-header h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+  }
+  .tickets-header h2 em { font-style: normal; color: var(--rust); }
+  .tickets-header p {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .ticket-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .ticket-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  .ticket-card.vip {
+    border-color: var(--rust);
+    border-width: 1.5px;
+  }
+  .ticket-tier {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .ticket-price {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .ticket-card.vip .ticket-price { color: var(--rust); }
+  .ticket-detail {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .rsvp-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+
+  @media (max-width: 768px) {
+    .timeline {
+      padding: 32px 20px 32px 20px;
+    }
+    .timeline::before { display: none; }
+    .schedule-time {
+      position: static;
+      width: auto;
+      text-align: left;
+      margin-bottom: 8px;
+    }
+    .schedule-dot { display: none; }
+    .tickets-section { padding: 48px 20px; }
+    .ticket-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<header class="page-header">
+  <h1>Schedule &mdash;<br><em>Oakland</em></h1>
+  <div class="header-meta">
+    <p>Thursday, April 16, 2026</p>
+    <p>STAK Space</p>
+    <p>1920 Broadway, Oakland, CA</p>
+  </div>
+</header>
+
+<div class="timeline">
+
+  <div class="schedule-block">
+    <div class="schedule-time">9:00 AM</div>
+    <div class="schedule-dot dot-moss"></div>
+    <div class="schedule-content schedule-break">
+      <div class="schedule-title">Doors Open</div>
+      <div class="schedule-desc">Check in, grab coffee, find your seat. Meet other campers.</div>
+    </div>
+  </div>
+
+  <div class="schedule-block">
+    <div class="schedule-time">9:30 AM</div>
+    <div class="schedule-dot dot-rust"></div>
+    <div class="schedule-content">
+      <div class="schedule-title">Keynote</div>
+      <div class="schedule-desc">Opening remarks and keynote address to kick off ClawCamp Oakland.</div>
+    </div>
+  </div>
+
+  <div class="schedule-block">
+    <div class="schedule-time">10:00 AM</div>
+    <div class="schedule-dot dot-rust"></div>
+    <div class="schedule-content">
+      <div class="schedule-title">Panel</div>
+      <div class="schedule-desc">Expert discussion on the state of personal AI agents, OpenClaw, and what's next for the builder community.</div>
+    </div>
+  </div>
+
+  <div class="schedule-block">
+    <div class="schedule-time">10:30 AM</div>
+    <div class="schedule-dot dot-rust"></div>
+    <div class="schedule-content">
+      <div class="schedule-title">Speaker &amp; Partner Presentations</div>
+      <div class="schedule-desc">Short, focused talks from speakers and partner organizations. Real projects, real insights.</div>
+    </div>
+  </div>
+
+  <div class="schedule-block">
+    <div class="schedule-time">11:30 AM</div>
+    <div class="schedule-dot dot-gold"></div>
+    <div class="schedule-content">
+      <div class="schedule-title">Workshops &amp; Skills Building</div>
+      <div class="schedule-desc">Hands-on breakout sessions. Install OpenClaw, build agents, explore multi-agent workflows, and learn from mentors. All skill levels.</div>
+    </div>
+  </div>
+
+  <div class="schedule-block">
+    <div class="schedule-time">1:00 PM</div>
+    <div class="schedule-dot dot-moss"></div>
+    <div class="schedule-content schedule-break">
+      <div class="schedule-title">Catered Lunch</div>
+      <div class="schedule-desc">Lunch break and networking. VIP Floor access for VIP ticket holders, speakers, sponsors, and partners.</div>
+      <div class="schedule-note">VIP Floor &mdash; Speakers, Sponsors &amp; Partners</div>
+    </div>
+  </div>
+
+  <div class="schedule-block">
+    <div class="schedule-time">3:30 PM</div>
+    <div class="schedule-dot dot-gold"></div>
+    <div class="schedule-content">
+      <div class="schedule-title">Skills Competition</div>
+      <div class="schedule-desc">Put your new skills to the test. Build challenges, live demos, and friendly competition with prizes.</div>
+    </div>
+  </div>
+
+  <div class="schedule-block">
+    <div class="schedule-time">5:00 PM</div>
+    <div class="schedule-dot dot-rust"></div>
+    <div class="schedule-content">
+      <div class="schedule-title">Award Presentations</div>
+      <div class="schedule-desc">Recognition for competition winners, outstanding contributions, and community highlights.</div>
+    </div>
+  </div>
+
+  <div class="schedule-block">
+    <div class="schedule-time">5:30 PM</div>
+    <div class="schedule-dot dot-moss"></div>
+    <div class="schedule-content schedule-break">
+      <div class="schedule-title">Networking</div>
+      <div class="schedule-desc">Close out the day with open networking. Connect with speakers, sponsors, and fellow builders.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="tickets-section">
+  <div class="tickets-header">
+    <h2>Tickets &amp; <em>Options</em></h2>
+    <p>Take advantage of our early pricing. Accessible tiers for everyone.</p>
+  </div>
+
+  <div class="ticket-grid">
+    <div class="ticket-card">
+      <div class="ticket-tier">Early Bird</div>
+      <div class="ticket-price">Free</div>
+      <div class="ticket-detail">First 200 tickets are free. Grab yours before they're gone.</div>
+    </div>
+    <div class="ticket-card">
+      <div class="ticket-tier">Runner Up</div>
+      <div class="ticket-price">$15</div>
+      <div class="ticket-detail">100 tickets at this tier.</div>
+    </div>
+    <div class="ticket-card">
+      <div class="ticket-tier">Filling Up</div>
+      <div class="ticket-price">$29</div>
+      <div class="ticket-detail">100 tickets at this tier.</div>
+    </div>
+    <div class="ticket-card">
+      <div class="ticket-tier">Last Call</div>
+      <div class="ticket-price">$50</div>
+      <div class="ticket-detail">Final full-price admission. Limited availability.</div>
+    </div>
+    <div class="ticket-card vip">
+      <div class="ticket-tier" style="color:var(--rust);">VIP Ticket</div>
+      <div class="ticket-price">$150</div>
+      <div class="ticket-detail">Includes catered lunch &amp; access to exclusive VIP Floor with premium amenities. Network with speakers, sponsors, and partners.</div>
+    </div>
+  </div>
+
+  <div class="rsvp-actions">
+    <a href="https://luma.com/clawcamp" target="_blank" class="btn-rust">RSVP on Luma &rarr;</a>
+    <a href="/speakers" class="btn-outline">View Speakers</a>
+  </div>
+</div>
+
+<div class="cta-band">
+  <div>
+    <h3>Demo tables &amp; sponsorship opportunities available</h3>
+    <p>Limited availability. Purchase on Luma or contact us directly.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="/sponsors" class="btn-dark">Sponsor Options &rarr;</a>
+    <a href="mailto:events@clawcamp.us" class="btn-outline">Contact Us</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

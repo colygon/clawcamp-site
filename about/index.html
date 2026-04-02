@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .content-section {
+    padding: 64px 48px;
+    max-width: 800px;
+  }
+  .content-section h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+  }
+  .content-section h2 em { font-style: normal; color: var(--rust); }
+  .content-section p {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  .content-section p strong { color: var(--ink); }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 40px 0;
+  }
+  .value-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--cream);
+  }
+  .value-name {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .value-desc {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .team-placeholder {
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    margin: 32px 0;
+  }
+  .team-placeholder p {
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+  }
+
+  .openclaw-note {
+    border-left: 3px solid var(--rust);
+    padding-left: 24px;
+    margin: 32px 0;
+  }
+
+  @media (max-width: 768px) {
+    .content-section { padding: 40px 20px; }
+    .value-row {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<header class="page-header">
+  <h1>About<br><em>ClawCamp</em></h1>
+  <div class="header-meta">
+    <p>Our Story</p>
+    <p>Our Values</p>
+    <p>Our Relationship with OpenClaw</p>
+  </div>
+</header>
+
+<div class="content-section">
+  <h2>Our <em>Story</em></h2>
+  <p>ClawCamp started as a simple idea: what if anyone could run a great AI builder event, anywhere in the world, without needing permission from a company or a conference committee?</p>
+  <p>The original CloudCamp proved it was possible. Starting in 2008, CloudCamp spread to 350+ events across dozens of countries using an open-franchise model &mdash; anyone could register a CloudCamp, run it their way, and connect it to a global network. We loved that model. We built ClawCamp on it.</p>
+  <p>The first ClawCamp events happened at Frontier Tower in San Francisco. What started as a scrappy idea to get builders in the same room &mdash; learning OpenClaw, building agents, sharing what they'd made &mdash; turned into something bigger than expected. Livestreams hit 15,000 concurrent views. Events sold out. Organizers in India, Berlin, and other cities started asking how to run their own.</p>
+  <p>So we opened it up. ClawCamp is now a global, open network. It is owned by a small founding team through an LLC with equal ownership &mdash; no single company, no single city, no single format. Just a shared commitment to hands-on, community-first AI education.</p>
+</div>
+
+<div class="content-section" style="padding-top:0;">
+  <h2>Our <em>Values</em></h2>
+  <div class="values-grid">
+    <div class="value-row">
+      <div class="value-name">Hands-on first.</div>
+      <div class="value-desc">No passive audiences. Every ClawCamp event has something you can actually do &mdash; install, build, demo, or ship.</div>
+    </div>
+    <div class="value-row">
+      <div class="value-name">Open by default.</div>
+      <div class="value-desc">The curriculum is shared. The playbook is shared. The brand is open to anyone who commits to running a quality camp.</div>
+    </div>
+    <div class="value-row">
+      <div class="value-name">Community owned.</div>
+      <div class="value-desc">ClawCamp is not a product. It is not owned by a sponsor. Local organizers own their events, their revenue, and their relationships.</div>
+    </div>
+    <div class="value-row">
+      <div class="value-name">Quality over quantity.</div>
+      <div class="value-desc">We would rather have 10 great camps than 100 mediocre ones. Every Unit Head goes through an onboarding process. Every camp follows a quality bar.</div>
+    </div>
+    <div class="value-row">
+      <div class="value-name">Fair compensation.</div>
+      <div class="value-desc">Anyone doing paid work for ClawCamp earns a minimum of $30/hour. Volunteers are welcome and clearly labeled. Nobody works for equity promises alone.</div>
+    </div>
+  </div>
+</div>
+
+<div class="content-section" style="padding-top:0;">
+  <h2>The Founding <em>Team</em></h2>
+  <p>ClawCamp LLC is founded and operated by a small core team based in San Francisco. Equal three-way ownership. No rug pulls.</p>
+  <div class="team-placeholder">
+    <p>Team bios coming soon.</p>
+  </div>
+</div>
+
+<div class="content-section" style="padding-top:0;">
+  <h2>Our Relationship with <em>OpenClaw</em></h2>
+  <div class="openclaw-note">
+    <p>ClawCamp is not owned by the OpenClaw project. We are an independent community that runs events centered on OpenClaw &mdash; just as local user groups run events centered on Linux, Python, or Kubernetes without being owned by those projects.</p>
+    <p>ClawCamp events may use OpenClaw, other open-source AI tools, or any stack the organizer chooses. We are claw-agnostic. The name reflects the spirit, not a product dependency.</p>
+  </div>
+</div>
+
+<div class="cta-band">
+  <div>
+    <h3>Join the ClawCamp network</h3>
+    <p>Attend, host, teach, or sponsor &mdash; there's a role for everyone.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="/community" class="btn-dark">See All Roles &rarr;</a>
+    <a href="/events" class="btn-outline">Find Events</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

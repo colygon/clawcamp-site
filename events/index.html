@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Events — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  /* Filter bar */
+  .filter-bar {
+    padding: 16px 48px;
+    border-bottom: 1px solid var(--sand);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    overflow-x: auto;
+  }
+  .filter-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-right: 4px;
+    white-space: nowrap;
+  }
+  .filter-btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--sand);
+    background: transparent;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: var(--ink); color: var(--ink); }
+  .filter-btn.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  /* Month section */
+  .month-section { padding-top: 48px; }
+  .month-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--sand);
+    margin-bottom: 0;
+  }
+
+  /* Event row */
+  .event-row {
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    gap: 0 24px;
+    align-items: stretch;
+    border-bottom: 1px solid var(--cream);
+    transition: background 0.12s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+  .event-row:hover { background: var(--cream); }
+  .event-date {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 22px;
+    border-right: 1px solid var(--cream);
+  }
+  .event-row:hover .event-date { border-right-color: var(--sand); }
+  .date-day {
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .date-dow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 3px;
+  }
+  .event-body {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .event-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .event-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .event-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .event-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    max-width: 600px;
+  }
+  .event-action {
+    padding: 20px 0;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 22px;
+    gap: 8px;
+  }
+
+  /* Featured event card */
+  .featured-event {
+    margin-top: 32px;
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    margin-bottom: 8px;
+  }
+  .featured-left {
+    padding: 32px 36px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .featured-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--rust);
+    margin-bottom: 12px;
+  }
+  .featured-title {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin-bottom: 16px;
+  }
+  .featured-title span { color: var(--rust); }
+  .featured-details {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .featured-detail {
+    font-size: 14px;
+    color: rgba(245, 242, 236, 0.7);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .featured-desc {
+    font-size: 14px;
+    color: rgba(245, 242, 236, 0.65);
+    line-height: 1.6;
+    max-width: 440px;
+    margin-bottom: 28px;
+  }
+  .featured-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+  .featured-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    border: 1px solid rgba(245, 242, 236, 0.2);
+    border-radius: 3px;
+    color: rgba(245, 242, 236, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .featured-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--rust);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 24px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .featured-cta:hover { background: #a8420a; }
+  .featured-right {
+    background: var(--rust-light);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .featured-date-block {
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    color: var(--rust);
+  }
+  .featured-month {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--rust);
+    margin-top: 8px;
+  }
+  .featured-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .featured-capacity {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* Animations */
+  .featured-event { animation: fadeUp 0.4s ease both; }
+  .month-section:nth-child(1) { animation: fadeUp 0.4s 0.1s ease both; }
+  .month-section:nth-child(2) { animation: fadeUp 0.4s 0.15s ease both; }
+  .month-section:nth-child(3) { animation: fadeUp 0.4s 0.2s ease both; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .filter-bar { padding: 16px 20px; }
+    .featured-event { grid-template-columns: 1fr; }
+    .featured-right { padding: 24px 32px; flex-direction: row; align-items: center; }
+    .event-row { grid-template-columns: 56px 1fr; }
+    .event-action { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<header class="page-header">
+  <h1>Events &amp;<br><em>Gatherings</em></h1>
+  <div class="header-meta">
+    <p>Spring 2026 Season</p>
+    <p>Oakland &middot; Global Tour</p>
+    <p>Personal AI Agents</p>
+  </div>
+</header>
+
+<div class="filter-bar">
+  <span class="filter-label">Filter:</span>
+  <button class="filter-btn active" onclick="filterEvents('all', this)">All Events</button>
+  <button class="filter-btn" onclick="filterEvents('flagship', this)">ClawCamp</button>
+  <button class="filter-btn" onclick="filterEvents('tour', this)">Claw-Con Tour</button>
+  <button class="filter-btn" onclick="filterEvents('workshop', this)">Workshops</button>
+  <button class="filter-btn" onclick="filterEvents('community', this)">Community</button>
+</div>
+
+<div class="main">
+
+  <!-- Featured: ClawCamp Oakland -->
+  <div class="featured-event" data-type="flagship">
+    <div class="featured-left">
+      <div class="featured-eyebrow">Flagship Event &middot; Oakland, CA</div>
+      <div class="featured-title">ClawCamp<br><span>Oakland</span></div>
+      <div class="featured-details">
+        <span class="featured-detail"><span class="meta-icon">&#128197;</span> Thursday, April 16, 2026</span>
+        <span class="featured-detail"><span class="meta-icon">&#128205;</span> Oakland, California</span>
+        <span class="featured-detail"><span class="meta-icon">&#9201;</span> Full Day</span>
+      </div>
+      <p class="featured-desc">Workshops, speakers, panels, networking, and hands-on personal AI agent learning. Beginners leave with their own working agents. Advanced attendees go deeper on multi-agent workflows, security, and token optimization.</p>
+      <div class="featured-tags">
+        <span class="featured-tag">Workshops</span>
+        <span class="featured-tag">Speakers</span>
+        <span class="featured-tag">Networking</span>
+        <span class="featured-tag">Hands-on</span>
+        <span class="featured-tag">All levels</span>
+      </div>
+      <a href="https://luma.com/clawcamp" target="_blank" class="featured-cta">RSVP on Luma &rarr;</a>
+    </div>
+    <div class="featured-right">
+      <div>
+        <div class="featured-date-block">16</div>
+        <div class="featured-month">April</div>
+        <div class="featured-year">2026 &middot; Thursday</div>
+      </div>
+      <div class="featured-capacity">
+        <div style="font-size:13px;font-weight:600;color:#0f0e0b;margin-bottom:6px">Tickets</div>
+        Limited availability<br>
+        Purchase on Luma<br>
+        <br>
+        Hosted by <a href="https://aiify.io" style="color:var(--rust);text-decoration:none">Aiify.io</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- March -->
+  <div class="month-section" id="march">
+    <div class="section-divider">
+      <span class="divider-label">March 2026</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <a class="event-row" href="https://luma.com/clawcontokyo" target="_blank" data-type="tour">
+      <div class="event-date">
+        <div class="date-day">30</div>
+        <div class="date-dow">Mon</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">ClawCon Tokyo</span>
+          <span class="event-tag tag-tour">Claw-Con Tour</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Tokyo, Japan</span>
+          <span class="meta-item"><span class="meta-icon">&#127908;</span> Demos &middot; Social &middot; Q&amp;A</span>
+        </div>
+        <p class="event-desc">Free evening social with personal AI demos, Q&amp;A, and community meetup. No LinkedIn screening, no paywall.</p>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/clawcontokyo" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+  </div>
+
+  <!-- April -->
+  <div class="month-section" id="april">
+    <div class="section-divider">
+      <span class="divider-label">April 2026</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <a class="event-row" href="https://luma.com/fhauricn" target="_blank" data-type="community">
+      <div class="event-date">
+        <div class="date-day">2</div>
+        <div class="date-dow">Thu</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">Agents. Payments. OpenClaw.</span>
+          <span class="event-tag tag-community">Community</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> The House by Edge &amp; Node, 103 Montgomery St, SF</span>
+          <span class="meta-item">90+ going</span>
+        </div>
+        <p class="event-desc">Agentic standards, payment systems, and maybe a product launch. Drinks by ampersend.ai.</p>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/fhauricn" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://luma.com/claw-villa-hack" target="_blank" data-type="community">
+      <div class="event-date">
+        <div class="date-day">4</div>
+        <div class="date-dow">Sat</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">Claw Villa BLR Hack</span>
+          <span class="event-tag tag-community">Community</span>
+          <span class="event-tag" style="background:#fce8e8;color:#b22;font-family:'DM Mono',monospace;font-size:10px;padding:3px 8px;border-radius:3px;text-transform:uppercase;letter-spacing:.04em">Full</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Zo House Bangalore (Whitefield), Bengaluru, Karnataka</span>
+          <span class="meta-item">11:00 AM &ndash; 4:00 PM IST</span>
+          <span class="meta-item">69 spots &middot; 40+ going &middot; Event Full</span>
+        </div>
+        <p class="event-desc">Immersive villa hacking experience for Bangalore builders. Ship the best AI agents. Exclusive &mdash; 69 hackers only. Hosted by Agent Hack.</p>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/claw-villa-hack" target="_blank" class="rsvp-btn rsvp-full">Waitlist</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://luma.com/clawconlondon" target="_blank" data-type="tour">
+      <div class="event-date">
+        <div class="date-day">8</div>
+        <div class="date-dow">Wed</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">ClawCon London</span>
+          <span class="event-tag tag-tour">Claw-Con Tour</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> London, UK</span>
+          <span class="meta-item">Demos &middot; Social &middot; Q&amp;A</span>
+        </div>
+        <p class="event-desc">Free evening social with personal AI demos and community meetup.</p>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/clawconlondon" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://luma.com/clawconla" target="_blank" data-type="tour">
+      <div class="event-date">
+        <div class="date-day">14</div>
+        <div class="date-dow">Tue</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">ClawCon Los Angeles</span>
+          <span class="event-tag tag-tour">Claw-Con Tour</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Los Angeles, CA</span>
+        </div>
+        <p class="event-desc">Free evening social with personal AI demos and community meetup.</p>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/clawconla" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://clawcamp.us" target="_blank" data-type="flagship">
+      <div class="event-date">
+        <div class="date-day">16</div>
+        <div class="date-dow">Thu</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">ClawCamp Oakland</span>
+          <span class="event-tag tag-flagship">Flagship</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Oakland, California</span>
+          <span class="meta-item">Full Day</span>
+          <span class="meta-item">Ticketed</span>
+        </div>
+        <p class="event-desc">Workshops, speakers, panels, and hands-on learning. All skill levels welcome &mdash; beginner through advanced multi-agent workflows.</p>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/clawcamp" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://luma.com/l7uq5gz1" target="_blank" data-type="community">
+      <div class="event-date">
+        <div class="date-day">TBD</div>
+        <div class="date-dow">Apr</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">WTF is OpenClaw? &mdash; Install Session</span>
+          <span class="event-tag tag-community">Community</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> AngelList HQ, 90 Gold St, San Francisco</span>
+          <span class="meta-item">Founders Cafe &middot; 34+ going</span>
+        </div>
+        <p class="event-desc">Casual install session. Bring your laptop &mdash; get OpenClaw running, ask questions, meet others. First 30 get lobster merch.</p>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/l7uq5gz1" target="_blank" class="rsvp-btn rsvp-secondary">View &rarr;</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://luma.com/b1fukify" target="_blank" data-type="workshop">
+      <div class="event-date">
+        <div class="date-day">TBD</div>
+        <div class="date-dow">Apr</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">AI for Good: Future of Education with OpenClaw</span>
+          <span class="event-tag tag-workshop">Workshop</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Studio 45, 45 29th St, San Francisco</span>
+          <span class="meta-item">9:30am&ndash;1:30pm</span>
+          <span class="meta-item">Worldwide Studios</span>
+        </div>
+        <p class="event-desc">Build interactive education tools with OpenClaw. Explore AI tutors, skill benchmarking, and personalized learning. Hardware welcome (Raspberry Pis, etc).</p>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/b1fukify" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://luma.com/0ow9dek5" target="_blank" data-type="workshop">
+      <div class="event-date">
+        <div class="date-day">TBD</div>
+        <div class="date-dow">Apr</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">Open Build Night: OpenClaw in 20 Lines of Code</span>
+          <span class="event-tag tag-workshop">Workshop</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Studio 45, 45 29th St, San Francisco</span>
+          <span class="meta-item">6:30&ndash;9:30pm</span>
+          <span class="meta-item">Worldwide Studios &middot; Civic</span>
+        </div>
+        <p class="event-desc">Build a self-improving AI agent from scratch in 20 lines. Guided by Will Sentance (Codesmith founder, ranked #1 AI training company by Forbes 2026).</p>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/0ow9dek5" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://luma.com/ba8xqsxq" target="_blank" data-type="workshop">
+      <div class="event-date">
+        <div class="date-day">TBD</div>
+        <div class="date-dow">Apr</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">OpenClaw Workshop II &mdash; MoltPod &times; Silkroad Hub</span>
+          <span class="event-tag tag-workshop">Workshop</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Palo Alto, CA (register to see address)</span>
+          <span class="meta-item">Capped at 50 &middot; Approval required</span>
+        </div>
+        <p class="event-desc">Get OpenClaw live &mdash; locally or via MoltPod cloud. Setup, architecture, workflow structuring, and enterprise use cases. Curated group of founders and investors.</p>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/ba8xqsxq" target="_blank" class="rsvp-btn rsvp-secondary">Apply &rarr;</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://luma.com/clawconsp" target="_blank" data-type="tour">
+      <div class="event-date">
+        <div class="date-day">24</div>
+        <div class="date-dow">Fri</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">ClawCon S&atilde;o Paulo</span>
+          <span class="event-tag tag-tour">Claw-Con Tour</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> S&atilde;o Paulo, Brazil</span>
+        </div>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/clawconsp" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://luma.com/clawconrio" target="_blank" data-type="tour">
+      <div class="event-date">
+        <div class="date-day">25</div>
+        <div class="date-dow">Sat</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">ClawCon Rio de Janeiro</span>
+          <span class="event-tag tag-tour">Claw-Con Tour</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Rio de Janeiro, Brazil</span>
+        </div>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/clawconrio" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://luma.com/clawconguad" target="_blank" data-type="tour">
+      <div class="event-date">
+        <div class="date-day">25</div>
+        <div class="date-dow">Sat</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">ClawCon Guadalajara</span>
+          <span class="event-tag tag-tour">Claw-Con Tour</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Guadalajara, Mexico</span>
+        </div>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/clawconguad" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://luma.com/clawconcopenhagen" target="_blank" data-type="tour">
+      <div class="event-date">
+        <div class="date-day">27</div>
+        <div class="date-dow">Mon</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">ClawCon Copenhagen</span>
+          <span class="event-tag tag-tour">Claw-Con Tour</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Copenhagen, Denmark</span>
+        </div>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/clawconcopenhagen" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://luma.com/clawconchicago" target="_blank" data-type="tour">
+      <div class="event-date">
+        <div class="date-day">28</div>
+        <div class="date-dow">Tue</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">ClawCon Chicago</span>
+          <span class="event-tag tag-tour">Claw-Con Tour</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Chicago, IL</span>
+        </div>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/clawconchicago" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://luma.com/clawconboston" target="_blank" data-type="tour">
+      <div class="event-date">
+        <div class="date-day">29</div>
+        <div class="date-dow">Wed</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">ClawCon Boston</span>
+          <span class="event-tag tag-tour">Claw-Con Tour</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Boston, MA</span>
+        </div>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/clawconboston" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+  </div>
+
+  <!-- May -->
+  <div class="month-section" id="may">
+    <div class="section-divider">
+      <span class="divider-label">May 2026</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <a class="event-row" href="https://luma.com/clawconseoul" target="_blank" data-type="tour">
+      <div class="event-date">
+        <div class="date-day">2</div>
+        <div class="date-dow">Sat</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">ClawCon Seoul</span>
+          <span class="event-tag tag-tour">Claw-Con Tour</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Seoul, South Korea</span>
+        </div>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/clawconseoul" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://luma.com/clawcontoronto" target="_blank" data-type="tour">
+      <div class="event-date">
+        <div class="date-day">9</div>
+        <div class="date-dow">Sat</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">ClawCon Toronto</span>
+          <span class="event-tag tag-tour">Claw-Con Tour</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Toronto, Canada</span>
+        </div>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/clawcontoronto" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://luma.com/clawconcdmx" target="_blank" data-type="tour">
+      <div class="event-date">
+        <div class="date-day">9</div>
+        <div class="date-dow">Sat</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">ClawCon CDMX</span>
+          <span class="event-tag tag-tour">Claw-Con Tour</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Mexico City, Mexico</span>
+        </div>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/clawconcdmx" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://luma.com/clawconsingapore" target="_blank" data-type="tour">
+      <div class="event-date">
+        <div class="date-day">15</div>
+        <div class="date-dow">Fri</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">ClawCon Singapore</span>
+          <span class="event-tag tag-tour">Claw-Con Tour</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Singapore</span>
+        </div>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/clawconsingapore" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+
+    <a class="event-row" href="https://luma.com/clawconshanghai" target="_blank" data-type="tour">
+      <div class="event-date">
+        <div class="date-day">17</div>
+        <div class="date-dow">Sun</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">ClawCon Shanghai</span>
+          <span class="event-tag tag-tour">Claw-Con Tour</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Shanghai, China</span>
+        </div>
+      </div>
+      <div class="event-action">
+        <a href="https://luma.com/clawconshanghai" target="_blank" class="rsvp-btn rsvp-primary">RSVP</a>
+      </div>
+    </a>
+  </div>
+
+</div>
+
+<div class="cta-band">
+  <div>
+    <h3>Don't see your city?</h3>
+    <p>ClawCamp is open. Host an event in your city &mdash; it takes about 10 minutes to apply.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="/host" class="btn-dark">Host a Camp &rarr;</a>
+    <a href="mailto:hello@clawcamp.ai" class="btn-outline">Get in touch</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+
+<script src="/js/nav.js"></script>
+<script>
+function filterEvents(type, btn) {
+  document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.querySelectorAll('.event-row, .featured-event').forEach(function(row) {
+    row.style.display = (type === 'all' || row.dataset.type === type) ? '' : 'none';
+  });
+  document.querySelectorAll('.month-section').forEach(function(section) {
+    var visible = section.querySelectorAll('.event-row:not([style*="none"])');
+    section.style.display = visible.length === 0 ? 'none' : '';
+  });
+}
+</script>
+</body>
+</html>
