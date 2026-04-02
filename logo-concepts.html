@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ClawCamp Logo Concepts</title>
+<title>ClawCamp Logo Concepts — SO-101 Gripper</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -36,7 +36,7 @@
   .page-header p {
     font-size: 15px;
     color: var(--muted);
-    max-width: 600px;
+    max-width: 640px;
     line-height: 1.6;
   }
   .grid {
@@ -57,27 +57,20 @@
     transform: translateY(-3px);
   }
   .card-preview {
-    height: 220px;
+    height: 240px;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 32px;
   }
-  .card-preview.dark {
-    background: var(--ink);
-  }
-  .card-preview.light {
-    background: var(--paper);
-  }
-  .card-preview.rust {
-    background: var(--rust);
-  }
-  .card-preview.cream {
-    background: var(--cream);
-  }
+  .card-preview.dark { background: var(--ink); }
+  .card-preview.light { background: var(--paper); }
+  .card-preview.rust { background: var(--rust); }
+  .card-preview.cream { background: var(--cream); }
+  .card-preview.moss { background: var(--moss); }
   .card-preview svg {
-    max-width: 240px;
-    max-height: 160px;
+    max-width: 280px;
+    max-height: 180px;
   }
   .card-info {
     padding: 20px 24px;
@@ -124,457 +117,467 @@
 
 <div class="page-header">
   <h1>Logo <em>Concepts</em></h1>
-  <p>20 directions for the ClawCamp mark. Ranging from literal claw + camp imagery to abstract geometric marks. All built with the brand palette: rust, moss, gold, ink, cream.</p>
+  <p>20 logos inspired by the SO-101 robotic arm's parallel jaw gripper. Two flat jaws facing each other, opening and closing around objects. The claw that builds.</p>
 </div>
 
 <div class="grid">
 
-  <!-- 1. The Pincer -->
+  <!-- 1. Clean Gripper Icon -->
   <div class="card">
     <div class="card-preview dark">
       <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
-        <!-- Stylized claw pincer forming a "C" -->
-        <path d="M50 95 Q20 60 50 25 Q65 10 80 20 L70 35 Q60 28 55 40 Q45 60 55 80 Q60 92 70 85 L80 100 Q65 110 50 95Z" fill="#c4540a"/>
-        <path d="M80 20 Q95 10 105 25 Q115 45 105 55 L90 45 Q95 38 90 30 Q87 25 80 28Z" fill="#c4540a"/>
-        <circle cx="75" cy="52" r="4" fill="#f5f2ec"/>
-        <text x="125" y="72" font-family="'Bricolage Grotesque', sans-serif" font-size="38" font-weight="800" fill="#f5f2ec" letter-spacing="-2">ClawCamp</text>
+        <!-- Two parallel jaw fingers from front view -->
+        <rect x="38" y="20" width="14" height="55" rx="3" fill="#c4540a"/>
+        <rect x="68" y="20" width="14" height="55" rx="3" fill="#c4540a"/>
+        <!-- Wrist/base connecting the jaws -->
+        <rect x="35" y="72" width="50" height="14" rx="4" fill="#c4540a"/>
+        <!-- Arm stub -->
+        <rect x="52" y="84" width="16" height="20" rx="3" fill="#c4540a" opacity="0.6"/>
+        <text x="110" y="68" font-family="'Bricolage Grotesque', sans-serif" font-size="38" font-weight="800" fill="#f5f2ec" letter-spacing="-2">ClawCamp</text>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 01</div>
-      <div class="card-name">The Pincer</div>
-      <div class="card-desc">Stylized lobster claw forming a C shape. Bold, recognizable at small sizes. The dot is the eye.</div>
-      <div class="card-tags"><span class="tag">Claw-forward</span><span class="tag">Minimal</span></div>
+      <div class="card-name">The Gripper</div>
+      <div class="card-desc">Front-view of the SO-101 parallel jaw gripper. Two rectangular fingers, open and ready to grasp. Direct, literal, iconic.</div>
+      <div class="card-tags"><span class="tag">Literal</span><span class="tag">Minimal</span></div>
     </div>
   </div>
 
-  <!-- 2. Tent Claws -->
+  <!-- 2. Rounded Gripper -->
   <div class="card">
     <div class="card-preview light">
       <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
-        <!-- Two claws forming an A-frame tent shape -->
-        <path d="M60 90 L85 30 Q90 20 95 30 L100 45" stroke="#c4540a" fill="none" stroke-width="6" stroke-linecap="round"/>
-        <path d="M130 90 L105 30 Q100 20 95 30 L90 45" stroke="#c4540a" fill="none" stroke-width="6" stroke-linecap="round"/>
-        <!-- Tent opening -->
-        <path d="M75 90 Q95 65 115 90" stroke="#3a6a40" fill="none" stroke-width="3" stroke-linecap="round"/>
-        <!-- Ground line -->
-        <line x1="55" y1="90" x2="135" y2="90" stroke="#0f0e0b" stroke-width="2"/>
-        <text x="148" y="72" font-family="'Bricolage Grotesque', sans-serif" font-size="36" font-weight="800" fill="#0f0e0b" letter-spacing="-2">ClawCamp</text>
+        <!-- Softer rounded jaw fingers -->
+        <path d="M40 25 Q40 18 47 18 L49 18 Q56 18 56 25 L56 65 Q56 70 51 70 L45 70 Q40 70 40 65Z" fill="#c4540a"/>
+        <path d="M68 25 Q68 18 75 18 L77 18 Q84 18 84 25 L84 65 Q84 70 79 70 L73 70 Q68 70 68 65Z" fill="#c4540a"/>
+        <!-- Rounded wrist -->
+        <path d="M36 72 Q36 68 40 68 L84 68 Q88 68 88 72 L88 82 Q88 86 84 86 L40 86 Q36 86 36 82Z" fill="#0f0e0b"/>
+        <text x="108" y="68" font-family="'Bricolage Grotesque', sans-serif" font-size="38" font-weight="800" fill="#0f0e0b" letter-spacing="-2">ClawCamp</text>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 02</div>
-      <div class="card-name">Tent Claws</div>
-      <div class="card-desc">Two claw pincers arch together to form an A-frame tent. Camp meets claw in one gesture.</div>
-      <div class="card-tags"><span class="tag">Hybrid</span><span class="tag">Clever</span></div>
+      <div class="card-name">Soft Grip</div>
+      <div class="card-desc">Rounded version of the gripper. Friendlier, more approachable. The rust fingers on ink wrist feel premium.</div>
+      <div class="card-tags"><span class="tag">Rounded</span><span class="tag">Friendly</span></div>
     </div>
   </div>
 
-  <!-- 3. Campfire Claw -->
+  <!-- 3. Gripper holding something -->
   <div class="card">
     <div class="card-preview dark">
       <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
-        <!-- Campfire with claw-shaped flames -->
-        <path d="M70 90 L80 70 Q85 55 78 45 Q75 38 80 30 Q85 20 90 30 Q95 42 92 50 Q88 58 95 50 Q100 42 102 50 Q108 65 110 70 L120 90Z" fill="#c4540a"/>
-        <path d="M82 90 L88 75 Q92 62 90 55 Q95 48 97 55 Q100 65 105 75 L108 90Z" fill="#b8860b"/>
-        <!-- Logs -->
-        <line x1="62" y1="95" x2="128" y2="95" stroke="#0f0e0b" stroke-width="4" stroke-linecap="round"/>
-        <line x1="65" y1="100" x2="125" y2="100" stroke="#0f0e0b" stroke-width="4" stroke-linecap="round"/>
-        <text x="140" y="72" font-family="'Bricolage Grotesque', sans-serif" font-size="36" font-weight="800" fill="#f5f2ec" letter-spacing="-2">ClawCamp</text>
+        <!-- Jaw fingers close together, gripping -->
+        <rect x="42" y="18" width="12" height="50" rx="3" fill="#c4540a"/>
+        <rect x="66" y="18" width="12" height="50" rx="3" fill="#c4540a"/>
+        <!-- Object being gripped — a glowing sphere -->
+        <circle cx="60" cy="42" r="10" fill="none" stroke="#b8860b" stroke-width="2"/>
+        <circle cx="60" cy="42" r="5" fill="#b8860b" opacity="0.6"/>
+        <!-- Wrist -->
+        <rect x="38" y="66" width="44" height="12" rx="4" fill="#c4540a"/>
+        <rect x="52" y="76" width="16" height="16" rx="3" fill="#c4540a" opacity="0.5"/>
+        <text x="108" y="66" font-family="'Bricolage Grotesque', sans-serif" font-size="36" font-weight="800" fill="#f5f2ec" letter-spacing="-2">ClawCamp</text>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 03</div>
-      <div class="card-name">Campfire Claw</div>
-      <div class="card-desc">Campfire flames shaped like claw pincers reaching upward. Warm, inviting, community energy.</div>
-      <div class="card-tags"><span class="tag">Hybrid</span><span class="tag">Warm</span></div>
+      <div class="card-name">The Grasp</div>
+      <div class="card-desc">Gripper holding a glowing orb — knowledge, an idea, a model. The claw that builds and grasps the future.</div>
+      <div class="card-tags"><span class="tag">Narrative</span><span class="tag">Symbolic</span></div>
     </div>
   </div>
 
-  <!-- 4. Geometric Claw -->
+  <!-- 4. Abstract gripper as brackets -->
   <div class="card">
     <div class="card-preview cream">
-      <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
-        <!-- Clean geometric claw mark -->
-        <path d="M55 85 L55 45 L70 30 L85 45 L85 55" stroke="#c4540a" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M55 85 L55 45 L40 30 L25 45 L25 55" stroke="#c4540a" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-        <text x="100" y="72" font-family="'Bricolage Grotesque', sans-serif" font-size="38" font-weight="800" fill="#0f0e0b" letter-spacing="-2">ClawCamp</text>
+      <svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
+        <!-- Left jaw as bracket -->
+        <path d="M30 15 L30 70 L48 70" stroke="#c4540a" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Right jaw as bracket -->
+        <path d="M90 15 L90 70 L72 70" stroke="#c4540a" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="110" y="58" font-family="'Bricolage Grotesque', sans-serif" font-size="38" font-weight="800" fill="#0f0e0b" letter-spacing="-2">ClawCamp</text>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 04</div>
-      <div class="card-name">Geo Claw</div>
-      <div class="card-desc">Minimalist geometric claw with angular lines. Clean, modern, tech-forward. Works at any size.</div>
-      <div class="card-tags"><span class="tag">Minimal</span><span class="tag">Geometric</span></div>
+      <div class="card-name">Jaw Brackets</div>
+      <div class="card-desc">The two jaws abstracted into bracket shapes. Doubles as code brackets. Gripper meets developer.</div>
+      <div class="card-tags"><span class="tag">Abstract</span><span class="tag">Code</span></div>
     </div>
   </div>
 
-  <!-- 5. Badge / Patch -->
+  <!-- 5. Badge with gripper -->
   <div class="card">
     <div class="card-preview dark">
       <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <!-- Circular camp badge -->
-        <circle cx="100" cy="100" r="88" fill="none" stroke="#c4540a" stroke-width="3"/>
-        <circle cx="100" cy="100" r="78" fill="none" stroke="#c4540a" stroke-width="1" opacity="0.4"/>
-        <!-- Claw icon center -->
-        <path d="M90 130 L90 80 L105 65 L120 80 L120 95" stroke="#f5f2ec" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M90 130 L90 80 L75 65 L60 80 L60 95" stroke="#f5f2ec" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-        <!-- Text arc top -->
-        <path id="top-arc" d="M30 100 A70 70 0 0 1 170 100" fill="none"/>
-        <text font-family="'DM Mono', monospace" font-size="12" fill="#c4540a" letter-spacing="4" text-transform="uppercase">
-          <textPath href="#top-arc" startOffset="50%" text-anchor="middle">CLAWCAMP</textPath>
+        <circle cx="100" cy="100" r="85" fill="none" stroke="#c4540a" stroke-width="3"/>
+        <circle cx="100" cy="100" r="75" fill="none" stroke="#c4540a" stroke-width="1" opacity="0.3"/>
+        <!-- Gripper centered -->
+        <rect x="82" y="50" width="12" height="48" rx="3" fill="#f5f2ec"/>
+        <rect x="106" y="50" width="12" height="48" rx="3" fill="#f5f2ec"/>
+        <rect x="78" y="96" width="44" height="12" rx="4" fill="#f5f2ec"/>
+        <rect x="93" y="106" width="14" height="18" rx="3" fill="#f5f2ec" opacity="0.5"/>
+        <!-- Text arcs -->
+        <path id="t5" d="M28 105 A72 72 0 0 1 172 105" fill="none"/>
+        <text font-family="'DM Mono', monospace" font-size="13" fill="#c4540a" letter-spacing="5">
+          <textPath href="#t5" startOffset="50%" text-anchor="middle">CLAWCAMP</textPath>
         </text>
-        <!-- Text arc bottom -->
-        <path id="bot-arc" d="M170 110 A70 70 0 0 1 30 110" fill="none"/>
-        <text font-family="'DM Mono', monospace" font-size="10" fill="#6b6860" letter-spacing="2">
-          <textPath href="#bot-arc" startOffset="50%" text-anchor="middle">EST. 2026</textPath>
+        <path id="b5" d="M172 115 A72 72 0 0 1 28 115" fill="none"/>
+        <text font-family="'DM Mono', monospace" font-size="10" fill="#6b6860" letter-spacing="3">
+          <textPath href="#b5" startOffset="50%" text-anchor="middle">AI BUILDERS</textPath>
         </text>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 05</div>
-      <div class="card-name">Scout Patch</div>
-      <div class="card-desc">Circular badge mark. Classic camp patch feel with geometric claw at center. Great for merch.</div>
-      <div class="card-tags"><span class="tag">Badge</span><span class="tag">Retro</span></div>
+      <div class="card-name">Gripper Badge</div>
+      <div class="card-desc">Circular badge with the SO-101 gripper at center. Camp patch energy, great for stickers and merch.</div>
+      <div class="card-tags"><span class="tag">Badge</span><span class="tag">Merch</span></div>
     </div>
   </div>
 
-  <!-- 6. Slash Mark -->
+  <!-- 6. Side profile gripper -->
   <div class="card">
     <div class="card-preview light">
       <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
-        <!-- Three diagonal claw scratches -->
-        <line x1="45" y1="25" x2="30" y2="95" stroke="#c4540a" stroke-width="6" stroke-linecap="round"/>
-        <line x1="60" y1="20" x2="45" y2="100" stroke="#c4540a" stroke-width="6" stroke-linecap="round"/>
-        <line x1="75" y1="25" x2="60" y2="95" stroke="#c4540a" stroke-width="6" stroke-linecap="round"/>
-        <text x="95" y="75" font-family="'Bricolage Grotesque', sans-serif" font-size="40" font-weight="800" fill="#0f0e0b" letter-spacing="-2">ClawCamp</text>
+        <!-- Side view: arm segment + wrist + open gripper -->
+        <path d="M25 95 L25 55 L55 55 L55 30" stroke="#c4540a" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Upper jaw from side -->
+        <path d="M55 30 L40 15" stroke="#c4540a" fill="none" stroke-width="6" stroke-linecap="round"/>
+        <!-- Lower jaw from side -->
+        <path d="M55 30 L70 15" stroke="#c4540a" fill="none" stroke-width="6" stroke-linecap="round"/>
+        <text x="95" y="68" font-family="'Bricolage Grotesque', sans-serif" font-size="38" font-weight="800" fill="#0f0e0b" letter-spacing="-2">ClawCamp</text>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 06</div>
-      <div class="card-name">Slash Mark</div>
-      <div class="card-desc">Three diagonal claw scratches. Raw, energetic, unmistakable. The simplest possible claw mark.</div>
-      <div class="card-tags"><span class="tag">Claw-forward</span><span class="tag">Bold</span></div>
+      <div class="card-name">Arm Profile</div>
+      <div class="card-desc">Side profile of the whole arm: base, segments, wrist, open gripper at top. The full robot in one stroke.</div>
+      <div class="card-tags"><span class="tag">Full arm</span><span class="tag">Line art</span></div>
     </div>
   </div>
 
-  <!-- 7. Bracket Claw -->
+  <!-- 7. Minimal open jaws, wide -->
   <div class="card">
     <div class="card-preview dark">
-      <svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
-        <!-- Code bracket styled as claws -->
-        <text x="15" y="72" font-family="'DM Mono', monospace" font-size="56" font-weight="500" fill="#c4540a">{</text>
-        <text x="60" y="68" font-family="'Bricolage Grotesque', sans-serif" font-size="36" font-weight="800" fill="#f5f2ec" letter-spacing="-1.5">ClawCamp</text>
-        <text x="260" y="72" font-family="'DM Mono', monospace" font-size="56" font-weight="500" fill="#c4540a">}</text>
+      <svg viewBox="0 0 320 100" xmlns="http://www.w3.org/2000/svg">
+        <!-- Two wide-set jaw bars -->
+        <rect x="20" y="22" width="8" height="56" rx="2" fill="#c4540a"/>
+        <rect x="42" y="22" width="8" height="56" rx="2" fill="#c4540a"/>
+        <!-- Connection bar at bottom -->
+        <rect x="18" y="74" width="34" height="6" rx="2" fill="#c4540a" opacity="0.5"/>
+        <text x="68" y="64" font-family="'Bricolage Grotesque', sans-serif" font-size="40" font-weight="800" fill="#f5f2ec" letter-spacing="-2">ClawCamp</text>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 07</div>
-      <div class="card-name">Bracket Claw</div>
-      <div class="card-desc">Curly braces as claw pincers. Code meets community. Developer-native, instantly readable.</div>
-      <div class="card-tags"><span class="tag">Code</span><span class="tag">Techy</span></div>
+      <div class="card-name">Twin Bars</div>
+      <div class="card-desc">Ultra-minimal: just two vertical bars and a base. The simplest possible read of a parallel gripper.</div>
+      <div class="card-tags"><span class="tag">Ultra-minimal</span><span class="tag">Clean</span></div>
     </div>
   </div>
 
-  <!-- 8. Mountain Claw -->
+  <!-- 8. Gripper as negative space -->
   <div class="card">
-    <div class="card-preview cream">
-      <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
-        <!-- Mountain peaks that double as open claw -->
-        <path d="M30 90 L55 40 L70 60 L90 25 L110 60 L125 40 L150 90Z" fill="none" stroke="#0f0e0b" stroke-width="3" stroke-linejoin="round"/>
-        <path d="M55 40 L70 60 L90 25 L110 60 L125 40" fill="none" stroke="#c4540a" stroke-width="3" stroke-linejoin="round"/>
-        <!-- Trees -->
-        <line x1="40" y1="90" x2="40" y2="78" stroke="#3a6a40" stroke-width="2" stroke-linecap="round"/>
-        <line x1="140" y1="90" x2="140" y2="80" stroke="#3a6a40" stroke-width="2" stroke-linecap="round"/>
-        <text x="160" y="70" font-family="'Bricolage Grotesque', sans-serif" font-size="34" font-weight="800" fill="#0f0e0b" letter-spacing="-2">ClawCamp</text>
+    <div class="card-preview rust">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Solid circle with gripper cut out as negative space -->
+        <defs>
+          <mask id="m8">
+            <rect width="200" height="200" fill="white"/>
+            <rect x="82" y="45" width="12" height="52" rx="3" fill="black"/>
+            <rect x="106" y="45" width="12" height="52" rx="3" fill="black"/>
+            <rect x="78" y="94" width="44" height="12" rx="4" fill="black"/>
+            <rect x="93" y="104" width="14" height="22" rx="3" fill="black"/>
+          </mask>
+        </defs>
+        <circle cx="100" cy="100" r="80" fill="#f5f2ec" mask="url(#m8)"/>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 08</div>
-      <div class="card-name">Mountain Claw</div>
-      <div class="card-desc">Mountain range silhouette where peaks form an open claw shape. Outdoor adventure + AI builder.</div>
-      <div class="card-tags"><span class="tag">Camp-forward</span><span class="tag">Outdoor</span></div>
+      <div class="card-name">Negative Grip</div>
+      <div class="card-desc">Gripper cut out of a solid circle as negative space. Bold, stamp-like. Works as a favicon or app icon.</div>
+      <div class="card-tags"><span class="tag">Negative space</span><span class="tag">Icon</span></div>
     </div>
   </div>
 
-  <!-- 9. Dot Matrix -->
+  <!-- 9. Stacked wordmark with gripper divider -->
   <div class="card">
     <div class="card-preview dark">
-      <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
-        <!-- Claw shape made of dots/circles -->
-        <circle cx="40" cy="80" r="5" fill="#c4540a"/>
-        <circle cx="35" cy="65" r="5" fill="#c4540a"/>
-        <circle cx="35" cy="50" r="5" fill="#c4540a"/>
-        <circle cx="42" cy="38" r="5" fill="#c4540a"/>
-        <circle cx="55" cy="30" r="5" fill="#c4540a"/>
-        <circle cx="70" cy="28" r="5" fill="#c4540a"/>
-        <circle cx="85" cy="35" r="5" fill="#c4540a"/>
-        <circle cx="92" cy="48" r="5" fill="#c4540a"/>
-        <!-- Second pincer -->
-        <circle cx="70" cy="28" r="5" fill="#c4540a"/>
-        <circle cx="80" cy="22" r="4" fill="#b8860b"/>
-        <circle cx="90" cy="25" r="4" fill="#b8860b"/>
-        <circle cx="95" cy="33" r="4" fill="#b8860b"/>
-        <text x="115" y="68" font-family="'Bricolage Grotesque', sans-serif" font-size="36" font-weight="800" fill="#f5f2ec" letter-spacing="-2">ClawCamp</text>
+      <svg viewBox="0 0 280 130" xmlns="http://www.w3.org/2000/svg">
+        <text x="20" y="52" font-family="'Bricolage Grotesque', sans-serif" font-size="46" font-weight="800" fill="#f5f2ec" letter-spacing="-3">CLAW</text>
+        <!-- Gripper as divider between words -->
+        <rect x="20" y="62" width="5" height="22" rx="1.5" fill="#c4540a"/>
+        <rect x="30" y="62" width="5" height="22" rx="1.5" fill="#c4540a"/>
+        <rect x="18" y="82" width="19" height="4" rx="1.5" fill="#c4540a" opacity="0.6"/>
+        <line x1="42" y1="74" x2="240" y2="74" stroke="#c4540a" stroke-width="1" opacity="0.3"/>
+        <text x="20" y="115" font-family="'Bricolage Grotesque', sans-serif" font-size="46" font-weight="800" fill="#c4540a" letter-spacing="-3">CAMP</text>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 09</div>
-      <div class="card-name">Dot Matrix</div>
-      <div class="card-desc">Claw shape built from circles/nodes. Feels like a network graph — community connections.</div>
-      <div class="card-tags"><span class="tag">Abstract</span><span class="tag">Network</span></div>
+      <div class="card-name">Stacked Divider</div>
+      <div class="card-desc">CLAW/CAMP stacked with a tiny gripper icon as the divider between the two words. The mark is built into the type.</div>
+      <div class="card-tags"><span class="tag">Wordmark</span><span class="tag">Integrated</span></div>
     </div>
   </div>
 
-  <!-- 10. Monogram CC -->
+  <!-- 10. Gripper pinching the dot -->
   <div class="card">
-    <div class="card-preview light">
-      <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
-        <!-- Overlapping C + C monogram -->
-        <path d="M75 30 Q40 30 40 60 Q40 90 75 90" stroke="#c4540a" fill="none" stroke-width="6" stroke-linecap="round"/>
-        <path d="M65 30 Q100 30 100 60 Q100 90 65 90" stroke="#0f0e0b" fill="none" stroke-width="6" stroke-linecap="round"/>
-        <text x="120" y="72" font-family="'Bricolage Grotesque', sans-serif" font-size="38" font-weight="800" fill="#0f0e0b" letter-spacing="-2">ClawCamp</text>
+    <div class="card-preview cream">
+      <svg viewBox="0 0 320 100" xmlns="http://www.w3.org/2000/svg">
+        <text x="20" y="68" font-family="'Bricolage Grotesque', sans-serif" font-size="42" font-weight="800" fill="#0f0e0b" letter-spacing="-2">ClawCamp</text>
+        <!-- Gripper pinching a dot after the wordmark -->
+        <rect x="262" y="32" width="8" height="32" rx="2" fill="#c4540a"/>
+        <rect x="282" y="32" width="8" height="32" rx="2" fill="#c4540a"/>
+        <circle cx="276" cy="50" r="6" fill="#b8860b"/>
+        <rect x="260" y="62" width="32" height="5" rx="2" fill="#c4540a" opacity="0.5"/>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 10</div>
-      <div class="card-name">CC Monogram</div>
-      <div class="card-desc">Two interlocking C's — one rust, one ink. Also reads as an open claw. Clean lettermark.</div>
-      <div class="card-tags"><span class="tag">Monogram</span><span class="tag">Elegant</span></div>
+      <div class="card-name">Grip the Dot</div>
+      <div class="card-desc">Wordmark with a gripper pinching a golden dot at the end. The period is the object. Playful and precise.</div>
+      <div class="card-tags"><span class="tag">Wordmark</span><span class="tag">Playful</span></div>
     </div>
   </div>
 
-  <!-- 11. Terminal Prompt -->
+  <!-- 11. Terminal gripper -->
   <div class="card">
     <div class="card-preview dark">
       <svg viewBox="0 0 320 100" xmlns="http://www.w3.org/2000/svg">
-        <text x="20" y="62" font-family="'DM Mono', monospace" font-size="28" font-weight="500" fill="#3a6a40">$</text>
-        <text x="48" y="62" font-family="'DM Mono', monospace" font-size="28" font-weight="400" fill="#f5f2ec">claw</text>
-        <text x="132" y="62" font-family="'DM Mono', monospace" font-size="28" font-weight="400" fill="#c4540a">camp</text>
-        <rect x="218" y="42" width="16" height="26" fill="#c4540a" opacity="0.8">
-          <animate attributeName="opacity" values="0.8;0;0.8" dur="1.2s" repeatCount="indefinite"/>
+        <!-- Gripper as terminal prompt character -->
+        <rect x="20" y="28" width="6" height="30" rx="1.5" fill="#3a6a40"/>
+        <rect x="32" y="28" width="6" height="30" rx="1.5" fill="#3a6a40"/>
+        <rect x="18" y="56" width="22" height="4" rx="1.5" fill="#3a6a40" opacity="0.6"/>
+        <text x="52" y="58" font-family="'DM Mono', monospace" font-size="26" font-weight="400" fill="#f5f2ec">clawcamp</text>
+        <rect x="240" y="36" width="14" height="24" fill="#c4540a" opacity="0.7">
+          <animate attributeName="opacity" values="0.7;0;0.7" dur="1.2s" repeatCount="indefinite"/>
         </rect>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 11</div>
-      <div class="card-name">Terminal Prompt</div>
-      <div class="card-desc">Command line aesthetic. Green dollar sign, monospace type, blinking cursor. Pure developer energy.</div>
-      <div class="card-tags"><span class="tag">Code</span><span class="tag">Developer</span></div>
+      <div class="card-name">$ Gripper</div>
+      <div class="card-desc">The gripper replaces the terminal prompt symbol. Green gripper, mono type, blinking cursor. Code-native.</div>
+      <div class="card-tags"><span class="tag">Terminal</span><span class="tag">Developer</span></div>
     </div>
   </div>
 
-  <!-- 12. Stacked Bold -->
+  <!-- 12. Thick geometric gripper -->
   <div class="card">
-    <div class="card-preview rust">
-      <svg viewBox="0 0 260 140" xmlns="http://www.w3.org/2000/svg">
-        <text x="20" y="65" font-family="'Bricolage Grotesque', sans-serif" font-size="52" font-weight="800" fill="#f5f2ec" letter-spacing="-3">CLAW</text>
-        <text x="20" y="115" font-family="'Bricolage Grotesque', sans-serif" font-size="52" font-weight="800" fill="#0f0e0b" letter-spacing="-3">CAMP</text>
+    <div class="card-preview light">
+      <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
+        <!-- Thick bold geometric gripper -->
+        <rect x="30" y="15" width="18" height="60" rx="4" fill="#c4540a"/>
+        <rect x="62" y="15" width="18" height="60" rx="4" fill="#c4540a"/>
+        <rect x="25" y="70" width="60" height="18" rx="5" fill="#0f0e0b"/>
+        <rect x="45" y="85" width="20" height="24" rx="4" fill="#0f0e0b" opacity="0.4"/>
+        <text x="105" y="68" font-family="'Bricolage Grotesque', sans-serif" font-size="38" font-weight="800" fill="#0f0e0b" letter-spacing="-2">ClawCamp</text>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 12</div>
-      <div class="card-name">Stacked Bold</div>
-      <div class="card-desc">Two-line stacked wordmark. CLAW in cream, CAMP in ink, on rust background. High impact, billboard-ready.</div>
-      <div class="card-tags"><span class="tag">Wordmark</span><span class="tag">Bold</span></div>
+      <div class="card-name">Bold Grip</div>
+      <div class="card-desc">Chunky, confident gripper mark. Rust jaws, ink wrist. Feels solid and engineered. Scales great to favicon.</div>
+      <div class="card-tags"><span class="tag">Bold</span><span class="tag">Geometric</span></div>
     </div>
   </div>
 
-  <!-- 13. Hex Mark -->
+  <!-- 13. Gripper forming letter C -->
   <div class="card">
     <div class="card-preview dark">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <!-- Hexagon container -->
-        <polygon points="100,15 175,55 175,135 100,175 25,135 25,55" fill="none" stroke="#c4540a" stroke-width="3"/>
-        <!-- Claw inside -->
-        <path d="M85 130 L85 80 L100 60 L115 80 L115 95" stroke="#f5f2ec" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M85 130 L85 80 L70 60 L55 80 L55 95" stroke="#f5f2ec" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-        <!-- Stars -->
-        <circle cx="100" cy="42" r="3" fill="#b8860b"/>
-        <circle cx="85" cy="48" r="2" fill="#b8860b"/>
-        <circle cx="115" cy="48" r="2" fill="#b8860b"/>
+      <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
+        <!-- Gripper rotated to form a C -->
+        <path d="M72 20 L30 20 L30 100 L72 100" stroke="#c4540a" fill="none" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Jaw tips -->
+        <rect x="68" y="14" width="8" height="18" rx="2" fill="#c4540a"/>
+        <rect x="68" y="90" width="8" height="18" rx="2" fill="#c4540a"/>
+        <text x="95" y="72" font-family="'Bricolage Grotesque', sans-serif" font-size="40" font-weight="800" fill="#f5f2ec" letter-spacing="-2">lawCamp</text>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 13</div>
-      <div class="card-name">Hex Mark</div>
-      <div class="card-desc">Geometric claw inside a hexagon. Tech-native shape (hex = packages, modules). Stars above like a night sky.</div>
-      <div class="card-tags"><span class="tag">Geometric</span><span class="tag">Techy</span></div>
+      <div class="card-name">C-Grip</div>
+      <div class="card-desc">The gripper rotated sideways forms the letter C. The jaw tips are the serifs. The mark IS the first letter.</div>
+      <div class="card-tags"><span class="tag">Letterform</span><span class="tag">Clever</span></div>
     </div>
   </div>
 
-  <!-- 14. Handwritten -->
+  <!-- 14. Tiny gripper replacing the A -->
   <div class="card">
     <div class="card-preview cream">
       <svg viewBox="0 0 320 100" xmlns="http://www.w3.org/2000/svg">
-        <!-- Hand-drawn style text -->
-        <text x="20" y="65" font-family="'Bricolage Grotesque', sans-serif" font-size="42" font-weight="800" fill="#0f0e0b" letter-spacing="-2" style="font-style:italic">claw</text>
-        <text x="148" y="65" font-family="'Bricolage Grotesque', sans-serif" font-size="42" font-weight="300" fill="#c4540a" letter-spacing="-2" style="font-style:italic">camp</text>
-        <!-- Underline scribble -->
-        <path d="M20 78 Q80 72 160 78 Q240 84 300 76" stroke="#c4540a" fill="none" stroke-width="2" stroke-linecap="round"/>
+        <text x="20" y="68" font-family="'Bricolage Grotesque', sans-serif" font-size="42" font-weight="800" fill="#0f0e0b" letter-spacing="-2">Cl</text>
+        <!-- Gripper replacing the "a" in Claw -->
+        <rect x="82" y="38" width="6" height="28" rx="1.5" fill="#c4540a"/>
+        <rect x="96" y="38" width="6" height="28" rx="1.5" fill="#c4540a"/>
+        <rect x="80" y="64" width="24" height="5" rx="2" fill="#c4540a"/>
+        <text x="108" y="68" font-family="'Bricolage Grotesque', sans-serif" font-size="42" font-weight="800" fill="#0f0e0b" letter-spacing="-2">wCamp</text>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 14</div>
-      <div class="card-name">Italic Contrast</div>
-      <div class="card-desc">Heavy italic "claw" meets light italic "camp". Contrast in weight creates visual tension. Organic underline.</div>
-      <div class="card-tags"><span class="tag">Wordmark</span><span class="tag">Organic</span></div>
+      <div class="card-name">Gripper-A</div>
+      <div class="card-desc">The gripper icon replaces the "a" in Claw. Subtle, clever — you see it once and can't unsee it.</div>
+      <div class="card-tags"><span class="tag">Wordmark</span><span class="tag">Hidden</span></div>
     </div>
   </div>
 
-  <!-- 15. Lobster Minimal -->
+  <!-- 15. Hex gripper -->
   <div class="card">
-    <div class="card-preview light">
-      <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
-        <!-- Minimal lobster outline -->
-        <ellipse cx="55" cy="65" rx="18" ry="25" fill="none" stroke="#c4540a" stroke-width="3"/>
-        <!-- Claws -->
-        <path d="M42 42 L30 25 M30 25 L22 30 M30 25 L28 18" stroke="#c4540a" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <path d="M68 42 L80 25 M80 25 L88 30 M80 25 L82 18" stroke="#c4540a" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <!-- Tail -->
-        <path d="M55 90 L55 105 L48 110 M55 105 L62 110" stroke="#c4540a" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <!-- Eyes -->
-        <circle cx="48" cy="55" r="2" fill="#c4540a"/>
-        <circle cx="62" cy="55" r="2" fill="#c4540a"/>
-        <text x="100" y="72" font-family="'Bricolage Grotesque', sans-serif" font-size="36" font-weight="800" fill="#0f0e0b" letter-spacing="-2">ClawCamp</text>
+    <div class="card-preview dark">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,12 178,50 178,130 100,168 22,130 22,50" fill="none" stroke="#c4540a" stroke-width="3"/>
+        <!-- Gripper inside hex -->
+        <rect x="84" y="48" width="10" height="46" rx="3" fill="#f5f2ec"/>
+        <rect x="106" y="48" width="10" height="46" rx="3" fill="#f5f2ec"/>
+        <rect x="80" y="92" width="40" height="10" rx="3" fill="#f5f2ec"/>
+        <rect x="94" y="100" width="12" height="20" rx="3" fill="#f5f2ec" opacity="0.4"/>
+        <!-- Sparkle dots -->
+        <circle cx="100" cy="36" r="3" fill="#b8860b"/>
+        <circle cx="86" cy="42" r="2" fill="#b8860b" opacity="0.5"/>
+        <circle cx="114" cy="42" r="2" fill="#b8860b" opacity="0.5"/>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 15</div>
-      <div class="card-name">Lobster Line</div>
-      <div class="card-desc">Single-weight line drawing of a lobster. Friendly, approachable, fun. Nods to OpenClaw's origin.</div>
-      <div class="card-tags"><span class="tag">Claw-forward</span><span class="tag">Playful</span></div>
+      <div class="card-name">Hex Grip</div>
+      <div class="card-desc">Gripper inside a hexagon with gold sparks. Tech-native (hex = packages). Night sky campfire feel.</div>
+      <div class="card-tags"><span class="tag">Hex</span><span class="tag">Techy</span></div>
     </div>
   </div>
 
-  <!-- 16. Split Block -->
+  <!-- 16. Gripper + campfire -->
   <div class="card">
     <div class="card-preview dark">
-      <svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
-        <rect x="20" y="20" width="125" height="60" rx="4" fill="#c4540a"/>
-        <rect x="155" y="20" width="125" height="60" rx="4" fill="none" stroke="#f5f2ec" stroke-width="2"/>
-        <text x="40" y="60" font-family="'Bricolage Grotesque', sans-serif" font-size="28" font-weight="800" fill="#f5f2ec" letter-spacing="-1">CLAW</text>
-        <text x="172" y="60" font-family="'Bricolage Grotesque', sans-serif" font-size="28" font-weight="800" fill="#f5f2ec" letter-spacing="-1">CAMP</text>
+      <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
+        <!-- Gripper jaws -->
+        <rect x="42" y="20" width="10" height="40" rx="3" fill="#c4540a"/>
+        <rect x="68" y="20" width="10" height="40" rx="3" fill="#c4540a"/>
+        <!-- Fire between the jaws -->
+        <path d="M56 55 Q52 42 56 35 Q60 28 60 38 Q60 28 64 35 Q68 42 64 55Z" fill="#b8860b" opacity="0.8"/>
+        <!-- Wrist -->
+        <rect x="38" y="58" width="44" height="10" rx="3" fill="#c4540a"/>
+        <!-- Logs -->
+        <line x1="36" y1="76" x2="84" y2="76" stroke="#f5f2ec" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+        <line x1="40" y1="82" x2="80" y2="82" stroke="#f5f2ec" stroke-width="3" stroke-linecap="round" opacity="0.2"/>
+        <text x="105" y="65" font-family="'Bricolage Grotesque', sans-serif" font-size="36" font-weight="800" fill="#f5f2ec" letter-spacing="-2">ClawCamp</text>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 16</div>
-      <div class="card-name">Split Block</div>
-      <div class="card-desc">Two blocks side by side. Filled + outlined. Modular feel — like building blocks or containers.</div>
-      <div class="card-tags"><span class="tag">Wordmark</span><span class="tag">Modular</span></div>
+      <div class="card-name">Fire Grip</div>
+      <div class="card-desc">Gripper holding a campfire flame between its jaws. The claw tends the fire. Robotics meets gathering.</div>
+      <div class="card-tags"><span class="tag">Hybrid</span><span class="tag">Camp</span></div>
     </div>
   </div>
 
-  <!-- 17. Campfire Ring -->
+  <!-- 17. Outline gripper, light -->
   <div class="card">
-    <div class="card-preview cream">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <!-- Outer ring with text -->
-        <circle cx="100" cy="100" r="85" fill="none" stroke="#0f0e0b" stroke-width="2"/>
-        <circle cx="100" cy="100" r="70" fill="none" stroke="#0f0e0b" stroke-width="1" opacity="0.3"/>
-        <!-- Campfire + claw combined -->
-        <path d="M90 130 L90 85 Q90 70 80 60 Q75 55 80 45 Q88 32 95 45 Q100 55 95 62 Q105 52 108 60 Q115 75 110 85 L110 130" fill="#c4540a" opacity="0.9"/>
-        <path d="M95 130 L95 90 Q98 78 100 72 Q102 78 105 90 L105 130" fill="#b8860b"/>
-        <!-- Text -->
-        <path id="ring-top" d="M25 100 A75 75 0 0 1 175 100" fill="none"/>
-        <text font-family="'Bricolage Grotesque', sans-serif" font-size="16" font-weight="700" fill="#0f0e0b" letter-spacing="6">
-          <textPath href="#ring-top" startOffset="50%" text-anchor="middle">CLAWCAMP</textPath>
-        </text>
-        <path id="ring-bot" d="M175 110 A75 75 0 0 1 25 110" fill="none"/>
-        <text font-family="'DM Mono', monospace" font-size="10" fill="#6b6860" letter-spacing="3">
-          <textPath href="#ring-bot" startOffset="50%" text-anchor="middle">OAKLAND 2026</textPath>
-        </text>
+    <div class="card-preview light">
+      <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outline-only gripper -->
+        <rect x="38" y="22" width="14" height="48" rx="4" fill="none" stroke="#c4540a" stroke-width="2.5"/>
+        <rect x="68" y="22" width="14" height="48" rx="4" fill="none" stroke="#c4540a" stroke-width="2.5"/>
+        <rect x="34" y="68" width="52" height="14" rx="5" fill="none" stroke="#c4540a" stroke-width="2.5"/>
+        <line x1="60" y1="80" x2="60" y2="100" stroke="#c4540a" stroke-width="2.5" stroke-linecap="round"/>
+        <text x="108" y="68" font-family="'Bricolage Grotesque', sans-serif" font-size="38" font-weight="800" fill="#0f0e0b" letter-spacing="-2">ClawCamp</text>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 17</div>
-      <div class="card-name">Campfire Ring</div>
-      <div class="card-desc">Circular emblem with a claw-shaped campfire at center. Text wraps the ring. Classic event branding.</div>
-      <div class="card-tags"><span class="tag">Badge</span><span class="tag">Event</span></div>
+      <div class="card-name">Wire Grip</div>
+      <div class="card-desc">Outline/wireframe version. Light, technical, blueprint feel. Like looking at the CAD file before printing.</div>
+      <div class="card-tags"><span class="tag">Outline</span><span class="tag">Technical</span></div>
     </div>
   </div>
 
-  <!-- 18. Arrow Claw -->
+  <!-- 18. Passport stamp with gripper -->
   <div class="card">
-    <div class="card-preview dark">
-      <svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
-        <!-- Two angular arrows forming a claw/chevron -->
-        <path d="M30 70 L55 30 L65 50" stroke="#c4540a" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M80 70 L55 30" stroke="#c4540a" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-        <text x="100" y="62" font-family="'Bricolage Grotesque', sans-serif" font-size="34" font-weight="800" fill="#f5f2ec" letter-spacing="-2">ClawCamp</text>
-        <!-- Dot -->
-        <circle cx="272" cy="50" r="5" fill="#c4540a"/>
+    <div class="card-preview cream">
+      <svg viewBox="0 0 280 120" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="15" width="260" height="90" rx="8" fill="none" stroke="#c4540a" stroke-width="3"/>
+        <rect x="16" y="21" width="248" height="78" rx="5" fill="none" stroke="#c4540a" stroke-width="1" opacity="0.4"/>
+        <!-- Small gripper -->
+        <rect x="28" y="36" width="6" height="28" rx="1.5" fill="#c4540a"/>
+        <rect x="42" y="36" width="6" height="28" rx="1.5" fill="#c4540a"/>
+        <rect x="26" y="62" width="24" height="5" rx="2" fill="#c4540a"/>
+        <!-- Text -->
+        <text x="65" y="52" font-family="'Bricolage Grotesque', sans-serif" font-size="20" font-weight="800" fill="#0f0e0b" letter-spacing="-1">CLAW</text>
+        <text x="65" y="76" font-family="'Bricolage Grotesque', sans-serif" font-size="20" font-weight="800" fill="#c4540a" letter-spacing="-1">CAMP</text>
+        <text x="162" y="50" font-family="'DM Mono', monospace" font-size="9" fill="#6b6860" letter-spacing="1">AI BUILDER</text>
+        <text x="162" y="64" font-family="'DM Mono', monospace" font-size="9" fill="#6b6860" letter-spacing="1">COMMUNITY</text>
+        <text x="162" y="78" font-family="'DM Mono', monospace" font-size="9" fill="#c4540a" letter-spacing="1">EST. 2026</text>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 18</div>
-      <div class="card-name">Chevron Claw</div>
-      <div class="card-desc">Angular chevron mark that reads as both a claw and an upward arrow. Forward motion, progress.</div>
-      <div class="card-tags"><span class="tag">Abstract</span><span class="tag">Sharp</span></div>
+      <div class="card-name">Passport Stamp</div>
+      <div class="card-desc">Rectangular stamp with gripper icon, stacked text, metadata. Like a passport stamp from your travels to ClawCamp.</div>
+      <div class="card-tags"><span class="tag">Stamp</span><span class="tag">Travel</span></div>
     </div>
   </div>
 
-  <!-- 19. Stamp -->
+  <!-- 19. Gripper on moss/nature -->
   <div class="card">
-    <div class="card-preview light">
-      <svg viewBox="0 0 280 120" xmlns="http://www.w3.org/2000/svg">
-        <!-- Rounded rectangle stamp border -->
-        <rect x="10" y="15" width="260" height="90" rx="8" fill="none" stroke="#c4540a" stroke-width="3"/>
-        <rect x="16" y="21" width="248" height="78" rx="5" fill="none" stroke="#c4540a" stroke-width="1" opacity="0.4"/>
-        <!-- Three claw marks -->
-        <line x1="30" y1="40" x2="25" y2="80" stroke="#c4540a" stroke-width="4" stroke-linecap="round"/>
-        <line x1="42" y1="36" x2="37" y2="84" stroke="#c4540a" stroke-width="4" stroke-linecap="round"/>
-        <line x1="54" y1="40" x2="49" y2="80" stroke="#c4540a" stroke-width="4" stroke-linecap="round"/>
-        <!-- Text -->
-        <text x="72" y="55" font-family="'Bricolage Grotesque', sans-serif" font-size="20" font-weight="800" fill="#0f0e0b" letter-spacing="-1">CLAW</text>
-        <text x="72" y="80" font-family="'Bricolage Grotesque', sans-serif" font-size="20" font-weight="800" fill="#c4540a" letter-spacing="-1">CAMP</text>
-        <!-- Side text -->
-        <text x="165" y="52" font-family="'DM Mono', monospace" font-size="9" fill="#6b6860" letter-spacing="1">AI BUILDER</text>
-        <text x="165" y="66" font-family="'DM Mono', monospace" font-size="9" fill="#6b6860" letter-spacing="1">COMMUNITY</text>
-        <text x="165" y="80" font-family="'DM Mono', monospace" font-size="9" fill="#c4540a" letter-spacing="1">EST. 2026</text>
+    <div class="card-preview moss">
+      <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
+        <!-- White gripper on moss -->
+        <rect x="38" y="20" width="14" height="50" rx="3" fill="#f5f2ec"/>
+        <rect x="68" y="20" width="14" height="50" rx="3" fill="#f5f2ec"/>
+        <rect x="34" y="68" width="52" height="14" rx="5" fill="#f5f2ec"/>
+        <rect x="52" y="80" width="16" height="18" rx="3" fill="#f5f2ec" opacity="0.5"/>
+        <text x="108" y="68" font-family="'Bricolage Grotesque', sans-serif" font-size="38" font-weight="800" fill="#f5f2ec" letter-spacing="-2">ClawCamp</text>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 19</div>
-      <div class="card-name">Passport Stamp</div>
-      <div class="card-desc">Rectangular stamp with claw marks, stacked text, and metadata. Looks like a passport stamp from your travels.</div>
-      <div class="card-tags"><span class="tag">Badge</span><span class="tag">Travel</span></div>
+      <div class="card-name">Forest Grip</div>
+      <div class="card-desc">White gripper on moss green. Nature palette. The robot in the forest. Camp vibes with tech precision.</div>
+      <div class="card-tags"><span class="tag">Nature</span><span class="tag">Camp</span></div>
     </div>
   </div>
 
-  <!-- 20. Constellation -->
+  <!-- 20. Constellation gripper -->
   <div class="card">
     <div class="card-preview dark">
       <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
-        <!-- Constellation dots forming claw shape -->
-        <circle cx="35" cy="85" r="3" fill="#f5f2ec"/>
-        <circle cx="30" cy="60" r="3" fill="#f5f2ec"/>
-        <circle cx="35" cy="40" r="3" fill="#f5f2ec"/>
-        <circle cx="50" cy="25" r="4" fill="#c4540a"/>
-        <circle cx="70" cy="20" r="3" fill="#f5f2ec"/>
-        <circle cx="85" cy="30" r="3" fill="#f5f2ec"/>
-        <circle cx="90" cy="45" r="3" fill="#f5f2ec"/>
-        <!-- Upper pincer -->
-        <circle cx="75" cy="15" r="2" fill="#b8860b"/>
-        <circle cx="88" cy="18" r="2" fill="#b8860b"/>
-        <!-- Connecting lines -->
-        <line x1="35" y1="85" x2="30" y2="60" stroke="#f5f2ec" stroke-width="0.8" opacity="0.3"/>
-        <line x1="30" y1="60" x2="35" y2="40" stroke="#f5f2ec" stroke-width="0.8" opacity="0.3"/>
-        <line x1="35" y1="40" x2="50" y2="25" stroke="#f5f2ec" stroke-width="0.8" opacity="0.3"/>
-        <line x1="50" y1="25" x2="70" y2="20" stroke="#f5f2ec" stroke-width="0.8" opacity="0.3"/>
-        <line x1="70" y1="20" x2="85" y2="30" stroke="#f5f2ec" stroke-width="0.8" opacity="0.3"/>
-        <line x1="85" y1="30" x2="90" y2="45" stroke="#f5f2ec" stroke-width="0.8" opacity="0.3"/>
-        <line x1="70" y1="20" x2="75" y2="15" stroke="#b8860b" stroke-width="0.8" opacity="0.3"/>
-        <line x1="75" y1="15" x2="88" y2="18" stroke="#b8860b" stroke-width="0.8" opacity="0.3"/>
-        <text x="110" y="62" font-family="'Bricolage Grotesque', sans-serif" font-size="34" font-weight="800" fill="#f5f2ec" letter-spacing="-2">ClawCamp</text>
-        <text x="112" y="80" font-family="'DM Mono', monospace" font-size="10" fill="#6b6860" letter-spacing="2">UNDER THE SAME SKY</text>
+        <!-- Gripper shape made of connected stars/dots -->
+        <!-- Left jaw -->
+        <circle cx="42" cy="22" r="3.5" fill="#f5f2ec"/>
+        <circle cx="42" cy="42" r="3" fill="#f5f2ec"/>
+        <circle cx="42" cy="62" r="3.5" fill="#f5f2ec"/>
+        <line x1="42" y1="25" x2="42" y2="39" stroke="#f5f2ec" stroke-width="1" opacity="0.4"/>
+        <line x1="42" y1="45" x2="42" y2="59" stroke="#f5f2ec" stroke-width="1" opacity="0.4"/>
+        <!-- Right jaw -->
+        <circle cx="72" cy="22" r="3.5" fill="#f5f2ec"/>
+        <circle cx="72" cy="42" r="3" fill="#f5f2ec"/>
+        <circle cx="72" cy="62" r="3.5" fill="#f5f2ec"/>
+        <line x1="72" y1="25" x2="72" y2="39" stroke="#f5f2ec" stroke-width="1" opacity="0.4"/>
+        <line x1="72" y1="45" x2="72" y2="59" stroke="#f5f2ec" stroke-width="1" opacity="0.4"/>
+        <!-- Wrist bar -->
+        <circle cx="42" cy="75" r="4" fill="#c4540a"/>
+        <circle cx="57" cy="75" r="3" fill="#c4540a"/>
+        <circle cx="72" cy="75" r="4" fill="#c4540a"/>
+        <line x1="42" y1="65" x2="42" y2="72" stroke="#c4540a" stroke-width="1" opacity="0.5"/>
+        <line x1="72" y1="65" x2="72" y2="72" stroke="#c4540a" stroke-width="1" opacity="0.5"/>
+        <line x1="46" y1="75" x2="54" y2="75" stroke="#c4540a" stroke-width="1" opacity="0.4"/>
+        <line x1="60" y1="75" x2="68" y2="75" stroke="#c4540a" stroke-width="1" opacity="0.4"/>
+        <!-- Arm -->
+        <circle cx="57" cy="90" r="3" fill="#c4540a" opacity="0.5"/>
+        <line x1="57" y1="78" x2="57" y2="87" stroke="#c4540a" stroke-width="1" opacity="0.3"/>
+        <text x="100" y="58" font-family="'Bricolage Grotesque', sans-serif" font-size="34" font-weight="800" fill="#f5f2ec" letter-spacing="-2">ClawCamp</text>
+        <text x="102" y="78" font-family="'DM Mono', monospace" font-size="10" fill="#6b6860" letter-spacing="2">UNDER THE SAME SKY</text>
       </svg>
     </div>
     <div class="card-info">
       <div class="card-number">Concept 20</div>
-      <div class="card-name">Constellation</div>
-      <div class="card-desc">Stars connected to form a claw shape in the night sky. Global community, camping under the stars, connected nodes.</div>
-      <div class="card-tags"><span class="tag">Abstract</span><span class="tag">Poetic</span></div>
+      <div class="card-name">Star Grip</div>
+      <div class="card-desc">The gripper as a constellation — stars connected to form the SO-101 shape. Community nodes, night sky, camping under the stars.</div>
+      <div class="card-tags"><span class="tag">Constellation</span><span class="tag">Poetic</span></div>
     </div>
   </div>
 
