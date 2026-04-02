@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robotics Workshop — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .workshop-hero { padding: 48px 48px 0; max-width: 800px; }
+  .workshop-hero .event-tag { margin-bottom: 12px; display: inline-block; }
+  .workshop-subtitle { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+  .workshop-desc { font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
+  .meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 48px; }
+  .meta-card { border: 1px solid var(--sand); border-radius: 8px; padding: 20px; }
+  .meta-card-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
+  .meta-card-value { font-size: 15px; line-height: 1.5; }
+  .content-block { padding: 0 48px; max-width: 800px; margin-bottom: 40px; }
+  .content-block h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 16px; }
+  .content-block h2 em { font-style: normal; color: var(--rust); }
+  .bullet-list { list-style: none; margin: 0; }
+  .bullet-list li { font-size: 15px; color: var(--muted); line-height: 1.6; padding: 6px 0 6px 18px; position: relative; }
+  .bullet-list li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 50%; background: var(--rust); }
+  .steps-section { padding: 0 48px; max-width: 800px; }
+  .steps-section h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 24px; }
+  .steps-section h2 em { font-style: normal; color: var(--rust); }
+  .step { display: grid; grid-template-columns: 56px 1fr; gap: 20px; padding: 28px 0; border-bottom: 1px solid var(--cream); }
+  .step:last-child { border-bottom: none; }
+  .step-number { font-size: 32px; font-weight: 800; color: var(--rust); line-height: 1; }
+  .step-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+  .step-title { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
+  .step-duration { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .step-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+  .step-tip { font-size: 13px; color: var(--moss); background: var(--moss-light); border-radius: 6px; padding: 10px 14px; margin-top: 8px; line-height: 1.5; }
+  .hardware-note { border: 1.5px solid var(--gold); border-radius: 8px; padding: 20px; background: var(--gold-light); margin: 24px 0; }
+  .hardware-note-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold); margin-bottom: 6px; }
+  .hardware-note p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); text-decoration: none; padding: 48px 48px 0; transition: color 0.15s; }
+  .back-link:hover { color: var(--ink); }
+  .spacer { height: 48px; }
+  @media (max-width: 768px) {
+    .workshop-hero, .content-block, .steps-section, .back-link { padding-left: 20px; padding-right: 20px; }
+    .meta-grid { grid-template-columns: 1fr; }
+    .step { grid-template-columns: 40px 1fr; gap: 12px; }
+    .step-number { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<a href="/curriculum" class="back-link">&larr; Back to Workshop Library</a>
+
+<header class="page-header">
+  <h1>Robotics with<br><em>Solo CLI</em></h1>
+  <div class="header-meta">
+    <p>Hardware</p>
+    <p>Intermediate</p>
+    <p>~75 Minutes</p>
+  </div>
+</header>
+
+<div class="workshop-hero">
+  <span class="event-tag tag-workshop">Intermediate</span>
+  <h2 class="workshop-subtitle">Control Real Robots with OpenClaw</h2>
+  <p class="workshop-desc">Bridge AI and physical hardware. Use OpenClaw's Solo CLI to teleoperate robots, record actions, train vision-language models, and deploy learned behaviors to real hardware.</p>
+  <div class="meta-grid">
+    <div class="meta-card">
+      <div class="meta-card-label">Who It's For</div>
+      <div class="meta-card-value">Developers curious about embodied AI and robotics</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-card-label">Value</div>
+      <div class="meta-card-value">Hands-on experience with real robot hardware and AI control</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-card-label">Takeaway</div>
+      <div class="meta-card-value">A trained robot behavior deployed from demonstration data</div>
+    </div>
+  </div>
+
+  <div class="hardware-note">
+    <div class="hardware-note-label">Hardware Note</div>
+    <p>Robot hardware is provided at in-person ClawCamp events. For remote participants, simulation environments are available. Check your local camp's equipment list.</p>
+  </div>
+</div>
+
+<div class="content-block">
+  <h2><em>Prerequisites</em></h2>
+  <ul class="bullet-list">
+    <li>OpenClaw installed (complete Local Install first)</li>
+    <li>Basic Python knowledge</li>
+    <li>Interest in robotics (no prior robotics experience needed)</li>
+    <li>Hardware provided at in-person events</li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h2>Learning <em>Outcomes</em></h2>
+  <ul class="bullet-list">
+    <li>Teleoperate a robot via Solo CLI</li>
+    <li>Record demonstration episodes for training</li>
+    <li>Train a VLA (Vision-Language-Action) model on your demos</li>
+    <li>Deploy trained behaviors to real hardware</li>
+  </ul>
+</div>
+
+<div class="steps-section">
+  <h2>Step-by-Step <em>Guide</em></h2>
+
+  <div class="step">
+    <div class="step-number">1</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Set Up Solo CLI</span>
+        <span class="step-duration">10 min</span>
+      </div>
+      <p class="step-desc">Install and configure the Solo CLI &mdash; OpenClaw's robotics interface. Solo CLI connects your local environment to robot hardware (or simulation) and provides the teleoperation and recording tools.</p>
+      <div class="step-tip">Solo CLI works with both real hardware and simulation. If you're working remotely, the simulator provides the same API.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">2</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Teleoperate</span>
+        <span class="step-duration">15 min</span>
+      </div>
+      <p class="step-desc">Take manual control of a robot arm. Learn the control interface &mdash; position, grip, speed &mdash; and practice executing tasks like pick-and-place, stacking, or sorting. This is how you'll generate training data.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">3</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Record Episodes</span>
+        <span class="step-duration">15 min</span>
+      </div>
+      <p class="step-desc">Capture demonstration data while teleoperating. Each "episode" is a complete task execution &mdash; the robot's camera feed, joint positions, and your control inputs are all recorded as training data for the VLA model.</p>
+      <ul class="bullet-list">
+        <li>Record 10&ndash;20 episodes of the same task</li>
+        <li>Vary your approach slightly each time for robustness</li>
+        <li>Review and discard any failed episodes</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">4</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Train VLA Model</span>
+        <span class="step-duration">20 min</span>
+      </div>
+      <p class="step-desc">Fine-tune a Vision-Language-Action model on your recorded demonstrations. The VLA model learns to map visual observations and language instructions to robot actions &mdash; turning your demonstrations into a generalizable policy.</p>
+      <div class="step-tip">VLA models learn from surprisingly few demonstrations. 10&ndash;20 high-quality episodes is often enough for simple tasks.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">5</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Deploy to Hardware</span>
+        <span class="step-duration">15 min</span>
+      </div>
+      <p class="step-desc">Push the trained model back to the robot. Watch it execute the task autonomously based on what it learned from your demonstrations. Test with variations to see how well the policy generalizes.</p>
+      <ul class="bullet-list">
+        <li>Load the trained model onto the robot controller</li>
+        <li>Give a natural language task instruction</li>
+        <li>Observe autonomous execution</li>
+        <li>Iterate: record more demos for failure cases</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="cta-band">
+  <div>
+    <h3>Explore more workshops</h3>
+    <p>From quick setup to advanced fine-tuning &mdash; find the right workshop for your level.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="/curriculum" class="btn-dark">Workshop Library &rarr;</a>
+    <a href="/schedule" class="btn-outline">Oakland Schedule</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

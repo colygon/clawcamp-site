@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Lifecycle Workshop — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .workshop-hero { padding: 48px 48px 0; max-width: 800px; }
+  .workshop-hero .event-tag { margin-bottom: 12px; display: inline-block; }
+  .workshop-subtitle { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+  .workshop-desc { font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
+  .meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 48px; }
+  .meta-card { border: 1px solid var(--sand); border-radius: 8px; padding: 20px; }
+  .meta-card-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
+  .meta-card-value { font-size: 15px; line-height: 1.5; }
+  .content-block { padding: 0 48px; max-width: 800px; margin-bottom: 40px; }
+  .content-block h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 16px; }
+  .content-block h2 em { font-style: normal; color: var(--rust); }
+  .bullet-list { list-style: none; margin: 0; }
+  .bullet-list li { font-size: 15px; color: var(--muted); line-height: 1.6; padding: 6px 0 6px 18px; position: relative; }
+  .bullet-list li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 50%; background: var(--rust); }
+  .steps-section { padding: 0 48px; max-width: 800px; }
+  .steps-section h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 24px; }
+  .steps-section h2 em { font-style: normal; color: var(--rust); }
+  .step { display: grid; grid-template-columns: 56px 1fr; gap: 20px; padding: 28px 0; border-bottom: 1px solid var(--cream); }
+  .step:last-child { border-bottom: none; }
+  .step-number { font-size: 32px; font-weight: 800; color: var(--rust); line-height: 1; }
+  .step-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+  .step-title { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
+  .step-duration { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .step-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+  .step-tip { font-size: 13px; color: var(--moss); background: var(--moss-light); border-radius: 6px; padding: 10px 14px; margin-top: 8px; line-height: 1.5; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); text-decoration: none; padding: 48px 48px 0; transition: color 0.15s; }
+  .back-link:hover { color: var(--ink); }
+  .spacer { height: 48px; }
+  @media (max-width: 768px) {
+    .workshop-hero, .content-block, .steps-section, .back-link { padding-left: 20px; padding-right: 20px; }
+    .meta-grid { grid-template-columns: 1fr; }
+    .step { grid-template-columns: 40px 1fr; gap: 12px; }
+    .step-number { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<a href="/curriculum" class="back-link">&larr; Back to Workshop Library</a>
+
+<header class="page-header">
+  <h1>Agent<br><em>Lifecycle</em></h1>
+  <div class="header-meta">
+    <p>Advanced</p>
+    <p>Advanced</p>
+    <p>~70 Minutes</p>
+  </div>
+</header>
+
+<div class="workshop-hero">
+  <span class="event-tag tag-flagship">Advanced</span>
+  <h2 class="workshop-subtitle">Continuous Improvement Through Fine-Tuning</h2>
+  <p class="workshop-desc">Your agent shipped. Now make it better. Learn the full agent lifecycle: capture interaction data, evaluate performance, fine-tune on your domain, and redeploy &mdash; creating agents that improve every week.</p>
+  <div class="meta-grid">
+    <div class="meta-card">
+      <div class="meta-card-label">Who It's For</div>
+      <div class="meta-card-value">Teams with deployed agents ready to move beyond prompt engineering</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-card-label">Value</div>
+      <div class="meta-card-value">Systematic agent improvement instead of ad-hoc prompt tweaking</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-card-label">Takeaway</div>
+      <div class="meta-card-value">A fine-tuning pipeline that captures data, trains, and redeploys automatically</div>
+    </div>
+  </div>
+</div>
+
+<div class="content-block">
+  <h2><em>Prerequisites</em></h2>
+  <ul class="bullet-list">
+    <li>Running OpenClaw agent (complete Local Install or Agent Inference first)</li>
+    <li>Basic ML concepts (training, evaluation, fine-tuning)</li>
+    <li>Nebius AI Cloud account with GPU access</li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h2>Learning <em>Outcomes</em></h2>
+  <ul class="bullet-list">
+    <li>Set up interaction data capture</li>
+    <li>Design evaluation criteria for your use case</li>
+    <li>Run fine-tuning jobs on Nebius GPU infrastructure</li>
+    <li>Deploy improved models alongside baseline</li>
+    <li>Automate the improvement loop</li>
+  </ul>
+</div>
+
+<div class="steps-section">
+  <h2>Step-by-Step <em>Guide</em></h2>
+
+  <div class="step">
+    <div class="step-number">1</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Set Up Data Capture</span>
+        <span class="step-duration">10 min</span>
+      </div>
+      <p class="step-desc">Log agent interactions with structured metadata. Every request-response pair becomes a potential training example. Configure what to capture: user queries, agent responses, tool calls, latency, and user feedback signals.</p>
+      <div class="step-tip">Start capturing data early &mdash; even before you plan to fine-tune. The more data you have, the better your first fine-tune will be.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">2</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Design Evaluation Criteria</span>
+        <span class="step-duration">10 min</span>
+      </div>
+      <p class="step-desc">Define what "better" means for your specific use case. Create a rubric that measures the dimensions that matter: accuracy, helpfulness, latency, cost, safety, or domain-specific criteria.</p>
+      <ul class="bullet-list">
+        <li>Build an evaluation dataset from real interactions</li>
+        <li>Define pass/fail criteria for each dimension</li>
+        <li>Set a baseline score with your current model</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">3</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Prepare Training Data</span>
+        <span class="step-duration">15 min</span>
+      </div>
+      <p class="step-desc">Filter, clean, and format captured interactions into training-ready datasets. Not all interactions are good training examples &mdash; select the ones where the agent performed well or where you have corrected responses.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">4</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Run Fine-Tuning Job</span>
+        <span class="step-duration">20 min</span>
+      </div>
+      <p class="step-desc">Launch a training job on Nebius GPU infrastructure. Fine-tune the base model on your domain-specific data. Monitor training metrics and watch for overfitting.</p>
+      <div class="step-tip">Start with a small dataset (100&ndash;500 examples) and short training runs. You can always iterate.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">5</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Deploy &amp; Compare</span>
+        <span class="step-duration">15 min</span>
+      </div>
+      <p class="step-desc">Deploy the fine-tuned model alongside your baseline. Run A/B tests to compare performance on your evaluation criteria. If the new model wins, promote it. If not, iterate on your training data.</p>
+      <ul class="bullet-list">
+        <li>Deploy fine-tuned model as a new endpoint</li>
+        <li>Route a percentage of traffic to the new model</li>
+        <li>Compare evaluation scores between baseline and fine-tuned</li>
+        <li>Promote the winner and repeat the cycle</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="cta-band">
+  <div>
+    <h3>Interested in robotics?</h3>
+    <p>Take the Robotics workshop to control real hardware with OpenClaw agents.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="/curriculum/robotics" class="btn-dark">Robotics Workshop &rarr;</a>
+    <a href="/curriculum" class="btn-outline">All Workshops</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

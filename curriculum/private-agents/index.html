@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Private Agents Workshop — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .workshop-hero { padding: 48px 48px 0; max-width: 800px; }
+  .workshop-hero .event-tag { margin-bottom: 12px; display: inline-block; }
+  .workshop-subtitle { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+  .workshop-desc { font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
+  .meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 48px; }
+  .meta-card { border: 1px solid var(--sand); border-radius: 8px; padding: 20px; }
+  .meta-card-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
+  .meta-card-value { font-size: 15px; line-height: 1.5; }
+  .content-block { padding: 0 48px; max-width: 800px; margin-bottom: 40px; }
+  .content-block h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 16px; }
+  .content-block h2 em { font-style: normal; color: var(--rust); }
+  .bullet-list { list-style: none; margin: 0; }
+  .bullet-list li { font-size: 15px; color: var(--muted); line-height: 1.6; padding: 6px 0 6px 18px; position: relative; }
+  .bullet-list li::before { content: ''; position: absolute; left: 0; top: 13px; width: 5px; height: 5px; border-radius: 50%; background: var(--rust); }
+  .steps-section { padding: 0 48px; max-width: 800px; }
+  .steps-section h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 24px; }
+  .steps-section h2 em { font-style: normal; color: var(--rust); }
+  .step { display: grid; grid-template-columns: 56px 1fr; gap: 20px; padding: 28px 0; border-bottom: 1px solid var(--cream); }
+  .step:last-child { border-bottom: none; }
+  .step-number { font-size: 32px; font-weight: 800; color: var(--rust); line-height: 1; }
+  .step-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+  .step-title { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
+  .step-duration { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .step-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+  .step-tip { font-size: 13px; color: var(--moss); background: var(--moss-light); border-radius: 6px; padding: 10px 14px; margin-top: 8px; line-height: 1.5; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); text-decoration: none; padding: 48px 48px 0; transition: color 0.15s; }
+  .back-link:hover { color: var(--ink); }
+  .spacer { height: 48px; }
+  @media (max-width: 768px) {
+    .workshop-hero, .content-block, .steps-section, .back-link { padding-left: 20px; padding-right: 20px; }
+    .meta-grid { grid-template-columns: 1fr; }
+    .step { grid-template-columns: 40px 1fr; gap: 12px; }
+    .step-number { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<a href="/curriculum" class="back-link">&larr; Back to Workshop Library</a>
+
+<header class="page-header">
+  <h1>Private<br><em>Agents</em></h1>
+  <div class="header-meta">
+    <p>Privacy</p>
+    <p>Intermediate</p>
+    <p>~55 Minutes</p>
+  </div>
+</header>
+
+<div class="workshop-hero">
+  <span class="event-tag tag-workshop">Intermediate</span>
+  <h2 class="workshop-subtitle">Zero-Retention Inference for Sensitive Workflows</h2>
+  <p class="workshop-desc">Process sensitive documents &mdash; legal briefs, medical records, financial reports &mdash; with fully isolated inference. No data leaves your infrastructure. Compliance-ready from day one.</p>
+  <div class="meta-grid">
+    <div class="meta-card">
+      <div class="meta-card-label">Who It's For</div>
+      <div class="meta-card-value">Teams handling sensitive data who need AI without data exposure</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-card-label">Value</div>
+      <div class="meta-card-value">AI capabilities without compliance risk</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-card-label">Takeaway</div>
+      <div class="meta-card-value">A private inference pipeline that processes documents with zero data retention</div>
+    </div>
+  </div>
+</div>
+
+<div class="content-block">
+  <h2><em>Prerequisites</em></h2>
+  <ul class="bullet-list">
+    <li>Nebius AI Cloud account</li>
+    <li>Basic container knowledge</li>
+    <li>Understanding of data compliance requirements</li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h2>Learning <em>Outcomes</em></h2>
+  <ul class="bullet-list">
+    <li>Deploy isolated inference endpoints</li>
+    <li>Configure zero-retention policies</li>
+    <li>Process sensitive documents safely</li>
+    <li>Audit and verify data handling</li>
+  </ul>
+</div>
+
+<div class="steps-section">
+  <h2>Step-by-Step <em>Guide</em></h2>
+
+  <div class="step">
+    <div class="step-number">1</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Understand Zero-Retention</span>
+        <span class="step-duration">5 min</span>
+      </div>
+      <p class="step-desc">Learn how isolated inference differs from shared endpoints. In a zero-retention setup, no prompts, completions, or metadata are stored after the request completes. The inference endpoint processes and forgets.</p>
+      <div class="step-tip">This is critical for HIPAA, SOC 2, and GDPR compliance scenarios where data residency matters.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">2</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Deploy Private Endpoint</span>
+        <span class="step-duration">15 min</span>
+      </div>
+      <p class="step-desc">Spin up a dedicated Nebius GPU instance with no external logging. This instance runs inference in complete isolation &mdash; no shared tenancy, no data pipeline to third parties.</p>
+      <ul class="bullet-list">
+        <li>Provision a dedicated GPU instance on Nebius</li>
+        <li>Configure network isolation (no external egress for data)</li>
+        <li>Deploy the OpenClaw inference container</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">3</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Configure Retention Policies</span>
+        <span class="step-duration">10 min</span>
+      </div>
+      <p class="step-desc">Set TTL=0 and disable all telemetry. Configure the endpoint to purge request data immediately after response delivery.</p>
+      <ul class="bullet-list">
+        <li>Set data TTL to zero on all inference requests</li>
+        <li>Disable telemetry and usage logging</li>
+        <li>Configure ephemeral storage for inference scratch space</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">4</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Process a Test Document</span>
+        <span class="step-duration">15 min</span>
+      </div>
+      <p class="step-desc">Send a sensitive document through the pipeline and verify the end-to-end flow. Use a sample legal brief or financial document to test extraction, summarization, and analysis.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">5</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Audit &amp; Verify</span>
+        <span class="step-duration">10 min</span>
+      </div>
+      <p class="step-desc">Confirm no data persists after processing. Run audit checks to verify zero-retention compliance.</p>
+      <ul class="bullet-list">
+        <li>Inspect storage volumes for residual data</li>
+        <li>Check network logs for data egress</li>
+        <li>Verify TTL enforcement on the inference endpoint</li>
+        <li>Document your compliance posture</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="cta-band">
+  <div>
+    <h3>Want agents that improve over time?</h3>
+    <p>Take the Agent Lifecycle workshop to learn continuous fine-tuning and redeployment.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="/curriculum/agent-lifecycle" class="btn-dark">Agent Lifecycle &rarr;</a>
+    <a href="/curriculum" class="btn-outline">All Workshops</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

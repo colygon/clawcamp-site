@@ -3,91 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Curriculum Library — ClawCamp</title>
+<title>Workshop Library — ClawCamp</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/shared.css">
 <style>
-  .coming-soon {
-    padding: 80px 48px 120px;
-    text-align: center;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  .coming-soon-badge {
-    display: inline-block;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--rust);
-    background: var(--rust-light);
-    padding: 6px 14px;
-    border-radius: 20px;
-    margin-bottom: 24px;
-  }
-  .coming-soon h2 {
-    font-size: clamp(28px, 4vw, 40px);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    margin-bottom: 16px;
-  }
-  .coming-soon h2 em { font-style: normal; color: var(--rust); }
-  .coming-soon p {
-    font-size: 16px;
-    color: var(--muted);
-    line-height: 1.7;
-    margin-bottom: 16px;
-  }
-  .coming-soon-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 32px;
-  }
-
-  .preview-grid {
-    padding: 0 48px 80px;
+  /* Workshop cards */
+  .workshop-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    max-width: 900px;
-    margin: 0 auto;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    padding-top: 32px;
   }
-  .preview-card {
+  .workshop-card {
     border: 1px solid var(--sand);
     border-radius: 8px;
-    padding: 28px;
-    text-align: left;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.15s, transform 0.15s;
+    display: flex;
+    flex-direction: column;
   }
-  .preview-card-eyebrow {
+  .workshop-card:hover {
+    box-shadow: 0 4px 16px rgba(15, 14, 11, 0.06);
+    transform: translateY(-2px);
+  }
+  .workshop-card-header {
+    padding: 24px 24px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .workshop-card-body {
+    padding: 12px 24px 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .workshop-card-title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .workshop-card-subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  .workshop-card-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+    flex: 1;
+  }
+  .workshop-card-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--cream);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .workshop-card-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--rust);
+    text-decoration: none;
+  }
+  .workshop-card-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* Guide cards */
+  .guide-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding-top: 32px;
+  }
+  .guide-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 24px;
+    transition: all 0.15s;
+  }
+  .guide-card:hover {
+    background: var(--cream);
+    border-color: var(--ink);
+  }
+  .guide-card-eyebrow {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--muted);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
-  .preview-card h3 {
+  .guide-card h3 {
     font-size: 16px;
     font-weight: 700;
     letter-spacing: -0.01em;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
-  .preview-card p {
+  .guide-card p {
     font-size: 13px;
     color: var(--muted);
-    line-height: 1.6;
+    line-height: 1.5;
   }
 
   @media (max-width: 768px) {
-    .coming-soon { padding: 60px 20px 80px; }
-    .preview-grid {
-      grid-template-columns: 1fr;
-      padding: 0 20px 60px;
-    }
+    .workshop-grid { grid-template-columns: 1fr; }
+    .guide-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -96,40 +128,139 @@
 <div id="site-nav"></div>
 
 <header class="page-header">
-  <h1>Curriculum<br><em>Library</em></h1>
+  <h1>Workshop<br><em>Library</em></h1>
   <div class="header-meta">
-    <p>Shared Resources</p>
-    <p>Open to All</p>
+    <p>5 Workshops</p>
+    <p>4 Deployment Guides</p>
+    <p>All Levels</p>
   </div>
 </header>
 
-<div class="coming-soon">
-  <span class="coming-soon-badge">Coming Soon</span>
-  <h2>A shared library for the <em>global network</em></h2>
-  <p>ClawCamp's curriculum library is a collection of workshop guides, session templates, cheat sheets, and build challenges &mdash; created by Counselors and Specialists around the world and shared freely with the network.</p>
-  <p>Anyone can create their own curriculum. We provide example starting points for common formats. Everyone is asked to share back &mdash; the whole network gets better.</p>
-  <div class="coming-soon-actions">
-    <a href="mailto:hello@clawcamp.ai?subject=Curriculum%20Contribution" class="btn-dark">Contribute Yours &rarr;</a>
-    <a href="/formats" class="btn-outline">Explore Formats</a>
-  </div>
-</div>
+<div class="main">
 
-<div class="preview-grid">
-  <div class="preview-card">
-    <div class="preview-card-eyebrow">Workshop Template</div>
-    <h3>OpenClaw Setup</h3>
-    <p>Step-by-step guide for a 2&ndash;3 hour setup workshop. Installation, configuration, and first agent build.</p>
+  <!-- Workshops -->
+  <div class="section-divider">
+    <span class="divider-label">Workshops</span>
+    <div class="divider-line"></div>
   </div>
-  <div class="preview-card">
-    <div class="preview-card-eyebrow">Workshop Template</div>
-    <h3>Agent Deep Dive</h3>
-    <p>Advanced workshop template for multi-agent workflows, tool integration, and local model setup.</p>
+
+  <div class="workshop-grid">
+
+    <a class="workshop-card" href="/curriculum/local-install">
+      <div class="workshop-card-header">
+        <span class="event-tag tag-tour">Beginner</span>
+        <span class="event-tag" style="background:var(--cream);color:var(--muted);border:1px solid var(--sand);">Quick Start</span>
+      </div>
+      <div class="workshop-card-body">
+        <div class="workshop-card-title">Local Install</div>
+        <div class="workshop-card-subtitle">From Zero to OpenClaw in 5 Minutes</div>
+        <div class="workshop-card-desc">Get OpenClaw running locally via npm with full Token Factory integration. Ship your first AI agent in under five minutes.</div>
+      </div>
+      <div class="workshop-card-footer">
+        <span class="workshop-card-link">View Workshop &rarr;</span>
+        <span class="workshop-card-meta">~5 min</span>
+      </div>
+    </a>
+
+    <a class="workshop-card" href="/curriculum/agent-inference">
+      <div class="workshop-card-header">
+        <span class="event-tag tag-tour">Beginner</span>
+        <span class="event-tag" style="background:var(--cream);color:var(--muted);border:1px solid var(--sand);">Deploy</span>
+      </div>
+      <div class="workshop-card-body">
+        <div class="workshop-card-title">Agent Inference</div>
+        <div class="workshop-card-subtitle">Deploy Agents on Nebius Serverless</div>
+        <div class="workshop-card-desc">Learn how OpenClaw separates orchestration from inference. Deploy production agents using Token Factory for pay-per-token GPU access.</div>
+      </div>
+      <div class="workshop-card-footer">
+        <span class="workshop-card-link">View Workshop &rarr;</span>
+        <span class="workshop-card-meta">60 min</span>
+      </div>
+    </a>
+
+    <a class="workshop-card" href="/curriculum/private-agents">
+      <div class="workshop-card-header">
+        <span class="event-tag tag-workshop">Intermediate</span>
+        <span class="event-tag" style="background:var(--cream);color:var(--muted);border:1px solid var(--sand);">Privacy</span>
+      </div>
+      <div class="workshop-card-body">
+        <div class="workshop-card-title">Private Agents</div>
+        <div class="workshop-card-subtitle">Zero-Retention Inference for Sensitive Workflows</div>
+        <div class="workshop-card-desc">Process sensitive documents with fully isolated inference. No data leaves your infrastructure. Compliance-ready from day one.</div>
+      </div>
+      <div class="workshop-card-footer">
+        <span class="workshop-card-link">View Workshop &rarr;</span>
+        <span class="workshop-card-meta">~55 min</span>
+      </div>
+    </a>
+
+    <a class="workshop-card" href="/curriculum/agent-lifecycle">
+      <div class="workshop-card-header">
+        <span class="event-tag tag-flagship">Advanced</span>
+      </div>
+      <div class="workshop-card-body">
+        <div class="workshop-card-title">Agent Lifecycle</div>
+        <div class="workshop-card-subtitle">Continuous Improvement Through Fine-Tuning</div>
+        <div class="workshop-card-desc">Capture interaction data, evaluate performance, fine-tune on your domain, and redeploy &mdash; creating agents that improve every week.</div>
+      </div>
+      <div class="workshop-card-footer">
+        <span class="workshop-card-link">View Workshop &rarr;</span>
+        <span class="workshop-card-meta">~70 min</span>
+      </div>
+    </a>
+
+    <a class="workshop-card" href="/curriculum/robotics">
+      <div class="workshop-card-header">
+        <span class="event-tag tag-workshop">Intermediate</span>
+        <span class="event-tag" style="background:var(--cream);color:var(--muted);border:1px solid var(--sand);">Hardware</span>
+      </div>
+      <div class="workshop-card-body">
+        <div class="workshop-card-title">Robotics with Solo CLI</div>
+        <div class="workshop-card-subtitle">Control Real Robots with OpenClaw</div>
+        <div class="workshop-card-desc">Bridge AI and physical hardware. Teleoperate robots, record actions, train vision-language models, and deploy learned behaviors.</div>
+      </div>
+      <div class="workshop-card-footer">
+        <span class="workshop-card-link">View Workshop &rarr;</span>
+        <span class="workshop-card-meta">~75 min</span>
+      </div>
+    </a>
+
   </div>
-  <div class="preview-card">
-    <div class="preview-card-eyebrow">Event Playbook</div>
-    <h3>Unconference Guide</h3>
-    <p>The Dave Nielsen CloudCamp unconference format, adapted for ClawCamp. Voting, sessions, and facilitation.</p>
+
+  <!-- Deployment Guides -->
+  <div class="section-divider" style="margin-top:48px;">
+    <span class="divider-label">Deployment Guides</span>
+    <div class="divider-line"></div>
   </div>
+
+  <div class="guide-grid">
+
+    <div class="guide-card">
+      <div class="guide-card-eyebrow">No-Code</div>
+      <h3>Deploy via Nebius Web Console</h3>
+      <p>Browser-based deployment with no Docker, CLI, or local setup required. Point, click, deploy.</p>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-card-eyebrow">Automated</div>
+      <h3>Deploy with Install Scripts</h3>
+      <p>Fully automated CLI deployment using install scripts. One command to set up the Gateway, Token Factory, and connectivity.</p>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-card-eyebrow">Comprehensive</div>
+      <h3>Deployment Patterns &amp; Troubleshooting</h3>
+      <p>Four deployment methods compared, plus common pitfalls: gateway crashes, token mismatches, region mapping, and port exposure.</p>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-card-eyebrow">Architecture</div>
+      <h3>Three Deployment Patterns</h3>
+      <p>Local + Token Factory, CPU Serverless + Token Factory GPU, and GPU Serverless + local model. Choose the right pattern for your use case.</p>
+    </div>
+
+  </div>
+
 </div>
 
 <div class="cta-band">
@@ -138,7 +269,7 @@
     <p>Built a great workshop or session guide? Share it with the global network.</p>
   </div>
   <div class="cta-band-actions">
-    <a href="mailto:hello@clawcamp.ai?subject=Curriculum%20Contribution" class="btn-dark">Get in Touch &rarr;</a>
+    <a href="mailto:hello@clawcamp.ai?subject=Curriculum%20Contribution" class="btn-dark">Contribute Yours &rarr;</a>
     <a href="/host" class="btn-outline">Host a Camp</a>
   </div>
 </div>
