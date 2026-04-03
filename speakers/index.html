@@ -69,11 +69,97 @@
     color: var(--muted);
   }
 
+  /* Form */
+  .speaker-form-section {
+    padding: 48px 48px 0;
+    max-width: 800px;
+  }
+  .speaker-form-section h2 {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .speaker-form-section h2 em { font-style: normal; color: var(--rust); }
+  .speaker-form-section > p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+  .speaker-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .form-group label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 15px;
+    padding: 12px 16px;
+    border: 1px solid var(--sand);
+    border-radius: 6px;
+    background: white;
+    color: var(--ink);
+    transition: border-color 0.15s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--rust);
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--rust);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 24px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+    align-self: flex-start;
+  }
+  .form-submit:hover { background: #a8420a; }
+  .form-note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: -8px;
+  }
+
   @media (max-width: 768px) {
     .speaker-grid {
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 16px;
     }
+    .speaker-form-section { padding-left: 20px; padding-right: 20px; }
+    .form-row { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -179,18 +265,92 @@
   <p class="more-note">More speakers to be announced. Check back for frequent updates.</p>
 </div>
 
-<div class="cta-band">
+<div class="speaker-form-section" id="apply">
+  <h2>Apply to <em>Speak</em></h2>
+  <p>We're looking for builders, founders, and practitioners to share their experience. Tell us about your talk and we'll be in touch.</p>
+
+  <form class="speaker-form" id="speaker-form" action="https://formspree.io/f/speaker" method="POST">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="speaker-name">Full Name *</label>
+        <input type="text" id="speaker-name" name="name" required placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <label for="speaker-email">Email *</label>
+        <input type="email" id="speaker-email" name="email" required placeholder="you@example.com">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="speaker-phone">Phone Number *</label>
+        <input type="tel" id="speaker-phone" name="phone" required placeholder="+1 (555) 000-0000">
+      </div>
+      <div class="form-group">
+        <label for="speaker-company">Company / Organization</label>
+        <input type="text" id="speaker-company" name="company" placeholder="Where you work">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="speaker-title">Your Title / Role</label>
+        <input type="text" id="speaker-title" name="title" placeholder="e.g. CTO, Founder, Engineer">
+      </div>
+      <div class="form-group">
+        <label for="speaker-event">Which Event? *</label>
+        <select id="speaker-event" name="event" required>
+          <option value="">Select an event</option>
+          <option value="oakland">ClawCamp Oakland (Apr 16)</option>
+          <option value="any">Any upcoming event</option>
+          <option value="online">Online events</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="speaker-format">Talk Format *</label>
+        <select id="speaker-format" name="format" required>
+          <option value="">Select a format</option>
+          <option value="keynote">Keynote (20 min)</option>
+          <option value="talk">Talk (10-15 min)</option>
+          <option value="lightning">Lightning Talk (5 min)</option>
+          <option value="workshop">Workshop Session (45 min)</option>
+          <option value="panel">Panel Participant</option>
+          <option value="demo">Live Demo</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="speaker-linkedin">LinkedIn or Website</label>
+        <input type="url" id="speaker-linkedin" name="linkedin" placeholder="https://linkedin.com/in/you">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="speaker-topic">Talk Title &amp; Description *</label>
+      <textarea id="speaker-topic" name="topic" required placeholder="What would you talk about? Give us a title and a 2-3 sentence description of your proposed talk."></textarea>
+    </div>
+    <div class="form-group">
+      <label for="speaker-bio">Short Bio</label>
+      <textarea id="speaker-bio" name="bio" placeholder="A few sentences about yourself, your work, and any previous speaking experience."></textarea>
+    </div>
+    <input type="hidden" name="_subject" value="New Speaker Application">
+    <button type="submit" class="form-submit">Submit Application &rarr;</button>
+    <p class="form-note">We review applications on a rolling basis and will respond within 5 business days.</p>
+  </form>
+</div>
+
+<div class="cta-band" style="margin-top:48px;">
   <div>
-    <h3>Want to speak at ClawCamp?</h3>
-    <p>We're looking for builders, founders, and practitioners to share their experience.</p>
+    <h3>Prefer email?</h3>
+    <p>Reach out directly with your talk idea.</p>
   </div>
   <div class="cta-band-actions">
-    <a href="mailto:events@clawcamp.us?subject=Speaker%20Application" class="btn-dark">Apply to Speak &rarr;</a>
+    <a href="mailto:events@clawcamp.us?subject=Speaker%20Application" class="btn-dark">events@clawcamp.us &rarr;</a>
     <a href="/events/oakland" class="btn-outline">View Oakland Details</a>
   </div>
 </div>
 
 <div id="site-footer"></div>
 <script src="/js/nav.js"></script>
+<script src="/js/supabase.js"></script>
 </body>
 </html>
