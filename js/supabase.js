@@ -62,7 +62,8 @@
           proposed_date: hostForm.querySelector('[name="proposed_date"]').value || null,
           venue: hostForm.querySelector('[name="venue"]').value,
           about: hostForm.querySelector('[name="about"]').value,
-          event_details: hostForm.querySelector('[name="event_details"]').value
+          event_details: hostForm.querySelector('[name="event_details"]').value,
+          email_opt_in: hostForm.querySelector('[name="email_opt_in"]') ? hostForm.querySelector('[name="email_opt_in"]').checked : null
         }, hostForm);
       });
     }
@@ -81,7 +82,8 @@
           tier: sponsorForm.querySelector('[name="tier"]').value,
           event: sponsorForm.querySelector('[name="event"]').value,
           website: sponsorForm.querySelector('[name="website"]').value,
-          message: sponsorForm.querySelector('[name="message"]').value
+          message: sponsorForm.querySelector('[name="message"]').value,
+          email_opt_in: sponsorForm.querySelector('[name="email_opt_in"]') ? sponsorForm.querySelector('[name="email_opt_in"]').checked : null
         }, sponsorForm);
       });
     }
@@ -100,7 +102,8 @@
           role: crewForm.querySelector('[name="role"]').value,
           linkedin: crewForm.querySelector('[name="linkedin"]').value,
           experience: crewForm.querySelector('[name="experience"]').value,
-          why: crewForm.querySelector('[name="why"]').value
+          why: crewForm.querySelector('[name="why"]').value,
+          email_opt_in: crewForm.querySelector('[name="email_opt_in"]') ? crewForm.querySelector('[name="email_opt_in"]').checked : null
         }, crewForm);
       });
     }
@@ -121,7 +124,8 @@
           format: speakerForm.querySelector('[name="format"]').value,
           linkedin: speakerForm.querySelector('[name="linkedin"]').value,
           topic: speakerForm.querySelector('[name="topic"]').value,
-          bio: speakerForm.querySelector('[name="bio"]').value
+          bio: speakerForm.querySelector('[name="bio"]').value,
+          email_opt_in: speakerForm.querySelector('[name="email_opt_in"]') ? speakerForm.querySelector('[name="email_opt_in"]').checked : null
         }, speakerForm);
       });
     }
@@ -141,7 +145,8 @@
           proposed_date: eventForm.querySelector('[name="proposed_date"]').value || null,
           venue: eventForm.querySelector('[name="venue"]').value,
           event_link: eventForm.querySelector('[name="event_link"]').value,
-          event_details: eventForm.querySelector('[name="event_details"]').value
+          event_details: eventForm.querySelector('[name="event_details"]').value,
+          email_opt_in: eventForm.querySelector('[name="email_opt_in"]') ? eventForm.querySelector('[name="email_opt_in"]').checked : null
         }, eventForm);
       });
     }
@@ -187,7 +192,8 @@
           event: showcaseForm.querySelector('[name="event"]').value,
           demo_ready: showcaseForm.querySelector('[name="demo_ready"]').value,
           description: showcaseForm.querySelector('[name="description"]').value,
-          pitch: showcaseForm.querySelector('[name="pitch"]').value
+          pitch: showcaseForm.querySelector('[name="pitch"]').value,
+          email_opt_in: showcaseForm.querySelector('[name="email_opt_in"]') ? showcaseForm.querySelector('[name="email_opt_in"]').checked : null
         }, showcaseForm);
       });
     }
