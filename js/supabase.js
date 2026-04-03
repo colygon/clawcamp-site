@@ -23,7 +23,8 @@
       if (res.ok) {
         form.innerHTML = '<div style="padding:32px 0;text-align:center;">' +
           '<div style="font-size:24px;font-weight:800;margin-bottom:8px;">Thank you!</div>' +
-          '<p style="color:var(--muted);font-size:15px;">Your submission has been received. We\'ll be in touch soon.</p>' +
+          '<p style="color:var(--muted);font-size:15px;margin-bottom:20px;">Your submission has been received. We\'ll be in touch soon.</p>' +
+          '<a href="https://discord.gg/haAtnsyE3W" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#5865F2;color:white;padding:14px 28px;border-radius:24px;font-family:Bricolage Grotesque,sans-serif;font-weight:700;font-size:15px;text-decoration:none;transition:background 0.15s;">Join the Community on Discord &rarr;</a>' +
           '</div>';
       } else {
         return res.text().then(function (text) { throw new Error(text); });
