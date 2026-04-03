@@ -130,13 +130,23 @@
 <header class="page-header">
   <h1>Workshop<br><em>Library</em></h1>
   <div class="header-meta">
-    <p>5 Workshops</p>
-    <p>4 Deployment Guides</p>
+    <p>9 Workshops</p>
     <p>All Levels</p>
+    <p>Open Source</p>
   </div>
 </header>
 
 <div class="main">
+
+  <div style="padding:0 0 16px;max-width:700px;">
+    <h2 style="font-size:22px;font-weight:700;letter-spacing:-0.02em;margin-bottom:16px;">Curriculum Policy</h2>
+    <p style="font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:12px;">ClawCamp does not have a single official curriculum. We believe:</p>
+    <ul class="curriculum-bullets" style="list-style:none;margin:16px 0;">
+      <li style="font-size:15px;color:var(--muted);line-height:1.6;padding:6px 0 6px 18px;position:relative;"><span style="position:absolute;left:0;top:13px;width:5px;height:5px;border-radius:50%;background:var(--rust);display:inline-block;"></span><strong style="color:var(--ink);">Anyone can create their own curriculum.</strong> Your workshop, your format, your content.</li>
+      <li style="font-size:15px;color:var(--muted);line-height:1.6;padding:6px 0 6px 18px;position:relative;"><span style="position:absolute;left:0;top:13px;width:5px;height:5px;border-radius:50%;background:var(--rust);display:inline-block;"></span><strong style="color:var(--ink);">We provide example curricula</strong> as starting points for common formats (OpenClaw setup, agent building, demo day hosting, etc.)</li>
+      <li style="font-size:15px;color:var(--muted);line-height:1.6;padding:6px 0 6px 18px;position:relative;"><span style="position:absolute;left:0;top:13px;width:5px;height:5px;border-radius:50%;background:var(--rust);display:inline-block;"></span><strong style="color:var(--ink);">Everyone is asked to share back.</strong> When you build something that works, add it to the shared library. The whole network gets better.</li>
+    </ul>
+  </div>
 
   <!-- Workshops -->
   <div class="section-divider">
@@ -225,39 +235,69 @@
       </div>
     </a>
 
-  </div>
+    <a class="workshop-card" href="/curriculum/deploy-console">
+      <div class="workshop-card-header">
+        <span class="event-tag tag-tour">Beginner</span>
+        <span class="event-tag" style="background:var(--cream);color:var(--muted);border:1px solid var(--sand);">No-Code</span>
+      </div>
+      <div class="workshop-card-body">
+        <div class="workshop-card-title">Deploy via Nebius Web Console</div>
+        <div class="workshop-card-subtitle">Browser-Based Deployment, Zero Setup</div>
+        <div class="workshop-card-desc">Browser-based deployment with no Docker, CLI, or local setup required. Point, click, deploy.</div>
+      </div>
+      <div class="workshop-card-footer">
+        <span class="workshop-card-link">View Workshop &rarr;</span>
+        <span class="workshop-card-meta">~20 min</span>
+      </div>
+    </a>
 
-  <!-- Deployment Guides -->
-  <div class="section-divider" style="margin-top:48px;">
-    <span class="divider-label">Deployment Guides</span>
-    <div class="divider-line"></div>
-  </div>
+    <a class="workshop-card" href="/curriculum/deploy-scripts">
+      <div class="workshop-card-header">
+        <span class="event-tag tag-tour">Beginner</span>
+        <span class="event-tag" style="background:var(--cream);color:var(--muted);border:1px solid var(--sand);">Automated</span>
+      </div>
+      <div class="workshop-card-body">
+        <div class="workshop-card-title">Deploy with Install Scripts</div>
+        <div class="workshop-card-subtitle">One-Command Automated Setup</div>
+        <div class="workshop-card-desc">Fully automated CLI deployment using install scripts. One command to set up the Gateway, Token Factory, and connectivity.</div>
+      </div>
+      <div class="workshop-card-footer">
+        <span class="workshop-card-link">View Workshop &rarr;</span>
+        <span class="workshop-card-meta">~15 min</span>
+      </div>
+    </a>
 
-  <div class="guide-grid">
+    <a class="workshop-card" href="/curriculum/deploy-patterns">
+      <div class="workshop-card-header">
+        <span class="event-tag tag-workshop">Intermediate</span>
+        <span class="event-tag" style="background:var(--cream);color:var(--muted);border:1px solid var(--sand);">Ops</span>
+      </div>
+      <div class="workshop-card-body">
+        <div class="workshop-card-title">Deployment Patterns &amp; Troubleshooting</div>
+        <div class="workshop-card-subtitle">Compare Methods, Fix Common Pitfalls</div>
+        <div class="workshop-card-desc">Four deployment methods compared, plus common pitfalls: gateway crashes, token mismatches, region mapping, and port exposure.</div>
+      </div>
+      <div class="workshop-card-footer">
+        <span class="workshop-card-link">View Workshop &rarr;</span>
+        <span class="workshop-card-meta">~45 min</span>
+      </div>
+    </a>
 
-    <div class="guide-card">
-      <div class="guide-card-eyebrow">No-Code</div>
-      <h3>Deploy via Nebius Web Console</h3>
-      <p>Browser-based deployment with no Docker, CLI, or local setup required. Point, click, deploy.</p>
-    </div>
-
-    <div class="guide-card">
-      <div class="guide-card-eyebrow">Automated</div>
-      <h3>Deploy with Install Scripts</h3>
-      <p>Fully automated CLI deployment using install scripts. One command to set up the Gateway, Token Factory, and connectivity.</p>
-    </div>
-
-    <div class="guide-card">
-      <div class="guide-card-eyebrow">Comprehensive</div>
-      <h3>Deployment Patterns &amp; Troubleshooting</h3>
-      <p>Four deployment methods compared, plus common pitfalls: gateway crashes, token mismatches, region mapping, and port exposure.</p>
-    </div>
-
-    <div class="guide-card">
-      <div class="guide-card-eyebrow">Architecture</div>
-      <h3>Three Deployment Patterns</h3>
-      <p>Local + Token Factory, CPU Serverless + Token Factory GPU, and GPU Serverless + local model. Choose the right pattern for your use case.</p>
-    </div>
+    <a class="workshop-card" href="/curriculum/deploy-architecture">
+      <div class="workshop-card-header">
+        <span class="event-tag tag-workshop">Intermediate</span>
+        <span class="event-tag" style="background:var(--cream);color:var(--muted);border:1px solid var(--sand);">Architecture</span>
+      </div>
+      <div class="workshop-card-body">
+        <div class="workshop-card-title">Three Deployment Patterns</div>
+        <div class="workshop-card-subtitle">Choose the Right Architecture</div>
+        <div class="workshop-card-desc">Local + Token Factory, CPU Serverless + Token Factory GPU, and GPU Serverless + local model. Choose the right pattern for your use case.</div>
+      </div>
+      <div class="workshop-card-footer">
+        <span class="workshop-card-link">View Workshop &rarr;</span>
+        <span class="workshop-card-meta">~30 min</span>
+      </div>
+    </a>
 
   </div>
 
