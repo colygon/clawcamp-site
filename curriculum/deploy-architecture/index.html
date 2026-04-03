@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Three Deployment Patterns — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  /* Workshop detail styles */
+  .workshop-hero {
+    padding: 48px 48px 0;
+    max-width: 800px;
+  }
+  .workshop-hero .event-tag { margin-bottom: 12px; display: inline-block; }
+  .workshop-subtitle {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .workshop-desc {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .meta-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .meta-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .meta-card-value {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .content-block {
+    padding: 0 48px;
+    max-width: 800px;
+    margin-bottom: 40px;
+  }
+  .content-block h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .content-block h2 em { font-style: normal; color: var(--rust); }
+
+  .bullet-list {
+    list-style: none;
+    margin: 0;
+  }
+  .bullet-list li {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+    padding: 6px 0 6px 18px;
+    position: relative;
+  }
+  .bullet-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 13px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--rust);
+  }
+  .bullet-list li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Schedule table */
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+  }
+  .schedule-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-align: left;
+    padding: 10px 0;
+    border-bottom: 2px solid var(--sand);
+  }
+  .schedule-table td {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid var(--cream);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .schedule-table td:first-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    white-space: nowrap;
+    width: 100px;
+  }
+  .schedule-table td strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Steps */
+  .steps-section {
+    padding: 0 48px;
+    max-width: 800px;
+  }
+  .steps-section h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .steps-section h2 em { font-style: normal; color: var(--rust); }
+
+  .step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 20px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--cream);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--rust);
+    line-height: 1;
+  }
+  .step-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .step-title {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .step-duration {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .step-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .step-instructions {
+    list-style: none;
+    margin: 0 0 12px;
+    counter-reset: instr;
+  }
+  .step-instructions li {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.6;
+    padding: 4px 0 4px 28px;
+    position: relative;
+    counter-increment: instr;
+  }
+  .step-instructions li::before {
+    content: counter(instr) '.';
+    position: absolute;
+    left: 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    font-weight: 500;
+  }
+
+  .code-block {
+    background: var(--cream);
+    border: 1px solid var(--sand);
+    border-radius: 6px;
+    padding: 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--ink);
+    overflow-x: auto;
+    margin-bottom: 8px;
+    line-height: 1.6;
+    white-space: pre;
+  }
+  .code-block code {
+    font-family: inherit;
+    font-size: inherit;
+  }
+  .code-comment {
+    color: var(--muted);
+  }
+
+  .step-tip {
+    font-size: 13px;
+    color: var(--moss);
+    background: var(--moss-light);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  .step-tip strong {
+    font-weight: 600;
+  }
+
+  .step-checkpoint {
+    font-size: 13px;
+    color: var(--gold);
+    background: var(--gold-light);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    line-height: 1.5;
+    border-left: 3px solid var(--gold);
+  }
+  .step-checkpoint strong {
+    font-weight: 600;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 48px 48px 0;
+    transition: color 0.15s;
+  }
+  .back-link:hover { color: var(--ink); }
+
+  /* You Leave With section */
+  .outcome-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .outcome-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .outcome-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .spacer { height: 48px; }
+
+  @media (max-width: 768px) {
+    .workshop-hero, .content-block, .steps-section, .back-link { padding-left: 20px; padding-right: 20px; }
+    .meta-grid { grid-template-columns: 1fr; }
+    .step { grid-template-columns: 40px 1fr; gap: 12px; }
+    .step-number { font-size: 24px; }
+    .outcome-grid { grid-template-columns: 1fr; }
+    .schedule-table td:first-child { width: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<a href="/curriculum" class="back-link">&larr; Back to Workshop Library</a>
+
+<header class="page-header">
+  <h1>Three Deployment<br><em>Patterns</em></h1>
+  <div class="header-meta">
+    <p>Choose the Right Architecture</p>
+    <p>Intermediate</p>
+    <p>~30 Minutes</p>
+  </div>
+</header>
+
+<div class="workshop-hero">
+  <span class="event-tag tag-workshop">Intermediate</span>
+  <h2 class="workshop-subtitle">Choose the Right Architecture</h2>
+  <p class="workshop-desc">OpenClaw supports three distinct deployment architectures, each with different cost profiles, latency characteristics, and operational tradeoffs. This workshop walks through all three &mdash; Local Gateway + Token Factory, CPU Serverless + Token Factory GPU, and GPU Serverless + Local Model &mdash; with text-based architecture diagrams, cost analysis, and clear guidance on when to use each.</p>
+
+  <div class="meta-grid">
+    <div class="meta-card">
+      <div class="meta-card-label">Who It's For</div>
+      <div class="meta-card-value">Developers and architects deciding how to deploy OpenClaw for production, staging, or cost-optimized workloads</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-card-label">What You Get</div>
+      <div class="meta-card-value">A clear understanding of three architecture patterns with cost estimates and decision criteria</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-card-label">Time Required</div>
+      <div class="meta-card-value">~30 minutes covering architecture review, cost analysis, and pattern selection</div>
+    </div>
+  </div>
+</div>
+
+<!-- What You'll Build -->
+<div class="content-block">
+  <h2>What You'll <em>Build</em></h2>
+  <ul class="bullet-list">
+    <li>A <strong>decision framework</strong> for selecting the right deployment pattern based on your requirements</li>
+    <li><strong>Architecture diagrams</strong> (text-based) for each of the three patterns</li>
+    <li>A <strong>cost model</strong> comparing per-token, per-hour, and per-month costs across patterns</li>
+  </ul>
+</div>
+
+<!-- What We'll Cover -->
+<div class="content-block">
+  <h2>What We'll <em>Cover</em></h2>
+  <ul class="bullet-list">
+    <li><strong>Pattern 1: Local Gateway + Token Factory</strong> &mdash; gateway runs on your machine or VM, inference via Token Factory API (pay-per-token)</li>
+    <li><strong>Pattern 2: CPU Serverless + Token Factory GPU</strong> &mdash; gateway runs on serverless CPU compute, inference via Token Factory (lowest ops burden)</li>
+    <li><strong>Pattern 3: GPU Serverless + Local Model</strong> &mdash; both gateway and model run on GPU serverless (lowest latency, highest cost)</li>
+    <li><strong>Architecture diagrams</strong> &mdash; text-based flow diagrams showing data paths, network boundaries, and component placement</li>
+    <li><strong>Cost analysis</strong> &mdash; per-token vs per-hour pricing, idle cost, burst cost, and break-even points</li>
+    <li><strong>When to use each</strong> &mdash; prototyping, low-traffic production, high-traffic production, latency-sensitive, and cost-sensitive scenarios</li>
+  </ul>
+</div>
+
+<!-- Schedule -->
+<div class="content-block">
+  <h2><em>Schedule</em></h2>
+  <table class="schedule-table">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Topic</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0:00 &ndash; 0:08</td>
+        <td><strong>Pattern 1: Local + Token Factory</strong> &mdash; Architecture walkthrough, data flow, cost model, best use cases</td>
+      </tr>
+      <tr>
+        <td>0:08 &ndash; 0:16</td>
+        <td><strong>Pattern 2: CPU Serverless + TF GPU</strong> &mdash; Architecture walkthrough, auto-scaling, cold starts, cost model</td>
+      </tr>
+      <tr>
+        <td>0:16 &ndash; 0:24</td>
+        <td><strong>Pattern 3: GPU Serverless + Local Model</strong> &mdash; Architecture walkthrough, model loading, latency, cost model</td>
+      </tr>
+      <tr>
+        <td>0:24 &ndash; 0:30</td>
+        <td><strong>Decision Framework</strong> &mdash; Side-by-side comparison, decision tree, Q&amp;A on specific use cases</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Prerequisites -->
+<div class="content-block">
+  <h2><em>Prerequisites</em></h2>
+  <ul class="bullet-list">
+    <li>Familiarity with <strong>OpenClaw concepts</strong> (gateway, channels, Token Factory) from a beginner workshop</li>
+    <li>Basic understanding of <strong>cloud computing</strong> concepts (VMs, serverless, API pricing)</li>
+    <li>No coding required &mdash; this is an <strong>architecture and planning</strong> workshop</li>
+  </ul>
+</div>
+
+<!-- Step-by-Step Guide -->
+<div class="steps-section">
+  <h2>Step-by-Step <em>Guide</em></h2>
+
+  <!-- Step 1 -->
+  <div class="step">
+    <div class="step-number">1</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Pattern 1: Local Gateway + Token Factory</span>
+        <span class="step-duration">8 min</span>
+      </div>
+      <p class="step-desc">The simplest architecture: run the gateway locally (or on a VM) and use Token Factory for all inference.</p>
+
+      <ol class="step-instructions">
+        <li>Review the architecture: Your Machine/VM runs the OpenClaw Gateway, which calls Token Factory API for inference</li>
+        <li>Understand the data flow: User &rarr; Gateway (local) &rarr; Token Factory API &rarr; GPU inference &rarr; response</li>
+        <li>Calculate costs: Token Factory charges per-token with no idle cost &mdash; you only pay when the agent is responding</li>
+        <li>Identify best use cases: prototyping, low-traffic bots, development, cost-sensitive workloads</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Pattern 1 Architecture</span>
+<span class="code-comment">#</span>
+<span class="code-comment"># [Your Machine / VM]          [Nebius Cloud]</span>
+<span class="code-comment"># +------------------+         +--------------------+</span>
+<span class="code-comment"># | OpenClaw Gateway | --API--&gt; | Token Factory      |</span>
+<span class="code-comment"># | (Node.js)        |         | (GPU Inference)    |</span>
+<span class="code-comment"># +------------------+         +--------------------+</span>
+<span class="code-comment"># | Control UI :18789|</span>
+<span class="code-comment"># +------------------+</span>
+<span class="code-comment">#</span>
+<span class="code-comment"># Cost: ~$0 idle + per-token inference</span>
+<span class="code-comment"># Latency: Network round-trip to Token Factory (~50-200ms)</span></code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> This pattern has zero idle cost. If your agent handles fewer than ~1000 messages/day, per-token pricing is almost always cheaper than reserving GPU compute.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You can draw this architecture and explain the cost model to someone else.</div>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step">
+    <div class="step-number">2</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Pattern 2: CPU Serverless + Token Factory GPU</span>
+        <span class="step-duration">8 min</span>
+      </div>
+      <p class="step-desc">Run the gateway on serverless CPU compute for zero-ops management, with Token Factory handling GPU inference.</p>
+
+      <ol class="step-instructions">
+        <li>Review the architecture: Gateway runs on Nebius serverless (auto-scales, no VM management), inference via Token Factory</li>
+        <li>Understand auto-scaling: the gateway scales to zero when idle and spins up on demand</li>
+        <li>Account for cold starts: first request after idle may take 2&ndash;5 seconds while the container starts</li>
+        <li>Calculate costs: small CPU serverless fee when active + per-token inference &mdash; near-zero idle cost</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Pattern 2 Architecture</span>
+<span class="code-comment">#</span>
+<span class="code-comment"># [Nebius Serverless (CPU)]     [Nebius Cloud]</span>
+<span class="code-comment"># +------------------+         +--------------------+</span>
+<span class="code-comment"># | OpenClaw Gateway | --API--&gt; | Token Factory      |</span>
+<span class="code-comment"># | (Container)      |         | (GPU Inference)    |</span>
+<span class="code-comment"># +------------------+         +--------------------+</span>
+<span class="code-comment"># | Auto-scales 0..N |</span>
+<span class="code-comment"># | Cold start ~2-5s |</span>
+<span class="code-comment"># +------------------+</span>
+<span class="code-comment">#</span>
+<span class="code-comment"># Cost: ~$0.01/hr active + per-token inference</span>
+<span class="code-comment"># Latency: Cold start + Token Factory round-trip</span></code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> This is the lowest-ops pattern. No VMs to manage, no SSH, no OS updates. Ideal for production bots that need to be always-available without infrastructure babysitting.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You understand how cold starts affect user experience and when this tradeoff is acceptable.</div>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="step">
+    <div class="step-number">3</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Pattern 3: GPU Serverless + Local Model</span>
+        <span class="step-duration">8 min</span>
+      </div>
+      <p class="step-desc">Run both the gateway and the inference model on GPU serverless for the lowest possible latency.</p>
+
+      <ol class="step-instructions">
+        <li>Review the architecture: Gateway and model run together on GPU serverless &mdash; no network hop for inference</li>
+        <li>Understand model loading: the model loads into GPU memory on cold start (can take 30&ndash;60 seconds for large models)</li>
+        <li>Calculate costs: GPU serverless is priced per-second of GPU time &mdash; higher cost but lowest latency</li>
+        <li>Identify best use cases: latency-sensitive applications, high-throughput workloads, dedicated model requirements</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Pattern 3 Architecture</span>
+<span class="code-comment">#</span>
+<span class="code-comment"># [Nebius GPU Serverless]</span>
+<span class="code-comment"># +-----------------------------------+</span>
+<span class="code-comment"># | OpenClaw Gateway + Local Model    |</span>
+<span class="code-comment"># | (Container with GPU access)       |</span>
+<span class="code-comment"># |                                   |</span>
+<span class="code-comment"># | Gateway --local--&gt; Model (vLLM)   |</span>
+<span class="code-comment"># | No network hop for inference      |</span>
+<span class="code-comment"># +-----------------------------------+</span>
+<span class="code-comment">#</span>
+<span class="code-comment"># Cost: ~$1-4/hr GPU time (even when idle)</span>
+<span class="code-comment"># Latency: ~10-50ms inference (no network hop)</span></code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> This pattern gives the best latency but costs significantly more when idle. Use it for high-traffic production agents or when response time is critical (e.g., real-time voice agents).</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You understand the cost/latency tradeoff and can calculate the break-even point vs Pattern 1.</div>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="step">
+    <div class="step-number">4</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Choose Your Pattern</span>
+        <span class="step-duration">6 min</span>
+      </div>
+      <p class="step-desc">Use the decision framework to select the right architecture for your specific use case.</p>
+
+      <ol class="step-instructions">
+        <li>Answer three questions: What is your traffic volume? What is your latency requirement? What is your ops budget?</li>
+        <li>Use the decision tree: Low traffic + cost-sensitive = Pattern 1. Medium traffic + low ops = Pattern 2. High traffic + low latency = Pattern 3.</li>
+        <li>Factor in growth: start with Pattern 1 for prototyping, graduate to Pattern 2 for production, use Pattern 3 only when latency demands it</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Decision Tree</span>
+<span class="code-comment">#</span>
+<span class="code-comment"># Is this a prototype or dev environment?</span>
+<span class="code-comment">#   YES --&gt; Pattern 1 (Local + Token Factory)</span>
+<span class="code-comment">#   NO  --&gt; Do you need sub-100ms inference?</span>
+<span class="code-comment">#             YES --&gt; Pattern 3 (GPU Serverless)</span>
+<span class="code-comment">#             NO  --&gt; Do you want zero-ops?</span>
+<span class="code-comment">#                       YES --&gt; Pattern 2 (CPU Serverless + TF)</span>
+<span class="code-comment">#                       NO  --&gt; Pattern 1 on a VM</span></code></div>
+
+      <div class="code-block"><code><span class="code-comment"># Cost Comparison (approximate, 10K messages/day)</span>
+<span class="code-comment">#</span>
+<span class="code-comment"># Pattern 1: ~$15-30/month  (per-token only)</span>
+<span class="code-comment"># Pattern 2: ~$20-40/month  (CPU serverless + per-token)</span>
+<span class="code-comment"># Pattern 3: ~$200-800/month (GPU reservation)</span></code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> Most teams should start with Pattern 1 and only move to Pattern 2 or 3 when they have a clear reason. Premature optimization of deployment architecture is a common mistake.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You have selected a pattern for your use case and can justify the choice with cost and latency data.</div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- You Leave With -->
+<div class="content-block">
+  <h2>You Leave <em>With</em></h2>
+  <div class="outcome-grid">
+    <div class="outcome-card">
+      <p><strong>Three architecture patterns</strong> understood with data flow, cost, and latency characteristics</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>A decision framework</strong> for selecting the right pattern based on traffic, latency, and ops requirements</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>Cost estimates</strong> for each pattern at different traffic levels</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>A migration path</strong> from prototype (Pattern 1) to production (Pattern 2/3)</p>
+    </div>
+  </div>
+  <ul class="bullet-list" style="margin-top: 16px;">
+    <li><strong>Ready to implement</strong> &mdash; return to the deployment workshops to build your chosen architecture</li>
+  </ul>
+</div>
+
+<div class="spacer"></div>
+
+<div class="cta-band">
+  <div>
+    <h3>Ready to deploy your chosen pattern?</h3>
+    <p>Head back to the workshop library and follow the deployment guide that matches your architecture.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="/curriculum/deploy-patterns" class="btn-dark">Deployment Patterns &rarr;</a>
+    <a href="/curriculum" class="btn-outline">All Workshops</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

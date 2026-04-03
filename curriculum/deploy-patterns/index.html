@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deployment Patterns & Troubleshooting — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  /* Workshop detail styles */
+  .workshop-hero {
+    padding: 48px 48px 0;
+    max-width: 800px;
+  }
+  .workshop-hero .event-tag { margin-bottom: 12px; display: inline-block; }
+  .workshop-subtitle {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .workshop-desc {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .meta-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .meta-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .meta-card-value {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .content-block {
+    padding: 0 48px;
+    max-width: 800px;
+    margin-bottom: 40px;
+  }
+  .content-block h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .content-block h2 em { font-style: normal; color: var(--rust); }
+
+  .bullet-list {
+    list-style: none;
+    margin: 0;
+  }
+  .bullet-list li {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+    padding: 6px 0 6px 18px;
+    position: relative;
+  }
+  .bullet-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 13px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--rust);
+  }
+  .bullet-list li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Schedule table */
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+  }
+  .schedule-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-align: left;
+    padding: 10px 0;
+    border-bottom: 2px solid var(--sand);
+  }
+  .schedule-table td {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid var(--cream);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .schedule-table td:first-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    white-space: nowrap;
+    width: 100px;
+  }
+  .schedule-table td strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Steps */
+  .steps-section {
+    padding: 0 48px;
+    max-width: 800px;
+  }
+  .steps-section h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .steps-section h2 em { font-style: normal; color: var(--rust); }
+
+  .step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 20px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--cream);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--rust);
+    line-height: 1;
+  }
+  .step-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .step-title {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .step-duration {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .step-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .step-instructions {
+    list-style: none;
+    margin: 0 0 12px;
+    counter-reset: instr;
+  }
+  .step-instructions li {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.6;
+    padding: 4px 0 4px 28px;
+    position: relative;
+    counter-increment: instr;
+  }
+  .step-instructions li::before {
+    content: counter(instr) '.';
+    position: absolute;
+    left: 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    font-weight: 500;
+  }
+
+  .code-block {
+    background: var(--cream);
+    border: 1px solid var(--sand);
+    border-radius: 6px;
+    padding: 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--ink);
+    overflow-x: auto;
+    margin-bottom: 8px;
+    line-height: 1.6;
+    white-space: pre;
+  }
+  .code-block code {
+    font-family: inherit;
+    font-size: inherit;
+  }
+  .code-comment {
+    color: var(--muted);
+  }
+
+  .step-tip {
+    font-size: 13px;
+    color: var(--moss);
+    background: var(--moss-light);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  .step-tip strong {
+    font-weight: 600;
+  }
+
+  .step-checkpoint {
+    font-size: 13px;
+    color: var(--gold);
+    background: var(--gold-light);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    line-height: 1.5;
+    border-left: 3px solid var(--gold);
+  }
+  .step-checkpoint strong {
+    font-weight: 600;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 48px 48px 0;
+    transition: color 0.15s;
+  }
+  .back-link:hover { color: var(--ink); }
+
+  /* You Leave With section */
+  .outcome-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .outcome-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .outcome-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .spacer { height: 48px; }
+
+  @media (max-width: 768px) {
+    .workshop-hero, .content-block, .steps-section, .back-link { padding-left: 20px; padding-right: 20px; }
+    .meta-grid { grid-template-columns: 1fr; }
+    .step { grid-template-columns: 40px 1fr; gap: 12px; }
+    .step-number { font-size: 24px; }
+    .outcome-grid { grid-template-columns: 1fr; }
+    .schedule-table td:first-child { width: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<a href="/curriculum" class="back-link">&larr; Back to Workshop Library</a>
+
+<header class="page-header">
+  <h1>Deployment Patterns &amp;<br><em>Troubleshooting</em></h1>
+  <div class="header-meta">
+    <p>Compare Methods, Fix Common Pitfalls</p>
+    <p>Intermediate</p>
+    <p>~45 Minutes</p>
+  </div>
+</header>
+
+<div class="workshop-hero">
+  <span class="event-tag tag-workshop">Intermediate</span>
+  <h2 class="workshop-subtitle">Compare Methods, Fix Common Pitfalls</h2>
+  <p class="workshop-desc">You've deployed OpenClaw &mdash; now understand why things break and how to fix them. This workshop compares four deployment methods side by side, then dives into the most common pitfalls: gateway crashes, token mismatches, region mapping errors, and port exposure issues. You'll leave with a troubleshooting playbook and the confidence to debug any deployment.</p>
+
+  <div class="meta-grid">
+    <div class="meta-card">
+      <div class="meta-card-label">Who It's For</div>
+      <div class="meta-card-value">Developers who have deployed OpenClaw at least once and want to understand tradeoffs and fix issues faster</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-card-label">What You Get</div>
+      <div class="meta-card-value">A mental model for choosing deployment methods plus a troubleshooting playbook for common failures</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-card-label">Time Required</div>
+      <div class="meta-card-value">~45 minutes covering comparison, debugging exercises, and health check patterns</div>
+    </div>
+  </div>
+</div>
+
+<!-- What You'll Build -->
+<div class="content-block">
+  <h2>What You'll <em>Build</em></h2>
+  <ul class="bullet-list">
+    <li>A <strong>comparison framework</strong> for evaluating local vs cloud, CPU vs GPU serverless deployments</li>
+    <li>A <strong>troubleshooting playbook</strong> covering the top failure modes in OpenClaw deployments</li>
+    <li><strong>Health check scripts</strong> you can reuse across any deployment method</li>
+  </ul>
+</div>
+
+<!-- What We'll Cover -->
+<div class="content-block">
+  <h2>What We'll <em>Cover</em></h2>
+  <ul class="bullet-list">
+    <li><strong>Local vs Cloud deployment</strong> &mdash; when to run on your machine vs Nebius compute, and the tradeoffs of each</li>
+    <li><strong>CPU vs GPU serverless</strong> &mdash; cost, latency, and model availability differences</li>
+    <li><strong>Gateway crash diagnosis</strong> &mdash; reading logs, identifying OOM kills, restart loops, and WebSocket failures</li>
+    <li><strong>Token mismatch debugging</strong> &mdash; API key formats, environment variable precedence, and auth flow tracing</li>
+    <li><strong>Region mapping errors</strong> &mdash; Token Factory region availability, endpoint URLs, and latency implications</li>
+    <li><strong>Port exposure and firewall issues</strong> &mdash; cloud security groups, local firewalls, bind address mistakes</li>
+    <li><strong>Health check patterns</strong> &mdash; automated scripts to verify gateway, Token Factory, and end-to-end connectivity</li>
+  </ul>
+</div>
+
+<!-- Schedule -->
+<div class="content-block">
+  <h2><em>Schedule</em></h2>
+  <table class="schedule-table">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Topic</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0:00 &ndash; 0:10</td>
+        <td><strong>Deployment Method Comparison</strong> &mdash; Side-by-side review of local install, web console, install scripts, and Docker &mdash; when to use each</td>
+      </tr>
+      <tr>
+        <td>0:10 &ndash; 0:20</td>
+        <td><strong>Local vs Cloud, CPU vs GPU</strong> &mdash; Cost analysis, latency benchmarks, model availability matrix</td>
+      </tr>
+      <tr>
+        <td>0:20 &ndash; 0:35</td>
+        <td><strong>Troubleshooting Deep Dive</strong> &mdash; Gateway crashes, token mismatches, region errors, port issues &mdash; live debugging exercises</td>
+      </tr>
+      <tr>
+        <td>0:35 &ndash; 0:45</td>
+        <td><strong>Health Checks &amp; Automation</strong> &mdash; Build reusable health check scripts, set up monitoring, discuss alerting patterns</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Prerequisites -->
+<div class="content-block">
+  <h2><em>Prerequisites</em></h2>
+  <ul class="bullet-list">
+    <li>Completed at least one deployment workshop (<a href="/curriculum/local-install" style="color: var(--rust); text-decoration: underline;">Local Install</a>, <a href="/curriculum/deploy-console" style="color: var(--rust); text-decoration: underline;">Web Console</a>, or <a href="/curriculum/deploy-scripts" style="color: var(--rust); text-decoration: underline;">Install Scripts</a>)</li>
+    <li>Basic comfort with the <strong>terminal</strong> and reading log output</li>
+    <li>A running or recently deployed <strong>OpenClaw instance</strong> (local or cloud) to test against</li>
+  </ul>
+</div>
+
+<!-- Step-by-Step Guide -->
+<div class="steps-section">
+  <h2>Step-by-Step <em>Guide</em></h2>
+
+  <!-- Step 1 -->
+  <div class="step">
+    <div class="step-number">1</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Map the Four Deployment Methods</span>
+        <span class="step-duration">10 min</span>
+      </div>
+      <p class="step-desc">Understand the four deployment paths and when each one makes sense.</p>
+
+      <ol class="step-instructions">
+        <li>Review the four methods: <strong>Local Install</strong> (npm), <strong>Web Console</strong> (browser), <strong>Install Scripts</strong> (CLI), <strong>Docker</strong> (container)</li>
+        <li>Compare on five axes: setup time, repeatability, isolation, resource requirements, and production readiness</li>
+        <li>Identify which method fits your current use case (prototyping, demo, staging, production)</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Quick comparison matrix</span>
+<span class="code-comment"># Method          Setup    Repeatable  Isolation  Prod-Ready</span>
+<span class="code-comment"># Local npm       ~5 min   Low         None       No</span>
+<span class="code-comment"># Web Console     ~20 min  Medium      VM         Yes</span>
+<span class="code-comment"># Install Script  ~15 min  High        VM         Yes</span>
+<span class="code-comment"># Docker          ~10 min  High        Container  Yes</span></code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> Local npm is best for learning and prototyping. Install scripts are best for repeatable cloud deployments. Docker adds isolation but requires Docker knowledge.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You can articulate why you'd choose one method over another for a given scenario.</div>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step">
+    <div class="step-number">2</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Debug Gateway Crashes &amp; Token Mismatches</span>
+        <span class="step-duration">15 min</span>
+      </div>
+      <p class="step-desc">Walk through the most common failure modes and learn how to diagnose each one.</p>
+
+      <ol class="step-instructions">
+        <li>Check gateway logs for crash indicators: OOM kills, unhandled promise rejections, and bind errors</li>
+        <li>Trace a token mismatch: verify <code style="font-family: 'DM Mono', monospace; font-size: 13px;">TOKEN_FACTORY_API_KEY</code> format, check env var precedence, test with curl</li>
+        <li>Simulate a region mapping error by pointing to the wrong Token Factory endpoint</li>
+        <li>Fix each issue and verify with a health check</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Check for gateway crashes</span>
+openclaw logs --tail 50 | grep -i "error\|crash\|killed"</code></div>
+
+      <div class="code-block"><code><span class="code-comment"># Test Token Factory connectivity directly</span>
+curl -s -H "Authorization: Bearer $TOKEN_FACTORY_API_KEY" \
+  https://api.tokenfactory.nebius.com/v1/models | jq '.data[0].id'</code></div>
+
+      <div class="code-block"><code><span class="code-comment"># Check environment variable precedence</span>
+env | grep -E "TOKEN_FACTORY|OPENCLAW|INFERENCE"</code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> The most common token mismatch is using a Token Factory key that starts with <code style="font-family: 'DM Mono', monospace; font-size: 12px;">v1.</code> in a field that expects the gateway token (or vice versa). They are different credentials.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You can identify and fix a gateway crash, token mismatch, and region error from logs alone.</div>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="step">
+    <div class="step-number">3</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Fix Port Exposure &amp; Firewall Issues</span>
+        <span class="step-duration">10 min</span>
+      </div>
+      <p class="step-desc">Diagnose and resolve connectivity problems caused by port binding, firewalls, and security groups.</p>
+
+      <ol class="step-instructions">
+        <li>Verify the gateway bind address: <code style="font-family: 'DM Mono', monospace; font-size: 13px;">loopback</code> (local only) vs <code style="font-family: 'DM Mono', monospace; font-size: 13px;">0.0.0.0</code> (all interfaces)</li>
+        <li>Check local firewall rules (iptables/ufw on Linux, pf on macOS)</li>
+        <li>Verify cloud security group rules in the Nebius console</li>
+        <li>Test external connectivity with curl from another machine</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Check what the gateway is bound to</span>
+ss -tlnp | grep 18789</code></div>
+
+      <div class="code-block"><code><span class="code-comment"># Test external connectivity</span>
+curl -s http://<span class="code-comment">{your-instance-ip}</span>:18789/health</code></div>
+
+      <div class="code-block"><code><span class="code-comment"># If bound to loopback, rebind to all interfaces for cloud access</span>
+openclaw gateway --bind 0.0.0.0 --auth token --token $OPENCLAW_GATEWAY_TOKEN</code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> On Nebius, you need to open port 18789 in both the VM's local firewall AND the cloud security group. Missing either one will block external access.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You can access the Control UI from an external browser after resolving firewall and bind address issues.</div>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="step">
+    <div class="step-number">4</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Build a Health Check Script</span>
+        <span class="step-duration">10 min</span>
+      </div>
+      <p class="step-desc">Create a reusable script that validates gateway, Token Factory, and end-to-end connectivity.</p>
+
+      <ol class="step-instructions">
+        <li>Write a script that checks gateway process status</li>
+        <li>Add a Token Factory API connectivity test</li>
+        <li>Add an end-to-end message test (send a prompt, verify a response)</li>
+        <li>Output a clear pass/fail summary</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment">#!/bin/bash</span>
+<span class="code-comment"># health-check.sh &mdash; OpenClaw deployment health check</span>
+
+echo "=== Gateway Status ==="
+curl -sf http://localhost:18789/health &amp;&amp; echo " OK" || echo " FAIL"
+
+echo "=== Token Factory ==="
+curl -sf -H "Authorization: Bearer $TOKEN_FACTORY_API_KEY" \
+  https://api.tokenfactory.nebius.com/v1/models &gt; /dev/null \
+  &amp;&amp; echo "OK" || echo "FAIL"
+
+echo "=== End-to-End ==="
+openclaw status &amp;&amp; echo "OK" || echo "FAIL"</code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> Run this script after every deployment or configuration change. Consider adding it to a cron job for continuous monitoring.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Your health check script reports pass/fail for all three checks.</div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- You Leave With -->
+<div class="content-block">
+  <h2>You Leave <em>With</em></h2>
+  <div class="outcome-grid">
+    <div class="outcome-card">
+      <p><strong>A comparison framework</strong> for choosing between four deployment methods</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>Troubleshooting skills</strong> for gateway crashes, token errors, region issues, and port problems</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>A reusable health check script</strong> for validating any OpenClaw deployment</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>Confidence to debug</strong> production issues without escalation</p>
+    </div>
+  </div>
+  <ul class="bullet-list" style="margin-top: 16px;">
+    <li><strong>Ready for architecture decisions</strong> &mdash; explore the Three Deployment Patterns workshop to choose the right architecture</li>
+  </ul>
+</div>
+
+<div class="spacer"></div>
+
+<div class="cta-band">
+  <div>
+    <h3>Ready to choose an architecture?</h3>
+    <p>Learn the three main deployment patterns and when to use each in the Architecture workshop.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="/curriculum/deploy-architecture" class="btn-dark">Deployment Architecture &rarr;</a>
+    <a href="/curriculum" class="btn-outline">All Workshops</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

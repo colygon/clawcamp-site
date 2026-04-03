@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deploy via Nebius Web Console — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  /* Workshop detail styles */
+  .workshop-hero {
+    padding: 48px 48px 0;
+    max-width: 800px;
+  }
+  .workshop-hero .event-tag { margin-bottom: 12px; display: inline-block; }
+  .workshop-subtitle {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .workshop-desc {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .meta-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .meta-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .meta-card-value {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .content-block {
+    padding: 0 48px;
+    max-width: 800px;
+    margin-bottom: 40px;
+  }
+  .content-block h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .content-block h2 em { font-style: normal; color: var(--rust); }
+
+  .bullet-list {
+    list-style: none;
+    margin: 0;
+  }
+  .bullet-list li {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+    padding: 6px 0 6px 18px;
+    position: relative;
+  }
+  .bullet-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 13px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--rust);
+  }
+  .bullet-list li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Schedule table */
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+  }
+  .schedule-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-align: left;
+    padding: 10px 0;
+    border-bottom: 2px solid var(--sand);
+  }
+  .schedule-table td {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid var(--cream);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .schedule-table td:first-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    white-space: nowrap;
+    width: 100px;
+  }
+  .schedule-table td strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Steps */
+  .steps-section {
+    padding: 0 48px;
+    max-width: 800px;
+  }
+  .steps-section h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .steps-section h2 em { font-style: normal; color: var(--rust); }
+
+  .step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 20px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--cream);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--rust);
+    line-height: 1;
+  }
+  .step-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .step-title {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .step-duration {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .step-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .step-instructions {
+    list-style: none;
+    margin: 0 0 12px;
+    counter-reset: instr;
+  }
+  .step-instructions li {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.6;
+    padding: 4px 0 4px 28px;
+    position: relative;
+    counter-increment: instr;
+  }
+  .step-instructions li::before {
+    content: counter(instr) '.';
+    position: absolute;
+    left: 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    font-weight: 500;
+  }
+
+  .code-block {
+    background: var(--cream);
+    border: 1px solid var(--sand);
+    border-radius: 6px;
+    padding: 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--ink);
+    overflow-x: auto;
+    margin-bottom: 8px;
+    line-height: 1.6;
+    white-space: pre;
+  }
+  .code-block code {
+    font-family: inherit;
+    font-size: inherit;
+  }
+  .code-comment {
+    color: var(--muted);
+  }
+
+  .step-tip {
+    font-size: 13px;
+    color: var(--moss);
+    background: var(--moss-light);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  .step-tip strong {
+    font-weight: 600;
+  }
+
+  .step-checkpoint {
+    font-size: 13px;
+    color: var(--gold);
+    background: var(--gold-light);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    line-height: 1.5;
+    border-left: 3px solid var(--gold);
+  }
+  .step-checkpoint strong {
+    font-weight: 600;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 48px 48px 0;
+    transition: color 0.15s;
+  }
+  .back-link:hover { color: var(--ink); }
+
+  /* You Leave With section */
+  .outcome-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .outcome-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .outcome-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .spacer { height: 48px; }
+
+  @media (max-width: 768px) {
+    .workshop-hero, .content-block, .steps-section, .back-link { padding-left: 20px; padding-right: 20px; }
+    .meta-grid { grid-template-columns: 1fr; }
+    .step { grid-template-columns: 40px 1fr; gap: 12px; }
+    .step-number { font-size: 24px; }
+    .outcome-grid { grid-template-columns: 1fr; }
+    .schedule-table td:first-child { width: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<a href="/curriculum" class="back-link">&larr; Back to Workshop Library</a>
+
+<header class="page-header">
+  <h1>Deploy via Nebius<br><em>Web Console</em></h1>
+  <div class="header-meta">
+    <p>Browser-Based Deployment, Zero Setup</p>
+    <p>Beginner</p>
+    <p>~20 Minutes</p>
+  </div>
+</header>
+
+<div class="workshop-hero">
+  <span class="event-tag tag-tour">Beginner</span>
+  <h2 class="workshop-subtitle">Browser-Based Deployment, Zero Setup</h2>
+  <p class="workshop-desc">Deploy OpenClaw using the Nebius web console &mdash; no Docker, no CLI, no local setup. Point, click, deploy. This workshop walks you through creating a Nebius account, launching a compute instance with OpenClaw pre-configured, connecting Token Factory for inference, and accessing the Control UI &mdash; all from your browser.</p>
+
+  <div class="meta-grid">
+    <div class="meta-card">
+      <div class="meta-card-label">Who It's For</div>
+      <div class="meta-card-value">Anyone who wants a running OpenClaw deployment without touching a terminal or installing anything locally</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-card-label">What You Get</div>
+      <div class="meta-card-value">A cloud-hosted OpenClaw instance on Nebius with Token Factory inference, accessible via browser</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-card-label">Time Required</div>
+      <div class="meta-card-value">~20 minutes from account creation to a live, accessible agent</div>
+    </div>
+  </div>
+</div>
+
+<!-- What You'll Build -->
+<div class="content-block">
+  <h2>What You'll <em>Build</em></h2>
+  <ul class="bullet-list">
+    <li>A <strong>cloud-hosted OpenClaw instance</strong> running on Nebius compute</li>
+    <li>Connected to <strong>Token Factory</strong> for GPU-powered inference with no local GPU</li>
+    <li>Accessible via the <strong>Control UI</strong> from any browser, anywhere</li>
+  </ul>
+</div>
+
+<!-- What We'll Cover -->
+<div class="content-block">
+  <h2>What We'll <em>Cover</em></h2>
+  <ul class="bullet-list">
+    <li><strong>Creating a Nebius account</strong> &mdash; sign-up, billing setup, and navigating the console</li>
+    <li><strong>Navigating to Compute</strong> &mdash; finding the right service, choosing a region, selecting an instance type</li>
+    <li><strong>Launching an instance with OpenClaw</strong> &mdash; using the marketplace image or startup script</li>
+    <li><strong>Configuring Token Factory</strong> &mdash; setting API keys and model selection via the console UI</li>
+    <li><strong>Accessing the Control UI</strong> &mdash; connecting to your instance's public IP and authenticating</li>
+    <li><strong>Security basics</strong> &mdash; firewall rules, token authentication, and HTTPS considerations</li>
+  </ul>
+</div>
+
+<!-- Schedule -->
+<div class="content-block">
+  <h2><em>Schedule</em></h2>
+  <table class="schedule-table">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Topic</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0:00 &ndash; 0:05</td>
+        <td><strong>Account Setup</strong> &mdash; Create a Nebius account, verify email, and configure billing</td>
+      </tr>
+      <tr>
+        <td>0:05 &ndash; 0:10</td>
+        <td><strong>Launch Compute Instance</strong> &mdash; Navigate to Compute, select region and instance type, configure the OpenClaw image</td>
+      </tr>
+      <tr>
+        <td>0:10 &ndash; 0:15</td>
+        <td><strong>Configure Token Factory</strong> &mdash; Set environment variables, API key, and model via the console</td>
+      </tr>
+      <tr>
+        <td>0:15 &ndash; 0:20</td>
+        <td><strong>Connect &amp; Verify</strong> &mdash; Access the Control UI, send a test message, explore the dashboard</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Prerequisites -->
+<div class="content-block">
+  <h2><em>Prerequisites</em></h2>
+  <ul class="bullet-list">
+    <li>A <strong>web browser</strong> (Chrome, Firefox, Safari, or Edge)</li>
+    <li>A <strong>valid email address</strong> for Nebius account creation</li>
+    <li>A <strong>payment method</strong> for Nebius billing (free tier available)</li>
+  </ul>
+</div>
+
+<!-- Step-by-Step Guide -->
+<div class="steps-section">
+  <h2>Step-by-Step <em>Guide</em></h2>
+
+  <!-- Step 1 -->
+  <div class="step">
+    <div class="step-number">1</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Create a Nebius Account</span>
+        <span class="step-duration">5 min</span>
+      </div>
+      <p class="step-desc">Sign up for Nebius and set up billing so you can launch compute resources.</p>
+
+      <ol class="step-instructions">
+        <li>Go to <a href="https://console.nebius.com" style="color: var(--rust); text-decoration: underline;">console.nebius.com</a> and click <strong>Sign Up</strong></li>
+        <li>Verify your email address and complete the registration form</li>
+        <li>Navigate to <strong>Billing</strong> and add a payment method (free tier credits apply)</li>
+      </ol>
+
+      <div class="step-tip"><strong>Tip:</strong> Nebius offers free trial credits for new accounts. You can run a small compute instance for several hours at no cost while you explore.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You can log into the Nebius console and see the main dashboard.</div>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step">
+    <div class="step-number">2</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Launch a Compute Instance with OpenClaw</span>
+        <span class="step-duration">5 min</span>
+      </div>
+      <p class="step-desc">Navigate to the Compute service and launch an instance pre-configured with OpenClaw.</p>
+
+      <ol class="step-instructions">
+        <li>In the Nebius console, navigate to <strong>Compute</strong> from the left sidebar</li>
+        <li>Click <strong>Create Instance</strong> and select a region close to you</li>
+        <li>Choose a CPU instance type (2 vCPU / 4 GB RAM is sufficient)</li>
+        <li>Under <strong>Image</strong>, select the OpenClaw marketplace image or paste the startup script</li>
+        <li>Configure the firewall to allow inbound traffic on port <strong>18789</strong></li>
+        <li>Click <strong>Create</strong> and wait for the instance to reach <strong>Running</strong> status</li>
+      </ol>
+
+      <div class="step-tip"><strong>Tip:</strong> A CPU instance is all you need &mdash; inference happens on Token Factory's GPUs, not on your compute instance. This keeps costs low.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Your instance shows <strong>Running</strong> status with a public IP address assigned.</div>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="step">
+    <div class="step-number">3</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Configure Token Factory</span>
+        <span class="step-duration">5 min</span>
+      </div>
+      <p class="step-desc">Set up Token Factory credentials so your OpenClaw instance can access GPU-powered inference.</p>
+
+      <ol class="step-instructions">
+        <li>Go to <a href="https://tokenfactory.nebius.com" style="color: var(--rust); text-decoration: underline;">tokenfactory.nebius.com</a> and create an API key</li>
+        <li>In the Nebius console, navigate to your instance's <strong>Environment Variables</strong> section</li>
+        <li>Set <code style="font-family: 'DM Mono', monospace; font-size: 13px;">TOKEN_FACTORY_API_KEY</code> to your API key</li>
+        <li>Set <code style="font-family: 'DM Mono', monospace; font-size: 13px;">INFERENCE_MODEL</code> to <code style="font-family: 'DM Mono', monospace; font-size: 13px;">zai-org/GLM-5</code></li>
+        <li>Set <code style="font-family: 'DM Mono', monospace; font-size: 13px;">OPENCLAW_GATEWAY_TOKEN</code> to a password of your choice</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Environment variables configured via the console UI:</span>
+TOKEN_FACTORY_API_KEY=<span class="code-comment">{your-token-factory-key}</span>
+TOKEN_FACTORY_URL=https://api.tokenfactory.nebius.com/v1
+INFERENCE_MODEL=zai-org/GLM-5
+OPENCLAW_GATEWAY_TOKEN=<span class="code-comment">{your-password}</span></code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> You can change the model at any time by updating the <code style="font-family: 'DM Mono', monospace; font-size: 12px;">INFERENCE_MODEL</code> variable. Try <code style="font-family: 'DM Mono', monospace; font-size: 12px;">deepseek-ai/DeepSeek-R1-0528</code> for reasoning tasks.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> All four environment variables are saved in the console.</div>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="step">
+    <div class="step-number">4</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Access the Control UI</span>
+        <span class="step-duration">5 min</span>
+      </div>
+      <p class="step-desc">Open your browser and connect to the running OpenClaw instance.</p>
+
+      <ol class="step-instructions">
+        <li>Copy your instance's <strong>public IP</strong> from the Nebius console</li>
+        <li>Open <code style="font-family: 'DM Mono', monospace; font-size: 13px;">http://{your-ip}:18789</code> in your browser</li>
+        <li>Authenticate with the gateway token you set in Step 3</li>
+        <li>Send a test message to verify the agent responds via Token Factory</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Open in your browser (replace with your instance IP)</span>
+http://203.0.113.42:18789/#token=<span class="code-comment">{your-password}</span></code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> For production use, set up a domain name and HTTPS. The Nebius console supports load balancer configuration with TLS termination.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You see the Control UI dashboard and can send and receive messages from your agent.</div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- You Leave With -->
+<div class="content-block">
+  <h2>You Leave <em>With</em></h2>
+  <div class="outcome-grid">
+    <div class="outcome-card">
+      <p><strong>A live OpenClaw instance</strong> running on Nebius cloud infrastructure</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>Token Factory configured</strong> for GPU-powered inference</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>Browser-based access</strong> to the Control UI from anywhere</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>Familiarity with Nebius console</strong> for managing compute instances and environment variables</p>
+    </div>
+  </div>
+  <ul class="bullet-list" style="margin-top: 16px;">
+    <li><strong>Ready for automation</strong> &mdash; try the Deploy with Install Scripts workshop for CLI-based repeatable deployments</li>
+  </ul>
+</div>
+
+<div class="spacer"></div>
+
+<div class="cta-band">
+  <div>
+    <h3>Want to automate this?</h3>
+    <p>Take the Deploy with Install Scripts workshop for one-command repeatable deployments.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="/curriculum/deploy-scripts" class="btn-dark">Install Scripts &rarr;</a>
+    <a href="/curriculum" class="btn-outline">All Workshops</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>

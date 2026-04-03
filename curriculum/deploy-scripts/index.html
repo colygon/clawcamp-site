@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deploy with Install Scripts — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  /* Workshop detail styles */
+  .workshop-hero {
+    padding: 48px 48px 0;
+    max-width: 800px;
+  }
+  .workshop-hero .event-tag { margin-bottom: 12px; display: inline-block; }
+  .workshop-subtitle {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .workshop-desc {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .meta-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .meta-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .meta-card-value {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .content-block {
+    padding: 0 48px;
+    max-width: 800px;
+    margin-bottom: 40px;
+  }
+  .content-block h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .content-block h2 em { font-style: normal; color: var(--rust); }
+
+  .bullet-list {
+    list-style: none;
+    margin: 0;
+  }
+  .bullet-list li {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+    padding: 6px 0 6px 18px;
+    position: relative;
+  }
+  .bullet-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 13px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--rust);
+  }
+  .bullet-list li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Schedule table */
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+  }
+  .schedule-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-align: left;
+    padding: 10px 0;
+    border-bottom: 2px solid var(--sand);
+  }
+  .schedule-table td {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid var(--cream);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .schedule-table td:first-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    white-space: nowrap;
+    width: 100px;
+  }
+  .schedule-table td strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Steps */
+  .steps-section {
+    padding: 0 48px;
+    max-width: 800px;
+  }
+  .steps-section h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .steps-section h2 em { font-style: normal; color: var(--rust); }
+
+  .step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 20px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--cream);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--rust);
+    line-height: 1;
+  }
+  .step-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .step-title {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .step-duration {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .step-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .step-instructions {
+    list-style: none;
+    margin: 0 0 12px;
+    counter-reset: instr;
+  }
+  .step-instructions li {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.6;
+    padding: 4px 0 4px 28px;
+    position: relative;
+    counter-increment: instr;
+  }
+  .step-instructions li::before {
+    content: counter(instr) '.';
+    position: absolute;
+    left: 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    font-weight: 500;
+  }
+
+  .code-block {
+    background: var(--cream);
+    border: 1px solid var(--sand);
+    border-radius: 6px;
+    padding: 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--ink);
+    overflow-x: auto;
+    margin-bottom: 8px;
+    line-height: 1.6;
+    white-space: pre;
+  }
+  .code-block code {
+    font-family: inherit;
+    font-size: inherit;
+  }
+  .code-comment {
+    color: var(--muted);
+  }
+
+  .step-tip {
+    font-size: 13px;
+    color: var(--moss);
+    background: var(--moss-light);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  .step-tip strong {
+    font-weight: 600;
+  }
+
+  .step-checkpoint {
+    font-size: 13px;
+    color: var(--gold);
+    background: var(--gold-light);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    line-height: 1.5;
+    border-left: 3px solid var(--gold);
+  }
+  .step-checkpoint strong {
+    font-weight: 600;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 48px 48px 0;
+    transition: color 0.15s;
+  }
+  .back-link:hover { color: var(--ink); }
+
+  /* You Leave With section */
+  .outcome-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .outcome-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .outcome-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .spacer { height: 48px; }
+
+  @media (max-width: 768px) {
+    .workshop-hero, .content-block, .steps-section, .back-link { padding-left: 20px; padding-right: 20px; }
+    .meta-grid { grid-template-columns: 1fr; }
+    .step { grid-template-columns: 40px 1fr; gap: 12px; }
+    .step-number { font-size: 24px; }
+    .outcome-grid { grid-template-columns: 1fr; }
+    .schedule-table td:first-child { width: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<a href="/curriculum" class="back-link">&larr; Back to Workshop Library</a>
+
+<header class="page-header">
+  <h1>Deploy with<br><em>Install Scripts</em></h1>
+  <div class="header-meta">
+    <p>One-Command Automated Setup</p>
+    <p>Beginner</p>
+    <p>~15 Minutes</p>
+  </div>
+</header>
+
+<div class="workshop-hero">
+  <span class="event-tag tag-tour">Beginner</span>
+  <h2 class="workshop-subtitle">One-Command Automated Setup</h2>
+  <p class="workshop-desc">Deploy OpenClaw with a single command using the official install scripts. SSH into a Nebius VM, run one script, and walk away with a fully configured Gateway, Token Factory connection, and accessible Control UI. This is the fastest path to a repeatable, automated cloud deployment.</p>
+
+  <div class="meta-grid">
+    <div class="meta-card">
+      <div class="meta-card-label">Who It's For</div>
+      <div class="meta-card-value">Developers comfortable with SSH who want a fast, repeatable deployment without manual configuration</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-card-label">What You Get</div>
+      <div class="meta-card-value">A fully automated OpenClaw deployment on Nebius with Gateway, Token Factory, and connectivity configured</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-card-label">Time Required</div>
+      <div class="meta-card-value">~15 minutes from SSH login to a verified, running deployment</div>
+    </div>
+  </div>
+</div>
+
+<!-- What You'll Build -->
+<div class="content-block">
+  <h2>What You'll <em>Build</em></h2>
+  <ul class="bullet-list">
+    <li>A <strong>cloud-hosted OpenClaw deployment</strong> on a Nebius VM via automated script</li>
+    <li>A fully configured <strong>Gateway + Token Factory</strong> connection with zero manual setup</li>
+    <li>A <strong>repeatable process</strong> you can run on any new VM in under a minute</li>
+  </ul>
+</div>
+
+<!-- What We'll Cover -->
+<div class="content-block">
+  <h2>What We'll <em>Cover</em></h2>
+  <ul class="bullet-list">
+    <li><strong>SSH into a Nebius VM</strong> &mdash; connecting to your compute instance from the terminal</li>
+    <li><strong>Running the install script</strong> &mdash; one command that installs OpenClaw, configures the gateway, and starts services</li>
+    <li><strong>Configuring environment variables</strong> &mdash; Token Factory API key, model selection, gateway token, and port binding</li>
+    <li><strong>Verifying the deployment</strong> &mdash; health checks, log inspection, and connecting to the Control UI</li>
+    <li><strong>What the script does under the hood</strong> &mdash; understanding the automation so you can customize it</li>
+  </ul>
+</div>
+
+<!-- Schedule -->
+<div class="content-block">
+  <h2><em>Schedule</em></h2>
+  <table class="schedule-table">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Topic</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0:00 &ndash; 0:03</td>
+        <td><strong>SSH &amp; Prep</strong> &mdash; Connect to your Nebius VM and verify system requirements</td>
+      </tr>
+      <tr>
+        <td>0:03 &ndash; 0:08</td>
+        <td><strong>Run the Install Script</strong> &mdash; Execute the one-liner, set environment variables, watch the automated setup</td>
+      </tr>
+      <tr>
+        <td>0:08 &ndash; 0:12</td>
+        <td><strong>Verify &amp; Connect</strong> &mdash; Health checks, log inspection, open the Control UI</td>
+      </tr>
+      <tr>
+        <td>0:12 &ndash; 0:15</td>
+        <td><strong>Customize &amp; Next Steps</strong> &mdash; Swap models, adjust config, preview advanced deployment patterns</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Prerequisites -->
+<div class="content-block">
+  <h2><em>Prerequisites</em></h2>
+  <ul class="bullet-list">
+    <li>A <strong>Nebius VM</strong> with a public IP (see the <a href="/curriculum/deploy-console" style="color: var(--rust); text-decoration: underline;">Web Console workshop</a> to create one)</li>
+    <li>An <strong>SSH client</strong> (Terminal on macOS/Linux, or PuTTY on Windows)</li>
+    <li>A <strong>Token Factory API key</strong> (sign up at <a href="https://tokenfactory.nebius.com" style="color: var(--rust); text-decoration: underline;">tokenfactory.nebius.com</a>)</li>
+  </ul>
+</div>
+
+<!-- Step-by-Step Guide -->
+<div class="steps-section">
+  <h2>Step-by-Step <em>Guide</em></h2>
+
+  <!-- Step 1 -->
+  <div class="step">
+    <div class="step-number">1</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">SSH into Your Nebius VM</span>
+        <span class="step-duration">3 min</span>
+      </div>
+      <p class="step-desc">Connect to your Nebius compute instance via SSH.</p>
+
+      <ol class="step-instructions">
+        <li>Open your terminal</li>
+        <li>SSH into the VM using the public IP from the Nebius console</li>
+        <li>Verify you have root or sudo access</li>
+      </ol>
+
+      <div class="code-block"><code>ssh ubuntu@<span class="code-comment">{your-instance-ip}</span></code></div>
+
+      <div class="code-block"><code><span class="code-comment"># Verify sudo access</span>
+sudo whoami
+<span class="code-comment"># Should print: root</span></code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> If you created the VM via the Nebius console, your SSH key was configured during instance creation. Use the same key pair.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You are logged into the VM and see a shell prompt.</div>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step">
+    <div class="step-number">2</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Run the Install Script</span>
+        <span class="step-duration">5 min</span>
+      </div>
+      <p class="step-desc">Execute the one-command install script that sets up everything automatically.</p>
+
+      <ol class="step-instructions">
+        <li>Export your Token Factory API key and gateway token</li>
+        <li>Run the install script &mdash; it handles Node.js, OpenClaw, and gateway configuration</li>
+        <li>Wait for the script to complete (typically 2&ndash;3 minutes)</li>
+      </ol>
+
+      <div class="code-block"><code>export TOKEN_FACTORY_API_KEY=<span class="code-comment">{your-token-factory-key}</span>
+export OPENCLAW_GATEWAY_TOKEN=<span class="code-comment">{your-password}</span>
+export INFERENCE_MODEL=zai-org/GLM-5</code></div>
+
+      <div class="code-block"><code>curl -fsSL https://get.openclaw.dev | bash</code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> The script is idempotent &mdash; you can safely run it again if something fails. It detects what's already installed and skips those steps.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> The script prints <code style="font-family: 'DM Mono', monospace; font-size: 12px; background: rgba(0,0,0,0.05); padding: 1px 5px; border-radius: 3px;">OpenClaw gateway started successfully</code> at the end.</div>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="step">
+    <div class="step-number">3</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Verify the Deployment</span>
+        <span class="step-duration">4 min</span>
+      </div>
+      <p class="step-desc">Run health checks and inspect logs to confirm everything is working.</p>
+
+      <ol class="step-instructions">
+        <li>Check the gateway process status</li>
+        <li>Inspect the gateway logs for any errors</li>
+        <li>Run the built-in health check command</li>
+        <li>Test connectivity from your local browser</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Check gateway status</span>
+openclaw status</code></div>
+
+      <div class="code-block"><code><span class="code-comment"># View recent logs</span>
+openclaw logs --tail 20</code></div>
+
+      <div class="code-block"><code><span class="code-comment"># Health check</span>
+curl -s http://localhost:18789/health | jq .</code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> If the health check fails, check that port 18789 is open in your Nebius firewall rules. The install script configures the local firewall but not the cloud security group.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> Health check returns <code style="font-family: 'DM Mono', monospace; font-size: 12px; background: rgba(0,0,0,0.05); padding: 1px 5px; border-radius: 3px;">{"status":"ok"}</code> and the Control UI loads in your browser.</div>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="step">
+    <div class="step-number">4</div>
+    <div>
+      <div class="step-header">
+        <span class="step-title">Connect and Test</span>
+        <span class="step-duration">3 min</span>
+      </div>
+      <p class="step-desc">Open the Control UI and send a message to confirm end-to-end connectivity.</p>
+
+      <ol class="step-instructions">
+        <li>Open <code style="font-family: 'DM Mono', monospace; font-size: 13px;">http://{your-ip}:18789</code> in your browser</li>
+        <li>Authenticate with your gateway token</li>
+        <li>Send a test message and verify the agent responds</li>
+      </ol>
+
+      <div class="code-block"><code><span class="code-comment"># Open in your browser</span>
+http://<span class="code-comment">{your-instance-ip}</span>:18789/#token=<span class="code-comment">{your-password}</span></code></div>
+
+      <div class="step-tip"><strong>Tip:</strong> To change models later, update the <code style="font-family: 'DM Mono', monospace; font-size: 12px;">INFERENCE_MODEL</code> environment variable and restart the gateway with <code style="font-family: 'DM Mono', monospace; font-size: 12px;">openclaw gateway restart</code>.</div>
+
+      <div class="step-checkpoint"><strong>Checkpoint:</strong> You received a response from your agent via Token Factory.</div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- You Leave With -->
+<div class="content-block">
+  <h2>You Leave <em>With</em></h2>
+  <div class="outcome-grid">
+    <div class="outcome-card">
+      <p><strong>A fully automated deployment</strong> running on Nebius with one command</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>Gateway + Token Factory</strong> configured and verified end-to-end</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>Health check knowledge</strong> to diagnose and verify deployments</p>
+    </div>
+    <div class="outcome-card">
+      <p><strong>A repeatable script</strong> you can use on any new VM in under a minute</p>
+    </div>
+  </div>
+  <ul class="bullet-list" style="margin-top: 16px;">
+    <li><strong>Ready for production patterns</strong> &mdash; explore the Deployment Patterns workshop for advanced architectures</li>
+  </ul>
+</div>
+
+<div class="spacer"></div>
+
+<div class="cta-band">
+  <div>
+    <h3>Ready to go deeper?</h3>
+    <p>Compare deployment methods and learn troubleshooting in the Deployment Patterns workshop.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="/curriculum/deploy-patterns" class="btn-dark">Deployment Patterns &rarr;</a>
+    <a href="/curriculum" class="btn-outline">All Workshops</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+</body>
+</html>
