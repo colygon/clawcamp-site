@@ -117,9 +117,121 @@
     line-height: 1.5;
   }
 
+  /* Resource cards (external links) */
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    padding-top: 24px;
+  }
+  .resource-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.15s;
+    display: block;
+  }
+  .resource-card:hover {
+    background: var(--cream);
+    border-color: var(--ink);
+    transform: translateY(-1px);
+  }
+  .resource-card-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .resource-card-eyebrow .type-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .type-video { background: #c0392b; }
+  .type-article { background: var(--rust); }
+  .type-repo { background: var(--moss); }
+  .type-gist { background: #8e44ad; }
+  .type-docs { background: var(--gold); }
+  .type-thread { background: #2980b9; }
+  .resource-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .resource-card .resource-author {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .resource-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .resource-card .resource-arrow {
+    font-size: 12px;
+    color: var(--rust);
+    font-weight: 600;
+    margin-top: 10px;
+    display: block;
+  }
+
+  /* Thread list (compact) */
+  .thread-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px;
+    padding-top: 20px;
+  }
+  .thread-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--sand);
+    border-radius: 6px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.15s;
+  }
+  .thread-link:hover {
+    background: var(--cream);
+    border-color: var(--ink);
+  }
+  .thread-link .thread-author {
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .thread-link .thread-desc {
+    font-size: 12px;
+    color: var(--muted);
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .thread-link .thread-arrow {
+    font-size: 11px;
+    color: var(--rust);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
   @media (max-width: 768px) {
     .workshop-grid { grid-template-columns: 1fr; }
     .guide-grid { grid-template-columns: 1fr; }
+    .resource-grid { grid-template-columns: 1fr; }
+    .thread-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -130,7 +242,7 @@
 <header class="page-header">
   <h1>Workshop<br><em>Library</em></h1>
   <div class="header-meta">
-    <p>9 Workshops</p>
+    <p>9 Workshops · 40+ Guides</p>
     <p>All Levels</p>
     <p>Open Source</p>
   </div>
@@ -296,6 +408,302 @@
         <span class="workshop-card-link">View Workshop &rarr;</span>
         <span class="workshop-card-meta">~30 min</span>
       </div>
+    </a>
+
+  </div>
+
+  <!-- Videos & Articles -->
+  <div class="section-divider" style="margin-top:48px;">
+    <span class="divider-label">Guides &amp; Tutorials</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="resource-grid">
+
+    <a class="resource-card" href="https://www.youtube.com/watch?v=HzVYgpMxMLE" target="_blank" rel="noopener">
+      <div class="resource-card-eyebrow"><span class="type-dot type-video"></span>Video</div>
+      <h3>How I Built My 10 Agent OpenClaw Team</h3>
+      <div class="resource-author">The AI Daily Brief</div>
+      <p>Full walkthrough of building and orchestrating a team of 10 specialized OpenClaw agents for different tasks.</p>
+      <span class="resource-arrow">Watch &rarr;</span>
+    </a>
+
+    <a class="resource-card" href="https://www.youtube.com/watch?v=eFpyRtRyu3k" target="_blank" rel="noopener">
+      <div class="resource-card-eyebrow"><span class="type-dot type-video"></span>Video</div>
+      <h3>How to Learn AI with AI</h3>
+      <div class="resource-author">The AI Daily Brief</div>
+      <p>Using AI tools including OpenClaw to accelerate your own AI learning journey.</p>
+      <span class="resource-arrow">Watch &rarr;</span>
+    </a>
+
+    <a class="resource-card" href="https://habr.com/en/articles/992720/" target="_blank" rel="noopener">
+      <div class="resource-card-eyebrow"><span class="type-dot type-article"></span>Article</div>
+      <h3>OpenClaw Setup Guide &mdash; Don&rsquo;t Launch Your Bot Before Reading This</h3>
+      <div class="resource-author">Habr</div>
+      <p>Installation, security configuration, gateway setup, chat platform connections, and security audits.</p>
+      <span class="resource-arrow">Read &rarr;</span>
+    </a>
+
+    <a class="resource-card" href="https://www.nextkicklabs.com/p/openclaw-hardened-deployment-security-with-ansible" target="_blank" rel="noopener">
+      <div class="resource-card-eyebrow"><span class="type-dot type-article"></span>Article</div>
+      <h3>Hardened Deployment: Security with Ansible</h3>
+      <div class="resource-author">NextKick Labs</div>
+      <p>Deploy OpenClaw securely using Ansible automation and Podman containers with network isolation and API budget caps.</p>
+      <span class="resource-arrow">Read &rarr;</span>
+    </a>
+
+    <a class="resource-card" href="https://forwardfuture.ai/p/what-people-are-actually-doing-with-openclaw-25-use-cases" target="_blank" rel="noopener">
+      <div class="resource-card-eyebrow"><span class="type-dot type-article"></span>Article</div>
+      <h3>What People Are Actually Doing With OpenClaw: 25+ Use Cases</h3>
+      <div class="resource-author">Forward Future</div>
+      <p>50+ working automations covering email, business ops, development workflows, content production, and home automation.</p>
+      <span class="resource-arrow">Read &rarr;</span>
+    </a>
+
+    <a class="resource-card" href="https://atalupadhyay.wordpress.com/2026/02/08/openclaw-build-your-ai-agent-army-in-60-minutes/" target="_blank" rel="noopener">
+      <div class="resource-card-eyebrow"><span class="type-dot type-article"></span>Article</div>
+      <h3>Build Your AI Agent Army in 60 Minutes</h3>
+      <div class="resource-author">Atal Upadhyay</div>
+      <p>Installation, interface configuration, custom skills, cron jobs, multi-agent systems, and VPS deployment.</p>
+      <span class="resource-arrow">Read &rarr;</span>
+    </a>
+
+  </div>
+
+  <!-- Tools & Collections -->
+  <div class="section-divider" style="margin-top:48px;">
+    <span class="divider-label">Tools &amp; Collections</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="resource-grid">
+
+    <a class="resource-card" href="https://github.com/hesamsheikh/awesome-openclaw-usecases" target="_blank" rel="noopener">
+      <div class="resource-card-eyebrow"><span class="type-dot type-repo"></span>GitHub Repo</div>
+      <h3>Awesome OpenClaw Use Cases</h3>
+      <div class="resource-author">hesamsheikh</div>
+      <p>Community collection of 42+ real-life use cases across social media, creative work, infrastructure, and productivity.</p>
+      <span class="resource-arrow">View Repo &rarr;</span>
+    </a>
+
+    <a class="resource-card" href="https://github.com/rohitg00/awesome-openclaw" target="_blank" rel="noopener">
+      <div class="resource-card-eyebrow"><span class="type-dot type-repo"></span>GitHub Repo</div>
+      <h3>Awesome OpenClaw</h3>
+      <div class="resource-author">rohitg00</div>
+      <p>Curated collection of hosting guides, cost comparisons, security hardening tips, and community links.</p>
+      <span class="resource-arrow">View Repo &rarr;</span>
+    </a>
+
+    <a class="resource-card" href="https://github.com/VoltAgent/awesome-openclaw-skills" target="_blank" rel="noopener">
+      <div class="resource-card-eyebrow"><span class="type-dot type-repo"></span>GitHub Repo</div>
+      <h3>Awesome OpenClaw Skills</h3>
+      <div class="resource-author">VoltAgent</div>
+      <p>Directory of 5,200+ filtered and categorized skills from the official OpenClaw Skills Registry.</p>
+      <span class="resource-arrow">View Repo &rarr;</span>
+    </a>
+
+    <a class="resource-card" href="https://gist.github.com/mberman84/065631c62d6d8f30ecb14748c00fc6d9" target="_blank" rel="noopener">
+      <div class="resource-card-eyebrow"><span class="type-dot type-gist"></span>Gist</div>
+      <h3>OpenClaw Prompts Collection</h3>
+      <div class="resource-author">mberman84</div>
+      <p>11 self-contained AI implementation briefs for personal productivity systems including CRM, knowledge base, and analytics.</p>
+      <span class="resource-arrow">View Gist &rarr;</span>
+    </a>
+
+    <a class="resource-card" href="https://gist.github.com/jordanlyall/8b9e566c1ee0b74db05e43f119ef4df4" target="_blank" rel="noopener">
+      <div class="resource-card-eyebrow"><span class="type-dot type-gist"></span>Gist</div>
+      <h3>Security-First Setup Commands</h3>
+      <div class="resource-author">jordanlyall</div>
+      <p>Hardening procedures covering machine hardening, installation, agent role definition, and security verification.</p>
+      <span class="resource-arrow">View Gist &rarr;</span>
+    </a>
+
+    <a class="resource-card" href="https://docs.openclaw.ai/start/getting-started" target="_blank" rel="noopener">
+      <div class="resource-card-eyebrow"><span class="type-dot type-docs"></span>Official Docs</div>
+      <h3>Getting Started</h3>
+      <div class="resource-author">OpenClaw Docs</div>
+      <p>Quick-start guide for installing and configuring OpenClaw in approximately 5 minutes.</p>
+      <span class="resource-arrow">Read Docs &rarr;</span>
+    </a>
+
+    <a class="resource-card" href="https://docs.openclaw.ai/start/onboarding-overview" target="_blank" rel="noopener">
+      <div class="resource-card-eyebrow"><span class="type-dot type-docs"></span>Official Docs</div>
+      <h3>Onboarding Overview</h3>
+      <div class="resource-author">OpenClaw Docs</div>
+      <p>CLI and macOS app onboarding pathways covering model providers, workspace, Gateway, channels, and daemon config.</p>
+      <span class="resource-arrow">Read Docs &rarr;</span>
+    </a>
+
+  </div>
+
+  <!-- Community Threads -->
+  <div class="section-divider" style="margin-top:48px;">
+    <span class="divider-label">Community Threads</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="thread-grid">
+
+    <a class="thread-link" href="https://x.com/witcheer/status/2021610036980543767" target="_blank" rel="noopener">
+      <span class="thread-author">@witcheer</span>
+      <span class="thread-desc">Security-focused setup guide from 20+ articles</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/austin_hurwitz/status/2023726021858783330" target="_blank" rel="noopener">
+      <span class="thread-author">@austin_hurwitz</span>
+      <span class="thread-desc">Give your OpenClaw agent memory that works</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/MatthewBerman/status/2021669868366598632" target="_blank" rel="noopener">
+      <span class="thread-author">@MatthewBerman</span>
+      <span class="thread-desc">OpenClaw setup and configuration walkthrough</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/sillydarket/status/2022394007448429004" target="_blank" rel="noopener">
+      <span class="thread-author">@sillydarket</span>
+      <span class="thread-desc">OpenClaw tips and agent patterns</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/Saboo_Shubham_/status/2022014147450614038" target="_blank" rel="noopener">
+      <span class="thread-author">@Saboo_Shubham_</span>
+      <span class="thread-desc">OpenClaw implementation insights</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/RyanTheGentry/status/2023865679875604875" target="_blank" rel="noopener">
+      <span class="thread-author">@RyanTheGentry</span>
+      <span class="thread-desc">OpenClaw community insights</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/twistartups/status/2023886640872030471" target="_blank" rel="noopener">
+      <span class="thread-author">@twistartups</span>
+      <span class="thread-desc">OpenClaw startup use cases</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/KSimback/status/2023362295166873743" target="_blank" rel="noopener">
+      <span class="thread-author">@KSimback</span>
+      <span class="thread-desc">OpenClaw workflow automation</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/sillydarket/status/2023232371038757328" target="_blank" rel="noopener">
+      <span class="thread-author">@sillydarket</span>
+      <span class="thread-desc">Advanced OpenClaw agent techniques</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/ryancarson/status/2023452909883609111" target="_blank" rel="noopener">
+      <span class="thread-author">@ryancarson</span>
+      <span class="thread-desc">OpenClaw in practice</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/irabukht/status/2023408664439361867" target="_blank" rel="noopener">
+      <span class="thread-author">@irabukht</span>
+      <span class="thread-desc">OpenClaw deployment experience</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/austin_hurwitz/status/2023384954546049065" target="_blank" rel="noopener">
+      <span class="thread-author">@austin_hurwitz</span>
+      <span class="thread-desc">Agentic workflow patterns</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/bradmillscan/status/2023484063680438468" target="_blank" rel="noopener">
+      <span class="thread-author">@bradmillscan</span>
+      <span class="thread-desc">OpenClaw community thread</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/woocassh/status/2023385475306709425" target="_blank" rel="noopener">
+      <span class="thread-author">@woocassh</span>
+      <span class="thread-desc">OpenClaw use case showcase</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/MatthewBerman/status/2023843493765157235" target="_blank" rel="noopener">
+      <span class="thread-author">@MatthewBerman</span>
+      <span class="thread-desc">OpenClaw agent demo and review</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/the_agenteers/status/2023515663277715667" target="_blank" rel="noopener">
+      <span class="thread-author">@the_agenteers</span>
+      <span class="thread-desc">Agent building with OpenClaw</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/austin_hurwitz/status/2023132187466641771" target="_blank" rel="noopener">
+      <span class="thread-author">@austin_hurwitz</span>
+      <span class="thread-desc">OpenClaw agent infrastructure tips</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/AlexFinn/status/2021740954244550839" target="_blank" rel="noopener">
+      <span class="thread-author">@AlexFinn</span>
+      <span class="thread-desc">OpenClaw getting started thread</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/tomcrawshaw01/status/2021951399857467820" target="_blank" rel="noopener">
+      <span class="thread-author">@tomcrawshaw01</span>
+      <span class="thread-desc">OpenClaw setup experience</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/Voxyz_ai/status/2021370776926990530" target="_blank" rel="noopener">
+      <span class="thread-author">@Voxyz_ai</span>
+      <span class="thread-desc">OpenClaw AI agent capabilities</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/zenorocha/status/2023047169326846102" target="_blank" rel="noopener">
+      <span class="thread-author">@zenorocha</span>
+      <span class="thread-desc">OpenClaw developer workflow</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/hasantoxr/status/2022287018110443852" target="_blank" rel="noopener">
+      <span class="thread-author">@hasantoxr</span>
+      <span class="thread-desc">OpenClaw tutorial and tips</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/twistartups/status/2022729932183417088" target="_blank" rel="noopener">
+      <span class="thread-author">@twistartups</span>
+      <span class="thread-desc">OpenClaw for startups</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/gregisenberg/status/2023077800152838389" target="_blank" rel="noopener">
+      <span class="thread-author">@gregisenberg</span>
+      <span class="thread-desc">OpenClaw business applications</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/Team9_ai/status/2020846025418916052" target="_blank" rel="noopener">
+      <span class="thread-author">@Team9_ai</span>
+      <span class="thread-desc">OpenClaw AI agent team setup</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/anothercohen/status/2023134773418610767" target="_blank" rel="noopener">
+      <span class="thread-author">@anothercohen</span>
+      <span class="thread-desc">OpenClaw community insights</span>
+      <span class="thread-arrow">&rarr;</span>
+    </a>
+
+    <a class="thread-link" href="https://x.com/ericosiu/status/2021249104710598785" target="_blank" rel="noopener">
+      <span class="thread-author">@ericosiu</span>
+      <span class="thread-desc">OpenClaw productivity automation</span>
+      <span class="thread-arrow">&rarr;</span>
     </a>
 
   </div>

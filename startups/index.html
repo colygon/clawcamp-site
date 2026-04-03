@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Startups — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .startup-intro {
+    padding: 48px 48px 0;
+    max-width: 720px;
+  }
+  .startup-intro p {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  /* What You Get */
+  .what-section {
+    padding: 64px 48px 0;
+  }
+  .what-section h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .what-section h2 em { font-style: normal; color: var(--rust); }
+  .what-section > p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 32px;
+    max-width: 600px;
+  }
+  .perks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .perk-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+  }
+  .perk-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+  .perk-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .perk-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* Awards & Grants */
+  .awards-section {
+    padding: 64px 48px 0;
+  }
+  .awards-section h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .awards-section h2 em { font-style: normal; color: var(--rust); }
+  .awards-section > p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 32px;
+    max-width: 600px;
+  }
+  .awards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .award-card {
+    border-top: 3px solid var(--rust);
+    background: var(--cream);
+    border-radius: 0 0 8px 8px;
+    padding: 28px;
+  }
+  .award-card.moss { border-top-color: var(--moss); }
+  .award-card.gold { border-top-color: var(--gold); }
+  .award-card.ink { border-top-color: var(--ink); }
+  .award-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .award-card h3 {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .award-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  .award-detail {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    font-weight: 500;
+  }
+
+  /* Sponsor Perks */
+  .sponsor-perks-section {
+    padding: 64px 48px 0;
+  }
+  .sponsor-perks-section h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .sponsor-perks-section h2 em { font-style: normal; color: var(--rust); }
+  .sponsor-perks-section > p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 32px;
+    max-width: 600px;
+  }
+  .sponsor-perks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .sponsor-perk {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .sponsor-perk-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .sponsor-perk h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .sponsor-perk p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .sponsor-perk .perk-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--rust);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* How It Works */
+  .how-section {
+    padding: 64px 48px 0;
+  }
+  .how-section h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+  }
+  .how-section h2 em { font-style: normal; color: var(--rust); }
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .step-card {
+    text-align: center;
+    padding: 24px 16px;
+  }
+  .step-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--rust);
+    margin-bottom: 12px;
+  }
+  .step-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .step-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* Eligibility */
+  .eligibility-section {
+    padding: 64px 48px 0;
+    max-width: 700px;
+  }
+  .eligibility-section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+  .eligibility-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .eligibility-list li {
+    font-size: 15px;
+    color: var(--muted);
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .eligibility-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--rust);
+  }
+
+  /* Form */
+  .startup-form-section {
+    padding: 64px 48px 0;
+    max-width: 800px;
+  }
+  .startup-form-section h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .startup-form-section h2 em { font-style: normal; color: var(--rust); }
+  .startup-form-section > p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+  .startup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .form-group label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 15px;
+    padding: 12px 16px;
+    border: 1px solid var(--sand);
+    border-radius: 6px;
+    background: white;
+    color: var(--ink);
+    transition: border-color 0.15s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--rust);
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--rust);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 24px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+    align-self: flex-start;
+  }
+  .form-submit:hover { background: #a8420a; }
+  .form-note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: -8px;
+  }
+
+  @media (max-width: 768px) {
+    .startup-intro, .what-section, .awards-section, .sponsor-perks-section,
+    .how-section, .eligibility-section, .startup-form-section {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .perks-grid { grid-template-columns: 1fr; }
+    .awards-grid { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: repeat(2, 1fr); }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<header class="page-header">
+  <h1>Startup<br><em>Program</em></h1>
+  <div class="header-meta">
+    <p>Awards &amp; Grants</p>
+    <p>Sponsor Perks</p>
+    <p>Global Network</p>
+  </div>
+</header>
+
+<div class="startup-intro">
+  <p>ClawCamp isn't just a place to learn &mdash; it's a launchpad. Our Startup Program gives early-stage founders building on OpenClaw a stage, a network, and real resources to accelerate.</p>
+  <p>Whether you're pre-seed or post-launch, if you're building with open-source AI, we want to help you ship faster, pitch sharper, and connect with the people who matter.</p>
+</div>
+
+<!-- What You Get -->
+<div class="what-section">
+  <h2>What You <em>Get</em></h2>
+  <p>Every startup accepted into the program receives access to the full ClawCamp ecosystem.</p>
+
+  <div class="perks-grid">
+    <div class="perk-card">
+      <div class="perk-icon">&#127942;</div>
+      <h3>Awards &amp; Grants</h3>
+      <p>Compete for cash grants, cloud credits, and recognition at ClawCamp events worldwide. Top builders get funded on the spot.</p>
+    </div>
+    <div class="perk-card">
+      <div class="perk-icon">&#128640;</div>
+      <h3>Demo Stage</h3>
+      <p>Pitch your product at ClawCamp Demo Days in front of builders, investors, and sponsor partners. Real audience, real feedback.</p>
+    </div>
+    <div class="perk-card">
+      <div class="perk-icon">&#127873;</div>
+      <h3>Sponsor Perks</h3>
+      <p>Exclusive credits, discounts, and free tiers from our sponsor partners &mdash; cloud compute, dev tools, APIs, and more.</p>
+    </div>
+    <div class="perk-card">
+      <div class="perk-icon">&#129309;</div>
+      <h3>Mentor Network</h3>
+      <p>Get connected with experienced founders, engineers, and investors in the ClawCamp community who can help you navigate the build.</p>
+    </div>
+    <div class="perk-card">
+      <div class="perk-icon">&#127758;</div>
+      <h3>Global Visibility</h3>
+      <p>Featured on the ClawCamp website, socials, and event materials. Your project gets seen by the worldwide OpenClaw community.</p>
+    </div>
+    <div class="perk-card">
+      <div class="perk-icon">&#127915;</div>
+      <h3>Priority Access</h3>
+      <p>VIP passes to ClawCamp events, early access to new workshops, and first-look invitations to hackathons and showcases.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Awards & Grants -->
+<div class="awards-section">
+  <h2>Awards &amp; <em>Grants</em></h2>
+  <p>We give real money and real resources to startups building on OpenClaw. Apply once, compete at any ClawCamp event.</p>
+
+  <div class="awards-grid">
+    <div class="award-card">
+      <div class="award-badge">Grand Prize</div>
+      <h3>Builder's Grant</h3>
+      <p>Cash grant for the top startup demo at flagship ClawCamp events. Judged by a panel of founders, engineers, and investors.</p>
+      <span class="award-detail">Cash + Cloud Credits</span>
+    </div>
+    <div class="award-card moss">
+      <div class="award-badge">Sustainability</div>
+      <h3>Open Source Award</h3>
+      <p>For startups contributing meaningfully to the OpenClaw ecosystem &mdash; skills, integrations, documentation, or tooling.</p>
+      <span class="award-detail">Cash + Recognition</span>
+    </div>
+    <div class="award-card gold">
+      <div class="award-badge">Innovation</div>
+      <h3>Frontier Award</h3>
+      <p>For the most creative or unexpected use of OpenClaw. Robotics, art, finance, civic tech &mdash; surprise us.</p>
+      <span class="award-detail">Cash + Sponsor Perks</span>
+    </div>
+    <div class="award-card ink">
+      <div class="award-badge">Community</div>
+      <h3>Community Impact Grant</h3>
+      <p>For projects that make AI more accessible &mdash; education tools, local community platforms, accessibility features, or civic infrastructure.</p>
+      <span class="award-detail">Cash + Mentorship</span>
+    </div>
+  </div>
+</div>
+
+<!-- Sponsor Perks -->
+<div class="sponsor-perks-section">
+  <h2>Sponsor <em>Perks</em></h2>
+  <p>Our sponsors don't just put logos on banners. They put tools in your hands. Accepted startups get exclusive perks from our partner network.</p>
+
+  <div class="sponsor-perks-grid">
+    <div class="sponsor-perk">
+      <div class="sponsor-perk-icon">&#9729;</div>
+      <div>
+        <h3>Cloud Compute Credits</h3>
+        <p>GPU and CPU credits from our cloud partners to power your inference, training, and deployment.</p>
+        <span class="perk-value">From sponsor partners</span>
+      </div>
+    </div>
+    <div class="sponsor-perk">
+      <div class="sponsor-perk-icon">&#128295;</div>
+      <div>
+        <h3>Dev Tool Discounts</h3>
+        <p>Free and discounted access to developer tools, APIs, monitoring, and deployment platforms.</p>
+        <span class="perk-value">Up to 90% off</span>
+      </div>
+    </div>
+    <div class="sponsor-perk">
+      <div class="sponsor-perk-icon">&#128218;</div>
+      <div>
+        <h3>Technical Mentorship</h3>
+        <p>Office hours and 1:1 sessions with engineers from sponsor companies who know the stack inside out.</p>
+        <span class="perk-value">Direct access</span>
+      </div>
+    </div>
+    <div class="sponsor-perk">
+      <div class="sponsor-perk-icon">&#127897;</div>
+      <div>
+        <h3>Marketing &amp; Distribution</h3>
+        <p>Featured spotlights in sponsor newsletters, social channels, and community platforms.</p>
+        <span class="perk-value">Amplified reach</span>
+      </div>
+    </div>
+    <div class="sponsor-perk">
+      <div class="sponsor-perk-icon">&#128176;</div>
+      <div>
+        <h3>Investor Introductions</h3>
+        <p>Warm intros to angel investors and VCs in the ClawCamp network who invest in AI-native startups.</p>
+        <span class="perk-value">Curated intros</span>
+      </div>
+    </div>
+    <div class="sponsor-perk">
+      <div class="sponsor-perk-icon">&#127919;</div>
+      <div>
+        <h3>API Credits &amp; Free Tiers</h3>
+        <p>Extended free tiers and API credits from AI infrastructure, data, and model provider partners.</p>
+        <span class="perk-value">Exclusive to program</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- How It Works -->
+<div class="how-section">
+  <h2>How It <em>Works</em></h2>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-number">01</div>
+      <h3>Apply</h3>
+      <p>Fill out the form below. Tell us what you're building and where you are in the journey.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-number">02</div>
+      <h3>Get Accepted</h3>
+      <p>We review applications on a rolling basis. Most decisions within one week.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-number">03</div>
+      <h3>Unlock Perks</h3>
+      <p>Receive your sponsor credits, discounts, and event passes. Start building.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-number">04</div>
+      <h3>Demo &amp; Win</h3>
+      <p>Showcase at a ClawCamp event. Compete for grants, get feedback, grow your network.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Eligibility -->
+<div class="eligibility-section">
+  <h2>Who Should Apply</h2>
+  <ul class="eligibility-list">
+    <li>Building a product or tool that uses OpenClaw or the OpenClaw ecosystem</li>
+    <li>Pre-seed through Series A &mdash; we focus on early-stage founders</li>
+    <li>Solo founders, small teams, or student projects all welcome</li>
+    <li>Open-source projects and commercial products both qualify</li>
+    <li>Based anywhere in the world &mdash; ClawCamp is a global network</li>
+    <li>Ready to demo or willing to build toward a demo within 3 months</li>
+  </ul>
+</div>
+
+<!-- Application Form -->
+<div class="startup-form-section" id="startup-apply">
+  <h2>Apply to the <em>Startup Program</em></h2>
+  <p>Tell us about your startup and what you're building. We'll review your application and get back to you within a week.</p>
+
+  <form class="startup-form" id="startup-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="startup-name">Your Name *</label>
+        <input type="text" id="startup-name" name="name" required placeholder="Your full name">
+      </div>
+      <div class="form-group">
+        <label for="startup-email">Email *</label>
+        <input type="email" id="startup-email" name="email" required placeholder="you@startup.com">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="startup-company">Company / Project Name *</label>
+        <input type="text" id="startup-company" name="company" required placeholder="Your startup name">
+      </div>
+      <div class="form-group">
+        <label for="startup-website">Website or GitHub</label>
+        <input type="url" id="startup-website" name="website" placeholder="https://yourstartup.com">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="startup-stage">Stage</label>
+        <select id="startup-stage" name="stage">
+          <option value="">Select stage</option>
+          <option value="idea">Idea / Pre-build</option>
+          <option value="prototype">Prototype / MVP</option>
+          <option value="launched">Launched / Live Users</option>
+          <option value="funded">Funded (Pre-seed / Seed)</option>
+          <option value="series-a">Series A+</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="startup-city">City</label>
+        <input type="text" id="startup-city" name="city" placeholder="Where are you based?">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="startup-description">What are you building? *</label>
+      <textarea id="startup-description" name="description" required placeholder="Describe your product or project. How does it use OpenClaw? What problem are you solving?"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="startup-help">What would help you most?</label>
+      <textarea id="startup-help" name="pitch" placeholder="Cloud credits? Mentor introductions? A demo slot? Investor intros? Tell us what you need." style="min-height:80px;"></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="startup-event">Preferred Event</label>
+        <input type="text" id="startup-event" name="preferred_event" placeholder="e.g. ClawCamp Oakland, any, etc.">
+      </div>
+      <div class="form-group">
+        <label for="startup-linkedin">LinkedIn (optional)</label>
+        <input type="url" id="startup-linkedin" name="linkedin" placeholder="https://linkedin.com/in/you">
+      </div>
+    </div>
+    <label style="font-size:14px;color:var(--ink);text-transform:none;letter-spacing:0;display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;">
+      <input type="checkbox" name="email_opt_in" value="yes" checked> Yes, send me updates about ClawCamp events and startup program news
+    </label>
+    <button type="submit" class="form-submit">Apply Now &rarr;</button>
+    <p class="form-note">We review applications on a rolling basis and respond within one week.</p>
+  </form>
+</div>
+
+<div class="cta-band" style="margin-top:64px;">
+  <div>
+    <h3>Questions about the program?</h3>
+    <p>Reach out and we'll help you figure out the right fit.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="mailto:hello@claw.camp?subject=Startup%20Program%20Question" class="btn-dark">hello@claw.camp &rarr;</a>
+    <a href="/sponsors" class="btn-outline">Become a Sponsor</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+<script src="/js/supabase.js"></script>
+</body>
+</html>

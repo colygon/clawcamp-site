@@ -176,6 +176,28 @@
       });
     }
 
+    // Startup Program application form
+    var startupForm = document.getElementById('startup-form');
+    if (startupForm) {
+      startupForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        submitToSupabase({
+          form_type: 'startup',
+          name: startupForm.querySelector('[name="name"]').value,
+          email: startupForm.querySelector('[name="email"]').value,
+          company: startupForm.querySelector('[name="company"]').value,
+          website: startupForm.querySelector('[name="website"]').value,
+          stage: startupForm.querySelector('[name="stage"]').value,
+          city: startupForm.querySelector('[name="city"]').value,
+          description: startupForm.querySelector('[name="description"]').value,
+          pitch: startupForm.querySelector('[name="pitch"]').value,
+          preferred_event: startupForm.querySelector('[name="preferred_event"]').value,
+          linkedin: startupForm.querySelector('[name="linkedin"]').value,
+          email_opt_in: startupForm.querySelector('[name="email_opt_in"]') ? startupForm.querySelector('[name="email_opt_in"]').checked : null
+        }, startupForm);
+      });
+    }
+
     // Startup Showcase form
     var showcaseForm = document.getElementById('showcase-form');
     if (showcaseForm) {

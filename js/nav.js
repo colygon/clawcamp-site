@@ -6,6 +6,7 @@
     <a href="/events" data-nav>Events</a>\
     <a href="/speakers" data-nav>Speakers</a>\
     <a href="/sponsors" data-nav>Sponsors</a>\
+    <a href="/startups" data-nav>Startups</a>\
     <a href="/host" data-nav>Host a Camp</a>\
     <div class="nav-more">\
       <button class="nav-more-label">About <span class="chevron">&#9662;</span></button>\
@@ -34,6 +35,7 @@
         <a href="/events">Events</a>\
         <a href="/speakers">Speakers</a>\
         <a href="/sponsors">Sponsors</a>\
+        <a href="/startups">Startups</a>\
         <a href="/host">Host a Camp</a>\
         <a href="/about">How it Started</a>\
         <a href="/formats">Formats</a>\
