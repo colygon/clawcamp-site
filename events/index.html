@@ -8,6 +8,39 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/shared.css">
 <style>
+  /* Time tabs */
+  .time-tabs {
+    padding: 0 48px;
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--sand);
+  }
+  .time-tab {
+    padding: 14px 24px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    border: none;
+    background: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.15s;
+  }
+  .time-tab:hover { color: var(--ink); }
+  .time-tab.active {
+    color: var(--ink);
+    border-bottom-color: var(--rust);
+  }
+  .time-tab .tab-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-left: 6px;
+  }
+  .time-tab.active .tab-count { color: var(--rust); }
+
   /* Filter bar */
   .filter-bar {
     padding: 16px 48px;
@@ -248,6 +281,7 @@
 
   /* Responsive */
   @media (max-width: 768px) {
+    .time-tabs { padding: 0 20px; }
     .filter-bar { padding: 16px 20px; }
     .featured-event { grid-template-columns: 1fr; }
     .featured-right { padding: 24px 32px; flex-direction: row; align-items: center; }
@@ -269,11 +303,15 @@
   </div>
 </header>
 
+<div class="time-tabs">
+  <button class="time-tab active" onclick="switchTimeTab('upcoming', this)">Upcoming <span class="tab-count" id="upcoming-count"></span></button>
+  <button class="time-tab" onclick="switchTimeTab('past', this)">Past Events <span class="tab-count" id="past-count"></span></button>
+</div>
+
 <div class="filter-bar">
   <span class="filter-label">Filter:</span>
   <button class="filter-btn active" onclick="filterEvents('all', this)">All Events</button>
   <button class="filter-btn" onclick="filterEvents('flagship', this)">ClawCamp</button>
-
   <button class="filter-btn" onclick="filterEvents('workshop', this)">Workshops</button>
   <button class="filter-btn" onclick="filterEvents('community', this)">Community</button>
 </div>
@@ -281,7 +319,7 @@
 <div class="main">
 
   <!-- Featured: ClawCamp Oakland -->
-  <div class="featured-event" data-type="flagship">
+  <div class="featured-event" data-type="flagship" data-date="2026-04-16">
     <div class="featured-left">
       <div class="featured-eyebrow">Flagship Event &middot; Oakland, CA</div>
       <div class="featured-title">ClawCamp<br><span>Oakland</span></div>
@@ -298,7 +336,7 @@
         <span class="featured-tag">Hands-on</span>
         <span class="featured-tag">All levels</span>
       </div>
-      <a href="https://luma.com/clawcamp" target="_blank" class="featured-cta">RSVP on Luma &rarr;</a>
+      <a href="/events/oakland" class="featured-cta">View Details &rarr;</a>
     </div>
     <div class="featured-right">
       <div>
@@ -323,7 +361,7 @@
       <div class="divider-line"></div>
     </div>
 
-    <a class="event-row" href="/events/ai-for-good-education" data-type="workshop">
+    <a class="event-row" href="/events/ai-for-good-education" data-type="workshop" data-date="2026-03-28">
       <div class="event-date">
         <div class="date-day">28</div>
         <div class="date-dow">Sat</div>
@@ -353,7 +391,7 @@
       <div class="divider-line"></div>
     </div>
 
-    <a class="event-row" href="/events/agents-payments-openclaw" data-type="community">
+    <a class="event-row" href="/events/agents-payments-openclaw" data-type="community" data-date="2026-04-02">
       <div class="event-date">
         <div class="date-day">2</div>
         <div class="date-dow">Thu</div>
@@ -374,7 +412,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="/events/claw-villa-blr-hack" data-type="community">
+    <a class="event-row" href="/events/claw-villa-blr-hack" data-type="community" data-date="2026-04-04">
       <div class="event-date">
         <div class="date-day">4</div>
         <div class="date-dow">Sat</div>
@@ -397,7 +435,29 @@
       </div>
     </a>
 
-    <a class="event-row" href="/events/oakland" data-type="flagship">
+    <a class="event-row" href="https://luma.com/l88gofex" target="_blank" data-type="workshop" data-date="2026-04-14">
+      <div class="event-date">
+        <div class="date-day">14</div>
+        <div class="date-dow">Tue</div>
+      </div>
+      <div class="event-body">
+        <div class="event-top">
+          <span class="event-name">Workshop: Running OpenClaw on Nebius</span>
+          <span class="event-tag tag-workshop">Workshop</span>
+        </div>
+        <div class="event-meta">
+          <span class="meta-item"><span class="meta-icon">&#128205;</span> Online (Zoom)</span>
+          <span class="meta-item">6:00 PM &ndash; 7:00 PM CET</span>
+          <span class="meta-item">Nebius</span>
+        </div>
+        <p class="event-desc">Learn how to run OpenClaw on Nebius, connect to Token Factory for fast inference, and extend with custom models. From prototype to production.</p>
+      </div>
+      <div class="event-action">
+        <span class="rsvp-btn rsvp-primary">RSVP &rarr;</span>
+      </div>
+    </a>
+
+    <a class="event-row" href="/events/oakland" data-type="flagship" data-date="2026-04-16">
       <div class="event-date">
         <div class="date-day">16</div>
         <div class="date-dow">Thu</div>
@@ -419,7 +479,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="/events/openclaw-20-lines" data-type="workshop">
+    <a class="event-row" href="/events/openclaw-20-lines" data-type="workshop" data-date="2026-04-02">
       <div class="event-date">
         <div class="date-day">2</div>
         <div class="date-dow">Thu</div>
@@ -460,17 +520,64 @@
 
 <script src="/js/nav.js"></script>
 <script>
-function filterEvents(type, btn) {
-  document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
-  btn.classList.add('active');
-  document.querySelectorAll('.event-row, .featured-event').forEach(function(row) {
-    row.style.display = (type === 'all' || row.dataset.type === type) ? '' : 'none';
+var currentTimeTab = 'upcoming';
+var currentTypeFilter = 'all';
+
+function getToday() {
+  var d = new Date();
+  return d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0');
+}
+
+function applyFilters() {
+  var today = getToday();
+  var allItems = document.querySelectorAll('.event-row, .featured-event');
+  allItems.forEach(function(row) {
+    var date = row.dataset.date || '';
+    var type = row.dataset.type || '';
+    var isUpcoming = date >= today;
+    var timeMatch = (currentTimeTab === 'upcoming') ? isUpcoming : !isUpcoming;
+    var typeMatch = (currentTypeFilter === 'all') || (type === currentTypeFilter);
+    row.style.display = (timeMatch && typeMatch) ? '' : 'none';
   });
+  // Hide empty month sections
   document.querySelectorAll('.month-section').forEach(function(section) {
-    var visible = section.querySelectorAll('.event-row:not([style*="none"])');
+    var visible = section.querySelectorAll('.event-row:not([style*="display: none"])');
     section.style.display = visible.length === 0 ? 'none' : '';
   });
 }
+
+function updateCounts() {
+  var today = getToday();
+  var allItems = document.querySelectorAll('.event-row, .featured-event');
+  var upcoming = 0, past = 0;
+  allItems.forEach(function(row) {
+    var date = row.dataset.date || '';
+    if (date >= today) upcoming++;
+    else past++;
+  });
+  document.getElementById('upcoming-count').textContent = '(' + upcoming + ')';
+  document.getElementById('past-count').textContent = '(' + past + ')';
+}
+
+function switchTimeTab(tab, btn) {
+  currentTimeTab = tab;
+  document.querySelectorAll('.time-tab').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function filterEvents(type, btn) {
+  currentTypeFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  applyFilters();
+}
+
+// Initialize on load
+updateCounts();
+applyFilters();
 </script>
 </body>
 </html>

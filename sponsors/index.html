@@ -74,7 +74,7 @@
 
   .tier-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 24px;
   }
   .tier-card {
@@ -142,9 +142,10 @@
     bottom: 0;
     width: 2px;
   }
-  .tier-card:nth-child(1) .tier-perks li::before { background: var(--moss); }
+  .tier-card:nth-child(1) .tier-perks li::before { background: var(--rust); }
   .tier-card:nth-child(2) .tier-perks li::before { background: var(--gold); }
-  .tier-card:nth-child(3) .tier-perks li::before { background: var(--rust); }
+  .tier-card:nth-child(3) .tier-perks li::before { background: var(--moss); }
+  .tier-card:nth-child(4) .tier-perks li::before { background: var(--muted); }
   .tier-perks li strong { color: var(--ink); }
   .tier-cta {
     margin-top: 24px;
@@ -328,55 +329,68 @@
   </div>
 
   <div class="tier-grid">
+    <div class="tier-card featured">
+      <div class="tier-popular">Top Tier</div>
+      <div class="tier-badge rust">Title Sponsor</div>
+      <div class="tier-name">Title Sponsor</div>
+      <div class="tier-price">$6,000 / camp</div>
+      <ul class="tier-perks">
+        <li><strong>Top-Level Presence</strong> &mdash; maximum marketing, promo, and recognition across all channels</li>
+        <li><strong>Max Physical Presence</strong> &mdash; largest footprint at the event</li>
+        <li><strong>12 VIP Passes</strong> &mdash; full VIP access for your team</li>
+        <li><strong>60 Community Partner Tickets</strong> &mdash; free ticket unlocks to share with your network</li>
+        <li><strong>Unlimited Discount Tickets</strong> &mdash; distribute discounted tickets without limits</li>
+      </ul>
+      <div class="tier-cta">
+        <a href="mailto:hello@clawcamp.ai?subject=Title%20Sponsor%20Inquiry" class="btn-dark" style="width:100%;text-align:center;">Become Title Sponsor</a>
+      </div>
+    </div>
+
     <div class="tier-card">
-      <div class="tier-badge moss">Cabin Leader</div>
-      <div class="tier-name">Cabin Leader</div>
+      <div class="tier-badge gold">Standard Sponsor</div>
+      <div class="tier-name">Standard Sponsor</div>
+      <div class="tier-price">$3,000 / camp</div>
+      <ul class="tier-perks">
+        <li><strong>Large Presence</strong> &mdash; prominent marketing, promo, and recognition</li>
+        <li><strong>6&rsquo; Table + Signage</strong> &mdash; 6&rsquo; wide table with space for two 3&rsquo; wide rollups or up to 8&rsquo; wide backdrop</li>
+        <li><strong>6 VIP Passes</strong> &mdash; VIP access for your team</li>
+        <li><strong>30 Community Partner Tickets</strong> &mdash; free ticket unlocks to share with your network</li>
+        <li><strong>Unlimited Discount Tickets</strong> &mdash; distribute discounted tickets without limits</li>
+      </ul>
+      <div class="tier-cta">
+        <a href="mailto:hello@clawcamp.ai?subject=Standard%20Sponsor%20Inquiry" class="btn-outline" style="width:100%;text-align:center;">Get in Touch</a>
+      </div>
+    </div>
+
+    <div class="tier-card">
+      <div class="tier-badge moss">Demo Table</div>
+      <div class="tier-name">Demo Table</div>
       <div class="tier-price">$500 / camp</div>
       <ul class="tier-perks">
-        <li><strong>Check-in Table</strong> &mdash; own the welcome moment, branded table, swag handoff</li>
-        <li><strong>Mess Hall Fuel</strong> &mdash; sponsor coffee, snacks, or drinks</li>
-        <li><strong>Trail Map Insert</strong> &mdash; one-pager in the camp guide</li>
-        <li><strong>Flagpole Credit</strong> &mdash; logo on event page, email invite, and livestream banner</li>
+        <li><strong>Community Partner Presence</strong> &mdash; community partner level marketing, promo, and recognition</li>
+        <li><strong>Standing Table + Rollup</strong> &mdash; 24&rdquo; wide round standing table with space for one 3&rsquo; wide rollup banner</li>
+        <li><strong>1 VIP Pass</strong> &mdash; VIP access for your team lead</li>
+        <li><strong>5 Community Partner Tickets</strong> &mdash; free ticket unlocks to share with your network</li>
+        <li><strong>Unlimited Discount Tickets</strong> &mdash; distribute discounted tickets without limits</li>
       </ul>
       <div class="tier-cta">
-        <a href="mailto:hello@clawcamp.ai?subject=Cabin%20Leader%20Sponsorship" class="btn-outline" style="width:100%;text-align:center;">Get in Touch</a>
-      </div>
-    </div>
-
-    <div class="tier-card featured">
-      <div class="tier-popular">Most Popular</div>
-      <div class="tier-badge gold">Activity Leader</div>
-      <div class="tier-name">Activity Leader</div>
-      <div class="tier-price">$1,500 / camp</div>
-      <ul class="tier-perks">
-        <li><strong>Workshop Bunk</strong> &mdash; host a 45-min hands-on session. You teach, builders build.</li>
-        <li><strong>Gear Drop</strong> &mdash; distribute a tool, credit, or hardware kit to every attendee</li>
-        <li><strong>Campfire Slot</strong> &mdash; 3-minute lightning talk at the opening or closing circle</li>
-        <li><strong>Activity Leader Badge</strong> &mdash; named sponsor on all camp comms</li>
-        <li><strong>Headcount Report</strong> &mdash; post-camp attendance and engagement summary</li>
-        <li><strong>Stream Credit</strong> &mdash; logo on the livestream if the camp is broadcast</li>
-      </ul>
-      <div class="tier-cta">
-        <a href="mailto:hello@clawcamp.ai?subject=Activity%20Leader%20Sponsorship" class="btn-dark" style="width:100%;text-align:center;">Become an Activity Leader</a>
+        <a href="mailto:hello@clawcamp.ai?subject=Demo%20Table%20Inquiry" class="btn-outline" style="width:100%;text-align:center;">Get in Touch</a>
       </div>
     </div>
 
     <div class="tier-card">
-      <div class="tier-badge rust">Camp Director</div>
-      <div class="tier-name">Camp Director</div>
-      <div class="tier-price">$4,000 / camp</div>
+      <div class="tier-badge" style="color:var(--muted);">Community Partner</div>
+      <div class="tier-name">Community Partner</div>
+      <div class="tier-price">In-kind</div>
       <ul class="tier-perks">
-        <li><strong>Keynote Campfire</strong> &mdash; 20-min featured talk to the full camp</li>
-        <li><strong>Skills Track</strong> &mdash; own a full workshop track (2&ndash;3 sessions) on your tooling</li>
-        <li><strong>Challenge Tent</strong> &mdash; sponsor the build challenge or competition with your own prize</li>
-        <li><strong>Mess Hall Naming</strong> &mdash; your brand on the meal and snack break</li>
-        <li><strong>Basecamp Screen</strong> &mdash; branded AV during transitions and breaks</li>
-        <li><strong>Roster Access</strong> &mdash; opt-in attendee list for post-camp follow-up</li>
-        <li><strong>Director Badge</strong> &mdash; top billing on all camp assets</li>
-        <li><strong>Post-Camp Debrief</strong> &mdash; 30-minute call with ClawCamp team</li>
+        <li><strong>Community Partner Presence</strong> &mdash; community partner level marketing, promo, and recognition</li>
+        <li><strong>Rollup Banner Space</strong> &mdash; space for one 3&rsquo; wide rollup banner</li>
+        <li><strong>1 VIP Pass</strong> &mdash; VIP access for your representative</li>
+        <li><strong>5 Community Partner Tickets</strong> &mdash; free ticket unlocks to share with your network</li>
+        <li><strong>Unlimited Discount Tickets</strong> &mdash; distribute discounted tickets without limits</li>
       </ul>
       <div class="tier-cta">
-        <a href="mailto:hello@clawcamp.ai?subject=Camp%20Director%20Sponsorship" class="btn-outline" style="width:100%;text-align:center;">Get in Touch</a>
+        <a href="mailto:hello@clawcamp.ai?subject=Community%20Partner%20Inquiry" class="btn-outline" style="width:100%;text-align:center;">Get in Touch</a>
       </div>
     </div>
   </div>

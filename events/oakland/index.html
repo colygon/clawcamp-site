@@ -101,7 +101,7 @@
   /* Venue gallery */
   .venue-gallery {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 4px;
   }
   .venue-gallery img {
@@ -353,8 +353,8 @@
   @media (max-width: 768px) {
     .event-hero { padding: 64px 20px 48px; }
     .event-section { padding: 48px 20px; }
-    .venue-gallery { grid-template-columns: 1fr; }
-    .venue-gallery img { height: 180px; }
+    .venue-gallery { grid-template-columns: repeat(2, 1fr); }
+    .venue-gallery img { height: 160px; }
     .speakers-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
     .speaker-photo { height: 180px; }
     .sched-item { grid-template-columns: 1fr; gap: 4px; }
@@ -391,6 +391,11 @@
 
 <!-- Venue Gallery -->
 <div class="venue-gallery">
+  <img src="/images/venue/stak-conference-rooms.jpg" alt="STAK Space conference rooms and kitchen bar">
+  <img src="/images/venue/stak-coworking-lounge.jpg" alt="STAK Space coworking lounge with digital signage">
+  <img src="/images/venue/stak-main-hall.jpg" alt="STAK Space main hall with booth seating">
+  <img src="/images/venue/stak-kitchen-bar.jpg" alt="STAK Space kitchen bar with marble counters">
+  <img src="/images/venue/stak-seating-area.jpg" alt="STAK Space seating area with acoustic panels">
   <img src="/images/venue/stak-lounge.webp" alt="STAK Space lounge area">
   <img src="/images/venue/stak-event-room.jpg" alt="STAK Space event room">
   <img src="/images/venue/stak-exterior.webp" alt="STAK Space exterior">
