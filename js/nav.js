@@ -90,6 +90,20 @@
       });
     }
 
+    // Transparent nav until scroll
+    var navNode = document.querySelector('nav');
+    if (navNode) {
+      function checkScroll() {
+        if (window.scrollY > 10) {
+          navNode.classList.add('nav-scrolled');
+        } else {
+          navNode.classList.remove('nav-scrolled');
+        }
+      }
+      window.addEventListener('scroll', checkScroll, { passive: true });
+      checkScroll();
+    }
+
     // Mobile hamburger
     var hamburger = document.querySelector('.nav-hamburger');
     var navLinks = document.querySelector('.nav-links');

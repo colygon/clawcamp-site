@@ -29,12 +29,24 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 20px 48px;
-  border-bottom: 1px solid var(--sand);
-  background: var(--paper);
+  border-bottom: 1px solid transparent;
+  background: transparent;
   position: sticky;
   top: 0;
   z-index: 100;
+  transition: background 0.25s, border-color 0.25s;
 }
+nav.nav-scrolled {
+  background: var(--paper);
+  border-bottom-color: var(--sand);
+}
+/* Dark hero pages: light nav text until scrolled */
+.dark-hero nav:not(.nav-scrolled) .logo { color: var(--paper); }
+.dark-hero nav:not(.nav-scrolled) a { color: rgba(245,242,236,0.7); }
+.dark-hero nav:not(.nav-scrolled) a:hover { color: var(--paper); }
+.dark-hero nav:not(.nav-scrolled) .nav-cta { color: var(--paper); border-color: rgba(245,242,236,0.4); }
+.dark-hero nav:not(.nav-scrolled) .nav-hamburger { color: var(--paper); }
+.dark-hero nav:not(.nav-scrolled) .nav-more-label { color: rgba(245,242,236,0.7); }
 .logo {
   font-family: 'DM Mono', monospace;
   font-size: 15px;
