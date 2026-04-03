@@ -60,7 +60,7 @@
     </div>\
   </div>\
   <div class="footer-bottom">\
-    <p>&copy; 2026 ClawCamp. Hosted by <a href="https://aiify.io" target="_blank">Aiify.io</a>.</p>\
+    <p>&copy; 2026 ClawCamp. Built by <a href="https://dabl.club" target="_blank">Dabl.club</a> and <a href="https://aiify.io" target="_blank">Aiify.io</a>.</p>\
   </div>\
 </footer>';
 

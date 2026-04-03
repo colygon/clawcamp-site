@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .dash-loading {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .dash-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--sand);
+    border-top-color: var(--rust);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .dash-header {
+    padding: 48px 48px 0;
+    max-width: 900px;
+  }
+  .dash-greeting {
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .dash-greeting em { font-style: normal; color: var(--rust); }
+  .dash-email {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .dash-signout {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: underline;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    padding: 0;
+  }
+  .dash-signout:hover { color: var(--rust); }
+
+  .dash-section {
+    padding: 40px 48px 0;
+    max-width: 900px;
+  }
+  .dash-section-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  /* Quick links */
+  .quick-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .quick-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px;
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.15s;
+  }
+  .quick-link:hover {
+    border-color: var(--ink);
+    background: var(--cream);
+    transform: translateY(-1px);
+  }
+  .quick-link-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+  .quick-link-text h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .quick-link-text p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* Perks / credits */
+  .perks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .perk-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .perk-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--rust);
+  }
+  .perk-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: white;
+    background: var(--rust);
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  .perk-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .perk-card .perk-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--rust);
+    margin-bottom: 8px;
+  }
+  .perk-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .perk-card a {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--rust);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .perk-card a:hover { text-decoration: underline; }
+
+  /* Library */
+  .library-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .library-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.15s;
+  }
+  .library-item:hover {
+    border-color: var(--ink);
+    background: var(--cream);
+  }
+  .library-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .library-item h3 {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .library-item p {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .dash-footer-space { height: 64px; }
+
+  /* Error state */
+  .dash-error {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dash-error-card {
+    text-align: center;
+    max-width: 400px;
+  }
+  .dash-error-card .icon { font-size: 48px; margin-bottom: 16px; }
+  .dash-error-card h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .dash-error-card p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .dash-error-card a {
+    display: inline-block;
+    background: var(--rust);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 24px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+  }
+  .dash-error-card a:hover { background: #a0522d; }
+
+  @media (max-width: 768px) {
+    .dash-header, .dash-section { padding-left: 20px; padding-right: 20px; }
+    .quick-links { grid-template-columns: 1fr; }
+    .perks-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<!-- Loading state -->
+<div class="dash-loading" id="dash-loading">
+  <div class="dash-spinner"></div>
+  <p style="font-size:14px;color:var(--muted);">Signing you in...</p>
+</div>
+
+<!-- Error state (hidden) -->
+<div class="dash-error" id="dash-error" style="display:none;"></div>
+
+<!-- Main dashboard (hidden until auth) -->
+<div id="dash-content" style="display:none;">
+
+  <div class="dash-header">
+    <div class="dash-greeting">Welcome back, <em id="dash-name">Camper</em></div>
+    <div class="dash-email" id="dash-email"></div>
+    <button class="dash-signout" id="dash-signout">Sign out</button>
+  </div>
+
+  <div class="dash-section">
+    <div class="dash-section-title">Quick Links</div>
+    <div class="quick-links">
+      <a href="https://discord.gg/haAtnsyE3W" target="_blank" class="quick-link">
+        <span class="quick-link-icon">&#128172;</span>
+        <div class="quick-link-text">
+          <h3>Discord Community</h3>
+          <p>Chat with campers, find events, get help</p>
+        </div>
+      </a>
+      <a href="/events" class="quick-link">
+        <span class="quick-link-icon">&#128197;</span>
+        <div class="quick-link-text">
+          <h3>Schedule of Events</h3>
+          <p>Browse upcoming camps and RSVP</p>
+        </div>
+      </a>
+      <a href="/curriculum" class="quick-link">
+        <span class="quick-link-icon">&#128218;</span>
+        <div class="quick-link-text">
+          <h3>Workshop Library</h3>
+          <p>Workshops, guides, tutorials, and threads</p>
+        </div>
+      </a>
+      <a href="/startups" class="quick-link">
+        <span class="quick-link-icon">&#128640;</span>
+        <div class="quick-link-text">
+          <h3>Startup Program</h3>
+          <p>Awards, grants, and sponsor perks</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="dash-section">
+    <div class="dash-section-title">Discounts &amp; Credits</div>
+    <div class="perks-grid">
+      <div class="perk-card">
+        <span class="perk-badge">Sponsor Perk</span>
+        <h3>Nebius AI Cloud</h3>
+        <div class="perk-value">$100 credits</div>
+        <p>GPU cloud credits for AI model training and inference. Available to all registered campers.</p>
+        <a href="https://nebius.com" target="_blank">Claim credits &rarr;</a>
+      </div>
+      <div class="perk-card">
+        <span class="perk-badge">Sponsor Perk</span>
+        <h3>You.com API</h3>
+        <div class="perk-value">Free tier upgrade</div>
+        <p>Extended API access for web-grounded AI search. Build agents that can search the web.</p>
+        <a href="https://you.com" target="_blank">Get access &rarr;</a>
+      </div>
+      <div class="perk-card">
+        <span class="perk-badge">Sponsor Perk</span>
+        <h3>Apify</h3>
+        <div class="perk-value">$50 credits</div>
+        <p>Web scraping and automation platform credits. Build data pipelines for your agents.</p>
+        <a href="https://apify.com" target="_blank">Claim credits &rarr;</a>
+      </div>
+      <div class="perk-card">
+        <span class="perk-badge">Sponsor Perk</span>
+        <h3>Fetch.ai</h3>
+        <div class="perk-value">Developer access</div>
+        <p>Early access to Fetch.ai agent framework and uAgents library for autonomous agent development.</p>
+        <a href="https://fetch.ai" target="_blank">Get started &rarr;</a>
+      </div>
+      <div class="perk-card">
+        <span class="perk-badge">Community</span>
+        <h3>ClawCamp Oakland</h3>
+        <div class="perk-value">10% off tickets</div>
+        <p>Registered community members get a discount on ClawCamp Oakland tickets (April 16, 2026).</p>
+        <a href="/events/oakland">View event &rarr;</a>
+      </div>
+      <div class="perk-card">
+        <span class="perk-badge">Sponsor Perk</span>
+        <h3>Civic</h3>
+        <div class="perk-value">Free identity pass</div>
+        <p>Civic identity verification for your AI agents. Prove you're human, let your agents transact.</p>
+        <a href="https://civic.com" target="_blank">Get your pass &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="dash-section">
+    <div class="dash-section-title">Learning Resources</div>
+    <div class="library-list">
+      <a href="/curriculum" class="library-item">
+        <span class="library-icon">&#127891;</span>
+        <div>
+          <h3>9 Official Workshops</h3>
+          <p>Hands-on curriculum from beginner to advanced multi-agent systems</p>
+        </div>
+      </a>
+      <a href="/curriculum#guides" class="library-item">
+        <span class="library-icon">&#128214;</span>
+        <div>
+          <h3>40+ Community Guides</h3>
+          <p>Tutorials, tools, repos, and curated threads from the community</p>
+        </div>
+      </a>
+      <a href="/formats" class="library-item">
+        <span class="library-icon">&#127760;</span>
+        <div>
+          <h3>Event Formats</h3>
+          <p>Workshops, deep dives, unconferences, demo days, and more</p>
+        </div>
+      </a>
+      <a href="https://discord.gg/haAtnsyE3W" target="_blank" class="library-item">
+        <span class="library-icon">&#128161;</span>
+        <div>
+          <h3>Ask the Community</h3>
+          <p>Get help and share what you're building in Discord</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="dash-footer-space"></div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+<script>
+(function() {
+  var SUPABASE_URL = 'https://mrnccntqmkxjazznejfc.supabase.co';
+  var loadingEl = document.getElementById('dash-loading');
+  var errorEl = document.getElementById('dash-error');
+  var contentEl = document.getElementById('dash-content');
+
+  function showError(msg) {
+    loadingEl.style.display = 'none';
+    errorEl.style.display = '';
+    var card = document.createElement('div');
+    card.className = 'dash-error-card';
+    var icon = document.createElement('div');
+    icon.className = 'icon';
+    icon.textContent = '\u26A0\uFE0F';
+    card.appendChild(icon);
+    var h2 = document.createElement('h2');
+    h2.textContent = 'Sign-In Required';
+    card.appendChild(h2);
+    var p = document.createElement('p');
+    p.textContent = msg;
+    card.appendChild(p);
+    var a = document.createElement('a');
+    a.href = '/get-involved';
+    a.textContent = 'Sign In \u2192';
+    card.appendChild(a);
+    errorEl.appendChild(card);
+  }
+
+  function showDashboard(user) {
+    loadingEl.style.display = 'none';
+    contentEl.style.display = '';
+    var firstName = user.name ? user.name.split(' ')[0] : 'Camper';
+    document.getElementById('dash-name').textContent = firstName;
+    document.getElementById('dash-email').textContent = user.email;
+  }
+
+  // Sign out
+  document.getElementById('dash-signout').addEventListener('click', function() {
+    localStorage.removeItem('clawcamp_session');
+    window.location.href = '/get-involved';
+  });
+
+  // Check for magic link token in URL
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get('token');
+
+  if (token) {
+    // Verify magic link
+    fetch(SUPABASE_URL + '/functions/v1/verify-magic-link', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: token })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.success && data.user) {
+        localStorage.setItem('clawcamp_session', JSON.stringify(data.user));
+        // Clean the URL
+        window.history.replaceState({}, '', '/dashboard');
+        showDashboard(data.user);
+      } else {
+        showError(data.error || 'Invalid or expired sign-in link. Please request a new one.');
+      }
+    })
+    .catch(function() {
+      showError('Something went wrong. Please try signing in again.');
+    });
+  } else {
+    // Check localStorage session
+    var session = localStorage.getItem('clawcamp_session');
+    if (session) {
+      try {
+        var user = JSON.parse(session);
+        if (user && user.email) {
+          showDashboard(user);
+        } else {
+          showError('Please sign in to access your dashboard.');
+        }
+      } catch(e) {
+        showError('Please sign in to access your dashboard.');
+      }
+    } else {
+      showError('Please sign in to access your dashboard.');
+    }
+  }
+})();
+</script>
+</body>
+</html>

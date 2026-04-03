@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Get Involved — ClawCamp</title>
+<title>Sign Up / Sign In — ClawCamp</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/shared.css">
@@ -154,10 +154,104 @@
     margin-top: -8px;
   }
 
+  /* Sign In section */
+  .signin-section {
+    padding: 0 48px 48px;
+    max-width: 480px;
+  }
+  .signin-card {
+    border: 2px solid var(--rust);
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+  }
+  .signin-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+  }
+  .signin-card h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+  }
+  .signin-card h2 em { font-style: normal; color: var(--rust); }
+  .signin-card > p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .signin-form {
+    display: flex;
+    gap: 8px;
+  }
+  .signin-form input {
+    flex: 1;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 15px;
+    padding: 12px 16px;
+    border: 1px solid var(--sand);
+    border-radius: 6px;
+    background: white;
+    color: var(--ink);
+  }
+  .signin-form input:focus {
+    outline: none;
+    border-color: var(--rust);
+  }
+  .signin-form button {
+    background: var(--rust);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 24px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s;
+  }
+  .signin-form button:hover { background: #a8420a; }
+  .signin-form button:disabled { opacity: 0.6; cursor: not-allowed; }
+  .signin-msg {
+    font-size: 14px;
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+  .signin-msg.success { color: var(--moss); }
+  .signin-msg.error { color: #b22; }
+  .signin-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 32px 48px;
+    max-width: 480px;
+  }
+  .signin-divider span {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .signin-divider::before,
+  .signin-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--sand);
+  }
+
   @media (max-width: 768px) {
     .chooser, .form-area { padding-left: 20px; padding-right: 20px; }
     .chooser-grid { grid-template-columns: repeat(2, 1fr); }
     .form-row { grid-template-columns: 1fr; }
+    .signin-section { padding-left: 20px; padding-right: 20px; }
+    .signin-divider { padding-left: 20px; padding-right: 20px; }
+    .signin-form { flex-direction: column; }
   }
 </style>
 </head>
@@ -166,13 +260,28 @@
 <div id="site-nav"></div>
 
 <header class="page-header">
-  <h1>Get<br><em>Involved</em></h1>
+  <h1>Sign Up /<br><em>Sign In</em></h1>
   <div class="header-meta">
-    <p>Host, Speak, Sponsor</p>
-    <p>Submit Events</p>
-    <p>Join Leadership</p>
+    <p>Returning members sign in</p>
+    <p>New? Register below</p>
+    <p>Access perks &amp; resources</p>
   </div>
 </header>
+
+<div class="signin-section">
+  <div class="signin-card">
+    <div class="signin-icon">&#128274;</div>
+    <h2>Sign in with <em>Email</em></h2>
+    <p>Enter the email you registered with and we'll send you a magic link. No password needed.</p>
+    <form class="signin-form" id="signin-form" onsubmit="return false;">
+      <input type="email" id="signin-email" placeholder="you@example.com" required>
+      <button type="submit" id="signin-btn">Send Link</button>
+    </form>
+    <div id="signin-msg"></div>
+  </div>
+</div>
+
+<div class="signin-divider"><span>or sign up</span></div>
 
 <div class="chooser">
   <p>There are many ways to be part of ClawCamp. Choose what fits you best and we'll take it from there.</p>
@@ -712,7 +821,64 @@ document.addEventListener('DOMContentLoaded', function() {
       btn.click();
     }
   }
+
+  // Check if already signed in
+  var session = localStorage.getItem('clawcamp_session');
+  if (session) {
+    try {
+      var user = JSON.parse(session);
+      if (user && user.email) {
+        window.location.href = '/dashboard';
+        return;
+      }
+    } catch(e) {}
+  }
 });
+
+// Magic link sign-in
+(function() {
+  var SUPABASE_URL = 'https://mrnccntqmkxjazznejfc.supabase.co';
+  var form = document.getElementById('signin-form');
+  var emailInput = document.getElementById('signin-email');
+  var btn = document.getElementById('signin-btn');
+  var msgEl = document.getElementById('signin-msg');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var email = emailInput.value.trim();
+    if (!email) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    msgEl.textContent = '';
+    msgEl.className = 'signin-msg';
+
+    fetch(SUPABASE_URL + '/functions/v1/send-magic-link', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.error) {
+        msgEl.textContent = data.error;
+        msgEl.className = 'signin-msg error';
+      } else {
+        msgEl.textContent = 'Check your inbox! We sent a sign-in link to ' + email;
+        msgEl.className = 'signin-msg success';
+        emailInput.value = '';
+      }
+      btn.disabled = false;
+      btn.textContent = 'Send Link';
+    })
+    .catch(function() {
+      msgEl.textContent = 'Something went wrong. Please try again.';
+      msgEl.className = 'signin-msg error';
+      btn.disabled = false;
+      btn.textContent = 'Send Link';
+    });
+  });
+})();
 </script>
 </body>
 </html>

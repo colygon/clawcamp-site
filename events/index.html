@@ -482,9 +482,10 @@
   </div>
 </div>
 
-<div class="main">
+<div class="main" id="events-main">
+  <div style="text-align:center;padding:48px;color:var(--muted);font-size:14px;" id="events-loading">Loading events...</div>
 
-  <!-- Featured: ClawCamp Oakland -->
+  <!-- Featured: ClawCamp Oakland (legacy fallback, replaced by JS) -->
   <div class="featured-event" data-type="flagship" data-date="2026-04-16" data-city="oakland">
     <div class="featured-left">
       <div class="featured-eyebrow">Flagship Event &middot; Oakland, CA</div>
@@ -1988,6 +1989,284 @@
 <script src="/js/nav.js"></script>
 <script src="/js/supabase.js"></script>
 <script>
+var SUPABASE_URL = 'https://mrnccntqmkxjazznejfc.supabase.co';
+var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ybmNjbnRxbWt4amF6em5lamZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyMDA3NTksImV4cCI6MjA5MDc3Njc1OX0.T6oFTtYiFTsx6ojuogpZFXAS7tN5-dPzwvmY5V2xFGI';
+
+var daysOfWeek = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function renderFeaturedEvent(ev) {
+  var d = new Date(ev.event_date + 'T00:00:00');
+  var day = d.getDate();
+  var monthName = monthNames[d.getMonth()];
+  var year = d.getFullYear();
+  var dow = daysOfWeek[d.getDay()];
+
+  var div = document.createElement('div');
+  div.className = 'featured-event';
+  div.dataset.type = ev.event_type;
+  div.dataset.date = ev.event_date;
+  div.dataset.city = ev.city;
+
+  var left = document.createElement('div');
+  left.className = 'featured-left';
+
+  var eyebrow = document.createElement('div');
+  eyebrow.className = 'featured-eyebrow';
+  eyebrow.textContent = 'Flagship Event \u00B7 ' + (ev.location || ev.city);
+  left.appendChild(eyebrow);
+
+  var title = document.createElement('div');
+  title.className = 'featured-title';
+  var parts = ev.name.split(' ');
+  if (parts.length > 1) {
+    title.textContent = parts[0];
+    var br = document.createElement('br');
+    title.appendChild(br);
+    var span = document.createElement('span');
+    span.textContent = parts.slice(1).join(' ');
+    title.appendChild(span);
+  } else {
+    title.textContent = ev.name;
+  }
+  left.appendChild(title);
+
+  var details = document.createElement('div');
+  details.className = 'featured-details';
+  var items = [
+    '\uD83D\uDCC5 ' + dow + ', ' + monthName + ' ' + day + ', ' + year,
+    '\uD83D\uDCCD ' + (ev.location || ev.city),
+    '\u23F1 ' + (ev.time_range || 'Full Day')
+  ];
+  items.forEach(function(txt) {
+    var span = document.createElement('span');
+    span.className = 'featured-detail';
+    span.textContent = txt;
+    details.appendChild(span);
+  });
+  left.appendChild(details);
+
+  if (ev.description) {
+    var desc = document.createElement('p');
+    desc.className = 'featured-desc';
+    desc.textContent = ev.description;
+    left.appendChild(desc);
+  }
+
+  if (ev.tags && ev.tags.length) {
+    var tagsDiv = document.createElement('div');
+    tagsDiv.className = 'featured-tags';
+    ev.tags.forEach(function(t) {
+      var tag = document.createElement('span');
+      tag.className = 'featured-tag';
+      tag.textContent = t;
+      tagsDiv.appendChild(tag);
+    });
+    left.appendChild(tagsDiv);
+  }
+
+  var cta = document.createElement('a');
+  cta.className = 'featured-cta';
+  cta.href = ev.link || '#';
+  cta.textContent = 'View Details \u2192';
+  if (ev.is_external) cta.target = '_blank';
+  left.appendChild(cta);
+
+  var right = document.createElement('div');
+  right.className = 'featured-right';
+
+  var dateBlock = document.createElement('div');
+  var dayNum = document.createElement('div');
+  dayNum.className = 'featured-date-block';
+  dayNum.textContent = day;
+  dateBlock.appendChild(dayNum);
+  var monthEl = document.createElement('div');
+  monthEl.className = 'featured-month';
+  monthEl.textContent = monthName;
+  dateBlock.appendChild(monthEl);
+  var yearEl = document.createElement('div');
+  yearEl.className = 'featured-year';
+  yearEl.textContent = year + ' \u00B7 ' + dow;
+  dateBlock.appendChild(yearEl);
+  right.appendChild(dateBlock);
+
+  var cap = document.createElement('div');
+  cap.className = 'featured-capacity';
+  cap.style.cssText = 'font-size:13px;font-weight:600;color:#0f0e0b;margin-bottom:6px';
+  cap.textContent = 'Tickets';
+  var capInfo = document.createElement('div');
+  capInfo.className = 'featured-capacity';
+  capInfo.textContent = 'Limited availability';
+  right.appendChild(cap);
+  right.appendChild(capInfo);
+
+  div.appendChild(left);
+  div.appendChild(right);
+  return div;
+}
+
+function renderEventRow(ev) {
+  var d = new Date(ev.event_date + 'T00:00:00');
+  var day = d.getDate();
+  var dow = daysOfWeek[d.getDay()];
+
+  var a = document.createElement('a');
+  a.className = 'event-row';
+  a.href = ev.link || '#';
+  if (ev.is_external) a.target = '_blank';
+  a.dataset.type = ev.event_type;
+  a.dataset.date = ev.event_date;
+  a.dataset.city = ev.city;
+
+  // Date column
+  var dateDiv = document.createElement('div');
+  dateDiv.className = 'event-date';
+  var dayEl = document.createElement('div');
+  dayEl.className = 'date-day';
+  dayEl.textContent = day;
+  var dowEl = document.createElement('div');
+  dowEl.className = 'date-dow';
+  dowEl.textContent = dow;
+  dateDiv.appendChild(dayEl);
+  dateDiv.appendChild(dowEl);
+  a.appendChild(dateDiv);
+
+  // Body
+  var body = document.createElement('div');
+  body.className = 'event-body';
+
+  var top = document.createElement('div');
+  top.className = 'event-top';
+  var nameEl = document.createElement('span');
+  nameEl.className = 'event-name';
+  nameEl.textContent = ev.name;
+  top.appendChild(nameEl);
+  var tagEl = document.createElement('span');
+  var tagLabel = ev.event_type.charAt(0).toUpperCase() + ev.event_type.slice(1);
+  tagEl.className = 'event-tag tag-' + ev.event_type;
+  tagEl.textContent = tagLabel;
+  top.appendChild(tagEl);
+  body.appendChild(top);
+
+  var meta = document.createElement('div');
+  meta.className = 'event-meta';
+  if (ev.location) {
+    var loc = document.createElement('span');
+    loc.className = 'meta-item';
+    loc.textContent = '\uD83D\uDCCD ' + ev.location;
+    meta.appendChild(loc);
+  }
+  if (ev.time_range) {
+    var time = document.createElement('span');
+    time.className = 'meta-item';
+    time.textContent = ev.time_range;
+    meta.appendChild(time);
+  }
+  if (ev.venue_name) {
+    var venue = document.createElement('span');
+    venue.className = 'meta-item';
+    venue.textContent = ev.venue_name;
+    meta.appendChild(venue);
+  }
+  body.appendChild(meta);
+
+  if (ev.description) {
+    var desc = document.createElement('p');
+    desc.className = 'event-desc';
+    desc.textContent = ev.description;
+    body.appendChild(desc);
+  }
+  a.appendChild(body);
+
+  // Action
+  var action = document.createElement('div');
+  action.className = 'event-action';
+  var btn = document.createElement('span');
+  btn.className = 'rsvp-btn rsvp-primary';
+  btn.textContent = ev.is_external ? 'RSVP \u2192' : 'Details \u2192';
+  action.appendChild(btn);
+  a.appendChild(action);
+
+  return a;
+}
+
+function renderEvents(events) {
+  var main = document.getElementById('events-main');
+  // Remove loading message and hardcoded events
+  main.textContent = '';
+
+  // Separate featured vs regular
+  var featured = events.filter(function(e) { return e.is_featured; });
+  var regular = events.filter(function(e) { return !e.is_featured; });
+
+  // Render featured
+  featured.forEach(function(ev) {
+    main.appendChild(renderFeaturedEvent(ev));
+  });
+
+  // Group regular by month
+  var months = {};
+  regular.forEach(function(ev) {
+    var d = new Date(ev.event_date + 'T00:00:00');
+    var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+    if (!months[key]) months[key] = [];
+    months[key].push(ev);
+  });
+
+  // Sort month keys
+  var sortedMonths = Object.keys(months).sort();
+
+  sortedMonths.forEach(function(key) {
+    var d = new Date(key + '-01T00:00:00');
+    var label = monthNames[d.getMonth()] + ' ' + d.getFullYear();
+    var monthId = monthNames[d.getMonth()].toLowerCase();
+
+    var section = document.createElement('div');
+    section.className = 'month-section';
+    section.id = monthId;
+
+    var divider = document.createElement('div');
+    divider.className = 'section-divider';
+    var divLabel = document.createElement('span');
+    divLabel.className = 'divider-label';
+    divLabel.textContent = label;
+    divider.appendChild(divLabel);
+    var divLine = document.createElement('div');
+    divLine.className = 'divider-line';
+    divider.appendChild(divLine);
+    section.appendChild(divider);
+
+    months[key].sort(function(a, b) { return a.event_date.localeCompare(b.event_date); });
+    months[key].forEach(function(ev) {
+      section.appendChild(renderEventRow(ev));
+    });
+
+    main.appendChild(section);
+  });
+}
+
+// Fetch events from Supabase
+fetch(SUPABASE_URL + '/rest/v1/events?select=*&order=event_date.asc', {
+  headers: {
+    'apikey': SUPABASE_ANON_KEY,
+    'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+  }
+})
+.then(function(res) { return res.json(); })
+.then(function(events) {
+  renderEvents(events);
+  updateCounts();
+  applyFilters();
+})
+.catch(function(err) {
+  console.error('Failed to load events:', err);
+  // Leave hardcoded events as fallback
+  var loading = document.getElementById('events-loading');
+  if (loading) loading.style.display = 'none';
+  updateCounts();
+  applyFilters();
+});
+
 var currentTimeTab = 'upcoming';
 var currentTypeFilter = 'all';
 var userLat = null;
@@ -2278,9 +2557,7 @@ function filterEvents(type, btn) {
   else applyFilters();
 }
 
-// Initialize on load
-updateCounts();
-applyFilters();
+// Initialize on load (called after fetch completes above)
 </script>
 </body>
 </html>
