@@ -1,15 +1,15 @@
-// ClawCamp Supabase Form Handler
+// ClawCamp Supabase Form Handler — Unified CRM
 (function () {
   var SUPABASE_URL = 'https://mrnccntqmkxjazznejfc.supabase.co';
   var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ybmNjbnRxbWt4amF6em5lamZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyMDA3NTksImV4cCI6MjA5MDc3Njc1OX0.T6oFTtYiFTsx6ojuogpZFXAS7tN5-dPzwvmY5V2xFGI';
 
-  function submitToSupabase(table, data, form) {
+  function submitToSupabase(data, form) {
     var submitBtn = form.querySelector('.form-submit');
     var originalText = submitBtn.textContent;
     submitBtn.textContent = 'Submitting...';
     submitBtn.disabled = true;
 
-    fetch(SUPABASE_URL + '/rest/v1/' + table, {
+    fetch(SUPABASE_URL + '/rest/v1/contacts', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -52,7 +52,8 @@
     if (hostForm) {
       hostForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        submitToSupabase('host_applications', {
+        submitToSupabase({
+          form_type: 'host',
           name: hostForm.querySelector('[name="name"]').value,
           email: hostForm.querySelector('[name="email"]').value,
           phone: hostForm.querySelector('[name="phone"]').value,
@@ -71,8 +72,9 @@
     if (sponsorForm) {
       sponsorForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        submitToSupabase('sponsor_inquiries', {
-          contact_name: sponsorForm.querySelector('[name="contact_name"]').value,
+        submitToSupabase({
+          form_type: 'sponsor',
+          name: sponsorForm.querySelector('[name="contact_name"]').value,
           email: sponsorForm.querySelector('[name="email"]').value,
           phone: sponsorForm.querySelector('[name="phone"]').value,
           company: sponsorForm.querySelector('[name="company"]').value,
@@ -84,12 +86,13 @@
       });
     }
 
-    // Staff / Crew application form
+    // Staff / Leadership application form
     var crewForm = document.getElementById('crew-form');
     if (crewForm) {
       crewForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        submitToSupabase('staff_applications', {
+        submitToSupabase({
+          form_type: 'staff',
           name: crewForm.querySelector('[name="name"]').value,
           email: crewForm.querySelector('[name="email"]').value,
           phone: crewForm.querySelector('[name="phone"]').value,
@@ -107,7 +110,8 @@
     if (speakerForm) {
       speakerForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        submitToSupabase('speaker_applications', {
+        submitToSupabase({
+          form_type: 'speaker',
           name: speakerForm.querySelector('[name="name"]').value,
           email: speakerForm.querySelector('[name="email"]').value,
           phone: speakerForm.querySelector('[name="phone"]').value,
@@ -127,7 +131,8 @@
     if (eventForm) {
       eventForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        submitToSupabase('event_submissions', {
+        submitToSupabase({
+          form_type: 'event',
           name: eventForm.querySelector('[name="name"]').value,
           email: eventForm.querySelector('[name="email"]').value,
           phone: eventForm.querySelector('[name="phone"]').value,
@@ -150,7 +155,8 @@
         camperForm.querySelectorAll('[name^="interest_"]:checked').forEach(function (cb) {
           interests.push(cb.name.replace('interest_', ''));
         });
-        submitToSupabase('camper_registrations', {
+        submitToSupabase({
+          form_type: 'camper',
           name: camperForm.querySelector('[name="name"]').value,
           email: camperForm.querySelector('[name="email"]').value,
           phone: camperForm.querySelector('[name="phone"]').value,
@@ -170,7 +176,8 @@
     if (showcaseForm) {
       showcaseForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        submitToSupabase('showcase_applications', {
+        submitToSupabase({
+          form_type: 'showcase',
           name: showcaseForm.querySelector('[name="name"]').value,
           email: showcaseForm.querySelector('[name="email"]').value,
           phone: showcaseForm.querySelector('[name="phone"]').value,
