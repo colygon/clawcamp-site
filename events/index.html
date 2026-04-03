@@ -471,6 +471,7 @@
   <button class="filter-btn" onclick="filterEvents('flagship', this)">ClawCamp</button>
   <button class="filter-btn" onclick="filterEvents('workshop', this)">Workshops</button>
   <button class="filter-btn" onclick="filterEvents('community', this)">Community</button>
+  <button class="filter-btn" onclick="filterEvents('online', this)">Online</button>
 </div>
 
 <div class="location-bar" id="location-bar">
@@ -2272,6 +2273,7 @@ var currentTypeFilter = 'all';
 var userLat = null;
 var userLon = null;
 var sortByDistance = false;
+var useMetric = true;
 
 // City coordinates lookup
 var cityCoords = {
@@ -2362,7 +2364,15 @@ function getDistanceForCity(cityKey) {
   return haversine(userLat, userLon, c[0], c[1]);
 }
 
+function isInUSA(lat, lon) {
+  return lat >= 24 && lat <= 50 && lon >= -125 && lon <= -66;
+}
+
 function formatDistance(km) {
+  if (useMetric) {
+    if (km < 100) return Math.round(km) + ' km';
+    return Math.round(km).toLocaleString() + ' km';
+  }
   var miles = km * 0.621371;
   if (miles < 100) return Math.round(miles) + ' mi';
   return Math.round(miles).toLocaleString() + ' mi';
@@ -2383,7 +2393,8 @@ function applyFilters() {
     var type = row.dataset.type || '';
     var isUpcoming = date >= today;
     var timeMatch = (currentTimeTab === 'upcoming') ? isUpcoming : !isUpcoming;
-    var typeMatch = (currentTypeFilter === 'all') || (type === currentTypeFilter);
+    var city = row.dataset.city || '';
+    var typeMatch = (currentTypeFilter === 'all') || (currentTypeFilter === 'online' ? city === 'online' : type === currentTypeFilter);
     row.style.display = (timeMatch && typeMatch) ? '' : 'none';
   });
   document.querySelectorAll('.month-section').forEach(function(section) {
@@ -2435,7 +2446,15 @@ function sortEventsByDistance() {
     }
   });
 
-  allItems.sort(function(a, b) { return (a._distance || Infinity) - (b._distance || Infinity); });
+  allItems.sort(function(a, b) {
+    var da = a._distance != null ? a._distance : Infinity;
+    var db = b._distance != null ? b._distance : Infinity;
+    // Online events sort after nearby (<161km / ~100mi) but before distant events
+    if (a.dataset.city === 'online' && da === Infinity) da = 161;
+    if (b.dataset.city === 'online' && db === Infinity) db = 161;
+    if (da !== db) return da - db;
+    return (a.dataset.date || '').localeCompare(b.dataset.date || '');
+  });
 
   document.querySelectorAll('.month-section').forEach(function(s) { s.style.display = 'none'; });
 
@@ -2450,6 +2469,7 @@ function setUserLocation(lat, lon, label) {
   userLat = lat;
   userLon = lon;
   sortByDistance = true;
+  useMetric = !isInUSA(lat, lon);
   var input = document.getElementById('location-input');
   input.value = label || (lat.toFixed(2) + ', ' + lon.toFixed(2));
   document.getElementById('location-clear').classList.add('visible');

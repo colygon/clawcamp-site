@@ -388,9 +388,10 @@
 
 <div id="site-footer"></div>
 <script src="/js/nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/auth.js"></script>
 <script>
 (function() {
-  var SUPABASE_URL = 'https://mrnccntqmkxjazznejfc.supabase.co';
   var loadingEl = document.getElementById('dash-loading');
   var errorEl = document.getElementById('dash-error');
   var contentEl = document.getElementById('dash-content');
@@ -417,63 +418,48 @@
     errorEl.appendChild(card);
   }
 
-  function showDashboard(user) {
+  function showDashboard(email, name) {
     loadingEl.style.display = 'none';
     contentEl.style.display = '';
-    var firstName = user.name ? user.name.split(' ')[0] : 'Camper';
+    var firstName = name ? name.split(' ')[0] : email.split('@')[0];
     document.getElementById('dash-name').textContent = firstName;
-    document.getElementById('dash-email').textContent = user.email;
+    document.getElementById('dash-email').textContent = email;
   }
 
   // Sign out
   document.getElementById('dash-signout').addEventListener('click', function() {
-    localStorage.removeItem('clawcamp_session');
-    window.location.href = '/get-involved';
+    clawAuth.signOut().then(function() {
+      window.location.href = '/get-involved';
+    });
   });
 
-  // Check for magic link token in URL
-  var params = new URLSearchParams(window.location.search);
-  var token = params.get('token');
-
-  if (token) {
-    // Verify magic link
-    fetch(SUPABASE_URL + '/functions/v1/verify-magic-link', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: token })
-    })
-    .then(function(res) { return res.json(); })
-    .then(function(data) {
-      if (data.success && data.user) {
-        localStorage.setItem('clawcamp_session', JSON.stringify(data.user));
-        // Clean the URL
+  // Listen for auth state changes (handles magic link callback via hash fragment)
+  clawAuth.onAuthStateChange(function(event, session) {
+    if (event === 'SIGNED_IN' && session) {
+      // Clean URL hash if present
+      if (window.location.hash) {
         window.history.replaceState({}, '', '/dashboard');
-        showDashboard(data.user);
-      } else {
-        showError(data.error || 'Invalid or expired sign-in link. Please request a new one.');
       }
-    })
-    .catch(function() {
-      showError('Something went wrong. Please try signing in again.');
-    });
-  } else {
-    // Check localStorage session
-    var session = localStorage.getItem('clawcamp_session');
-    if (session) {
-      try {
-        var user = JSON.parse(session);
-        if (user && user.email) {
-          showDashboard(user);
-        } else {
-          showError('Please sign in to access your dashboard.');
-        }
-      } catch(e) {
-        showError('Please sign in to access your dashboard.');
-      }
-    } else {
+      var user = session.user;
+      var email = user.email || '';
+      var name = (user.user_metadata && user.user_metadata.name) || '';
+      showDashboard(email, name);
+    }
+  });
+
+  // Check existing session on load
+  clawAuth.getSession().then(function(result) {
+    if (result.data.session) {
+      var user = result.data.session.user;
+      var email = user.email || '';
+      var name = (user.user_metadata && user.user_metadata.name) || '';
+      showDashboard(email, name);
+    } else if (!window.location.hash) {
+      // No session and no hash fragment — not authenticated
       showError('Please sign in to access your dashboard.');
     }
-  }
+    // If there's a hash fragment, wait for onAuthStateChange to handle it
+  });
 })();
 </script>
 </body>

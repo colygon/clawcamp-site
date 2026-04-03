@@ -45,17 +45,10 @@
       <div class="footer-col">\
         <h4>Connect</h4>\
         <a href="mailto:hello@claw.camp">hello@claw.camp</a>\
-        <a href="mailto:events@clawcamp.us">events@clawcamp.us</a>\
+        <a href="mailto:events@claw.camp">events@claw.camp</a>\
         <a href="https://discord.gg/clawcamp" target="_blank">Discord</a>\
         <a href="https://linkedin.com/company/clawcamp" target="_blank">LinkedIn</a>\
         <a href="https://x.com/clawcamp" target="_blank">X</a>\
-      </div>\
-      <div class="footer-col">\
-        <h4>Next Event</h4>\
-        <p>ClawCamp Oakland</p>\
-        <p>Thursday, April 16, 2026</p>\
-        <p>STAK Space</p>\
-        <p>1920 Broadway, Oakland, CA</p>\
       </div>\
     </div>\
   </div>\
