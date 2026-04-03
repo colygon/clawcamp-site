@@ -490,19 +490,26 @@
     align-items: flex-end;
     gap: 24px;
   }
-  .map-img-layer {
+  .map-pan-container {
     position: absolute !important;
     top: 0; left: 0;
+    width: 100%;
+    z-index: 0 !important;
+    cursor: grab;
+    touch-action: pan-y;
+  }
+  .map-pan-container:active { cursor: grabbing; }
+  .map-img-layer {
     width: 100%;
     aspect-ratio: 2 / 1;
     background: url('/images/earth-night.jpg') no-repeat left top;
     background-size: 100% 100%;
     opacity: 0.35;
     pointer-events: none;
-    z-index: 0 !important;
   }
-  .map-dots-layer { z-index: 1 !important; }
+  .map-dots-layer { pointer-events: auto; }
   .map-header > * { position: relative; z-index: 2; }
+  .map-pan-container { z-index: 1 !important; }
   .map-header h1 {
     font-size: clamp(40px, 6vw, 72px);
     font-weight: 800;
@@ -522,7 +529,6 @@
     top: 0; left: 0;
     width: 100%;
     aspect-ratio: 2 / 1;
-    z-index: 2;
   }
   .map-dot-btn {
     position: absolute;
@@ -591,6 +597,7 @@
 <div id="site-nav"></div>
 
 <header class="map-header">
+  <div class="map-pan-container" id="map-pan">
   <div class="map-img-layer"></div>
   <div class="map-dots-layer">
     <button class="map-dot-btn flagship" style="left:16.0%;top:29.0%" data-city="oakland" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Oakland</span></button>
@@ -634,6 +641,7 @@
     <button class="map-dot-btn" style="left:88.8%;top:30.2%" data-city="tokyo" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Tokyo</span></button>
     <button class="map-dot-btn" style="left:79.4%;top:44.2%" data-city="ho-chi-minh-city" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Ho Chi Minh City</span></button>
     <button class="map-dot-btn" style="left:77.4%;top:39.5%" data-city="chiang-mai" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Chiang Mai</span></button>
+  </div>
   </div>
   <h1>Schedule of<br><em>Events</em></h1>
   <div class="header-meta">
@@ -2776,6 +2784,71 @@ function mapDotClick(btn) {
     document.getElementById('location-input').value = label;
   }
 }
+
+// Map drag/pan
+(function() {
+  var pan = document.getElementById('map-pan');
+  if (!pan) return;
+  var header = pan.parentElement;
+  var isDragging = false;
+  var startY = 0;
+  var currentY = 0;
+  var dragDistance = 0;
+
+  function clampY() {
+    var panH = pan.offsetHeight;
+    var headerH = header.offsetHeight;
+    var minY = -(panH - headerH);
+    var maxY = 0;
+    currentY = Math.max(minY, Math.min(maxY, currentY));
+  }
+
+  function applyTransform() {
+    pan.style.transform = 'translateY(' + currentY + 'px)';
+  }
+
+  function onStart(e) {
+    // Don't interfere with dot button clicks
+    if (e.target.closest('.map-dot-btn')) return;
+    isDragging = true;
+    dragDistance = 0;
+    startY = (e.touches ? e.touches[0].clientY : e.clientY) - currentY;
+    pan.style.transition = 'none';
+  }
+
+  function onMove(e) {
+    if (!isDragging) return;
+    var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    var newY = clientY - startY;
+    dragDistance += Math.abs(newY - currentY);
+    currentY = newY;
+    clampY();
+    applyTransform();
+  }
+
+  function onEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    pan.style.transition = 'transform 0.2s ease-out';
+    clampY();
+    applyTransform();
+  }
+
+  // Suppress click on dots after a drag
+  pan.addEventListener('click', function(e) {
+    if (dragDistance > 5) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+  }, true);
+
+  pan.addEventListener('mousedown', onStart);
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('mouseup', onEnd);
+  pan.addEventListener('touchstart', onStart, { passive: true });
+  window.addEventListener('touchmove', onMove, { passive: true });
+  window.addEventListener('touchend', onEnd);
+})();
 
 function detectLocation() {
   var btn = document.querySelector('.location-btn-detect');
