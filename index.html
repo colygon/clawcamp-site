@@ -21,12 +21,17 @@
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('/images/earth-night.jpg') no-repeat center;
-    background-size: cover;
+    width: 200%;
+    height: 100%;
+    background: url('/images/earth-night.jpg') repeat-x center;
+    background-size: 50% auto;
     opacity: 0.35;
     pointer-events: none;
+    animation: earthScroll 90s linear infinite;
+  }
+  @keyframes earthScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
   }
   .hero > * { position: relative; z-index: 1; }
   .hero-eyebrow {
