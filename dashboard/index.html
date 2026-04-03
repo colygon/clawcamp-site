@@ -201,6 +201,73 @@
     color: var(--muted);
   }
 
+  /* Email preferences */
+  .pref-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .pref-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+  }
+  .pref-info h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .pref-info p {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .pref-toggle {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+  .pref-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .pref-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--sand);
+    border-radius: 24px;
+    transition: background 0.2s;
+  }
+  .pref-slider::before {
+    content: '';
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+  }
+  .pref-toggle input:checked + .pref-slider {
+    background: var(--rust);
+  }
+  .pref-toggle input:checked + .pref-slider::before {
+    transform: translateX(20px);
+  }
+  .pref-status {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 12px;
+    min-height: 16px;
+  }
+
   .dash-footer-space { height: 64px; }
 
   /* Error state */
@@ -397,6 +464,43 @@
     </div>
   </div>
 
+  <div class="dash-section">
+    <div class="dash-section-title">Email Preferences</div>
+    <div class="pref-list" id="pref-list">
+      <div class="pref-item">
+        <div class="pref-info">
+          <h3>Event Announcements</h3>
+          <p>New camps, schedule updates, and RSVP reminders</p>
+        </div>
+        <label class="pref-toggle">
+          <input type="checkbox" id="pref-events" checked onchange="savePref()">
+          <span class="pref-slider"></span>
+        </label>
+      </div>
+      <div class="pref-item">
+        <div class="pref-info">
+          <h3>Newsletter</h3>
+          <p>Weekly digest of community highlights, new guides, and recaps</p>
+        </div>
+        <label class="pref-toggle">
+          <input type="checkbox" id="pref-newsletter" checked onchange="savePref()">
+          <span class="pref-slider"></span>
+        </label>
+      </div>
+      <div class="pref-item">
+        <div class="pref-info">
+          <h3>Sponsor Offers</h3>
+          <p>Credits, discounts, and perks from ClawCamp sponsors</p>
+        </div>
+        <label class="pref-toggle">
+          <input type="checkbox" id="pref-sponsors" checked onchange="savePref()">
+          <span class="pref-slider"></span>
+        </label>
+      </div>
+    </div>
+    <div class="pref-status" id="pref-status"></div>
+  </div>
+
   <div class="dash-footer-space"></div>
 </div>
 
@@ -432,12 +536,63 @@
     errorEl.appendChild(card);
   }
 
+  var SUPABASE_URL = 'https://mrnccntqmkxjazznejfc.supabase.co';
+  var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ybmNjbnRxbWt4amF6em5lamZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyMDA3NTksImV4cCI6MjA5MDc3Njc1OX0.T6oFTtYiFTsx6ojuogpZFXAS7tN5-dPzwvmY5V2xFGI';
+  var dashEmail = '';
+
+  function loadPrefs(email) {
+    fetch(SUPABASE_URL + '/rest/v1/contacts?email=eq.' + encodeURIComponent(email) + '&select=sub_events,sub_newsletter,sub_sponsors&limit=1', {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY }
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(rows) {
+      if (rows.length) {
+        var row = rows[0];
+        document.getElementById('pref-events').checked = row.sub_events !== false;
+        document.getElementById('pref-newsletter').checked = row.sub_newsletter !== false;
+        document.getElementById('pref-sponsors').checked = row.sub_sponsors !== false;
+      }
+    })
+    .catch(function() { /* silently fail */ });
+  }
+
+  window.savePref = function() {
+    if (!dashEmail) return;
+    var body = {
+      sub_events: document.getElementById('pref-events').checked,
+      sub_newsletter: document.getElementById('pref-newsletter').checked,
+      sub_sponsors: document.getElementById('pref-sponsors').checked
+    };
+    var statusEl = document.getElementById('pref-status');
+    statusEl.textContent = 'Saving...';
+    fetch(SUPABASE_URL + '/rest/v1/contacts?email=eq.' + encodeURIComponent(dashEmail), {
+      method: 'PATCH',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(body)
+    })
+    .then(function(r) {
+      statusEl.textContent = r.ok ? 'Preferences saved' : 'Error saving preferences';
+      setTimeout(function() { statusEl.textContent = ''; }, 2000);
+    })
+    .catch(function() {
+      statusEl.textContent = 'Error saving preferences';
+      setTimeout(function() { statusEl.textContent = ''; }, 2000);
+    });
+  };
+
   function showDashboard(email, name) {
     loadingEl.style.display = 'none';
     contentEl.style.display = '';
+    dashEmail = email;
     var firstName = name ? name.split(' ')[0] : email.split('@')[0];
     document.getElementById('dash-name').textContent = firstName;
     document.getElementById('dash-email').textContent = email;
+    loadPrefs(email);
   }
 
   // Sign out
