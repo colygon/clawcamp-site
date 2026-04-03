@@ -473,6 +473,7 @@
   <button class="filter-btn" onclick="filterEvents('community', this)">Community</button>
   <button class="filter-btn" onclick="filterEvents('online', this)">Online</button>
   <button class="filter-btn" onclick="filterEvents('clawcon', this)">ClawCon</button>
+  <button class="filter-btn" onclick="filterEvents('aicamp', this)">AI Camp</button>
 </div>
 
 <div class="location-bar" id="location-bar">
@@ -2406,7 +2407,7 @@ function applyFilters() {
     var timeMatch = (currentTimeTab === 'upcoming') ? isUpcoming : !isUpcoming;
     var city = row.dataset.city || '';
     var name = (row.querySelector('.event-name') || row.querySelector('.featured-title') || {}).textContent || '';
-    var typeMatch = (currentTypeFilter === 'all') || (currentTypeFilter === 'online' ? city === 'online' : currentTypeFilter === 'clawcon' ? name.indexOf('ClawCon') === 0 : type === currentTypeFilter);
+    var typeMatch = (currentTypeFilter === 'all') || (currentTypeFilter === 'online' ? city === 'online' : currentTypeFilter === 'clawcon' ? name.indexOf('ClawCon') === 0 : currentTypeFilter === 'aicamp' ? name.indexOf('AICamp') === 0 : type === currentTypeFilter);
     row.style.display = (timeMatch && typeMatch) ? '' : 'none';
   });
   document.querySelectorAll('.month-section').forEach(function(section) {
