@@ -121,5 +121,24 @@
       });
     }
 
+    // Submit an Event form
+    var eventForm = document.getElementById('event-form');
+    if (eventForm) {
+      eventForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        submitToSupabase('event_submissions', {
+          name: eventForm.querySelector('[name="name"]').value,
+          email: eventForm.querySelector('[name="email"]').value,
+          phone: eventForm.querySelector('[name="phone"]').value,
+          city: eventForm.querySelector('[name="city"]').value,
+          format: eventForm.querySelector('[name="format"]').value,
+          proposed_date: eventForm.querySelector('[name="proposed_date"]').value || null,
+          venue: eventForm.querySelector('[name="venue"]').value,
+          event_link: eventForm.querySelector('[name="event_link"]').value,
+          event_details: eventForm.querySelector('[name="event_details"]').value
+        }, eventForm);
+      });
+    }
+
   });
 })();

@@ -279,6 +279,90 @@
   .month-section:nth-child(2) { animation: fadeUp 0.4s 0.15s ease both; }
   .month-section:nth-child(3) { animation: fadeUp 0.4s 0.2s ease both; }
 
+  /* Submit Event Form */
+  .submit-event-section {
+    padding: 48px 48px 0;
+    max-width: 800px;
+  }
+  .submit-event-section h2 {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .submit-event-section h2 em { font-style: normal; color: var(--rust); }
+  .submit-event-section > p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+  .submit-event-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .form-group label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 15px;
+    padding: 12px 16px;
+    border: 1px solid var(--sand);
+    border-radius: 6px;
+    background: white;
+    color: var(--ink);
+    transition: border-color 0.15s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--rust);
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--rust);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 24px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+    align-self: flex-start;
+  }
+  .form-submit:hover { background: #a8420a; }
+  .form-note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: -8px;
+  }
+
   /* Responsive */
   @media (max-width: 768px) {
     .time-tabs { padding: 0 20px; }
@@ -287,6 +371,8 @@
     .featured-right { padding: 24px 32px; flex-direction: row; align-items: center; }
     .event-row { grid-template-columns: 56px 1fr; }
     .event-action { display: none; }
+    .submit-event-section { padding-left: 20px; padding-right: 20px; }
+    .form-row { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -571,6 +657,69 @@
 
 </div>
 
+<div class="submit-event-section" id="submit-event">
+  <h2>Submit an <em>Event</em></h2>
+  <p>Running a ClawCamp event? Submit it here and we'll add it to the calendar.</p>
+
+  <form class="submit-event-form" id="event-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="event-name">Full Name *</label>
+        <input type="text" id="event-name" name="name" required placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <label for="event-email">Email *</label>
+        <input type="email" id="event-email" name="email" required placeholder="you@example.com">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="event-phone">Phone Number *</label>
+        <input type="tel" id="event-phone" name="phone" required placeholder="+1 (555) 000-0000">
+      </div>
+      <div class="form-group">
+        <label for="event-city">City *</label>
+        <input type="text" id="event-city" name="city" required placeholder="e.g. Oakland, CA">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="event-format">Event Format</label>
+        <select id="event-format" name="format">
+          <option value="">Select a format</option>
+          <option value="workshop">OpenClaw Workshop</option>
+          <option value="deep-dive">Deep Dive Workshop</option>
+          <option value="unconference">Unconference</option>
+          <option value="demo-day">Demo Day</option>
+          <option value="show-and-tell">Show &amp; Tell</option>
+          <option value="startup-showcase">Startup Showcase</option>
+          <option value="online">Online Event</option>
+          <option value="other">Other / Multiple</option>
+        </select>
+        <p class="form-note" style="margin-top:4px;">Not sure? <a href="/formats" style="color:var(--rust);text-decoration:underline;">Explore event formats &rarr;</a></p>
+      </div>
+      <div class="form-group">
+        <label for="event-date">Proposed Date</label>
+        <input type="date" id="event-date" name="proposed_date">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="event-venue">Venue</label>
+      <input type="text" id="event-venue" name="venue" placeholder="Venue name and address (if known)">
+    </div>
+    <div class="form-group">
+      <label for="event-luma">Event Link (Luma, Eventbrite, etc.)</label>
+      <input type="url" id="event-luma" name="event_link" placeholder="https://luma.com/your-event">
+    </div>
+    <div class="form-group">
+      <label for="event-details">Event Details</label>
+      <textarea id="event-details" name="event_details" placeholder="Tell us about your event &mdash; expected size, target audience, any co-organizers or sponsors lined up"></textarea>
+    </div>
+    <button type="submit" class="form-submit">Submit Event &rarr;</button>
+    <p class="form-note">We'll review your submission and add it to the calendar within 2 business days.</p>
+  </form>
+</div>
+
 <div class="cta-band">
   <div>
     <h3>Don't see your city?</h3>
@@ -578,13 +727,14 @@
   </div>
   <div class="cta-band-actions">
     <a href="/host" class="btn-dark">Host a Camp &rarr;</a>
-    <a href="mailto:hello@clawcamp.ai" class="btn-outline">Get in touch</a>
+    <a href="#submit-event" class="btn-outline">Submit an Event</a>
   </div>
 </div>
 
 <div id="site-footer"></div>
 
 <script src="/js/nav.js"></script>
+<script src="/js/supabase.js"></script>
 <script>
 var currentTimeTab = 'upcoming';
 var currentTypeFilter = 'all';

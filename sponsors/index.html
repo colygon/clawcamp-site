@@ -223,18 +223,18 @@
     margin-bottom: 24px;
   }
   .sponsor-logo-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 16px;
   }
   .sponsor-logo-card {
     border: 1px solid var(--sand);
-    border-radius: 6px;
-    padding: 16px 24px;
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink);
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
     text-decoration: none;
     transition: all 0.15s;
   }
@@ -242,6 +242,15 @@
     background: var(--cream);
     border-color: var(--ink);
   }
+  .sponsor-logo-card img {
+    max-height: 32px;
+    max-width: 120px;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.75;
+    transition: opacity 0.15s;
+  }
+  .sponsor-logo-card:hover img { opacity: 1; }
 
   /* Community Fund */
   .fund-section {
@@ -382,6 +391,24 @@
 <body>
 
 <div id="site-nav"></div>
+
+<div class="current-section">
+  <h2>Current Sponsors &amp; Partners</h2>
+  <div class="sponsor-logo-grid">
+    <a class="sponsor-logo-card" href="https://nebius.com" target="_blank"><img src="/images/sponsors/nebius-logo.svg" alt="Nebius"></a>
+    <a class="sponsor-logo-card" href="https://you.com" target="_blank"><img src="/images/sponsors/youcom-logo.png" alt="You.com"></a>
+    <a class="sponsor-logo-card" href="https://apify.com" target="_blank"><img src="/images/sponsors/apify-logo.png" alt="Apify"></a>
+    <a class="sponsor-logo-card" href="https://theagentic.com" target="_blank"><img src="/images/sponsors/theagentic-logo.png" alt="The Agentic"></a>
+    <a class="sponsor-logo-card" href="#" target="_blank"><img src="/images/sponsors/blitzscaling-logo.png" alt="Blitzscaling Ventures"></a>
+    <a class="sponsor-logo-card" href="https://fetch.ai" target="_blank"><img src="/images/sponsors/fetchai-logo.svg" alt="Fetch.ai"></a>
+    <a class="sponsor-logo-card" href="#" target="_blank"><img src="/images/sponsors/asi-one-logo.png" alt="ASI:One"></a>
+    <a class="sponsor-logo-card" href="#" target="_blank"><img src="/images/sponsors/stakventures-logo.svg" alt="STAK Ventures"></a>
+    <a class="sponsor-logo-card" href="https://aiify.io" target="_blank"><img src="/images/sponsors/aiify-logo.png" alt="Aiify.io"></a>
+    <a class="sponsor-logo-card" href="#" target="_blank"><img src="/images/sponsors/hackersquad-logo.png" alt="HackerSquad"></a>
+    <a class="sponsor-logo-card" href="https://donely.ai" target="_blank"><img src="/images/sponsors/donely-logo.png" alt="Donely.ai"></a>
+    <a class="sponsor-logo-card" href="#" target="_blank"><img src="/images/sponsors/pitchfreaks-logo.png" alt="PitchFreaks"></a>
+  </div>
+</div>
 
 <header class="page-header">
   <h1>Sponsor<br><em>ClawCamp</em></h1>
@@ -532,25 +559,6 @@
   <p style="margin-top:12px;">We reserve the right to decline activities that shift the vibe from camp to conference booth.</p>
 </div>
 
-<div class="current-section">
-  <h2>Current Sponsors &amp; Partners</h2>
-  <div class="sponsor-logo-grid">
-    <a class="sponsor-logo-card" href="https://you.com" target="_blank">you.com</a>
-    <a class="sponsor-logo-card" href="https://apify.com" target="_blank">Apify</a>
-    <span class="sponsor-logo-card">The Agentic</span>
-    <span class="sponsor-logo-card">Blitzscaling Ventures</span>
-    <a class="sponsor-logo-card" href="https://fetch.ai" target="_blank">Fetch.ai</a>
-    <span class="sponsor-logo-card">ASI:One</span>
-    <span class="sponsor-logo-card">STAK Ventures</span>
-    <a class="sponsor-logo-card" href="https://aiify.io" target="_blank">Aiify.io</a>
-    <span class="sponsor-logo-card">HackerSquad</span>
-    <a class="sponsor-logo-card" href="https://donely.ai" target="_blank">Donely.ai</a>
-    <span class="sponsor-logo-card">PitchFreaks</span>
-    <span class="sponsor-logo-card">MoltPod</span>
-    <span class="sponsor-logo-card">Efficient Frontier Labs</span>
-    <span class="sponsor-logo-card">Constructive</span>
-  </div>
-</div>
 
 <div class="fund-section">
   <h2>ClawCamp <em>Community Fund</em></h2>

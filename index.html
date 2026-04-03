@@ -39,6 +39,38 @@
     margin-bottom: 36px;
   }
   .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-logos {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(245,242,236,0.1);
+  }
+  .hero-logos-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(245,242,236,0.35);
+    margin-bottom: 20px;
+  }
+  .hero-logos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px 32px;
+    align-items: center;
+  }
+  .hero-logos-grid img {
+    height: 28px;
+    width: auto;
+    opacity: 0.55;
+    filter: brightness(0) invert(1);
+    transition: opacity 0.2s;
+  }
+  .hero-logos-grid img:hover { opacity: 0.9; }
+  .hero-logos-grid img.logo-no-invert {
+    filter: none;
+    opacity: 0.7;
+  }
+  .hero-logos-grid img.logo-no-invert:hover { opacity: 1; }
 
   /* Marquee */
   .marquee {
@@ -275,6 +307,23 @@
   <div class="hero-actions">
     <a href="/events" class="btn-rust">Find a Camp Near You &rarr;</a>
     <a href="/host" class="btn-outline" style="color:var(--paper);border-color:rgba(245,242,236,0.3);">Host Your Own Camp</a>
+  </div>
+  <div class="hero-logos">
+    <p class="hero-logos-label">Supported by</p>
+    <div class="hero-logos-grid">
+      <img src="/images/sponsors/nebius-logo.svg" alt="Nebius" class="logo-no-invert">
+      <img src="/images/sponsors/youcom-logo.png" alt="You.com">
+      <img src="/images/sponsors/apify-logo.png" alt="Apify">
+      <img src="/images/sponsors/theagentic-logo.png" alt="The Agentic">
+      <img src="/images/sponsors/blitzscaling-logo.png" alt="Blitzscaling Ventures">
+      <img src="/images/sponsors/fetchai-logo.svg" alt="Fetch.ai">
+      <img src="/images/sponsors/asi-one-logo.png" alt="ASI:One">
+      <img src="/images/sponsors/stakventures-logo.svg" alt="STAK Ventures">
+      <img src="/images/sponsors/aiify-logo.png" alt="Aiify.io">
+      <img src="/images/sponsors/hackersquad-logo.png" alt="HackerSquad">
+      <img src="/images/sponsors/donely-logo.png" alt="Donely.ai">
+      <img src="/images/sponsors/pitchfreaks-logo.png" alt="PitchFreaks">
+    </div>
   </div>
 </section>
 
