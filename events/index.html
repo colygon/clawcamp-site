@@ -472,6 +472,7 @@
   <button class="filter-btn" onclick="filterEvents('workshop', this)">Workshops</button>
   <button class="filter-btn" onclick="filterEvents('community', this)">Community</button>
   <button class="filter-btn" onclick="filterEvents('online', this)">Online</button>
+  <button class="filter-btn" onclick="filterEvents('clawcon', this)">ClawCon</button>
 </div>
 
 <div class="location-bar" id="location-bar">
@@ -2322,6 +2323,14 @@ var cityCoords = {
   'buenos-aires': [-34.6037, -58.3816],
   'paris': [48.8566, 2.3522],
   'stockholm': [59.3293, 18.0686],
+  'melbourne': [-37.8136, 144.9631],
+  'dallas': [32.7767, -96.7970],
+  'atlanta': [33.7490, -84.3880],
+  'houston': [29.7604, -95.3698],
+  'portland': [45.5152, -122.6784],
+  'san-diego': [32.7157, -117.1611],
+  'auckland': [-36.8485, 174.7633],
+  'waterloo': [43.4643, -80.5204],
   'online': null
 };
 
@@ -2345,7 +2354,9 @@ var cityNames = {
   'philly': 'philadelphia', 'seoul': 'seoul', 'mexico city': 'mexico-city',
   'cdmx': 'mexico-city', 'bogota': 'bogota', 'porto alegre': 'porto-alegre',
   'shanghai': 'shanghai', 'buenos aires': 'buenos-aires', 'paris': 'paris',
-  'stockholm': 'stockholm'
+  'stockholm': 'stockholm', 'melbourne': 'melbourne', 'dallas': 'dallas',
+  'atlanta': 'atlanta', 'houston': 'houston', 'portland': 'portland',
+  'san diego': 'san-diego', 'auckland': 'auckland'
 };
 
 function haversine(lat1, lon1, lat2, lon2) {
@@ -2394,7 +2405,8 @@ function applyFilters() {
     var isUpcoming = date >= today;
     var timeMatch = (currentTimeTab === 'upcoming') ? isUpcoming : !isUpcoming;
     var city = row.dataset.city || '';
-    var typeMatch = (currentTypeFilter === 'all') || (currentTypeFilter === 'online' ? city === 'online' : type === currentTypeFilter);
+    var name = (row.querySelector('.event-name') || row.querySelector('.featured-title') || {}).textContent || '';
+    var typeMatch = (currentTypeFilter === 'all') || (currentTypeFilter === 'online' ? city === 'online' : currentTypeFilter === 'clawcon' ? name.indexOf('ClawCon') === 0 : type === currentTypeFilter);
     row.style.display = (timeMatch && typeMatch) ? '' : 'none';
   });
   document.querySelectorAll('.month-section').forEach(function(section) {
