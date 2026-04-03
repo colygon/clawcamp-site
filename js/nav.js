@@ -3,7 +3,7 @@
 <nav>\
   <a href="/" class="logo">Claw<span>Camp</span></a>\
   <div class="nav-links">\
-    <a href="/events" data-nav>Events</a>\
+    <a href="/events" data-nav>Schedule</a>\
     <a href="/speakers" data-nav>Speakers</a>\
     <a href="/sponsors" data-nav>Sponsors</a>\
     <a href="/startups" data-nav>Startups</a>\
@@ -32,7 +32,7 @@
     <div class="footer-links">\
       <div class="footer-col">\
         <h4>Pages</h4>\
-        <a href="/events">Events</a>\
+        <a href="/events">Schedule</a>\
         <a href="/speakers">Speakers</a>\
         <a href="/sponsors">Sponsors</a>\
         <a href="/startups">Startups</a>\
