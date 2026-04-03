@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verify Email — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .verify-wrap {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 24px;
+  }
+  .verify-card {
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+  }
+  .verify-icon {
+    font-size: 56px;
+    margin-bottom: 24px;
+  }
+  .verify-title {
+    font-size: clamp(28px, 5vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .verify-title em {
+    font-style: normal;
+    color: var(--rust);
+  }
+  .verify-message {
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+  .verify-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .verify-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--rust);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 28px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background 0.15s, transform 0.15s;
+  }
+  .verify-btn:hover {
+    background: #a0522d;
+    transform: translateY(-1px);
+  }
+  .verify-secondary {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+  .verify-secondary a {
+    color: var(--rust);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .verify-secondary a:hover {
+    text-decoration: underline;
+  }
+  .verify-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--sand);
+    border-top-color: var(--rust);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 24px;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  .verify-error {
+    color: #b22;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .verify-wrap { padding: 40px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<div class="verify-wrap">
+  <div class="verify-card" id="verify-card">
+    <div class="verify-spinner" id="verify-spinner"></div>
+    <div class="verify-title" id="verify-title">Verifying your email...</div>
+    <p class="verify-message" id="verify-message">Hang tight, this will only take a moment.</p>
+    <div class="verify-actions" id="verify-actions" style="display:none;"></div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+<script>
+(function () {
+  var SUPABASE_URL = 'https://mrnccntqmkxjazznejfc.supabase.co';
+
+  var spinner = document.getElementById('verify-spinner');
+  var titleEl = document.getElementById('verify-title');
+  var messageEl = document.getElementById('verify-message');
+  var actionsEl = document.getElementById('verify-actions');
+  var iconEl = document.createElement('div');
+  iconEl.className = 'verify-icon';
+
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get('token');
+
+  if (!token) {
+    showError('No verification token found. Please check the link in your email.');
+    return;
+  }
+
+  fetch(SUPABASE_URL + '/functions/v1/verify-email', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: token })
+  })
+  .then(function (res) { return res.json(); })
+  .then(function (data) {
+    if (data.success) {
+      showSuccess(data.email);
+    } else {
+      showError(data.error || 'Verification failed. The link may have expired or already been used.');
+    }
+  })
+  .catch(function () {
+    showError('Something went wrong. Please try again or contact hello@claw.camp.');
+  });
+
+  function showSuccess(email) {
+    spinner.style.display = 'none';
+    iconEl.textContent = '\u2705';
+    spinner.parentNode.insertBefore(iconEl, spinner);
+    titleEl.textContent = '';
+    var titleText = document.createTextNode('Email ');
+    var titleEm = document.createElement('em');
+    titleEm.textContent = 'Verified';
+    titleEl.appendChild(titleText);
+    titleEl.appendChild(titleEm);
+    messageEl.textContent = 'Your email' + (email ? ' (' + email + ')' : '') + ' has been verified. You\'re all set!';
+
+    var btn = document.createElement('a');
+    btn.href = '/events';
+    btn.className = 'verify-btn';
+    btn.textContent = 'Browse Events';
+    actionsEl.appendChild(btn);
+
+    var secondary = document.createElement('p');
+    secondary.className = 'verify-secondary';
+    secondary.textContent = 'or ';
+    var discordLink = document.createElement('a');
+    discordLink.href = 'https://discord.gg/haAtnsyE3W';
+    discordLink.target = '_blank';
+    discordLink.textContent = 'Join us on Discord';
+    secondary.appendChild(discordLink);
+    actionsEl.appendChild(secondary);
+
+    actionsEl.style.display = '';
+  }
+
+  function showError(msg) {
+    spinner.style.display = 'none';
+    iconEl.textContent = '\u26A0\uFE0F';
+    spinner.parentNode.insertBefore(iconEl, spinner);
+    titleEl.textContent = 'Verification Issue';
+    messageEl.textContent = msg;
+    messageEl.classList.add('verify-error');
+
+    var btn = document.createElement('a');
+    btn.href = '/';
+    btn.className = 'verify-btn';
+    btn.textContent = 'Go to Homepage';
+    actionsEl.appendChild(btn);
+
+    var secondary = document.createElement('p');
+    secondary.className = 'verify-secondary';
+    secondary.textContent = 'Need help? ';
+    var helpLink = document.createElement('a');
+    helpLink.href = 'mailto:hello@claw.camp';
+    helpLink.textContent = 'hello@claw.camp';
+    secondary.appendChild(helpLink);
+    actionsEl.appendChild(secondary);
+
+    actionsEl.style.display = '';
+  }
+})();
+</script>
+</body>
+</html>

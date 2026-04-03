@@ -17,7 +17,7 @@
         <a href="/startups" data-nav>Startup Program</a>\
       </div>\
     </div>\
-    <a href="/get-involved" class="nav-cta">Get Involved &rarr;</a>\
+    <a href="/get-involved" class="nav-cta">Sign Up / Sign In &rarr;</a>\
   </div>\
   <button class="nav-hamburger" aria-label="Menu">&#9776;</button>\
 </nav>';
