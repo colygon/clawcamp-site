@@ -475,13 +475,160 @@
     white-space: nowrap;
     letter-spacing: 0.02em;
   }
+
+  /* Map header */
+  .map-header {
+    position: relative;
+    background: var(--ink);
+    overflow: hidden;
+    padding: 64px 48px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    border-bottom: 1px solid var(--sand);
+  }
+  .map-header::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/images/earth-night.jpg') no-repeat center center;
+    background-size: cover;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .map-header > * { position: relative; z-index: 1; }
+  .map-header h1 {
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    color: var(--paper);
+  }
+  .map-header h1 em {
+    font-style: normal;
+    color: var(--rust);
+  }
+  .map-header .header-meta p {
+    color: rgba(245,242,236,0.5);
+  }
+  .map-dots-layer {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 2;
+  }
+  .map-dot-btn {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--rust);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .map-dot-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(196,84,10,0.4);
+    animation: mapDotPulse 3s ease-in-out infinite;
+  }
+  .map-dot-btn:hover {
+    transform: translate(-50%, -50%) scale(1.8);
+    box-shadow: 0 0 12px 3px rgba(196,84,10,0.6);
+  }
+  .map-dot-btn:hover::after { animation: none; opacity: 0; }
+  .map-dot-btn.flagship {
+    width: 12px;
+    height: 12px;
+    box-shadow: 0 0 8px 2px rgba(196,84,10,0.5);
+  }
+  .map-dot-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+    border: 1px solid rgba(196,84,10,0.3);
+  }
+  .map-dot-btn:hover .map-dot-tooltip { opacity: 1; }
+  @keyframes mapDotPulse {
+    0%, 100% { transform: translate(-50%,-50%) scale(1); opacity: 0.5; }
+    50% { transform: translate(-50%,-50%) scale(1.6); opacity: 0; }
+  }
+  @media (max-width: 768px) {
+    .map-header { padding: 40px 20px 32px; flex-direction: column; align-items: flex-start; }
+    .map-header .header-meta { text-align: left; }
+    .map-dots-layer { display: none; }
+  }
 </style>
 </head>
 <body>
 
 <div id="site-nav"></div>
 
-<header class="page-header">
+<header class="map-header">
+  <div class="map-dots-layer">
+    <button class="map-dot-btn flagship" style="left:16.0%;top:29.0%" data-city="oakland" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Oakland</span></button>
+    <button class="map-dot-btn" style="left:17.2%;top:31.1%" data-city="los-angeles" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Los Angeles</span></button>
+    <button class="map-dot-btn" style="left:25.6%;top:26.7%" data-city="chicago" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Chicago</span></button>
+    <button class="map-dot-btn" style="left:26.8%;top:26.5%" data-city="ann-arbor" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Ann Arbor</span></button>
+    <button class="map-dot-btn" style="left:30.2%;top:26.4%" data-city="boston" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Boston</span></button>
+    <button class="map-dot-btn" style="left:29.2%;top:27.8%" data-city="philadelphia" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Philadelphia</span></button>
+    <button class="map-dot-btn" style="left:28.0%;top:25.7%" data-city="toronto" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Toronto</span></button>
+    <button class="map-dot-btn" style="left:22.4%;top:39.2%" data-city="mexico-city" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Mexico City</span></button>
+    <button class="map-dot-btn" style="left:21.4%;top:38.5%" data-city="guadalajara" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Guadalajara</span></button>
+    <button class="map-dot-btn" style="left:29.4%;top:47.4%" data-city="bogota" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Bogota</span></button>
+    <button class="map-dot-btn" style="left:37.2%;top:63.1%" data-city="sao-paulo" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Sao Paulo</span></button>
+    <button class="map-dot-btn" style="left:38.0%;top:62.7%" data-city="rio-de-janeiro" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Rio de Janeiro</span></button>
+    <button class="map-dot-btn" style="left:33.8%;top:69.2%" data-city="buenos-aires" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Buenos Aires</span></button>
+    <button class="map-dot-btn" style="left:50.0%;top:21.4%" data-city="london" onclick="mapDotClick(this)"><span class="map-dot-tooltip">London</span></button>
+    <button class="map-dot-btn" style="left:50.6%;top:22.8%" data-city="paris" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Paris</span></button>
+    <button class="map-dot-btn" style="left:53.8%;top:20.8%" data-city="berlin" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Berlin</span></button>
+    <button class="map-dot-btn" style="left:53.4%;top:19.1%" data-city="copenhagen" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Copenhagen</span></button>
+    <button class="map-dot-btn" style="left:55.0%;top:17.1%" data-city="stockholm" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Stockholm</span></button>
+    <button class="map-dot-btn" style="left:49.8%;top:28.1%" data-city="valencia" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Valencia</span></button>
+    <button class="map-dot-btn" style="left:59.2%;top:27.8%" data-city="ankara" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Ankara</span></button>
+    <button class="map-dot-btn" style="left:58.2%;top:27.2%" data-city="istanbul" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Istanbul</span></button>
+    <button class="map-dot-btn" style="left:71.6%;top:42.8%" data-city="bangalore" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Bangalore</span></button>
+    <button class="map-dot-btn" style="left:78.8%;top:49.3%" data-city="singapore" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Singapore</span></button>
+    <button class="map-dot-btn" style="left:83.8%;top:32.7%" data-city="shanghai" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Shanghai</span></button>
+    <button class="map-dot-btn" style="left:85.2%;top:29.1%" data-city="seoul" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Seoul</span></button>
+    <button class="map-dot-btn" style="left:21.6%;top:33.3%" data-city="austin" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Austin</span></button>
+    <button class="map-dot-btn" style="left:15.6%;top:26.4%" data-city="seattle" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Seattle</span></button>
+    <button class="map-dot-btn" style="left:30.0%;top:27.5%" data-city="new-york" onclick="mapDotClick(this)"><span class="map-dot-tooltip">New York</span></button>
+    <button class="map-dot-btn" style="left:19.2%;top:28.9%" data-city="boulder" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Boulder</span></button>
+    <button class="map-dot-btn" style="left:27.0%;top:30.3%" data-city="raleigh" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Raleigh</span></button>
+    <button class="map-dot-btn" style="left:23.2%;top:30.0%" data-city="bentonville" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Bentonville</span></button>
+    <button class="map-dot-btn" style="left:15.2%;top:23.9%" data-city="vancouver" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Vancouver</span></button>
+    <button class="map-dot-btn" style="left:27.8%;top:26.2%" data-city="kitchener" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Kitchener</span></button>
+    <button class="map-dot-btn" style="left:51.4%;top:20.6%" data-city="amsterdam" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Amsterdam</span></button>
+    <button class="map-dot-btn" style="left:52.8%;top:16.7%" data-city="oslo" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Oslo</span></button>
+    <button class="map-dot-btn" style="left:51.0%;top:21.6%" data-city="ghent" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Ghent</span></button>
+    <button class="map-dot-btn" style="left:50.4%;top:25.8%" data-city="toulouse" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Toulouse</span></button>
+    <button class="map-dot-btn" style="left:57.2%;top:25.3%" data-city="bucharest" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Bucharest</span></button>
+    <button class="map-dot-btn" style="left:88.8%;top:30.2%" data-city="tokyo" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Tokyo</span></button>
+    <button class="map-dot-btn" style="left:79.4%;top:44.2%" data-city="ho-chi-minh-city" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Ho Chi Minh City</span></button>
+    <button class="map-dot-btn" style="left:77.4%;top:39.5%" data-city="chiang-mai" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Chiang Mai</span></button>
+  </div>
   <h1>Schedule of<br><em>Events</em></h1>
   <div class="header-meta">
     <p>Spring 2026 Season</p>
@@ -2604,6 +2751,16 @@ function setUserLocation(lat, lon, label) {
   input.value = label || (lat.toFixed(2) + ', ' + lon.toFixed(2));
   document.getElementById('location-clear').classList.add('visible');
   sortEventsByDistance();
+}
+
+function mapDotClick(btn) {
+  var cityKey = btn.dataset.city;
+  var coords = cityCoords[cityKey];
+  if (coords) {
+    var label = btn.querySelector('.map-dot-tooltip').textContent || cityKey;
+    setUserLocation(coords[0], coords[1], label);
+    document.getElementById('location-input').value = label;
+  }
 }
 
 function detectLocation() {
