@@ -163,24 +163,21 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: none;
-    border: 1.5px solid var(--sand);
-    border-radius: 8px;
-    padding: 14px 24px;
+    background: var(--rust);
+    color: white;
+    border: none;
+    border-radius: 24px;
+    padding: 12px 24px;
+    margin-top: 16px;
     font-family: 'Bricolage Grotesque', sans-serif;
     font-size: 15px;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .signin-toggle em {
-    font-style: normal;
-    color: var(--rust);
     font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.15s;
   }
   .signin-toggle:hover {
-    border-color: var(--rust);
-    color: var(--ink);
+    background: #a8420a;
+    transform: translateY(-1px);
   }
   .signin-card {
     border: 2px solid var(--rust);
@@ -288,14 +285,14 @@
     <p>Returning members sign in</p>
     <p>New? Register below</p>
     <p>Access perks &amp; resources</p>
+    <button class="signin-toggle" id="signin-toggle" onclick="document.getElementById('signin-section').style.display='';document.getElementById('signin-email').focus();this.style.display='none';">
+      Sign In &rarr;
+    </button>
   </div>
 </header>
 
-<div class="signin-section">
-  <button class="signin-toggle" id="signin-toggle" onclick="document.getElementById('signin-card').style.display='';this.style.display='none';">
-    &#128274; Already registered? <em>Sign In</em>
-  </button>
-  <div class="signin-card" id="signin-card" style="display:none;">
+<div class="signin-section" id="signin-section" style="display:none;">
+  <div class="signin-card" id="signin-card">
     <div class="signin-icon">&#128274;</div>
     <h2>Sign in with <em>Email</em></h2>
     <p>Enter the email you registered with and we'll send you a magic link. No password needed.</p>
