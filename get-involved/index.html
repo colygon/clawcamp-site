@@ -177,6 +177,11 @@
 <div class="chooser">
   <p>There are many ways to be part of ClawCamp. Choose what fits you best and we'll take it from there.</p>
   <div class="chooser-grid">
+    <button class="chooser-btn" onclick="showForm('camper')">
+      <span class="chooser-icon">&#9978;</span>
+      <span class="chooser-label">Camper Registration</span>
+      <span class="chooser-desc">Sign up and find events</span>
+    </button>
     <button class="chooser-btn" onclick="showForm('host')">
       <span class="chooser-icon">&#127969;</span>
       <span class="chooser-label">Host a Camp</span>
@@ -211,6 +216,105 @@
 </div>
 
 <div class="form-area">
+
+  <!-- Camper Registration -->
+  <div class="form-panel" id="panel-camper">
+    <h2>Camper <em>Registration</em></h2>
+    <p>Join the ClawCamp community. Tell us a bit about yourself and what you're interested in, and we'll keep you posted on upcoming events.</p>
+    <form class="involve-form" id="camper-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="camper-name">Full Name *</label>
+          <input type="text" id="camper-name" name="name" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label for="camper-email">Email *</label>
+          <input type="email" id="camper-email" name="email" required placeholder="you@example.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="camper-phone">Phone Number</label>
+          <input type="tel" id="camper-phone" name="phone" placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="form-group">
+          <label for="camper-city">City *</label>
+          <input type="text" id="camper-city" name="city" required placeholder="e.g. Oakland, CA">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="camper-role">What Best Describes You? *</label>
+          <select id="camper-role" name="role" required>
+            <option value="">Select one</option>
+            <option value="developer">Developer / Engineer</option>
+            <option value="founder">Founder / CEO</option>
+            <option value="product">Product Manager</option>
+            <option value="designer">Designer</option>
+            <option value="student">Student</option>
+            <option value="career-changer">Career Changer</option>
+            <option value="investor">Investor / VC</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="camper-experience">AI Experience Level *</label>
+          <select id="camper-experience" name="experience_level" required>
+            <option value="">Select one</option>
+            <option value="curious">Curious &mdash; just getting started</option>
+            <option value="beginner">Beginner &mdash; built a few things</option>
+            <option value="intermediate">Intermediate &mdash; building regularly</option>
+            <option value="advanced">Advanced &mdash; shipping AI products</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>What Are You Interested In? (check all that apply)</label>
+        <div style="display:flex;flex-wrap:wrap;gap:12px 24px;padding-top:4px;">
+          <label style="font-size:14px;color:var(--ink);text-transform:none;letter-spacing:0;display:flex;align-items:center;gap:6px;cursor:pointer;">
+            <input type="checkbox" name="interest_workshops" value="yes"> Workshops
+          </label>
+          <label style="font-size:14px;color:var(--ink);text-transform:none;letter-spacing:0;display:flex;align-items:center;gap:6px;cursor:pointer;">
+            <input type="checkbox" name="interest_demo_days" value="yes"> Demo Days
+          </label>
+          <label style="font-size:14px;color:var(--ink);text-transform:none;letter-spacing:0;display:flex;align-items:center;gap:6px;cursor:pointer;">
+            <input type="checkbox" name="interest_hackathons" value="yes"> Hackathons
+          </label>
+          <label style="font-size:14px;color:var(--ink);text-transform:none;letter-spacing:0;display:flex;align-items:center;gap:6px;cursor:pointer;">
+            <input type="checkbox" name="interest_unconferences" value="yes"> Unconferences
+          </label>
+          <label style="font-size:14px;color:var(--ink);text-transform:none;letter-spacing:0;display:flex;align-items:center;gap:6px;cursor:pointer;">
+            <input type="checkbox" name="interest_networking" value="yes"> Networking
+          </label>
+          <label style="font-size:14px;color:var(--ink);text-transform:none;letter-spacing:0;display:flex;align-items:center;gap:6px;cursor:pointer;">
+            <input type="checkbox" name="interest_showcases" value="yes"> Startup Showcases
+          </label>
+          <label style="font-size:14px;color:var(--ink);text-transform:none;letter-spacing:0;display:flex;align-items:center;gap:6px;cursor:pointer;">
+            <input type="checkbox" name="interest_online" value="yes"> Online Events
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="camper-events">Which Events Are You Interested In?</label>
+        <select id="camper-events" name="preferred_event">
+          <option value="">Select an event</option>
+          <option value="oakland">ClawCamp Oakland (Apr 16)</option>
+          <option value="any-in-person">Any in-person event near me</option>
+          <option value="online">Online events</option>
+          <option value="all">All of the above</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="camper-about">Anything Else?</label>
+        <textarea id="camper-about" name="about" placeholder="What are you working on? What do you hope to get out of ClawCamp?"></textarea>
+      </div>
+      <label style="font-size:14px;color:var(--ink);text-transform:none;letter-spacing:0;display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;">
+        <input type="checkbox" name="email_opt_in" value="yes" checked> Yes, send me updates about upcoming ClawCamp events and community news
+      </label>
+      <button type="submit" class="form-submit">Register &rarr;</button>
+      <p class="form-note">Welcome to the community! We'll be in touch with upcoming events in your area.</p>
+    </form>
+  </div>
 
   <!-- Host a Camp -->
   <div class="form-panel" id="panel-host">

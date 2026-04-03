@@ -140,6 +140,30 @@
       });
     }
 
+    // Camper Registration form
+    var camperForm = document.getElementById('camper-form');
+    if (camperForm) {
+      camperForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var interests = [];
+        camperForm.querySelectorAll('[name^="interest_"]:checked').forEach(function (cb) {
+          interests.push(cb.name.replace('interest_', ''));
+        });
+        submitToSupabase('camper_registrations', {
+          name: camperForm.querySelector('[name="name"]').value,
+          email: camperForm.querySelector('[name="email"]').value,
+          phone: camperForm.querySelector('[name="phone"]').value,
+          city: camperForm.querySelector('[name="city"]').value,
+          role: camperForm.querySelector('[name="role"]').value,
+          experience_level: camperForm.querySelector('[name="experience_level"]').value,
+          interests: interests.join(', '),
+          preferred_event: camperForm.querySelector('[name="preferred_event"]').value,
+          about: camperForm.querySelector('[name="about"]').value,
+          email_opt_in: camperForm.querySelector('[name="email_opt_in"]').checked
+        }, camperForm);
+      });
+    }
+
     // Startup Showcase form
     var showcaseForm = document.getElementById('showcase-form');
     if (showcaseForm) {
