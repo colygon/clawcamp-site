@@ -21,18 +21,11 @@
     top: 0; left: 0;
     width: 200%;
     height: 100%;
-    pointer-events: none;
-    animation: earthScroll 90s linear infinite;
-  }
-  .earth-bg::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
     background: url('/images/earth-night.jpg') repeat-x center;
     background-size: 50% auto;
     opacity: 0.35;
+    pointer-events: none;
+    animation: earthScroll 90s linear infinite;
   }
   @keyframes earthScroll {
     from { transform: translateX(0); }
@@ -44,7 +37,7 @@
     height: 6px;
     border-radius: 50%;
     background: #C4540A;
-    opacity: 0.9;
+    opacity: 1;
   }
   .map-dot::after {
     content: '';
