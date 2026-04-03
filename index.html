@@ -22,17 +22,16 @@
     top: 0; left: 0;
     width: 200%;
     height: 100%;
-    background: url('/images/earth-night.jpg') repeat-x center;
-    background-size: 50% auto;
+    background: url('/images/earth-night.jpg') repeat-x center top;
+    background-size: 50% 100%;
     opacity: 0.35;
     pointer-events: none;
     animation: earthScroll 90s linear infinite;
   }
   .earth-dots {
     position: absolute;
-    top: 0; left: 0;
+    top: 0; left: 0; bottom: 0;
     width: 200%;
-    height: 100%;
     pointer-events: none;
     animation: earthScroll 90s linear infinite;
   }
@@ -354,7 +353,7 @@
 
 <!-- Hero -->
 <section class="hero">
-  <div class="earth-dots">
+  <div class="earth-dots" style="position:absolute;top:0;left:0;bottom:0;width:200%;pointer-events:none;animation:earthScroll 90s linear infinite;">
     <!-- First copy of dots (left half = first map) -->
     <!-- Oakland/SF (flagship) --><span class="map-dot flagship" style="left:8.0%;top:29.0%"></span>
     <!-- Los Angeles --><span class="map-dot" style="left:8.6%;top:31.1%"></span>
