@@ -45,8 +45,17 @@ nav.nav-scrolled {
 .dark-hero nav:not(.nav-scrolled) a { color: rgba(245,242,236,0.7); }
 .dark-hero nav:not(.nav-scrolled) a:hover { color: var(--paper); }
 .dark-hero nav:not(.nav-scrolled) .nav-cta { color: var(--paper); border-color: rgba(245,242,236,0.4); }
+.dark-hero nav:not(.nav-scrolled) .nav-link-active { color: var(--paper) !important; }
 .dark-hero nav:not(.nav-scrolled) .nav-hamburger { color: var(--paper); }
 .dark-hero nav:not(.nav-scrolled) .nav-more-label { color: rgba(245,242,236,0.7); }
+/* Dropdown has light background, so revert to dark text */
+.dark-hero nav:not(.nav-scrolled) .nav-more-dropdown a { color: var(--muted); }
+.dark-hero nav:not(.nav-scrolled) .nav-more-dropdown a:hover { color: var(--ink); }
+/* When mobile menu is open, revert to dark text on light background */
+.dark-hero nav:not(.nav-scrolled) .nav-links.nav-open a { color: var(--ink); }
+.dark-hero nav:not(.nav-scrolled) .nav-links.nav-open a:hover { color: var(--ink); }
+.dark-hero nav:not(.nav-scrolled) .nav-links.nav-open .nav-cta { background: var(--ink) !important; color: var(--paper) !important; border-color: var(--ink); }
+.dark-hero nav:not(.nav-scrolled) .nav-links.nav-open .nav-more-label { color: var(--ink); }
 .logo {
   font-family: 'DM Mono', monospace;
   font-size: 15px;
