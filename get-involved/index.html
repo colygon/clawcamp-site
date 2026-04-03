@@ -156,8 +156,31 @@
 
   /* Sign In section */
   .signin-section {
-    padding: 0 48px 48px;
+    padding: 0 48px 32px;
     max-width: 480px;
+  }
+  .signin-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: 1.5px solid var(--sand);
+    border-radius: 8px;
+    padding: 14px 24px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 15px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .signin-toggle em {
+    font-style: normal;
+    color: var(--rust);
+    font-weight: 700;
+  }
+  .signin-toggle:hover {
+    border-color: var(--rust);
+    color: var(--ink);
   }
   .signin-card {
     border: 2px solid var(--rust);
@@ -269,7 +292,10 @@
 </header>
 
 <div class="signin-section">
-  <div class="signin-card">
+  <button class="signin-toggle" id="signin-toggle" onclick="document.getElementById('signin-card').style.display='';this.style.display='none';">
+    &#128274; Already registered? <em>Sign In</em>
+  </button>
+  <div class="signin-card" id="signin-card" style="display:none;">
     <div class="signin-icon">&#128274;</div>
     <h2>Sign in with <em>Email</em></h2>
     <p>Enter the email you registered with and we'll send you a magic link. No password needed.</p>
@@ -280,8 +306,6 @@
     <div id="signin-msg"></div>
   </div>
 </div>
-
-<div class="signin-divider"><span>or sign up</span></div>
 
 <div class="chooser">
   <p>There are many ways to be part of ClawCamp. Choose what fits you best and we'll take it from there.</p>
