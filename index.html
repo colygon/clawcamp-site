@@ -255,7 +255,21 @@
     background: var(--ink);
     color: var(--paper);
     padding: 24px;
+    position: relative;
+    overflow: hidden;
   }
+  .featured-card-img {
+    position: absolute;
+    top: 0; right: 0;
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.2;
+    mask-image: linear-gradient(to right, transparent, black 30%);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 30%);
+    pointer-events: none;
+  }
+  .featured-card-top > * { position: relative; z-index: 1; }
   .featured-card-date {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
@@ -623,32 +637,35 @@
   <div class="featured-grid">
     <a class="featured-card" href="/events/oakland">
       <div class="featured-card-top">
+        <img class="featured-card-img" src="https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,anim=false,background=white,quality=75,width=500,height=500/event-covers/sz/df1c910c-c1c9-4cec-b69d-a237e833ae42.jpg" alt="">
         <div class="featured-card-date">Apr 16, 2026</div>
         <div class="featured-card-name">ClawCamp Oakland</div>
       </div>
       <div class="featured-card-bottom">
-        <span class="featured-card-loc">STAK Space, Oakland, CA</span>
+        <span class="featured-card-loc">Oakland, California</span>
         <span class="event-tag tag-flagship">Flagship</span>
       </div>
     </a>
-    <a class="featured-card" href="/events/ai-for-good-education">
+    <a class="featured-card" href="/events/claw-villa-blr-hack">
       <div class="featured-card-top">
-        <div class="featured-card-date">Mar 28, 2026</div>
-        <div class="featured-card-name">AI for Good: Education</div>
+        <img class="featured-card-img" src="https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,anim=false,background=white,quality=75,width=500,height=500/event-covers/ug/f8a87305-1749-4493-a7ef-59a9b8310170.png" alt="">
+        <div class="featured-card-date">Apr 4, 2026</div>
+        <div class="featured-card-name">Claw Villa BLR Hack</div>
       </div>
       <div class="featured-card-bottom">
-        <span class="featured-card-loc">Studio 45, San Francisco</span>
-        <span class="event-tag tag-workshop">Workshop</span>
+        <span class="featured-card-loc">Bangalore, India</span>
+        <span class="event-tag tag-community">Community</span>
       </div>
     </a>
-    <a class="featured-card" href="/events/openclaw-20-lines">
+    <a class="featured-card" href="https://luma.com/openclaw-x-money" target="_blank">
       <div class="featured-card-top">
-        <div class="featured-card-date">Apr 2, 2026</div>
-        <div class="featured-card-name">Open Build Night</div>
+        <img class="featured-card-img" src="https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,anim=false,background=white,quality=75,width=500,height=500/gallery-images/px/ed3cdc76-58b4-4276-a674-985315b2bdb0.png" alt="">
+        <div class="featured-card-date">Apr 15, 2026</div>
+        <div class="featured-card-name">OpenClaw x Money</div>
       </div>
       <div class="featured-card-bottom">
-        <span class="featured-card-loc">Studio 45, San Francisco</span>
-        <span class="event-tag tag-workshop">Workshop</span>
+        <span class="featured-card-loc">Berlin, Germany</span>
+        <span class="event-tag tag-community">Community</span>
       </div>
     </a>
   </div>

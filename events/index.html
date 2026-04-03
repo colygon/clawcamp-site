@@ -191,6 +191,19 @@
     padding: 32px 36px;
     background: var(--ink);
     color: var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+  .featured-bg {
+    position: absolute;
+    top: 0; right: 0;
+    width: 45%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.15;
+    mask-image: linear-gradient(to right, transparent, black 40%);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 40%);
+    pointer-events: none;
   }
   .featured-eyebrow {
     font-family: 'DM Mono', monospace;
@@ -2034,6 +2047,14 @@ function renderFeaturedEvent(ev) {
   var left = document.createElement('div');
   left.className = 'featured-left';
 
+  if (ev.image_url) {
+    var bgImg = document.createElement('img');
+    bgImg.className = 'featured-bg';
+    bgImg.src = ev.image_url;
+    bgImg.alt = '';
+    left.appendChild(bgImg);
+  }
+
   var eyebrow = document.createElement('div');
   eyebrow.className = 'featured-eyebrow';
   eyebrow.textContent = 'Flagship Event \u00B7 ' + (ev.location || ev.city);
@@ -2237,7 +2258,8 @@ function renderEvents(events) {
   var featured = events.filter(function(e) { return e.is_featured; });
   var regular = events.filter(function(e) { return !e.is_featured; });
 
-  // Render featured
+  // Render featured (chronological order)
+  featured.sort(function(a, b) { return (a.event_date || '').localeCompare(b.event_date || ''); });
   featured.forEach(function(ev) {
     main.appendChild(renderFeaturedEvent(ev));
   });
@@ -2295,6 +2317,16 @@ fetch(SUPABASE_URL + '/rest/v1/events?select=*&order=event_date.asc', {
   renderEvents(events);
   updateCounts();
   applyFilters();
+  // Auto-detect location on load
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function(pos) {
+        setUserLocation(pos.coords.latitude, pos.coords.longitude, 'Your Location');
+      },
+      function() { /* silently fail */ },
+      { timeout: 10000 }
+    );
+  }
 })
 .catch(function(err) {
   console.error('Failed to load events:', err);
