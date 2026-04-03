@@ -44,7 +44,7 @@
     </radialGradient>
   </defs>
 
-  <!-- Oakland / San Francisco - approx 37.8°N, 122.3°W -->
+  <!-- Oakland / San Francisco (flagship - larger dot) -->
   <circle cx="168" cy="195" r="20" fill="url(#glow)"/>
   <circle cx="168" cy="195" r="4" fill="#C4540A" opacity="0.9"/>
   <circle cx="168" cy="195" r="7" stroke="#C4540A" stroke-width="1" fill="none" opacity="0.4">
@@ -52,21 +52,109 @@
     <animate attributeName="opacity" values="0.4;0;0.4" dur="3s" repeatCount="indefinite"/>
   </circle>
 
-  <!-- Berlin - approx 52.5°N, 13.4°E -->
-  <circle cx="545" cy="138" r="16" fill="url(#dot-glow)"/>
-  <circle cx="545" cy="138" r="3.5" fill="#C4540A" opacity="0.9"/>
-  <circle cx="545" cy="138" r="6" stroke="#C4540A" stroke-width="0.8" fill="none" opacity="0.3">
-    <animate attributeName="r" values="6;12;6" dur="3.5s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.3;0;0.3" dur="3.5s" repeatCount="indefinite"/>
-  </circle>
+  <!-- Los Angeles -->
+  <circle cx="160" cy="208" r="12" fill="url(#dot-glow)"/>
+  <circle cx="160" cy="208" r="2.5" fill="#C4540A" opacity="0.8"/>
 
-  <!-- Bengaluru - approx 12.9°N, 77.6°E -->
-  <circle cx="715" cy="280" r="16" fill="url(#dot-glow)"/>
-  <circle cx="715" cy="280" r="3.5" fill="#C4540A" opacity="0.9"/>
-  <circle cx="715" cy="280" r="6" stroke="#C4540A" stroke-width="0.8" fill="none" opacity="0.3">
-    <animate attributeName="r" values="6;12;6" dur="4s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0.3;0;0.3" dur="4s" repeatCount="indefinite"/>
-  </circle>
+  <!-- Chicago -->
+  <circle cx="230" cy="180" r="12" fill="url(#dot-glow)"/>
+  <circle cx="230" cy="180" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Ann Arbor / Michigan -->
+  <circle cx="240" cy="176" r="12" fill="url(#dot-glow)"/>
+  <circle cx="240" cy="176" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Boston -->
+  <circle cx="270" cy="178" r="12" fill="url(#dot-glow)"/>
+  <circle cx="270" cy="178" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Philadelphia -->
+  <circle cx="262" cy="186" r="12" fill="url(#dot-glow)"/>
+  <circle cx="262" cy="186" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Toronto -->
+  <circle cx="248" cy="172" r="12" fill="url(#dot-glow)"/>
+  <circle cx="248" cy="172" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Mexico City -->
+  <circle cx="198" cy="250" r="12" fill="url(#dot-glow)"/>
+  <circle cx="198" cy="250" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Guadalajara -->
+  <circle cx="188" cy="245" r="12" fill="url(#dot-glow)"/>
+  <circle cx="188" cy="245" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Bogotá -->
+  <circle cx="248" cy="315" r="12" fill="url(#dot-glow)"/>
+  <circle cx="248" cy="315" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- São Paulo -->
+  <circle cx="290" cy="395" r="12" fill="url(#dot-glow)"/>
+  <circle cx="290" cy="395" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Rio de Janeiro -->
+  <circle cx="298" cy="388" r="12" fill="url(#dot-glow)"/>
+  <circle cx="298" cy="388" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Belo Horizonte -->
+  <circle cx="295" cy="380" r="12" fill="url(#dot-glow)"/>
+  <circle cx="295" cy="380" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Porto Alegre -->
+  <circle cx="282" cy="410" r="12" fill="url(#dot-glow)"/>
+  <circle cx="282" cy="410" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Buenos Aires -->
+  <circle cx="268" cy="430" r="12" fill="url(#dot-glow)"/>
+  <circle cx="268" cy="430" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- London -->
+  <circle cx="483" cy="122" r="12" fill="url(#dot-glow)"/>
+  <circle cx="483" cy="122" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Paris -->
+  <circle cx="498" cy="132" r="12" fill="url(#dot-glow)"/>
+  <circle cx="498" cy="132" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Berlin -->
+  <circle cx="545" cy="128" r="14" fill="url(#dot-glow)"/>
+  <circle cx="545" cy="128" r="3" fill="#C4540A" opacity="0.85"/>
+
+  <!-- Copenhagen -->
+  <circle cx="538" cy="118" r="12" fill="url(#dot-glow)"/>
+  <circle cx="538" cy="118" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Stockholm -->
+  <circle cx="552" cy="110" r="12" fill="url(#dot-glow)"/>
+  <circle cx="552" cy="110" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Valencia -->
+  <circle cx="490" cy="162" r="12" fill="url(#dot-glow)"/>
+  <circle cx="490" cy="162" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Ankara -->
+  <circle cx="600" cy="162" r="12" fill="url(#dot-glow)"/>
+  <circle cx="600" cy="162" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Istanbul -->
+  <circle cx="592" cy="155" r="12" fill="url(#dot-glow)"/>
+  <circle cx="592" cy="155" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Bengaluru -->
+  <circle cx="715" cy="280" r="14" fill="url(#dot-glow)"/>
+  <circle cx="715" cy="280" r="3" fill="#C4540A" opacity="0.85"/>
+
+  <!-- Singapore -->
+  <circle cx="778" cy="305" r="12" fill="url(#dot-glow)"/>
+  <circle cx="778" cy="305" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Shanghai -->
+  <circle cx="855" cy="195" r="12" fill="url(#dot-glow)"/>
+  <circle cx="855" cy="195" r="2.5" fill="#C4540A" opacity="0.8"/>
+
+  <!-- Seoul -->
+  <circle cx="875" cy="175" r="12" fill="url(#dot-glow)"/>
+  <circle cx="875" cy="175" r="2.5" fill="#C4540A" opacity="0.8"/>
 
   <!-- Subtle grid lines for texture -->
   <g opacity="0.03" stroke="#F5F2EC">
