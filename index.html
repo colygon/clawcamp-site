@@ -13,7 +13,23 @@
     background: var(--ink);
     color: var(--paper);
     padding: 96px 48px 80px;
+    position: relative;
+    overflow: hidden;
   }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -5%;
+    transform: translateY(-55%);
+    width: 70%;
+    height: 120%;
+    background: url('/images/world-map.svg') no-repeat center;
+    background-size: contain;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .hero > * { position: relative; z-index: 1; }
   .hero-eyebrow {
     font-family: 'DM Mono', monospace;
     font-size: 12px;

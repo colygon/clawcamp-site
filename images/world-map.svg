@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" fill="none">
+  <!-- Simplified world map outline paths - continents as subtle shapes -->
+  <g opacity="0.12" stroke="#C4540A" stroke-width="0.8" fill="none">
+    <!-- North America -->
+    <path d="M120,120 L140,100 L180,95 L220,90 L260,95 L280,100 L300,95 L320,100 L340,110 L350,130 L340,150 L320,160 L310,180 L300,200 L280,220 L260,240 L240,250 L220,260 L200,270 L190,290 L195,310 L210,320 L220,330 L240,340 L250,350 L240,360 L220,355 L200,345 L180,330 L160,310 L150,290 L145,270 L140,250 L130,230 L120,210 L110,190 L105,170 L100,150 L110,130 Z"/>
+    <!-- Greenland -->
+    <path d="M310,60 L340,55 L370,60 L390,70 L395,85 L385,100 L365,105 L340,100 L320,90 L310,75 Z"/>
+    <!-- South America -->
+    <path d="M240,360 L260,355 L280,360 L300,370 L310,390 L315,410 L320,430 L318,450 L310,470 L300,490 L285,505 L270,510 L260,500 L255,480 L250,460 L240,440 L235,420 L230,400 L235,380 Z"/>
+    <!-- Europe -->
+    <path d="M500,100 L520,95 L540,100 L560,95 L580,100 L600,110 L610,120 L605,140 L590,150 L570,155 L555,160 L540,170 L525,175 L510,170 L500,160 L495,145 L490,130 L495,115 Z"/>
+    <!-- UK/Ireland -->
+    <path d="M470,110 L480,105 L490,110 L488,125 L480,135 L470,130 L468,120 Z"/>
+    <!-- Africa -->
+    <path d="M510,200 L530,190 L560,195 L590,200 L610,210 L625,230 L635,260 L640,290 L635,320 L625,350 L610,380 L590,400 L570,410 L550,405 L535,390 L520,370 L510,345 L505,320 L500,295 L495,270 L500,240 L505,220 Z"/>
+    <!-- Middle East / Arabian Peninsula -->
+    <path d="M620,200 L640,195 L660,200 L670,215 L665,235 L650,250 L635,255 L625,245 L620,225 L618,210 Z"/>
+    <!-- India -->
+    <path d="M700,200 L720,195 L740,200 L750,220 L755,245 L750,270 L740,290 L725,305 L710,310 L700,300 L695,280 L690,260 L685,240 L690,220 Z"/>
+    <!-- Southeast Asia -->
+    <path d="M770,240 L790,235 L810,240 L825,255 L830,275 L820,290 L800,295 L785,285 L775,270 L770,255 Z"/>
+    <!-- China / East Asia -->
+    <path d="M750,130 L780,120 L810,115 L840,120 L870,130 L890,145 L900,165 L895,185 L880,200 L860,210 L840,215 L815,210 L790,200 L770,190 L755,175 L750,155 Z"/>
+    <!-- Japan -->
+    <path d="M910,150 L920,140 L930,145 L935,160 L930,175 L920,185 L910,180 L905,165 Z"/>
+    <!-- Australia -->
+    <path d="M850,380 L880,370 L910,365 L940,370 L965,380 L980,400 L985,425 L975,445 L955,455 L930,460 L905,455 L880,445 L865,430 L855,410 L850,395 Z"/>
+    <!-- Indonesia -->
+    <path d="M810,320 L830,315 L855,320 L875,325 L890,335 L880,345 L860,348 L840,345 L820,340 L810,330 Z"/>
+    <!-- Russia / Northern Asia -->
+    <path d="M600,80 L640,70 L680,65 L720,60 L760,65 L800,70 L840,75 L880,80 L920,85 L940,95 L935,110 L910,115 L880,110 L840,105 L800,100 L760,95 L720,90 L680,85 L640,90 L610,95 Z"/>
+  </g>
+
+  <!-- Location dots with glow effect -->
+  <defs>
+    <radialGradient id="glow">
+      <stop offset="0%" stop-color="#C4540A" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#C4540A" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#C4540A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="dot-glow">
+      <stop offset="0%" stop-color="#C4540A" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#C4540A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Oakland / San Francisco - approx 37.8°N, 122.3°W -->
+  <circle cx="168" cy="195" r="20" fill="url(#glow)"/>
+  <circle cx="168" cy="195" r="4" fill="#C4540A" opacity="0.9"/>
+  <circle cx="168" cy="195" r="7" stroke="#C4540A" stroke-width="1" fill="none" opacity="0.4">
+    <animate attributeName="r" values="7;14;7" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.4;0;0.4" dur="3s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Berlin - approx 52.5°N, 13.4°E -->
+  <circle cx="545" cy="138" r="16" fill="url(#dot-glow)"/>
+  <circle cx="545" cy="138" r="3.5" fill="#C4540A" opacity="0.9"/>
+  <circle cx="545" cy="138" r="6" stroke="#C4540A" stroke-width="0.8" fill="none" opacity="0.3">
+    <animate attributeName="r" values="6;12;6" dur="3.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.3;0;0.3" dur="3.5s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Bengaluru - approx 12.9°N, 77.6°E -->
+  <circle cx="715" cy="280" r="16" fill="url(#dot-glow)"/>
+  <circle cx="715" cy="280" r="3.5" fill="#C4540A" opacity="0.9"/>
+  <circle cx="715" cy="280" r="6" stroke="#C4540A" stroke-width="0.8" fill="none" opacity="0.3">
+    <animate attributeName="r" values="6;12;6" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.3;0;0.3" dur="4s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Subtle grid lines for texture -->
+  <g opacity="0.03" stroke="#F5F2EC">
+    <line x1="0" y1="150" x2="1200" y2="150"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="450" x2="1200" y2="450"/>
+    <line x1="300" y1="0" x2="300" y2="600"/>
+    <line x1="600" y1="0" x2="600" y2="600"/>
+    <line x1="900" y1="0" x2="900" y2="600"/>
+  </g>
+</svg>
