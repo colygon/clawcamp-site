@@ -197,12 +197,7 @@
       <span class="chooser-label">Become a Sponsor</span>
       <span class="chooser-desc">Support the community</span>
     </button>
-    <button class="chooser-btn" onclick="showForm('leadership')">
-      <span class="chooser-icon">&#127942;</span>
-      <span class="chooser-label">Join Leadership</span>
-      <span class="chooser-desc">Apply for a staff role</span>
-    </button>
-    <button class="chooser-btn" onclick="showForm('event')">
+<button class="chooser-btn" onclick="showForm('event')">
       <span class="chooser-icon">&#128197;</span>
       <span class="chooser-label">Submit an Event</span>
       <span class="chooser-desc">Add your event to the calendar</span>
@@ -521,64 +516,6 @@
   </div>
 
   <!-- Join Leadership -->
-  <div class="form-panel" id="panel-leadership">
-    <h2>Join the <em>Leadership</em></h2>
-    <p>Apply for a role in the ClawCamp network. Tell us about your experience and what you'd bring to the team.</p>
-    <form class="involve-form" id="crew-form">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="crew-name">Full Name *</label>
-          <input type="text" id="crew-name" name="name" required placeholder="Your name">
-        </div>
-        <div class="form-group">
-          <label for="crew-email">Email *</label>
-          <input type="email" id="crew-email" name="email" required placeholder="you@example.com">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="crew-phone">Phone Number *</label>
-          <input type="tel" id="crew-phone" name="phone" required placeholder="+1 (555) 000-0000">
-        </div>
-        <div class="form-group">
-          <label for="crew-city">City *</label>
-          <input type="text" id="crew-city" name="city" required placeholder="e.g. Oakland, CA">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="crew-role">Role You're Applying For *</label>
-          <select id="crew-role" name="role" required>
-            <option value="">Select a role</option>
-            <option value="area-director">Area Director</option>
-            <option value="unit-head">Unit Head</option>
-            <option value="camp-counselor">Camp Counselor</option>
-            <option value="specialist">Specialist</option>
-            <option value="activity-leader">Activity Leader</option>
-            <option value="camp-counselor-in-training">Camp Counselor in Training</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="crew-linkedin">LinkedIn or Website</label>
-          <input type="url" id="crew-linkedin" name="linkedin" placeholder="https://linkedin.com/in/you">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="crew-experience">Relevant Experience *</label>
-        <textarea id="crew-experience" name="experience" required placeholder="Tell us about your background. Have you organized events, taught workshops, or built with AI before?"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="crew-why">Why ClawCamp?</label>
-        <textarea id="crew-why" name="why" placeholder="What interests you about joining the crew? What would you bring to the network?"></textarea>
-      </div>
-      <label style="font-size:14px;color:var(--ink);text-transform:none;letter-spacing:0;display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;">
-        <input type="checkbox" name="email_opt_in" value="yes" checked> Yes, send me updates about upcoming ClawCamp events and community news
-      </label>
-      <button type="submit" class="form-submit">Submit Application &rarr;</button>
-      <p class="form-note">We'll review your application and get back to you within 5 business days.</p>
-    </form>
-  </div>
-
   <!-- Startup Showcase -->
   <div class="form-panel" id="panel-showcase">
     <h2>Startup <em>Showcase</em></h2>
