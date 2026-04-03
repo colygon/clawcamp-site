@@ -13,6 +13,8 @@
     background: var(--ink);
     color: var(--paper);
     padding: 96px 48px 80px;
+    padding-top: 140px;
+    margin-top: -73px;
     position: relative;
     overflow: hidden;
   }
@@ -45,7 +47,34 @@
     height: 6px;
     border-radius: 50%;
     background: #C4540A;
+    pointer-events: auto;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    transition: transform 0.15s, box-shadow 0.15s;
   }
+  .map-dot:hover {
+    transform: scale(2);
+    box-shadow: 0 0 12px 3px rgba(196,84,10,0.6);
+    z-index: 10;
+  }
+  .map-dot .dot-tip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+  }
+  .map-dot:hover .dot-tip { opacity: 1; }
   .map-dot::after {
     content: '';
     position: absolute;
@@ -372,99 +401,99 @@
 <section class="hero">
   <div class="earth-dots" style="position:absolute;top:0;left:0;bottom:0;width:200%;pointer-events:none;animation:earthScroll 90s linear infinite;">
     <!-- First copy of dots (left half = first map) -->
-    <!-- Oakland/SF (flagship) --><span class="map-dot flagship" style="left:8.0%;top:29.0%"></span>
-    <!-- Los Angeles --><span class="map-dot" style="left:8.6%;top:31.1%"></span>
-    <!-- Chicago --><span class="map-dot" style="left:12.8%;top:26.7%"></span>
-    <!-- Ann Arbor --><span class="map-dot" style="left:13.4%;top:26.5%"></span>
-    <!-- Boston --><span class="map-dot" style="left:15.1%;top:26.4%"></span>
-    <!-- Philadelphia --><span class="map-dot" style="left:14.6%;top:27.8%"></span>
-    <!-- Toronto --><span class="map-dot" style="left:14.0%;top:25.7%"></span>
-    <!-- Mexico City --><span class="map-dot" style="left:11.2%;top:39.2%"></span>
-    <!-- Guadalajara --><span class="map-dot" style="left:10.7%;top:38.5%"></span>
-    <!-- Bogotá --><span class="map-dot" style="left:14.7%;top:47.4%"></span>
-    <!-- São Paulo --><span class="map-dot" style="left:18.6%;top:63.1%"></span>
-    <!-- Rio de Janeiro --><span class="map-dot" style="left:19.0%;top:62.7%"></span>
-    <!-- Belo Horizonte --><span class="map-dot" style="left:18.9%;top:61.1%"></span>
-    <!-- Porto Alegre --><span class="map-dot" style="left:17.9%;top:66.7%"></span>
-    <!-- Buenos Aires --><span class="map-dot" style="left:16.9%;top:69.2%"></span>
-    <!-- London --><span class="map-dot" style="left:25.0%;top:21.4%"></span>
-    <!-- Paris --><span class="map-dot" style="left:25.3%;top:22.8%"></span>
-    <!-- Berlin --><span class="map-dot" style="left:26.9%;top:20.8%"></span>
-    <!-- Copenhagen --><span class="map-dot" style="left:26.7%;top:19.1%"></span>
-    <!-- Stockholm --><span class="map-dot" style="left:27.5%;top:17.1%"></span>
-    <!-- Valencia --><span class="map-dot" style="left:24.9%;top:28.1%"></span>
-    <!-- Ankara --><span class="map-dot" style="left:29.6%;top:27.8%"></span>
-    <!-- Istanbul --><span class="map-dot" style="left:29.1%;top:27.2%"></span>
-    <!-- Bengaluru --><span class="map-dot" style="left:35.8%;top:42.8%"></span>
-    <!-- Singapore --><span class="map-dot" style="left:39.4%;top:49.3%"></span>
-    <!-- Shanghai --><span class="map-dot" style="left:41.9%;top:32.7%"></span>
-    <!-- Seoul --><span class="map-dot" style="left:42.6%;top:29.1%"></span>
-    <!-- Austin --><span class="map-dot" style="left:10.8%;top:33.3%"></span>
-    <!-- Seattle --><span class="map-dot" style="left:7.8%;top:26.4%"></span>
-    <!-- NYC --><span class="map-dot" style="left:15.0%;top:27.5%"></span>
-    <!-- Boulder --><span class="map-dot" style="left:9.6%;top:28.9%"></span>
-    <!-- Raleigh --><span class="map-dot" style="left:13.5%;top:30.3%"></span>
-    <!-- Bentonville --><span class="map-dot" style="left:11.6%;top:30.0%"></span>
-    <!-- Victoria BC --><span class="map-dot" style="left:7.5%;top:23.6%"></span>
-    <!-- Vancouver --><span class="map-dot" style="left:7.6%;top:23.9%"></span>
-    <!-- Kitchener --><span class="map-dot" style="left:13.9%;top:26.2%"></span>
-    <!-- Amsterdam --><span class="map-dot" style="left:25.7%;top:20.6%"></span>
-    <!-- Oslo --><span class="map-dot" style="left:26.4%;top:16.7%"></span>
-    <!-- Ghent --><span class="map-dot" style="left:25.5%;top:21.6%"></span>
-    <!-- Toulouse --><span class="map-dot" style="left:25.2%;top:25.8%"></span>
-    <!-- Bucharest --><span class="map-dot" style="left:28.6%;top:25.3%"></span>
-    <!-- Tokyo --><span class="map-dot" style="left:44.4%;top:30.2%"></span>
-    <!-- Ho Chi Minh City --><span class="map-dot" style="left:39.7%;top:44.2%"></span>
-    <!-- Chiang Mai --><span class="map-dot" style="left:38.7%;top:39.5%"></span>
+    <a class="map-dot flagship" href="/events?city=oakland" style="left:8.0%;top:29.0%"><span class="dot-tip">Oakland</span></a>
+    <a class="map-dot" href="/events?city=los-angeles" style="left:8.6%;top:31.1%"><span class="dot-tip">Los Angeles</span></a>
+    <a class="map-dot" href="/events?city=chicago" style="left:12.8%;top:26.7%"><span class="dot-tip">Chicago</span></a>
+    <a class="map-dot" href="/events?city=ann-arbor" style="left:13.4%;top:26.5%"><span class="dot-tip">Ann Arbor</span></a>
+    <a class="map-dot" href="/events?city=boston" style="left:15.1%;top:26.4%"><span class="dot-tip">Boston</span></a>
+    <a class="map-dot" href="/events?city=philadelphia" style="left:14.6%;top:27.8%"><span class="dot-tip">Philadelphia</span></a>
+    <a class="map-dot" href="/events?city=toronto" style="left:14.0%;top:25.7%"><span class="dot-tip">Toronto</span></a>
+    <a class="map-dot" href="/events?city=mexico-city" style="left:11.2%;top:39.2%"><span class="dot-tip">Mexico City</span></a>
+    <a class="map-dot" href="/events?city=guadalajara" style="left:10.7%;top:38.5%"><span class="dot-tip">Guadalajara</span></a>
+    <a class="map-dot" href="/events?city=bogota" style="left:14.7%;top:47.4%"><span class="dot-tip">Bogotá</span></a>
+    <a class="map-dot" href="/events?city=sao-paulo" style="left:18.6%;top:63.1%"><span class="dot-tip">São Paulo</span></a>
+    <a class="map-dot" href="/events?city=rio-de-janeiro" style="left:19.0%;top:62.7%"><span class="dot-tip">Rio de Janeiro</span></a>
+    <a class="map-dot" href="/events?city=belo-horizonte" style="left:18.9%;top:61.1%"><span class="dot-tip">Belo Horizonte</span></a>
+    <a class="map-dot" href="/events?city=porto-alegre" style="left:17.9%;top:66.7%"><span class="dot-tip">Porto Alegre</span></a>
+    <a class="map-dot" href="/events?city=buenos-aires" style="left:16.9%;top:69.2%"><span class="dot-tip">Buenos Aires</span></a>
+    <a class="map-dot" href="/events?city=london" style="left:25.0%;top:21.4%"><span class="dot-tip">London</span></a>
+    <a class="map-dot" href="/events?city=paris" style="left:25.3%;top:22.8%"><span class="dot-tip">Paris</span></a>
+    <a class="map-dot" href="/events?city=berlin" style="left:26.9%;top:20.8%"><span class="dot-tip">Berlin</span></a>
+    <a class="map-dot" href="/events?city=copenhagen" style="left:26.7%;top:19.1%"><span class="dot-tip">Copenhagen</span></a>
+    <a class="map-dot" href="/events?city=stockholm" style="left:27.5%;top:17.1%"><span class="dot-tip">Stockholm</span></a>
+    <a class="map-dot" href="/events?city=valencia" style="left:24.9%;top:28.1%"><span class="dot-tip">Valencia</span></a>
+    <a class="map-dot" href="/events?city=ankara" style="left:29.6%;top:27.8%"><span class="dot-tip">Ankara</span></a>
+    <a class="map-dot" href="/events?city=istanbul" style="left:29.1%;top:27.2%"><span class="dot-tip">Istanbul</span></a>
+    <a class="map-dot" href="/events?city=bengaluru" style="left:35.8%;top:42.8%"><span class="dot-tip">Bengaluru</span></a>
+    <a class="map-dot" href="/events?city=singapore" style="left:39.4%;top:49.3%"><span class="dot-tip">Singapore</span></a>
+    <a class="map-dot" href="/events?city=shanghai" style="left:41.9%;top:32.7%"><span class="dot-tip">Shanghai</span></a>
+    <a class="map-dot" href="/events?city=seoul" style="left:42.6%;top:29.1%"><span class="dot-tip">Seoul</span></a>
+    <a class="map-dot" href="/events?city=austin" style="left:10.8%;top:33.3%"><span class="dot-tip">Austin</span></a>
+    <a class="map-dot" href="/events?city=seattle" style="left:7.8%;top:26.4%"><span class="dot-tip">Seattle</span></a>
+    <a class="map-dot" href="/events?city=new-york" style="left:15.0%;top:27.5%"><span class="dot-tip">New York</span></a>
+    <a class="map-dot" href="/events?city=boulder" style="left:9.6%;top:28.9%"><span class="dot-tip">Boulder</span></a>
+    <a class="map-dot" href="/events?city=raleigh" style="left:13.5%;top:30.3%"><span class="dot-tip">Raleigh</span></a>
+    <a class="map-dot" href="/events?city=bentonville" style="left:11.6%;top:30.0%"><span class="dot-tip">Bentonville</span></a>
+    <a class="map-dot" href="/events?city=victoria" style="left:7.5%;top:23.6%"><span class="dot-tip">Victoria</span></a>
+    <a class="map-dot" href="/events?city=vancouver" style="left:7.6%;top:23.9%"><span class="dot-tip">Vancouver</span></a>
+    <a class="map-dot" href="/events?city=kitchener" style="left:13.9%;top:26.2%"><span class="dot-tip">Kitchener</span></a>
+    <a class="map-dot" href="/events?city=amsterdam" style="left:25.7%;top:20.6%"><span class="dot-tip">Amsterdam</span></a>
+    <a class="map-dot" href="/events?city=oslo" style="left:26.4%;top:16.7%"><span class="dot-tip">Oslo</span></a>
+    <a class="map-dot" href="/events?city=ghent" style="left:25.5%;top:21.6%"><span class="dot-tip">Ghent</span></a>
+    <a class="map-dot" href="/events?city=toulouse" style="left:25.2%;top:25.8%"><span class="dot-tip">Toulouse</span></a>
+    <a class="map-dot" href="/events?city=bucharest" style="left:28.6%;top:25.3%"><span class="dot-tip">Bucharest</span></a>
+    <a class="map-dot" href="/events?city=tokyo" style="left:44.4%;top:30.2%"><span class="dot-tip">Tokyo</span></a>
+    <a class="map-dot" href="/events?city=ho-chi-minh-city" style="left:39.7%;top:44.2%"><span class="dot-tip">Ho Chi Minh City</span></a>
+    <a class="map-dot" href="/events?city=chiang-mai" style="left:38.7%;top:39.5%"><span class="dot-tip">Chiang Mai</span></a>
 
     <!-- Second copy of dots (right half = second map, +50%) -->
-    <!-- Oakland/SF (flagship) --><span class="map-dot flagship" style="left:58.0%;top:29.0%"></span>
-    <!-- Los Angeles --><span class="map-dot" style="left:58.6%;top:31.1%"></span>
-    <!-- Chicago --><span class="map-dot" style="left:62.8%;top:26.7%"></span>
-    <!-- Ann Arbor --><span class="map-dot" style="left:63.4%;top:26.5%"></span>
-    <!-- Boston --><span class="map-dot" style="left:65.1%;top:26.4%"></span>
-    <!-- Philadelphia --><span class="map-dot" style="left:64.6%;top:27.8%"></span>
-    <!-- Toronto --><span class="map-dot" style="left:64.0%;top:25.7%"></span>
-    <!-- Mexico City --><span class="map-dot" style="left:61.2%;top:39.2%"></span>
-    <!-- Guadalajara --><span class="map-dot" style="left:60.7%;top:38.5%"></span>
-    <!-- Bogotá --><span class="map-dot" style="left:64.7%;top:47.4%"></span>
-    <!-- São Paulo --><span class="map-dot" style="left:68.6%;top:63.1%"></span>
-    <!-- Rio de Janeiro --><span class="map-dot" style="left:69.0%;top:62.7%"></span>
-    <!-- Belo Horizonte --><span class="map-dot" style="left:68.9%;top:61.1%"></span>
-    <!-- Porto Alegre --><span class="map-dot" style="left:67.9%;top:66.7%"></span>
-    <!-- Buenos Aires --><span class="map-dot" style="left:66.9%;top:69.2%"></span>
-    <!-- London --><span class="map-dot" style="left:75.0%;top:21.4%"></span>
-    <!-- Paris --><span class="map-dot" style="left:75.3%;top:22.8%"></span>
-    <!-- Berlin --><span class="map-dot" style="left:76.9%;top:20.8%"></span>
-    <!-- Copenhagen --><span class="map-dot" style="left:76.7%;top:19.1%"></span>
-    <!-- Stockholm --><span class="map-dot" style="left:77.5%;top:17.1%"></span>
-    <!-- Valencia --><span class="map-dot" style="left:74.9%;top:28.1%"></span>
-    <!-- Ankara --><span class="map-dot" style="left:79.6%;top:27.8%"></span>
-    <!-- Istanbul --><span class="map-dot" style="left:79.1%;top:27.2%"></span>
-    <!-- Bengaluru --><span class="map-dot" style="left:85.8%;top:42.8%"></span>
-    <!-- Singapore --><span class="map-dot" style="left:89.4%;top:49.3%"></span>
-    <!-- Shanghai --><span class="map-dot" style="left:91.9%;top:32.7%"></span>
-    <!-- Seoul --><span class="map-dot" style="left:92.6%;top:29.1%"></span>
-    <!-- Austin --><span class="map-dot" style="left:60.8%;top:33.3%"></span>
-    <!-- Seattle --><span class="map-dot" style="left:57.8%;top:26.4%"></span>
-    <!-- NYC --><span class="map-dot" style="left:65.0%;top:27.5%"></span>
-    <!-- Boulder --><span class="map-dot" style="left:59.6%;top:28.9%"></span>
-    <!-- Raleigh --><span class="map-dot" style="left:63.5%;top:30.3%"></span>
-    <!-- Bentonville --><span class="map-dot" style="left:61.6%;top:30.0%"></span>
-    <!-- Victoria BC --><span class="map-dot" style="left:57.5%;top:23.6%"></span>
-    <!-- Vancouver --><span class="map-dot" style="left:57.6%;top:23.9%"></span>
-    <!-- Kitchener --><span class="map-dot" style="left:63.9%;top:26.2%"></span>
-    <!-- Amsterdam --><span class="map-dot" style="left:75.7%;top:20.6%"></span>
-    <!-- Oslo --><span class="map-dot" style="left:76.4%;top:16.7%"></span>
-    <!-- Ghent --><span class="map-dot" style="left:75.5%;top:21.6%"></span>
-    <!-- Toulouse --><span class="map-dot" style="left:75.2%;top:25.8%"></span>
-    <!-- Bucharest --><span class="map-dot" style="left:78.6%;top:25.3%"></span>
-    <!-- Tokyo --><span class="map-dot" style="left:94.4%;top:30.2%"></span>
-    <!-- Ho Chi Minh City --><span class="map-dot" style="left:89.7%;top:44.2%"></span>
-    <!-- Chiang Mai --><span class="map-dot" style="left:88.7%;top:39.5%"></span>
+    <a class="map-dot flagship" href="/events?city=oakland" style="left:58.0%;top:29.0%"><span class="dot-tip">Oakland</span></a>
+    <a class="map-dot" href="/events?city=los-angeles" style="left:58.6%;top:31.1%"><span class="dot-tip">Los Angeles</span></a>
+    <a class="map-dot" href="/events?city=chicago" style="left:62.8%;top:26.7%"><span class="dot-tip">Chicago</span></a>
+    <a class="map-dot" href="/events?city=ann-arbor" style="left:63.4%;top:26.5%"><span class="dot-tip">Ann Arbor</span></a>
+    <a class="map-dot" href="/events?city=boston" style="left:65.1%;top:26.4%"><span class="dot-tip">Boston</span></a>
+    <a class="map-dot" href="/events?city=philadelphia" style="left:64.6%;top:27.8%"><span class="dot-tip">Philadelphia</span></a>
+    <a class="map-dot" href="/events?city=toronto" style="left:64.0%;top:25.7%"><span class="dot-tip">Toronto</span></a>
+    <a class="map-dot" href="/events?city=mexico-city" style="left:61.2%;top:39.2%"><span class="dot-tip">Mexico City</span></a>
+    <a class="map-dot" href="/events?city=guadalajara" style="left:60.7%;top:38.5%"><span class="dot-tip">Guadalajara</span></a>
+    <a class="map-dot" href="/events?city=bogota" style="left:64.7%;top:47.4%"><span class="dot-tip">Bogotá</span></a>
+    <a class="map-dot" href="/events?city=sao-paulo" style="left:68.6%;top:63.1%"><span class="dot-tip">São Paulo</span></a>
+    <a class="map-dot" href="/events?city=rio-de-janeiro" style="left:69.0%;top:62.7%"><span class="dot-tip">Rio de Janeiro</span></a>
+    <a class="map-dot" href="/events?city=belo-horizonte" style="left:68.9%;top:61.1%"><span class="dot-tip">Belo Horizonte</span></a>
+    <a class="map-dot" href="/events?city=porto-alegre" style="left:67.9%;top:66.7%"><span class="dot-tip">Porto Alegre</span></a>
+    <a class="map-dot" href="/events?city=buenos-aires" style="left:66.9%;top:69.2%"><span class="dot-tip">Buenos Aires</span></a>
+    <a class="map-dot" href="/events?city=london" style="left:75.0%;top:21.4%"><span class="dot-tip">London</span></a>
+    <a class="map-dot" href="/events?city=paris" style="left:75.3%;top:22.8%"><span class="dot-tip">Paris</span></a>
+    <a class="map-dot" href="/events?city=berlin" style="left:76.9%;top:20.8%"><span class="dot-tip">Berlin</span></a>
+    <a class="map-dot" href="/events?city=copenhagen" style="left:76.7%;top:19.1%"><span class="dot-tip">Copenhagen</span></a>
+    <a class="map-dot" href="/events?city=stockholm" style="left:77.5%;top:17.1%"><span class="dot-tip">Stockholm</span></a>
+    <a class="map-dot" href="/events?city=valencia" style="left:74.9%;top:28.1%"><span class="dot-tip">Valencia</span></a>
+    <a class="map-dot" href="/events?city=ankara" style="left:79.6%;top:27.8%"><span class="dot-tip">Ankara</span></a>
+    <a class="map-dot" href="/events?city=istanbul" style="left:79.1%;top:27.2%"><span class="dot-tip">Istanbul</span></a>
+    <a class="map-dot" href="/events?city=bengaluru" style="left:85.8%;top:42.8%"><span class="dot-tip">Bengaluru</span></a>
+    <a class="map-dot" href="/events?city=singapore" style="left:89.4%;top:49.3%"><span class="dot-tip">Singapore</span></a>
+    <a class="map-dot" href="/events?city=shanghai" style="left:91.9%;top:32.7%"><span class="dot-tip">Shanghai</span></a>
+    <a class="map-dot" href="/events?city=seoul" style="left:92.6%;top:29.1%"><span class="dot-tip">Seoul</span></a>
+    <a class="map-dot" href="/events?city=austin" style="left:60.8%;top:33.3%"><span class="dot-tip">Austin</span></a>
+    <a class="map-dot" href="/events?city=seattle" style="left:57.8%;top:26.4%"><span class="dot-tip">Seattle</span></a>
+    <a class="map-dot" href="/events?city=new-york" style="left:65.0%;top:27.5%"><span class="dot-tip">New York</span></a>
+    <a class="map-dot" href="/events?city=boulder" style="left:59.6%;top:28.9%"><span class="dot-tip">Boulder</span></a>
+    <a class="map-dot" href="/events?city=raleigh" style="left:63.5%;top:30.3%"><span class="dot-tip">Raleigh</span></a>
+    <a class="map-dot" href="/events?city=bentonville" style="left:61.6%;top:30.0%"><span class="dot-tip">Bentonville</span></a>
+    <a class="map-dot" href="/events?city=victoria" style="left:57.5%;top:23.6%"><span class="dot-tip">Victoria</span></a>
+    <a class="map-dot" href="/events?city=vancouver" style="left:57.6%;top:23.9%"><span class="dot-tip">Vancouver</span></a>
+    <a class="map-dot" href="/events?city=kitchener" style="left:63.9%;top:26.2%"><span class="dot-tip">Kitchener</span></a>
+    <a class="map-dot" href="/events?city=amsterdam" style="left:75.7%;top:20.6%"><span class="dot-tip">Amsterdam</span></a>
+    <a class="map-dot" href="/events?city=oslo" style="left:76.4%;top:16.7%"><span class="dot-tip">Oslo</span></a>
+    <a class="map-dot" href="/events?city=ghent" style="left:75.5%;top:21.6%"><span class="dot-tip">Ghent</span></a>
+    <a class="map-dot" href="/events?city=toulouse" style="left:75.2%;top:25.8%"><span class="dot-tip">Toulouse</span></a>
+    <a class="map-dot" href="/events?city=bucharest" style="left:78.6%;top:25.3%"><span class="dot-tip">Bucharest</span></a>
+    <a class="map-dot" href="/events?city=tokyo" style="left:94.4%;top:30.2%"><span class="dot-tip">Tokyo</span></a>
+    <a class="map-dot" href="/events?city=ho-chi-minh-city" style="left:89.7%;top:44.2%"><span class="dot-tip">Ho Chi Minh City</span></a>
+    <a class="map-dot" href="/events?city=chiang-mai" style="left:88.7%;top:39.5%"><span class="dot-tip">Chiang Mai</span></a>
   </div>
   <p class="hero-eyebrow">April 16, 2026 &middot; Oakland, CA &middot; Global Tour</p>
-  <h1>The Global Network of <em>AI Agent Camps</em></h1>
+  <h1>The Global Network of <em>AI Community Events</em></h1>
   <p class="hero-sub">ClawCamp is a grassroots community of hands-on AI events &mdash; workshops, unconferences, demo days, and hackathons &mdash; happening in cities and online around the world. Anyone can host. Everyone builds.</p>
   <div class="hero-actions">
     <a href="/events" class="btn-rust">Find a Camp Near You &rarr;</a>

@@ -40,7 +40,7 @@ nav.nav-scrolled {
   background: var(--paper);
   border-bottom-color: var(--sand);
 }
-/* Dark hero pages: light nav text until scrolled */
+/* Dark hero pages: nav overlaps hero, light text until scrolled */
 .dark-hero nav:not(.nav-scrolled) .logo { color: var(--paper); }
 .dark-hero nav:not(.nav-scrolled) a { color: rgba(245,242,236,0.7); }
 .dark-hero nav:not(.nav-scrolled) a:hover { color: var(--paper); }

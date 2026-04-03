@@ -482,6 +482,8 @@
     background: var(--ink);
     overflow: hidden;
     padding: 80px 48px 60px;
+    padding-top: 140px;
+    margin-top: -73px;
     min-height: 320px;
     display: flex;
     justify-content: space-between;
@@ -2464,8 +2466,15 @@ fetch(SUPABASE_URL + '/rest/v1/events?select=*&order=event_date.asc', {
   renderEvents(events);
   updateCounts();
   applyFilters();
-  // Auto-detect location on load
-  if (navigator.geolocation) {
+  // Check for ?city= URL param from homepage map clicks
+  var urlParams = new URLSearchParams(window.location.search);
+  var cityParam = urlParams.get('city');
+  if (cityParam && cityCoords[cityParam]) {
+    var coords = cityCoords[cityParam];
+    var label = cityParam.replace(/-/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+    setUserLocation(coords[0], coords[1], label);
+  } else if (navigator.geolocation) {
+    // Auto-detect location on load
     navigator.geolocation.getCurrentPosition(
       function(pos) {
         setUserLocation(pos.coords.latitude, pos.coords.longitude, 'Your Location');
@@ -2517,6 +2526,7 @@ var cityCoords = {
   'chiang-mai': [18.7883, 98.9853],
   'oslo': [59.9139, 10.7522],
   'bangalore': [12.9716, 77.5946],
+  'bengaluru': [12.9716, 77.5946],
   'london': [51.5074, -0.1278],
   'los-angeles': [34.0522, -118.2437],
   'valencia': [39.4699, -0.3763],
