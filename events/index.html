@@ -373,6 +373,77 @@
     .event-action { display: none; }
     .submit-event-section { padding-left: 20px; padding-right: 20px; }
     .form-row { grid-template-columns: 1fr; }
+    .location-bar { flex-direction: column; gap: 8px; }
+    .location-bar .location-input-wrap { width: 100%; }
+    .location-bar input { width: 100%; }
+  }
+
+  /* Location bar */
+  .location-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 48px;
+    border-bottom: 1px solid var(--sand);
+    background: var(--cream);
+  }
+  .location-bar .location-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .location-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    max-width: 360px;
+  }
+  .location-bar input {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 14px;
+    padding: 8px 12px;
+    border: 1px solid var(--sand);
+    border-radius: 6px;
+    background: white;
+    color: var(--ink);
+    flex: 1;
+    transition: border-color 0.15s;
+  }
+  .location-bar input:focus { outline: none; border-color: var(--rust); }
+  .location-btn {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .location-btn-detect {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .location-btn-detect:hover { background: #2a2825; }
+  .location-btn-clear {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--sand);
+    display: none;
+  }
+  .location-btn-clear:hover { border-color: var(--ink); color: var(--ink); }
+  .location-btn-clear.visible { display: inline-block; }
+  .distance-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--rust);
+    white-space: nowrap;
+    letter-spacing: 0.02em;
   }
 </style>
 </head>
@@ -402,10 +473,19 @@
   <button class="filter-btn" onclick="filterEvents('community', this)">Community</button>
 </div>
 
+<div class="location-bar" id="location-bar">
+  <span class="location-label">Sort by nearest:</span>
+  <div class="location-input-wrap">
+    <input type="text" id="location-input" placeholder="Enter your city..." autocomplete="off">
+    <button class="location-btn location-btn-detect" onclick="detectLocation()">&#128205; Use My Location</button>
+    <button class="location-btn location-btn-clear" id="location-clear" onclick="clearLocation()">Clear</button>
+  </div>
+</div>
+
 <div class="main">
 
   <!-- Featured: ClawCamp Oakland -->
-  <div class="featured-event" data-type="flagship" data-date="2026-04-16">
+  <div class="featured-event" data-type="flagship" data-date="2026-04-16" data-city="oakland">
     <div class="featured-left">
       <div class="featured-eyebrow">Flagship Event &middot; Oakland, CA</div>
       <div class="featured-title">ClawCamp<br><span>Oakland</span></div>
@@ -447,7 +527,7 @@
       <div class="divider-line"></div>
     </div>
 
-    <a class="event-row" href="https://luma.com/nm1yzbuq?tk=RIrqh9" target="_blank" data-type="community" data-date="2026-02-19">
+    <a class="event-row" href="https://luma.com/nm1yzbuq?tk=RIrqh9" target="_blank" data-type="community" data-date="2026-02-19" data-city="oakland">
       <div class="event-date">
         <div class="date-day">19</div>
         <div class="date-dow">Thu</div>
@@ -476,7 +556,7 @@
       <div class="divider-line"></div>
     </div>
 
-    <a class="event-row" href="https://luma.com/4rppzl9u" target="_blank" data-type="community" data-date="2026-03-12">
+    <a class="event-row" href="https://luma.com/4rppzl9u" target="_blank" data-type="community" data-date="2026-03-12" data-city="oakland">
       <div class="event-date">
         <div class="date-day">12</div>
         <div class="date-dow">Thu</div>
@@ -497,7 +577,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="/events/ai-for-good-education" data-type="workshop" data-date="2026-03-28">
+    <a class="event-row" href="/events/ai-for-good-education" data-type="workshop" data-date="2026-03-28" data-city="san-francisco">
       <div class="event-date">
         <div class="date-day">28</div>
         <div class="date-dow">Sat</div>
@@ -527,7 +607,7 @@
       <div class="divider-line"></div>
     </div>
 
-    <a class="event-row" href="https://luma.com/fnthorpk" target="_blank" data-type="workshop" data-date="2026-04-02">
+    <a class="event-row" href="https://luma.com/fnthorpk" target="_blank" data-type="workshop" data-date="2026-04-02" data-city="oakland">
       <div class="event-date">
         <div class="date-day">2</div>
         <div class="date-dow">Thu</div>
@@ -549,7 +629,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="/events/agents-payments-openclaw" data-type="community" data-date="2026-04-02">
+    <a class="event-row" href="/events/agents-payments-openclaw" data-type="community" data-date="2026-04-02" data-city="san-francisco">
       <div class="event-date">
         <div class="date-day">2</div>
         <div class="date-dow">Thu</div>
@@ -570,7 +650,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/de3n5ppp" target="_blank" data-type="community" data-date="2026-04-03">
+    <a class="event-row" href="https://luma.com/de3n5ppp" target="_blank" data-type="community" data-date="2026-04-03" data-city="san-francisco">
       <div class="event-date">
         <div class="date-day">3</div>
         <div class="date-dow">Fri</div>
@@ -591,7 +671,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/2ygp3sqn" target="_blank" data-type="workshop" data-date="2026-04-04">
+    <a class="event-row" href="https://luma.com/2ygp3sqn" target="_blank" data-type="workshop" data-date="2026-04-04" data-city="ho-chi-minh-city">
       <div class="event-date">
         <div class="date-day">4</div>
         <div class="date-dow">Sat</div>
@@ -612,7 +692,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/jtvgqgho" target="_blank" data-type="community" data-date="2026-04-04">
+    <a class="event-row" href="https://luma.com/jtvgqgho" target="_blank" data-type="community" data-date="2026-04-04" data-city="austin">
       <div class="event-date">
         <div class="date-day">4</div>
         <div class="date-dow">Sat</div>
@@ -633,7 +713,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/tcysd6oz" target="_blank" data-type="community" data-date="2026-04-06">
+    <a class="event-row" href="https://luma.com/tcysd6oz" target="_blank" data-type="community" data-date="2026-04-06" data-city="bentonville">
       <div class="event-date">
         <div class="date-day">6</div>
         <div class="date-dow">Mon</div>
@@ -654,7 +734,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/83j64l35" target="_blank" data-type="community" data-date="2026-04-06">
+    <a class="event-row" href="https://luma.com/83j64l35" target="_blank" data-type="community" data-date="2026-04-06" data-city="seattle">
       <div class="event-date">
         <div class="date-day">6</div>
         <div class="date-dow">Mon</div>
@@ -675,7 +755,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/wn9f2gta" target="_blank" data-type="workshop" data-date="2026-04-07">
+    <a class="event-row" href="https://luma.com/wn9f2gta" target="_blank" data-type="workshop" data-date="2026-04-07" data-city="singapore">
       <div class="event-date">
         <div class="date-day">7</div>
         <div class="date-dow">Tue</div>
@@ -696,7 +776,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/utfyo4tb" target="_blank" data-type="community" data-date="2026-04-07">
+    <a class="event-row" href="https://luma.com/utfyo4tb" target="_blank" data-type="community" data-date="2026-04-07" data-city="singapore">
       <div class="event-date">
         <div class="date-day">7</div>
         <div class="date-dow">Tue</div>
@@ -717,7 +797,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/3voprpic" target="_blank" data-type="community" data-date="2026-04-08">
+    <a class="event-row" href="https://luma.com/3voprpic" target="_blank" data-type="community" data-date="2026-04-08" data-city="tokyo">
       <div class="event-date">
         <div class="date-day">8</div>
         <div class="date-dow">Wed</div>
@@ -738,7 +818,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/8fc2z19a" target="_blank" data-type="community" data-date="2026-04-08">
+    <a class="event-row" href="https://luma.com/8fc2z19a" target="_blank" data-type="community" data-date="2026-04-08" data-city="bucharest">
       <div class="event-date">
         <div class="date-day">8</div>
         <div class="date-dow">Wed</div>
@@ -759,7 +839,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/ppeaitgq" target="_blank" data-type="community" data-date="2026-04-08">
+    <a class="event-row" href="https://luma.com/ppeaitgq" target="_blank" data-type="community" data-date="2026-04-08" data-city="istanbul">
       <div class="event-date">
         <div class="date-day">8</div>
         <div class="date-dow">Wed</div>
@@ -780,7 +860,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/hcx97i9i" target="_blank" data-type="community" data-date="2026-04-08">
+    <a class="event-row" href="https://luma.com/hcx97i9i" target="_blank" data-type="community" data-date="2026-04-08" data-city="ghent">
       <div class="event-date">
         <div class="date-day">8</div>
         <div class="date-dow">Wed</div>
@@ -801,7 +881,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/5efqfyb4" target="_blank" data-type="community" data-date="2026-04-08">
+    <a class="event-row" href="https://luma.com/5efqfyb4" target="_blank" data-type="community" data-date="2026-04-08" data-city="toulouse">
       <div class="event-date">
         <div class="date-day">8</div>
         <div class="date-dow">Wed</div>
@@ -822,7 +902,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/foriorb8" target="_blank" data-type="community" data-date="2026-04-08">
+    <a class="event-row" href="https://luma.com/foriorb8" target="_blank" data-type="community" data-date="2026-04-08" data-city="new-york">
       <div class="event-date">
         <div class="date-day">8</div>
         <div class="date-dow">Wed</div>
@@ -843,7 +923,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/i5m0p57j" target="_blank" data-type="workshop" data-date="2026-04-09">
+    <a class="event-row" href="https://luma.com/i5m0p57j" target="_blank" data-type="workshop" data-date="2026-04-09" data-city="berlin">
       <div class="event-date">
         <div class="date-day">9</div>
         <div class="date-dow">Thu</div>
@@ -864,7 +944,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/qzcdudyv" target="_blank" data-type="community" data-date="2026-04-09">
+    <a class="event-row" href="https://luma.com/qzcdudyv" target="_blank" data-type="community" data-date="2026-04-09" data-city="victoria">
       <div class="event-date">
         <div class="date-day">9</div>
         <div class="date-dow">Thu</div>
@@ -885,7 +965,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/o3cmcku6" target="_blank" data-type="community" data-date="2026-04-09">
+    <a class="event-row" href="https://luma.com/o3cmcku6" target="_blank" data-type="community" data-date="2026-04-09" data-city="raleigh">
       <div class="event-date">
         <div class="date-day">9</div>
         <div class="date-dow">Thu</div>
@@ -906,7 +986,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/txcpg2pj" target="_blank" data-type="community" data-date="2026-04-09">
+    <a class="event-row" href="https://luma.com/txcpg2pj" target="_blank" data-type="community" data-date="2026-04-09" data-city="kitchener">
       <div class="event-date">
         <div class="date-day">9</div>
         <div class="date-dow">Thu</div>
@@ -927,7 +1007,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/nr6qy1pq" target="_blank" data-type="community" data-date="2026-04-09">
+    <a class="event-row" href="https://luma.com/nr6qy1pq" target="_blank" data-type="community" data-date="2026-04-09" data-city="new-york">
       <div class="event-date">
         <div class="date-day">9</div>
         <div class="date-dow">Thu</div>
@@ -948,7 +1028,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/4mda7i1s" target="_blank" data-type="community" data-date="2026-04-09">
+    <a class="event-row" href="https://luma.com/4mda7i1s" target="_blank" data-type="community" data-date="2026-04-09" data-city="boulder">
       <div class="event-date">
         <div class="date-day">9</div>
         <div class="date-dow">Thu</div>
@@ -969,7 +1049,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/ams-apr10" target="_blank" data-type="community" data-date="2026-04-10">
+    <a class="event-row" href="https://luma.com/ams-apr10" target="_blank" data-type="community" data-date="2026-04-10" data-city="amsterdam">
       <div class="event-date">
         <div class="date-day">10</div>
         <div class="date-dow">Fri</div>
@@ -990,7 +1070,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/zvytnx68" target="_blank" data-type="community" data-date="2026-04-10">
+    <a class="event-row" href="https://luma.com/zvytnx68" target="_blank" data-type="community" data-date="2026-04-10" data-city="singapore">
       <div class="event-date">
         <div class="date-day">10</div>
         <div class="date-dow">Fri</div>
@@ -1011,7 +1091,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/lpiem3j6" target="_blank" data-type="workshop" data-date="2026-04-10">
+    <a class="event-row" href="https://luma.com/lpiem3j6" target="_blank" data-type="workshop" data-date="2026-04-10" data-city="toronto">
       <div class="event-date">
         <div class="date-day">10</div>
         <div class="date-dow">Fri</div>
@@ -1032,7 +1112,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/5l4n2x0a" target="_blank" data-type="community" data-date="2026-04-10">
+    <a class="event-row" href="https://luma.com/5l4n2x0a" target="_blank" data-type="community" data-date="2026-04-10" data-city="vancouver">
       <div class="event-date">
         <div class="date-day">10</div>
         <div class="date-dow">Fri</div>
@@ -1053,7 +1133,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/2w471wrh" target="_blank" data-type="community" data-date="2026-04-11">
+    <a class="event-row" href="https://luma.com/2w471wrh" target="_blank" data-type="community" data-date="2026-04-11" data-city="chiang-mai">
       <div class="event-date">
         <div class="date-day">11</div>
         <div class="date-dow">Sat</div>
@@ -1074,7 +1154,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/1gfhussn" target="_blank" data-type="community" data-date="2026-04-13">
+    <a class="event-row" href="https://luma.com/1gfhussn" target="_blank" data-type="community" data-date="2026-04-13" data-city="oslo">
       <div class="event-date">
         <div class="date-day">13</div>
         <div class="date-dow">Mon</div>
@@ -1095,7 +1175,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="/events/claw-villa-blr-hack" data-type="community" data-date="2026-04-04">
+    <a class="event-row" href="/events/claw-villa-blr-hack" data-type="community" data-date="2026-04-04" data-city="bangalore">
       <div class="event-date">
         <div class="date-day">4</div>
         <div class="date-dow">Sat</div>
@@ -1118,7 +1198,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/l88gofex" target="_blank" data-type="workshop" data-date="2026-04-14">
+    <a class="event-row" href="https://luma.com/l88gofex" target="_blank" data-type="workshop" data-date="2026-04-14" data-city="online">
       <div class="event-date">
         <div class="date-day">14</div>
         <div class="date-dow">Tue</div>
@@ -1140,7 +1220,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/openclaw-x-money" target="_blank" data-type="community" data-date="2026-04-15">
+    <a class="event-row" href="https://luma.com/openclaw-x-money" target="_blank" data-type="community" data-date="2026-04-15" data-city="berlin">
       <div class="event-date">
         <div class="date-day">15</div>
         <div class="date-dow">Wed</div>
@@ -1162,7 +1242,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="/events/oakland" data-type="flagship" data-date="2026-04-16">
+    <a class="event-row" href="/events/oakland" data-type="flagship" data-date="2026-04-16" data-city="oakland">
       <div class="event-date">
         <div class="date-day">16</div>
         <div class="date-dow">Thu</div>
@@ -1184,7 +1264,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="/staff" data-type="community" data-date="2026-04-06">
+    <a class="event-row" href="/staff" data-type="community" data-date="2026-04-06" data-city="online">
       <div class="event-date">
         <div class="date-day">6</div>
         <div class="date-dow">Mon</div>
@@ -1206,7 +1286,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="/staff" data-type="community" data-date="2026-04-08">
+    <a class="event-row" href="/staff" data-type="community" data-date="2026-04-08" data-city="online">
       <div class="event-date">
         <div class="date-day">8</div>
         <div class="date-dow">Wed</div>
@@ -1228,7 +1308,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/ifuw88zt" target="_blank" data-type="community" data-date="2026-04-09">
+    <a class="event-row" href="https://luma.com/ifuw88zt" target="_blank" data-type="community" data-date="2026-04-09" data-city="oakland">
       <div class="event-date">
         <div class="date-day">9</div>
         <div class="date-dow">Thu</div>
@@ -1250,7 +1330,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/9phcbb1z" target="_blank" data-type="workshop" data-date="2026-04-23">
+    <a class="event-row" href="https://luma.com/9phcbb1z" target="_blank" data-type="workshop" data-date="2026-04-23" data-city="oakland">
       <div class="event-date">
         <div class="date-day">23</div>
         <div class="date-dow">Thu</div>
@@ -1272,7 +1352,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="/events/openclaw-20-lines" data-type="workshop" data-date="2026-04-02">
+    <a class="event-row" href="/events/openclaw-20-lines" data-type="workshop" data-date="2026-04-02" data-city="san-francisco">
       <div class="event-date">
         <div class="date-day">2</div>
         <div class="date-dow">Thu</div>
@@ -1294,7 +1374,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconlondon" target="_blank" data-type="community" data-date="2026-04-08">
+    <a class="event-row" href="https://luma.com/clawconlondon" target="_blank" data-type="community" data-date="2026-04-08" data-city="london">
       <div class="event-date">
         <div class="date-day">8</div>
         <div class="date-dow">Wed</div>
@@ -1315,7 +1395,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconla" target="_blank" data-type="community" data-date="2026-04-14">
+    <a class="event-row" href="https://luma.com/clawconla" target="_blank" data-type="community" data-date="2026-04-14" data-city="los-angeles">
       <div class="event-date">
         <div class="date-day">14</div>
         <div class="date-dow">Tue</div>
@@ -1336,7 +1416,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/detf9zaf" target="_blank" data-type="community" data-date="2026-04-14">
+    <a class="event-row" href="https://luma.com/detf9zaf" target="_blank" data-type="community" data-date="2026-04-14" data-city="valencia">
       <div class="event-date">
         <div class="date-day">14</div>
         <div class="date-dow">Tue</div>
@@ -1357,7 +1437,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconmichigan" target="_blank" data-type="community" data-date="2026-04-16">
+    <a class="event-row" href="https://luma.com/clawconmichigan" target="_blank" data-type="community" data-date="2026-04-16" data-city="ann-arbor">
       <div class="event-date">
         <div class="date-day">16</div>
         <div class="date-dow">Thu</div>
@@ -1378,7 +1458,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconsp" target="_blank" data-type="community" data-date="2026-04-23">
+    <a class="event-row" href="https://luma.com/clawconsp" target="_blank" data-type="community" data-date="2026-04-23" data-city="sao-paulo">
       <div class="event-date">
         <div class="date-day">23</div>
         <div class="date-dow">Thu</div>
@@ -1399,7 +1479,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconguad" target="_blank" data-type="community" data-date="2026-04-25">
+    <a class="event-row" href="https://luma.com/clawconguad" target="_blank" data-type="community" data-date="2026-04-25" data-city="guadalajara">
       <div class="event-date">
         <div class="date-day">25</div>
         <div class="date-dow">Sat</div>
@@ -1420,7 +1500,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconrio" target="_blank" data-type="community" data-date="2026-04-25">
+    <a class="event-row" href="https://luma.com/clawconrio" target="_blank" data-type="community" data-date="2026-04-25" data-city="rio-de-janeiro">
       <div class="event-date">
         <div class="date-day">25</div>
         <div class="date-dow">Sat</div>
@@ -1441,7 +1521,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconcopenhagen" target="_blank" data-type="community" data-date="2026-04-27">
+    <a class="event-row" href="https://luma.com/clawconcopenhagen" target="_blank" data-type="community" data-date="2026-04-27" data-city="copenhagen">
       <div class="event-date">
         <div class="date-day">27</div>
         <div class="date-dow">Mon</div>
@@ -1462,7 +1542,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconchicago" target="_blank" data-type="community" data-date="2026-04-28">
+    <a class="event-row" href="https://luma.com/clawconchicago" target="_blank" data-type="community" data-date="2026-04-28" data-city="chicago">
       <div class="event-date">
         <div class="date-day">28</div>
         <div class="date-dow">Tue</div>
@@ -1483,7 +1563,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconankara" target="_blank" data-type="community" data-date="2026-04-29">
+    <a class="event-row" href="https://luma.com/clawconankara" target="_blank" data-type="community" data-date="2026-04-29" data-city="ankara">
       <div class="event-date">
         <div class="date-day">29</div>
         <div class="date-dow">Wed</div>
@@ -1504,7 +1584,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconbh" target="_blank" data-type="community" data-date="2026-04-29">
+    <a class="event-row" href="https://luma.com/clawconbh" target="_blank" data-type="community" data-date="2026-04-29" data-city="belo-horizonte">
       <div class="event-date">
         <div class="date-day">29</div>
         <div class="date-dow">Wed</div>
@@ -1525,7 +1605,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconboston" target="_blank" data-type="community" data-date="2026-04-29">
+    <a class="event-row" href="https://luma.com/clawconboston" target="_blank" data-type="community" data-date="2026-04-29" data-city="boston">
       <div class="event-date">
         <div class="date-day">29</div>
         <div class="date-dow">Wed</div>
@@ -1546,7 +1626,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconphiladelphia" target="_blank" data-type="community" data-date="2026-04-30">
+    <a class="event-row" href="https://luma.com/clawconphiladelphia" target="_blank" data-type="community" data-date="2026-04-30" data-city="philadelphia">
       <div class="event-date">
         <div class="date-day">30</div>
         <div class="date-dow">Thu</div>
@@ -1576,7 +1656,7 @@
       <div class="divider-line"></div>
     </div>
 
-    <a class="event-row" href="https://luma.com/clawconseoul" target="_blank" data-type="community" data-date="2026-05-02">
+    <a class="event-row" href="https://luma.com/clawconseoul" target="_blank" data-type="community" data-date="2026-05-02" data-city="seoul">
       <div class="event-date">
         <div class="date-day">2</div>
         <div class="date-dow">Sat</div>
@@ -1597,7 +1677,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconistanbul" target="_blank" data-type="community" data-date="2026-05-06">
+    <a class="event-row" href="https://luma.com/clawconistanbul" target="_blank" data-type="community" data-date="2026-05-06" data-city="istanbul">
       <div class="event-date">
         <div class="date-day">6</div>
         <div class="date-dow">Wed</div>
@@ -1618,7 +1698,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconcdmx" target="_blank" data-type="community" data-date="2026-05-09">
+    <a class="event-row" href="https://luma.com/clawconcdmx" target="_blank" data-type="community" data-date="2026-05-09" data-city="mexico-city">
       <div class="event-date">
         <div class="date-day">9</div>
         <div class="date-dow">Sat</div>
@@ -1639,7 +1719,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawcontoronto" target="_blank" data-type="community" data-date="2026-05-09">
+    <a class="event-row" href="https://luma.com/clawcontoronto" target="_blank" data-type="community" data-date="2026-05-09" data-city="toronto">
       <div class="event-date">
         <div class="date-day">9</div>
         <div class="date-dow">Sat</div>
@@ -1660,7 +1740,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconbogota" target="_blank" data-type="community" data-date="2026-05-12">
+    <a class="event-row" href="https://luma.com/clawconbogota" target="_blank" data-type="community" data-date="2026-05-12" data-city="bogota">
       <div class="event-date">
         <div class="date-day">12</div>
         <div class="date-dow">Tue</div>
@@ -1681,7 +1761,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconpoa" target="_blank" data-type="community" data-date="2026-05-13">
+    <a class="event-row" href="https://luma.com/clawconpoa" target="_blank" data-type="community" data-date="2026-05-13" data-city="porto-alegre">
       <div class="event-date">
         <div class="date-day">13</div>
         <div class="date-dow">Wed</div>
@@ -1702,7 +1782,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconsingapore" target="_blank" data-type="community" data-date="2026-05-14">
+    <a class="event-row" href="https://luma.com/clawconsingapore" target="_blank" data-type="community" data-date="2026-05-14" data-city="singapore">
       <div class="event-date">
         <div class="date-day">14</div>
         <div class="date-dow">Thu</div>
@@ -1723,7 +1803,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconshanghai" target="_blank" data-type="community" data-date="2026-05-17">
+    <a class="event-row" href="https://luma.com/clawconshanghai" target="_blank" data-type="community" data-date="2026-05-17" data-city="shanghai">
       <div class="event-date">
         <div class="date-day">17</div>
         <div class="date-dow">Sun</div>
@@ -1744,7 +1824,7 @@
       </div>
     </a>
 
-    <a class="event-row" href="https://luma.com/clawconbuenosaires" target="_blank" data-type="community" data-date="2026-05-23">
+    <a class="event-row" href="https://luma.com/clawconbuenosaires" target="_blank" data-type="community" data-date="2026-05-23" data-city="buenos-aires">
       <div class="event-date">
         <div class="date-day">23</div>
         <div class="date-dow">Sat</div>
@@ -1773,7 +1853,7 @@
       <div class="divider-line"></div>
     </div>
 
-    <a class="event-row" href="https://luma.com/clawconparis" target="_blank" data-type="community" data-date="2026-06-16">
+    <a class="event-row" href="https://luma.com/clawconparis" target="_blank" data-type="community" data-date="2026-06-16" data-city="paris">
       <div class="event-date">
         <div class="date-day">16</div>
         <div class="date-dow">Tue</div>
@@ -1802,7 +1882,7 @@
       <div class="divider-line"></div>
     </div>
 
-    <a class="event-row" href="https://luma.com/clawconstockholm" target="_blank" data-type="community" data-date="2026-09-08">
+    <a class="event-row" href="https://luma.com/clawconstockholm" target="_blank" data-type="community" data-date="2026-09-08" data-city="stockholm">
       <div class="event-date">
         <div class="date-day">8</div>
         <div class="date-dow">Tue</div>
@@ -1910,6 +1990,104 @@
 <script>
 var currentTimeTab = 'upcoming';
 var currentTypeFilter = 'all';
+var userLat = null;
+var userLon = null;
+var sortByDistance = false;
+
+// City coordinates lookup
+var cityCoords = {
+  'oakland': [37.8044, -122.2712],
+  'san-francisco': [37.7749, -122.4194],
+  'ho-chi-minh-city': [10.8231, 106.6297],
+  'austin': [30.2672, -97.7431],
+  'bentonville': [36.3729, -94.2088],
+  'seattle': [47.6062, -122.3321],
+  'singapore': [1.3521, 103.8198],
+  'tokyo': [35.6762, 139.6503],
+  'bucharest': [44.4268, 26.1025],
+  'istanbul': [41.0082, 28.9784],
+  'ghent': [51.0543, 3.7174],
+  'toulouse': [43.6047, 1.4442],
+  'new-york': [40.7128, -74.0060],
+  'berlin': [52.5200, 13.4050],
+  'victoria': [48.4284, -123.3656],
+  'raleigh': [35.7796, -78.6382],
+  'kitchener': [43.4516, -80.4925],
+  'boulder': [40.0150, -105.2705],
+  'amsterdam': [52.3676, 4.9041],
+  'toronto': [43.6532, -79.3832],
+  'vancouver': [49.2827, -123.1207],
+  'chiang-mai': [18.7883, 98.9853],
+  'oslo': [59.9139, 10.7522],
+  'bangalore': [12.9716, 77.5946],
+  'london': [51.5074, -0.1278],
+  'los-angeles': [34.0522, -118.2437],
+  'valencia': [39.4699, -0.3763],
+  'ann-arbor': [42.2808, -83.7430],
+  'sao-paulo': [-23.5505, -46.6333],
+  'guadalajara': [20.6597, -103.3496],
+  'rio-de-janeiro': [-22.9068, -43.1729],
+  'copenhagen': [55.6761, 12.5683],
+  'chicago': [41.8781, -87.6298],
+  'ankara': [39.9334, 32.8597],
+  'belo-horizonte': [-19.9167, -43.9345],
+  'boston': [42.3601, -71.0589],
+  'philadelphia': [39.9526, -75.1652],
+  'seoul': [37.5665, 126.9780],
+  'mexico-city': [19.4326, -99.1332],
+  'bogota': [4.7110, -74.0721],
+  'porto-alegre': [-30.0346, -51.2177],
+  'shanghai': [31.2304, 121.4737],
+  'buenos-aires': [-34.6037, -58.3816],
+  'paris': [48.8566, 2.3522],
+  'stockholm': [59.3293, 18.0686],
+  'online': null
+};
+
+// Known city names for input matching
+var cityNames = {
+  'oakland': 'oakland', 'san francisco': 'san-francisco', 'sf': 'san-francisco',
+  'ho chi minh': 'ho-chi-minh-city', 'saigon': 'ho-chi-minh-city',
+  'austin': 'austin', 'bentonville': 'bentonville', 'seattle': 'seattle',
+  'singapore': 'singapore', 'tokyo': 'tokyo', 'bucharest': 'bucharest',
+  'istanbul': 'istanbul', 'ghent': 'ghent', 'toulouse': 'toulouse',
+  'new york': 'new-york', 'nyc': 'new-york', 'berlin': 'berlin',
+  'victoria': 'victoria', 'raleigh': 'raleigh', 'kitchener': 'kitchener',
+  'waterloo': 'kitchener', 'boulder': 'boulder', 'amsterdam': 'amsterdam',
+  'toronto': 'toronto', 'vancouver': 'vancouver', 'chiang mai': 'chiang-mai',
+  'oslo': 'oslo', 'bangalore': 'bangalore', 'bengaluru': 'bangalore',
+  'london': 'london', 'los angeles': 'los-angeles', 'la': 'los-angeles',
+  'valencia': 'valencia', 'ann arbor': 'ann-arbor', 'sao paulo': 'sao-paulo',
+  'guadalajara': 'guadalajara', 'rio de janeiro': 'rio-de-janeiro', 'rio': 'rio-de-janeiro',
+  'copenhagen': 'copenhagen', 'chicago': 'chicago', 'ankara': 'ankara',
+  'belo horizonte': 'belo-horizonte', 'boston': 'boston', 'philadelphia': 'philadelphia',
+  'philly': 'philadelphia', 'seoul': 'seoul', 'mexico city': 'mexico-city',
+  'cdmx': 'mexico-city', 'bogota': 'bogota', 'porto alegre': 'porto-alegre',
+  'shanghai': 'shanghai', 'buenos aires': 'buenos-aires', 'paris': 'paris',
+  'stockholm': 'stockholm'
+};
+
+function haversine(lat1, lon1, lat2, lon2) {
+  var R = 6371;
+  var dLat = (lat2 - lat1) * Math.PI / 180;
+  var dLon = (lon2 - lon1) * Math.PI / 180;
+  var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function getDistanceForCity(cityKey) {
+  if (!userLat || !userLon || !cityKey || !cityCoords[cityKey]) return Infinity;
+  var c = cityCoords[cityKey];
+  return haversine(userLat, userLon, c[0], c[1]);
+}
+
+function formatDistance(km) {
+  var miles = km * 0.621371;
+  if (miles < 100) return Math.round(miles) + ' mi';
+  return Math.round(miles).toLocaleString() + ' mi';
+}
 
 function getToday() {
   var d = new Date();
@@ -1929,12 +2107,147 @@ function applyFilters() {
     var typeMatch = (currentTypeFilter === 'all') || (type === currentTypeFilter);
     row.style.display = (timeMatch && typeMatch) ? '' : 'none';
   });
-  // Hide empty month sections
   document.querySelectorAll('.month-section').forEach(function(section) {
     var visible = section.querySelectorAll('.event-row:not([style*="display: none"])');
     section.style.display = visible.length === 0 ? 'none' : '';
   });
 }
+
+function sortEventsByDistance() {
+  if (!sortByDistance || !userLat) return;
+
+  var mainEl = document.querySelector('.main');
+  var allItems = Array.from(document.querySelectorAll('.event-row, .featured-event'));
+
+  allItems.forEach(function(row) {
+    var city = row.dataset.city;
+    var dist = getDistanceForCity(city);
+    row._distance = dist;
+
+    var old = row.querySelector('.distance-badge');
+    if (old) {
+      var oldParent = old.parentNode;
+      if (oldParent && oldParent.classList.contains('meta-item') && oldParent.children.length <= 1) {
+        oldParent.remove();
+      } else {
+        old.remove();
+      }
+    }
+
+    if (dist < Infinity) {
+      var badge = document.createElement('span');
+      badge.className = 'distance-badge';
+      badge.textContent = formatDistance(dist) + ' away';
+      if (row.classList.contains('featured-event')) {
+        var eyebrow = row.querySelector('.featured-eyebrow');
+        if (eyebrow) {
+          eyebrow.appendChild(document.createTextNode(' \u00B7 '));
+          eyebrow.appendChild(badge);
+        }
+      } else {
+        var meta = row.querySelector('.event-meta');
+        if (meta) {
+          var span = document.createElement('span');
+          span.className = 'meta-item';
+          span.appendChild(badge);
+          meta.appendChild(span);
+        }
+      }
+    }
+  });
+
+  allItems.sort(function(a, b) { return (a._distance || Infinity) - (b._distance || Infinity); });
+
+  document.querySelectorAll('.month-section').forEach(function(s) { s.style.display = 'none'; });
+
+  allItems.forEach(function(row) {
+    mainEl.appendChild(row);
+  });
+
+  applyFilters();
+}
+
+function setUserLocation(lat, lon, label) {
+  userLat = lat;
+  userLon = lon;
+  sortByDistance = true;
+  var input = document.getElementById('location-input');
+  input.value = label || (lat.toFixed(2) + ', ' + lon.toFixed(2));
+  document.getElementById('location-clear').classList.add('visible');
+  sortEventsByDistance();
+}
+
+function detectLocation() {
+  var btn = document.querySelector('.location-btn-detect');
+  var origText = btn.textContent;
+  btn.textContent = 'Locating...';
+  btn.disabled = true;
+
+  if (!navigator.geolocation) {
+    btn.textContent = origText;
+    btn.disabled = false;
+    alert('Geolocation is not supported by your browser.');
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    function(pos) {
+      btn.textContent = origText;
+      btn.disabled = false;
+      setUserLocation(pos.coords.latitude, pos.coords.longitude, 'Your Location');
+    },
+    function() {
+      btn.textContent = origText;
+      btn.disabled = false;
+      alert('Unable to get your location. Please enter a city name instead.');
+    },
+    { timeout: 10000 }
+  );
+}
+
+function clearLocation() {
+  location.reload();
+}
+
+document.getElementById('location-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    var val = this.value.trim().toLowerCase();
+    if (!val) return;
+
+    var cityKey = cityNames[val];
+    if (cityKey && cityCoords[cityKey]) {
+      var c = cityCoords[cityKey];
+      setUserLocation(c[0], c[1], this.value.trim());
+      return;
+    }
+
+    var keys = Object.keys(cityNames);
+    for (var i = 0; i < keys.length; i++) {
+      if (keys[i].indexOf(val) !== -1 || val.indexOf(keys[i]) !== -1) {
+        cityKey = cityNames[keys[i]];
+        if (cityCoords[cityKey]) {
+          var c = cityCoords[cityKey];
+          setUserLocation(c[0], c[1], this.value.trim());
+          return;
+        }
+      }
+    }
+
+    fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(this.value.trim()) + '&limit=1')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && data.length > 0) {
+          setUserLocation(parseFloat(data[0].lat), parseFloat(data[0].lon), data[0].display_name.split(',')[0]);
+        } else {
+          alert('City not found. Please try a different name.');
+        }
+      })
+      .catch(function() {
+        alert('Could not look up that city. Please try again.');
+      });
+  }
+});
 
 function updateCounts() {
   var today = getToday();
@@ -1953,14 +2266,16 @@ function switchTimeTab(tab, btn) {
   currentTimeTab = tab;
   document.querySelectorAll('.time-tab').forEach(function(b) { b.classList.remove('active'); });
   btn.classList.add('active');
-  applyFilters();
+  if (sortByDistance) sortEventsByDistance();
+  else applyFilters();
 }
 
 function filterEvents(type, btn) {
   currentTypeFilter = type;
   document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
   btn.classList.add('active');
-  applyFilters();
+  if (sortByDistance) sortEventsByDistance();
+  else applyFilters();
 }
 
 // Initialize on load
