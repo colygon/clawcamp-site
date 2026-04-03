@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Involved — ClawCamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/shared.css">
+<style>
+  .chooser {
+    padding: 48px 48px 0;
+    max-width: 900px;
+  }
+  .chooser p {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+  .chooser-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .chooser-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 24px 16px;
+    border: 1.5px solid var(--sand);
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    text-align: center;
+  }
+  .chooser-btn:hover {
+    border-color: var(--ink);
+    background: var(--cream);
+  }
+  .chooser-btn.active {
+    border-color: var(--rust);
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .chooser-btn .chooser-icon {
+    font-size: 28px;
+    line-height: 1;
+  }
+  .chooser-btn .chooser-label {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .chooser-btn .chooser-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .chooser-btn.active .chooser-desc {
+    color: rgba(245,242,236,0.6);
+  }
+
+  /* Form area */
+  .form-area {
+    padding: 48px 48px 0;
+    max-width: 800px;
+  }
+  .form-panel {
+    display: none;
+  }
+  .form-panel.active {
+    display: block;
+  }
+  .form-panel h2 {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .form-panel h2 em { font-style: normal; color: var(--rust); }
+  .form-panel > p {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+  .involve-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .form-group label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 15px;
+    padding: 12px 16px;
+    border: 1px solid var(--sand);
+    border-radius: 6px;
+    background: white;
+    color: var(--ink);
+    transition: border-color 0.15s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--rust);
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--rust);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 24px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+    align-self: flex-start;
+  }
+  .form-submit:hover { background: #a8420a; }
+  .form-note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: -8px;
+  }
+
+  @media (max-width: 768px) {
+    .chooser, .form-area { padding-left: 20px; padding-right: 20px; }
+    .chooser-grid { grid-template-columns: repeat(2, 1fr); }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div id="site-nav"></div>
+
+<header class="page-header">
+  <h1>Get<br><em>Involved</em></h1>
+  <div class="header-meta">
+    <p>Host, Speak, Sponsor</p>
+    <p>Submit Events</p>
+    <p>Join Leadership</p>
+  </div>
+</header>
+
+<div class="chooser">
+  <p>There are many ways to be part of ClawCamp. Choose what fits you best and we'll take it from there.</p>
+  <div class="chooser-grid">
+    <button class="chooser-btn" onclick="showForm('host')">
+      <span class="chooser-icon">&#127969;</span>
+      <span class="chooser-label">Host a Camp</span>
+      <span class="chooser-desc">Run an event in your city</span>
+    </button>
+    <button class="chooser-btn" onclick="showForm('speaker')">
+      <span class="chooser-icon">&#127908;</span>
+      <span class="chooser-label">Apply to Speak</span>
+      <span class="chooser-desc">Share your expertise on stage</span>
+    </button>
+    <button class="chooser-btn" onclick="showForm('sponsor')">
+      <span class="chooser-icon">&#129309;</span>
+      <span class="chooser-label">Become a Sponsor</span>
+      <span class="chooser-desc">Support the community</span>
+    </button>
+    <button class="chooser-btn" onclick="showForm('leadership')">
+      <span class="chooser-icon">&#127942;</span>
+      <span class="chooser-label">Join Leadership</span>
+      <span class="chooser-desc">Apply for a staff role</span>
+    </button>
+    <button class="chooser-btn" onclick="showForm('event')">
+      <span class="chooser-icon">&#128197;</span>
+      <span class="chooser-label">Submit an Event</span>
+      <span class="chooser-desc">Add your event to the calendar</span>
+    </button>
+  </div>
+</div>
+
+<div class="form-area">
+
+  <!-- Host a Camp -->
+  <div class="form-panel" id="panel-host">
+    <h2>Host a <em>Camp</em></h2>
+    <p>Tell us about yourself and the event you want to run. We'll get back to you within 5 business days.</p>
+    <form class="involve-form" id="host-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="host-name">Full Name *</label>
+          <input type="text" id="host-name" name="name" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label for="host-email">Email *</label>
+          <input type="email" id="host-email" name="email" required placeholder="you@example.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="host-phone">Phone Number *</label>
+          <input type="tel" id="host-phone" name="phone" required placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="form-group">
+          <label for="host-city">City *</label>
+          <input type="text" id="host-city" name="city" required placeholder="e.g. Oakland, CA">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="host-format">Event Format</label>
+          <select id="host-format" name="format">
+            <option value="">Select a format</option>
+            <option value="workshop">OpenClaw Workshop</option>
+            <option value="deep-dive">Deep Dive Workshop</option>
+            <option value="unconference">Unconference</option>
+            <option value="demo-day">Demo Day</option>
+            <option value="show-and-tell">Show &amp; Tell</option>
+            <option value="startup-showcase">Startup Showcase</option>
+            <option value="online">Online Event</option>
+            <option value="other">Other / Multiple</option>
+          </select>
+          <p class="form-note" style="margin-top:4px;">Not sure? <a href="/formats" style="color:var(--rust);text-decoration:underline;">Explore event formats &rarr;</a></p>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="host-date">Proposed Date</label>
+          <input type="date" id="host-date" name="proposed_date">
+        </div>
+        <div class="form-group">
+          <label for="host-venue">Venue (if known)</label>
+          <input type="text" id="host-venue" name="venue" placeholder="Venue name or TBD">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="host-about">Tell Us About Yourself *</label>
+        <textarea id="host-about" name="about" required placeholder="What's your background? Have you organized events before? Why do you want to run a ClawCamp?"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="host-details">Event Details</label>
+        <textarea id="host-details" name="event_details" placeholder="Describe the event you want to run &mdash; expected size, target audience, any co-organizers or sponsors lined up"></textarea>
+      </div>
+      <button type="submit" class="form-submit">Submit Application &rarr;</button>
+      <p class="form-note">We'll get back to you within 5 business days.</p>
+    </form>
+  </div>
+
+  <!-- Apply to Speak -->
+  <div class="form-panel" id="panel-speaker">
+    <h2>Apply to <em>Speak</em></h2>
+    <p>We're looking for builders, founders, and practitioners to share their experience. Tell us about your talk and we'll be in touch.</p>
+    <form class="involve-form" id="speaker-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="speaker-name">Full Name *</label>
+          <input type="text" id="speaker-name" name="name" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label for="speaker-email">Email *</label>
+          <input type="email" id="speaker-email" name="email" required placeholder="you@example.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="speaker-phone">Phone Number *</label>
+          <input type="tel" id="speaker-phone" name="phone" required placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="form-group">
+          <label for="speaker-company">Company / Organization</label>
+          <input type="text" id="speaker-company" name="company" placeholder="Where you work">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="speaker-title">Your Title / Role</label>
+          <input type="text" id="speaker-title" name="title" placeholder="e.g. CTO, Founder, Engineer">
+        </div>
+        <div class="form-group">
+          <label for="speaker-event">Which Event? *</label>
+          <select id="speaker-event" name="event" required>
+            <option value="">Select an event</option>
+            <option value="oakland">ClawCamp Oakland (Apr 16)</option>
+            <option value="any">Any upcoming event</option>
+            <option value="online">Online events</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="speaker-format">Talk Format *</label>
+          <select id="speaker-format" name="format" required>
+            <option value="">Select a format</option>
+            <option value="keynote">Keynote (20 min)</option>
+            <option value="talk">Talk (10-15 min)</option>
+            <option value="lightning">Lightning Talk (5 min)</option>
+            <option value="workshop">Workshop Session (45 min)</option>
+            <option value="panel">Panel Participant</option>
+            <option value="demo">Live Demo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="speaker-linkedin">LinkedIn or Website</label>
+          <input type="url" id="speaker-linkedin" name="linkedin" placeholder="https://linkedin.com/in/you">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="speaker-topic">Talk Title &amp; Description *</label>
+        <textarea id="speaker-topic" name="topic" required placeholder="What would you talk about? Give us a title and a 2-3 sentence description of your proposed talk."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="speaker-bio">Short Bio</label>
+        <textarea id="speaker-bio" name="bio" placeholder="A few sentences about yourself, your work, and any previous speaking experience."></textarea>
+      </div>
+      <button type="submit" class="form-submit">Submit Application &rarr;</button>
+      <p class="form-note">We review applications on a rolling basis and will respond within 5 business days.</p>
+    </form>
+  </div>
+
+  <!-- Become a Sponsor -->
+  <div class="form-panel" id="panel-sponsor">
+    <h2>Sponsor <em>ClawCamp</em></h2>
+    <p>Interested in sponsoring? Tell us about your company and we'll send over the full sponsor deck.</p>
+    <form class="involve-form" id="sponsor-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="sponsor-contact">Contact Name *</label>
+          <input type="text" id="sponsor-contact" name="contact_name" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label for="sponsor-email">Email *</label>
+          <input type="email" id="sponsor-email" name="email" required placeholder="you@company.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="sponsor-phone">Phone Number *</label>
+          <input type="tel" id="sponsor-phone" name="phone" required placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="form-group">
+          <label for="sponsor-company">Company *</label>
+          <input type="text" id="sponsor-company" name="company" required placeholder="Company name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="sponsor-tier">Tier of Interest</label>
+          <select id="sponsor-tier" name="tier">
+            <option value="">Select a tier</option>
+            <option value="title">Title Sponsor</option>
+            <option value="standard">Standard Sponsor</option>
+            <option value="demo-table">Demo Table</option>
+            <option value="community-partner">Community Partner (In-kind)</option>
+            <option value="add-on">A La Carte Add-on</option>
+            <option value="not-sure">Not sure yet</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="sponsor-event">Which Event(s)?</label>
+          <input type="text" id="sponsor-event" name="event" placeholder="e.g. ClawCamp Oakland, all events, etc.">
+        </div>
+        <div class="form-group">
+          <label for="sponsor-website">Company Website</label>
+          <input type="url" id="sponsor-website" name="website" placeholder="https://yourcompany.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="sponsor-message">Tell Us More</label>
+        <textarea id="sponsor-message" name="message" placeholder="What does your company do? What are you hoping to get out of sponsoring? Any specific activities or formats you're interested in?"></textarea>
+      </div>
+      <button type="submit" class="form-submit">Submit Inquiry &rarr;</button>
+      <p class="form-note">We'll respond within 2 business days with the full sponsor deck.</p>
+    </form>
+  </div>
+
+  <!-- Join Leadership -->
+  <div class="form-panel" id="panel-leadership">
+    <h2>Join the <em>Leadership</em></h2>
+    <p>Apply for a role in the ClawCamp network. Tell us about your experience and what you'd bring to the team.</p>
+    <form class="involve-form" id="crew-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="crew-name">Full Name *</label>
+          <input type="text" id="crew-name" name="name" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label for="crew-email">Email *</label>
+          <input type="email" id="crew-email" name="email" required placeholder="you@example.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="crew-phone">Phone Number *</label>
+          <input type="tel" id="crew-phone" name="phone" required placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="form-group">
+          <label for="crew-city">City *</label>
+          <input type="text" id="crew-city" name="city" required placeholder="e.g. Oakland, CA">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="crew-role">Role You're Applying For *</label>
+          <select id="crew-role" name="role" required>
+            <option value="">Select a role</option>
+            <option value="area-director">Area Director</option>
+            <option value="unit-head">Unit Head</option>
+            <option value="camp-counselor">Camp Counselor</option>
+            <option value="specialist">Specialist</option>
+            <option value="activity-leader">Activity Leader</option>
+            <option value="camp-counselor-in-training">Camp Counselor in Training</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="crew-linkedin">LinkedIn or Website</label>
+          <input type="url" id="crew-linkedin" name="linkedin" placeholder="https://linkedin.com/in/you">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="crew-experience">Relevant Experience *</label>
+        <textarea id="crew-experience" name="experience" required placeholder="Tell us about your background. Have you organized events, taught workshops, or built with AI before?"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="crew-why">Why ClawCamp?</label>
+        <textarea id="crew-why" name="why" placeholder="What interests you about joining the crew? What would you bring to the network?"></textarea>
+      </div>
+      <button type="submit" class="form-submit">Submit Application &rarr;</button>
+      <p class="form-note">We'll review your application and get back to you within 5 business days.</p>
+    </form>
+  </div>
+
+  <!-- Submit an Event -->
+  <div class="form-panel" id="panel-event">
+    <h2>Submit an <em>Event</em></h2>
+    <p>Running a ClawCamp event? Submit it here and we'll add it to the calendar.</p>
+    <form class="involve-form" id="event-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="event-name">Full Name *</label>
+          <input type="text" id="event-name" name="name" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label for="event-email">Email *</label>
+          <input type="email" id="event-email" name="email" required placeholder="you@example.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="event-phone">Phone Number *</label>
+          <input type="tel" id="event-phone" name="phone" required placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="form-group">
+          <label for="event-city">City *</label>
+          <input type="text" id="event-city" name="city" required placeholder="e.g. Oakland, CA">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="event-format">Event Format</label>
+          <select id="event-format" name="format">
+            <option value="">Select a format</option>
+            <option value="workshop">OpenClaw Workshop</option>
+            <option value="deep-dive">Deep Dive Workshop</option>
+            <option value="unconference">Unconference</option>
+            <option value="demo-day">Demo Day</option>
+            <option value="show-and-tell">Show &amp; Tell</option>
+            <option value="startup-showcase">Startup Showcase</option>
+            <option value="online">Online Event</option>
+            <option value="other">Other / Multiple</option>
+          </select>
+          <p class="form-note" style="margin-top:4px;">Not sure? <a href="/formats" style="color:var(--rust);text-decoration:underline;">Explore event formats &rarr;</a></p>
+        </div>
+        <div class="form-group">
+          <label for="event-date">Proposed Date</label>
+          <input type="date" id="event-date" name="proposed_date">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="event-venue">Venue</label>
+        <input type="text" id="event-venue" name="venue" placeholder="Venue name and address (if known)">
+      </div>
+      <div class="form-group">
+        <label for="event-luma">Event Link (Luma, Eventbrite, etc.)</label>
+        <input type="url" id="event-luma" name="event_link" placeholder="https://luma.com/your-event">
+      </div>
+      <div class="form-group">
+        <label for="event-details">Event Details</label>
+        <textarea id="event-details" name="event_details" placeholder="Tell us about your event &mdash; expected size, target audience, any co-organizers or sponsors lined up"></textarea>
+      </div>
+      <button type="submit" class="form-submit">Submit Event &rarr;</button>
+      <p class="form-note">We'll review your submission and add it to the calendar within 2 business days.</p>
+    </form>
+  </div>
+
+</div>
+
+<div style="height:48px;"></div>
+
+<div class="cta-band">
+  <div>
+    <h3>Prefer email?</h3>
+    <p>Reach out directly and we'll point you in the right direction.</p>
+  </div>
+  <div class="cta-band-actions">
+    <a href="mailto:hello@clawcamp.ai" class="btn-dark">hello@clawcamp.ai &rarr;</a>
+    <a href="https://discord.gg/haAtnsyE3W" target="_blank" class="btn-outline">Join Discord</a>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/nav.js"></script>
+<script src="/js/supabase.js"></script>
+<script>
+function showForm(type) {
+  // Hide all panels
+  var panels = document.querySelectorAll('.form-panel');
+  for (var i = 0; i < panels.length; i++) {
+    panels[i].classList.remove('active');
+  }
+  // Deactivate all buttons
+  var btns = document.querySelectorAll('.chooser-btn');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].classList.remove('active');
+  }
+  // Show selected panel
+  var panel = document.getElementById('panel-' + type);
+  if (panel) {
+    panel.classList.add('active');
+    // Activate the clicked button
+    event.currentTarget.classList.add('active');
+    // Scroll to form
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// Check URL hash on load
+document.addEventListener('DOMContentLoaded', function() {
+  var hash = window.location.hash.replace('#', '');
+  if (hash) {
+    var btn = document.querySelector('.chooser-btn[onclick*="' + hash + '"]');
+    if (btn) {
+      btn.click();
+    }
+  }
+});
+</script>
+</body>
+</html>

@@ -16,7 +16,7 @@
         <a href="/curriculum" data-nav>Curriculum</a>\
       </div>\
     </div>\
-    <a href="https://discord.gg/haAtnsyE3W" class="nav-cta" target="_blank">Join Discord &rarr;</a>\
+    <a href="/get-involved" class="nav-cta">Get Involved &rarr;</a>\
   </div>\
   <button class="nav-hamburger" aria-label="Menu">&#9776;</button>\
 </nav>';
