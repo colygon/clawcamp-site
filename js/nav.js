@@ -5,15 +5,14 @@
   <div class="nav-links">\
     <a href="/events" data-nav>Events</a>\
     <a href="/speakers" data-nav>Speakers</a>\
-    <a href="/schedule" data-nav>Schedule</a>\
     <a href="/sponsors" data-nav>Sponsors</a>\
+    <a href="/host" data-nav>Host a Camp</a>\
     <div class="nav-more">\
-      <button class="nav-more-label">More <span class="chevron">&#9662;</span></button>\
+      <button class="nav-more-label">About <span class="chevron">&#9662;</span></button>\
       <div class="nav-more-dropdown">\
-        <a href="/about" data-nav>About</a>\
+        <a href="/about" data-nav>How it Started</a>\
         <a href="/formats" data-nav>Formats</a>\
         <a href="/community" data-nav>Community</a>\
-        <a href="/host" data-nav>Host a Camp</a>\
         <a href="/curriculum" data-nav>Curriculum</a>\
       </div>\
     </div>\
@@ -34,12 +33,12 @@
         <h4>Pages</h4>\
         <a href="/events">Events</a>\
         <a href="/speakers">Speakers</a>\
-        <a href="/schedule">Schedule</a>\
         <a href="/sponsors">Sponsors</a>\
-        <a href="/about">About</a>\
+        <a href="/host">Host a Camp</a>\
+        <a href="/about">How it Started</a>\
         <a href="/formats">Formats</a>\
         <a href="/community">Community</a>\
-        <a href="/host">Host a Camp</a>\
+        <a href="/curriculum">Curriculum</a>\
       </div>\
       <div class="footer-col">\
         <h4>Connect</h4>\
@@ -59,7 +58,7 @@
     </div>\
   </div>\
   <div class="footer-bottom">\
-    <p>&copy; 2026 ClawCamp LLC. Hosted by <a href="https://aiify.io" target="_blank">Aiify.io</a>.</p>\
+    <p>&copy; 2026 ClawCamp. Hosted by <a href="https://aiify.io" target="_blank">Aiify.io</a>.</p>\
   </div>\
 </footer>';
 

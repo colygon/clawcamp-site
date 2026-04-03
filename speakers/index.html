@@ -27,15 +27,16 @@
   .speaker-photo {
     aspect-ratio: 1;
     background: var(--cream);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
   }
-  .speaker-initials {
-    font-size: 48px;
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    color: var(--sand);
+  .speaker-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+  .speaker-card:hover .speaker-photo img {
+    transform: scale(1.04);
   }
   .speaker-info {
     padding: 20px 24px 24px;
@@ -93,7 +94,7 @@
   <div class="speaker-grid">
 
     <div class="speaker-card">
-      <div class="speaker-photo"><span class="speaker-initials">PD</span></div>
+      <div class="speaker-photo"><img src="/images/speakers/peter-danenberg.jpg" alt="Peter Danenberg"></div>
       <div class="speaker-info">
         <div class="speaker-name">Peter Danenberg</div>
         <div class="speaker-title">Senior Engineer</div>
@@ -102,7 +103,7 @@
     </div>
 
     <div class="speaker-card">
-      <div class="speaker-photo"><span class="speaker-initials">AS</span></div>
+      <div class="speaker-photo"><img src="/images/speakers/akash-saraf.jpg" alt="Akash Saraf"></div>
       <div class="speaker-info">
         <div class="speaker-name">Akash Saraf</div>
         <div class="speaker-title">CEO</div>
@@ -111,7 +112,7 @@
     </div>
 
     <div class="speaker-card">
-      <div class="speaker-photo"><span class="speaker-initials">MB</span></div>
+      <div class="speaker-photo"><img src="/images/speakers/marianne-bekker.jpg" alt="Marianne Bekker"></div>
       <div class="speaker-info">
         <div class="speaker-name">Marianne Bekker</div>
         <div class="speaker-title">Head of DevRel</div>
@@ -120,7 +121,7 @@
     </div>
 
     <div class="speaker-card">
-      <div class="speaker-photo"><span class="speaker-initials">AS</span></div>
+      <div class="speaker-photo"><img src="/images/speakers/andrew-smith.jpg" alt="Andrew Smith"></div>
       <div class="speaker-info">
         <div class="speaker-name">Andrew Smith</div>
         <div class="speaker-title">Co-Founder &amp; CEO</div>
@@ -129,7 +130,7 @@
     </div>
 
     <div class="speaker-card">
-      <div class="speaker-photo"><span class="speaker-initials">AA</span></div>
+      <div class="speaker-photo"><img src="/images/speakers/aditya-advani.jpg" alt="Aditya Advani"></div>
       <div class="speaker-info">
         <div class="speaker-name">Aditya Advani</div>
         <div class="speaker-title">Founder</div>
@@ -138,7 +139,7 @@
     </div>
 
     <div class="speaker-card">
-      <div class="speaker-photo"><span class="speaker-initials">AB</span></div>
+      <div class="speaker-photo"><img src="/images/speakers/amit-badlani.jpg" alt="Amit Badlani"></div>
       <div class="speaker-info">
         <div class="speaker-name">Amit Badlani</div>
         <div class="speaker-title">Chief Product Officer, AI/ML</div>
@@ -147,7 +148,7 @@
     </div>
 
     <div class="speaker-card">
-      <div class="speaker-photo"><span class="speaker-initials">DL</span></div>
+      <div class="speaker-photo"><img src="/images/speakers/dan-lynch.jpg" alt="Dan Lynch"></div>
       <div class="speaker-info">
         <div class="speaker-name">Dan Lynch</div>
         <div class="speaker-title">CEO</div>
@@ -156,7 +157,7 @@
     </div>
 
     <div class="speaker-card">
-      <div class="speaker-photo"><span class="speaker-initials">BS</span></div>
+      <div class="speaker-photo"><img src="/images/speakers/brian-sparkes.jpg" alt="Brian Sparkes"></div>
       <div class="speaker-info">
         <div class="speaker-name">Brian Sparkes</div>
         <div class="speaker-title">CEO &amp; Founder</div>
@@ -165,7 +166,7 @@
     </div>
 
     <div class="speaker-card">
-      <div class="speaker-photo"><span class="speaker-initials">CB</span></div>
+      <div class="speaker-photo"><img src="/images/speakers/colin-behring.jpg" alt="Colin Behring"></div>
       <div class="speaker-info">
         <div class="speaker-name">Colin Behring</div>
         <div class="speaker-title">Chief Executive Officer</div>
@@ -185,7 +186,7 @@
   </div>
   <div class="cta-band-actions">
     <a href="mailto:events@clawcamp.us?subject=Speaker%20Application" class="btn-dark">Apply to Speak &rarr;</a>
-    <a href="/schedule" class="btn-outline">View Schedule</a>
+    <a href="/events/oakland" class="btn-outline">View Oakland Details</a>
   </div>
 </div>
 
