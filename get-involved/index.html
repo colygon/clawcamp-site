@@ -358,6 +358,16 @@
       <span class="chooser-label">Startup Showcase</span>
       <span class="chooser-desc">Demo your AI startup</span>
     </button>
+    <button class="chooser-btn" onclick="showForm('mentor')">
+      <span class="chooser-icon">&#129489;&#8205;&#127891;</span>
+      <span class="chooser-label">Become a Mentor</span>
+      <span class="chooser-desc">Guide builders at events</span>
+    </button>
+    <button class="chooser-btn" onclick="showForm('partner')">
+      <span class="chooser-icon">&#129309;</span>
+      <span class="chooser-label">Partner With Us</span>
+      <span class="chooser-desc">Community or org partnership</span>
+    </button>
   </div>
 </div>
 
@@ -597,6 +607,10 @@
         <label for="speaker-bio">Short Bio</label>
         <textarea id="speaker-bio" name="bio" placeholder="A few sentences about yourself, your work, and any previous speaking experience."></textarea>
       </div>
+      <div class="form-group">
+        <label for="speaker-offers">What credits, offers, or prizes can you offer?</label>
+        <textarea id="speaker-offers" name="offers" placeholder="e.g. free API credits, coaching sessions, discounts, hackathon prizes"></textarea>
+      </div>
       <label style="font-size:14px;color:var(--ink);text-transform:none;letter-spacing:0;display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;">
         <input type="checkbox" name="email_opt_in" value="yes" checked> Yes, send me updates about upcoming ClawCamp events and community news
       </label>
@@ -655,8 +669,20 @@
         </div>
       </div>
       <div class="form-group">
+        <label for="sponsor-linkedin">LinkedIn</label>
+        <input type="url" id="sponsor-linkedin" name="linkedin" placeholder="https://linkedin.com/company/you">
+      </div>
+      <div class="form-group">
+        <label for="sponsor-bio">About Your Company</label>
+        <textarea id="sponsor-bio" name="bio" placeholder="A few sentences about your company and what you do."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="sponsor-offers">What credits, offers, or prizes can you offer?</label>
+        <textarea id="sponsor-offers" name="offers" placeholder="e.g. free API credits, product discounts, hackathon prizes, swag"></textarea>
+      </div>
+      <div class="form-group">
         <label for="sponsor-message">Tell Us More</label>
-        <textarea id="sponsor-message" name="message" placeholder="What does your company do? What are you hoping to get out of sponsoring? Any specific activities or formats you're interested in?"></textarea>
+        <textarea id="sponsor-message" name="message" placeholder="What are you hoping to get out of sponsoring? Any specific activities or formats you're interested in?"></textarea>
       </div>
       <label style="font-size:14px;color:var(--ink);text-transform:none;letter-spacing:0;display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;">
         <input type="checkbox" name="email_opt_in" value="yes" checked> Yes, send me updates about upcoming ClawCamp events and community news
@@ -810,6 +836,149 @@
       </label>
       <button type="submit" class="form-submit">Submit Event &rarr;</button>
       <p class="form-note">We'll review your submission and add it to the calendar within 2 business days.</p>
+    </form>
+  </div>
+
+  <!-- Become a Mentor -->
+  <div class="form-panel" id="panel-mentor">
+    <h2>Become a <em>Mentor</em></h2>
+    <p>Share your expertise one-on-one with builders at ClawCamp events. Mentors guide participants through workshops, office hours, and hands-on sessions.</p>
+    <form class="involve-form" id="mentor-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="mentor-name">Full Name *</label>
+          <input type="text" id="mentor-name" name="name" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label for="mentor-email">Email *</label>
+          <input type="email" id="mentor-email" name="email" required placeholder="you@example.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="mentor-phone">Phone Number</label>
+          <input type="tel" id="mentor-phone" name="phone" placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="form-group">
+          <label for="mentor-company">Company / Organization</label>
+          <input type="text" id="mentor-company" name="company" placeholder="Where you work">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="mentor-title">Your Title / Role</label>
+          <input type="text" id="mentor-title" name="title" placeholder="e.g. CTO, Founder, Engineer">
+        </div>
+        <div class="form-group">
+          <label for="mentor-linkedin">LinkedIn</label>
+          <input type="url" id="mentor-linkedin" name="linkedin" placeholder="https://linkedin.com/in/you">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="mentor-event">Which Event? *</label>
+          <select id="mentor-event" name="event" required>
+            <option value="">Select an event</option>
+            <option value="oakland">ClawCamp Oakland (Apr 16)</option>
+            <option value="any">Any upcoming event</option>
+            <option value="online">Online events</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="mentor-expertise">Area of Expertise *</label>
+          <select id="mentor-expertise" name="expertise" required>
+            <option value="">Select your specialty</option>
+            <option value="ai-agents">AI Agents</option>
+            <option value="ml-engineering">ML Engineering</option>
+            <option value="product">Product / PM</option>
+            <option value="design">Design / UX</option>
+            <option value="startup">Startup / Business</option>
+            <option value="fullstack">Full-Stack Development</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="mentor-bio">Short Bio *</label>
+        <textarea id="mentor-bio" name="bio" required placeholder="A few sentences about yourself, your background, and what you'd like to mentor on."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="mentor-offers">What credits, offers, or skills competition prizes can you offer?</label>
+        <textarea id="mentor-offers" name="offers" placeholder="e.g. free API credits, coaching sessions, discounts on tools, prizes for hackathon winners"></textarea>
+      </div>
+      <label style="font-size:14px;color:var(--ink);text-transform:none;letter-spacing:0;display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;">
+        <input type="checkbox" name="email_opt_in" value="yes" checked> Yes, send me updates about upcoming ClawCamp events and community news
+      </label>
+      <button type="submit" class="form-submit">Apply to Mentor &rarr;</button>
+      <p class="form-note">We review applications on a rolling basis and will respond within 5 business days.</p>
+    </form>
+  </div>
+
+  <!-- Partner With Us -->
+  <div class="form-panel" id="panel-partner">
+    <h2>Partner <em>With Us</em></h2>
+    <p>Interested in a community, media, venue, or technology partnership with ClawCamp? Tell us about your organization and how we can collaborate.</p>
+    <form class="involve-form" id="partner-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="partner-name">Contact Name *</label>
+          <input type="text" id="partner-name" name="name" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label for="partner-email">Email *</label>
+          <input type="email" id="partner-email" name="email" required placeholder="you@org.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="partner-phone">Phone Number</label>
+          <input type="tel" id="partner-phone" name="phone" placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="form-group">
+          <label for="partner-company">Organization *</label>
+          <input type="text" id="partner-company" name="company" required placeholder="Your organization name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="partner-website">Website</label>
+          <input type="url" id="partner-website" name="website" placeholder="https://yourorg.com">
+        </div>
+        <div class="form-group">
+          <label for="partner-linkedin">LinkedIn</label>
+          <input type="url" id="partner-linkedin" name="linkedin" placeholder="https://linkedin.com/company/you">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="partner-type">Partnership Type *</label>
+        <select id="partner-type" name="partnership_type" required>
+          <option value="">Select type</option>
+          <option value="community-partner">Community Partner</option>
+          <option value="media-partner">Media Partner</option>
+          <option value="venue-partner">Venue Partner</option>
+          <option value="tech-partner">Technology Partner</option>
+          <option value="educational-partner">Educational Partner</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="partner-bio">About Your Organization</label>
+        <textarea id="partner-bio" name="bio" placeholder="Tell us about your organization and what you do."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="partner-offers">What credits, offers, or value can you bring to the partnership?</label>
+        <textarea id="partner-offers" name="offers" placeholder="e.g. venue space, media coverage, API credits, co-marketing, event promotion"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="partner-message">Anything Else?</label>
+        <textarea id="partner-message" name="message" placeholder="Any additional details about the partnership you have in mind."></textarea>
+      </div>
+      <label style="font-size:14px;color:var(--ink);text-transform:none;letter-spacing:0;display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;">
+        <input type="checkbox" name="email_opt_in" value="yes" checked> Yes, send me updates about upcoming ClawCamp events and community news
+      </label>
+      <button type="submit" class="form-submit">Submit Partnership Inquiry &rarr;</button>
+      <p class="form-note">We'll respond within 2 business days.</p>
     </form>
   </div>
 

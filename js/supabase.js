@@ -94,6 +94,9 @@
           tier: sponsorForm.querySelector('[name="tier"]').value,
           event: sponsorForm.querySelector('[name="event"]').value,
           website: sponsorForm.querySelector('[name="website"]').value,
+          linkedin: sponsorForm.querySelector('[name="linkedin"]').value,
+          bio: sponsorForm.querySelector('[name="bio"]').value,
+          offers: sponsorForm.querySelector('[name="offers"]').value,
           message: sponsorForm.querySelector('[name="message"]').value,
           email_opt_in: sponsorForm.querySelector('[name="email_opt_in"]') ? sponsorForm.querySelector('[name="email_opt_in"]').checked : null
         }, sponsorForm);
@@ -137,6 +140,7 @@
           linkedin: speakerForm.querySelector('[name="linkedin"]').value,
           topic: speakerForm.querySelector('[name="topic"]').value,
           bio: speakerForm.querySelector('[name="bio"]').value,
+          offers: speakerForm.querySelector('[name="offers"]').value,
           email_opt_in: speakerForm.querySelector('[name="email_opt_in"]') ? speakerForm.querySelector('[name="email_opt_in"]').checked : null
         }, speakerForm);
       });
@@ -229,6 +233,50 @@
           pitch: showcaseForm.querySelector('[name="pitch"]').value,
           email_opt_in: showcaseForm.querySelector('[name="email_opt_in"]') ? showcaseForm.querySelector('[name="email_opt_in"]').checked : null
         }, showcaseForm);
+      });
+    }
+
+    // Mentor application form
+    var mentorForm = document.getElementById('mentor-form');
+    if (mentorForm) {
+      mentorForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        submitToSupabase({
+          form_type: 'mentor',
+          name: mentorForm.querySelector('[name="name"]').value,
+          email: mentorForm.querySelector('[name="email"]').value,
+          phone: mentorForm.querySelector('[name="phone"]').value,
+          company: mentorForm.querySelector('[name="company"]').value,
+          title: mentorForm.querySelector('[name="title"]').value,
+          linkedin: mentorForm.querySelector('[name="linkedin"]').value,
+          event: mentorForm.querySelector('[name="event"]').value,
+          expertise: mentorForm.querySelector('[name="expertise"]').value,
+          bio: mentorForm.querySelector('[name="bio"]').value,
+          offers: mentorForm.querySelector('[name="offers"]').value,
+          email_opt_in: mentorForm.querySelector('[name="email_opt_in"]') ? mentorForm.querySelector('[name="email_opt_in"]').checked : null
+        }, mentorForm);
+      });
+    }
+
+    // Partner inquiry form
+    var partnerForm = document.getElementById('partner-form');
+    if (partnerForm) {
+      partnerForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        submitToSupabase({
+          form_type: 'partner',
+          name: partnerForm.querySelector('[name="name"]').value,
+          email: partnerForm.querySelector('[name="email"]').value,
+          phone: partnerForm.querySelector('[name="phone"]').value,
+          company: partnerForm.querySelector('[name="company"]').value,
+          website: partnerForm.querySelector('[name="website"]').value,
+          linkedin: partnerForm.querySelector('[name="linkedin"]').value,
+          partnership_type: partnerForm.querySelector('[name="partnership_type"]').value,
+          bio: partnerForm.querySelector('[name="bio"]').value,
+          offers: partnerForm.querySelector('[name="offers"]').value,
+          message: partnerForm.querySelector('[name="message"]').value,
+          email_opt_in: partnerForm.querySelector('[name="email_opt_in"]') ? partnerForm.querySelector('[name="email_opt_in"]').checked : null
+        }, partnerForm);
       });
     }
 
