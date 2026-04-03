@@ -202,6 +202,11 @@
       <span class="chooser-label">Submit an Event</span>
       <span class="chooser-desc">Add your event to the calendar</span>
     </button>
+    <button class="chooser-btn" onclick="showForm('showcase')">
+      <span class="chooser-icon">&#128640;</span>
+      <span class="chooser-label">Startup Showcase</span>
+      <span class="chooser-desc">Demo your AI startup</span>
+    </button>
   </div>
 </div>
 
@@ -455,6 +460,83 @@
       </div>
       <button type="submit" class="form-submit">Submit Application &rarr;</button>
       <p class="form-note">We'll review your application and get back to you within 5 business days.</p>
+    </form>
+  </div>
+
+  <!-- Startup Showcase -->
+  <div class="form-panel" id="panel-showcase">
+    <h2>Startup <em>Showcase</em></h2>
+    <p>Apply to demo your AI startup at an upcoming ClawCamp event. Show the community what you're building.</p>
+    <form class="involve-form" id="showcase-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="showcase-name">Founder Name *</label>
+          <input type="text" id="showcase-name" name="name" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label for="showcase-email">Email *</label>
+          <input type="email" id="showcase-email" name="email" required placeholder="you@startup.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="showcase-phone">Phone Number *</label>
+          <input type="tel" id="showcase-phone" name="phone" required placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="form-group">
+          <label for="showcase-company">Startup Name *</label>
+          <input type="text" id="showcase-company" name="company" required placeholder="Your startup name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="showcase-website">Website</label>
+          <input type="url" id="showcase-website" name="website" placeholder="https://yourstartup.com">
+        </div>
+        <div class="form-group">
+          <label for="showcase-stage">Stage *</label>
+          <select id="showcase-stage" name="stage" required>
+            <option value="">Select stage</option>
+            <option value="idea">Idea / Pre-product</option>
+            <option value="prototype">Prototype / MVP</option>
+            <option value="launched">Launched / Live product</option>
+            <option value="revenue">Revenue generating</option>
+            <option value="funded">Funded</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="showcase-event">Which Event? *</label>
+          <select id="showcase-event" name="event" required>
+            <option value="">Select an event</option>
+            <option value="oakland">ClawCamp Oakland (Apr 16)</option>
+            <option value="any">Any upcoming event</option>
+            <option value="online">Online events</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="showcase-demo">Demo Ready? *</label>
+          <select id="showcase-demo" name="demo_ready" required>
+            <option value="">Select</option>
+            <option value="yes-live">Yes &mdash; live demo ready</option>
+            <option value="yes-recorded">Yes &mdash; recorded demo</option>
+            <option value="slides">Slides / pitch deck only</option>
+            <option value="not-yet">Not yet</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="showcase-description">What Are You Building? *</label>
+        <textarea id="showcase-description" name="description" required placeholder="Describe your product in 2-3 sentences. What problem does it solve? Who is it for?"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="showcase-pitch">Why Should We Feature You?</label>
+        <textarea id="showcase-pitch" name="pitch" placeholder="What makes your startup interesting for the ClawCamp audience? Any traction, press, or notable users?"></textarea>
+      </div>
+      <button type="submit" class="form-submit">Apply to Showcase &rarr;</button>
+      <p class="form-note">We review applications on a rolling basis and will respond within 5 business days.</p>
     </form>
   </div>
 

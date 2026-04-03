@@ -140,5 +140,25 @@
       });
     }
 
+    // Startup Showcase form
+    var showcaseForm = document.getElementById('showcase-form');
+    if (showcaseForm) {
+      showcaseForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        submitToSupabase('showcase_applications', {
+          name: showcaseForm.querySelector('[name="name"]').value,
+          email: showcaseForm.querySelector('[name="email"]').value,
+          phone: showcaseForm.querySelector('[name="phone"]').value,
+          company: showcaseForm.querySelector('[name="company"]').value,
+          website: showcaseForm.querySelector('[name="website"]').value,
+          stage: showcaseForm.querySelector('[name="stage"]').value,
+          event: showcaseForm.querySelector('[name="event"]').value,
+          demo_ready: showcaseForm.querySelector('[name="demo_ready"]').value,
+          description: showcaseForm.querySelector('[name="description"]').value,
+          pitch: showcaseForm.querySelector('[name="pitch"]').value
+        }, showcaseForm);
+      });
+    }
+
   });
 })();
