@@ -95,14 +95,30 @@
   /* Event row */
   .event-row {
     display: grid;
-    grid-template-columns: 72px 1fr auto;
-    gap: 0 24px;
+    grid-template-columns: 72px 72px 1fr auto;
+    gap: 0 16px;
     align-items: stretch;
     border-bottom: 1px solid var(--cream);
     transition: background 0.12s;
     cursor: pointer;
     text-decoration: none;
     color: inherit;
+  }
+  .event-img {
+    width: 72px;
+    height: 72px;
+    border-radius: 8px;
+    object-fit: cover;
+    align-self: center;
+    flex-shrink: 0;
+  }
+  .event-img-placeholder {
+    width: 72px;
+    height: 72px;
+    border-radius: 8px;
+    background: var(--sand);
+    align-self: center;
+    flex-shrink: 0;
   }
   .event-row:hover { background: var(--cream); }
   .event-date {
@@ -369,7 +385,8 @@
     .filter-bar { padding: 16px 20px; }
     .featured-event { grid-template-columns: 1fr; }
     .featured-right { padding: 24px 32px; flex-direction: row; align-items: center; }
-    .event-row { grid-template-columns: 56px 1fr; }
+    .event-row { grid-template-columns: 56px 56px 1fr; }
+    .event-img, .event-img-placeholder { width: 56px; height: 56px; }
     .event-action { display: none; }
     .submit-event-section { padding-left: 20px; padding-right: 20px; }
     .form-row { grid-template-columns: 1fr; }
@@ -474,6 +491,8 @@
   <button class="filter-btn" onclick="filterEvents('online', this)">Online</button>
   <button class="filter-btn" onclick="filterEvents('clawcon', this)">ClawCon</button>
   <button class="filter-btn" onclick="filterEvents('aicamp', this)">AI Camp</button>
+  <button class="filter-btn" onclick="filterEvents('ai_collective', this)">AI Collective</button>
+  <button class="filter-btn" onclick="filterEvents('openclaw', this)">OpenClaw</button>
 </div>
 
 <div class="location-bar" id="location-bar">
@@ -2010,6 +2029,7 @@ function renderFeaturedEvent(ev) {
   div.dataset.type = ev.event_type;
   div.dataset.date = ev.event_date;
   div.dataset.city = ev.city;
+  div.dataset.source = ev.source || '';
 
   var left = document.createElement('div');
   left.className = 'featured-left';
@@ -2120,6 +2140,7 @@ function renderEventRow(ev) {
   a.dataset.type = ev.event_type;
   a.dataset.date = ev.event_date;
   a.dataset.city = ev.city;
+  a.dataset.source = ev.source || '';
 
   // Date column
   var dateDiv = document.createElement('div');
@@ -2133,6 +2154,20 @@ function renderEventRow(ev) {
   dateDiv.appendChild(dayEl);
   dateDiv.appendChild(dowEl);
   a.appendChild(dateDiv);
+
+  // Image
+  if (ev.image_url) {
+    var img = document.createElement('img');
+    img.className = 'event-img';
+    img.src = ev.image_url;
+    img.alt = ev.name;
+    img.loading = 'lazy';
+    a.appendChild(img);
+  } else {
+    var placeholder = document.createElement('div');
+    placeholder.className = 'event-img-placeholder';
+    a.appendChild(placeholder);
+  }
 
   // Body
   var body = document.createElement('div');
@@ -2332,6 +2367,34 @@ var cityCoords = {
   'san-diego': [32.7157, -117.1611],
   'auckland': [-36.8485, 174.7633],
   'waterloo': [43.4643, -80.5204],
+  'helsinki': [60.1699, 24.9384],
+  'stamford': [41.0534, -73.5387],
+  'peoria': [40.6936, -89.5890],
+  'virginia-beach': [36.8529, -75.9780],
+  'hartford': [41.7658, -72.6734],
+  'wellington': [-41.2865, 174.7762],
+  'dunedin': [-45.8788, 170.5028],
+  'christchurch': [-43.5321, 172.6362],
+  'goteborg': [57.7089, 11.9746],
+  'toledo': [41.6528, -83.5379],
+  'mountain-view': [37.3861, -122.0839],
+  'salt-lake-city': [40.7608, -111.8910],
+  'dublin': [53.3498, -6.2603],
+  'adelaide': [-34.9285, 138.6007],
+  'delhi': [28.7041, 77.1025],
+  'nairobi': [-1.2921, 36.8219],
+  'innsbruck': [47.2692, 11.4041],
+  'barcelona': [41.3874, 2.1686],
+  'charlotte': [35.2271, -80.8431],
+  'naples': [26.1420, -81.7948],
+  'sacramento': [38.5816, -121.4944],
+  'sandy-springs': [33.9304, -84.3733],
+  'washington': [38.9072, -77.0369],
+  'miami': [25.7617, -80.1918],
+  'dhaka': [23.8103, 90.4125],
+  'accra': [5.6037, -0.1870],
+  'cape-town': [-33.9249, 18.4241],
+  'rancho-cordova': [38.5891, -121.3028],
   'online': null
 };
 
@@ -2357,7 +2420,18 @@ var cityNames = {
   'shanghai': 'shanghai', 'buenos aires': 'buenos-aires', 'paris': 'paris',
   'stockholm': 'stockholm', 'melbourne': 'melbourne', 'dallas': 'dallas',
   'atlanta': 'atlanta', 'houston': 'houston', 'portland': 'portland',
-  'san diego': 'san-diego', 'auckland': 'auckland'
+  'san diego': 'san-diego', 'auckland': 'auckland',
+  'helsinki': 'helsinki', 'stamford': 'stamford', 'peoria': 'peoria',
+  'virginia beach': 'virginia-beach', 'hartford': 'hartford', 'wellington': 'wellington',
+  'dunedin': 'dunedin', 'christchurch': 'christchurch', 'goteborg': 'goteborg',
+  'gothenburg': 'goteborg', 'toledo': 'toledo', 'mountain view': 'mountain-view',
+  'salt lake city': 'salt-lake-city', 'slc': 'salt-lake-city', 'dublin': 'dublin',
+  'adelaide': 'adelaide', 'delhi': 'delhi', 'new delhi': 'delhi',
+  'nairobi': 'nairobi', 'innsbruck': 'innsbruck', 'barcelona': 'barcelona',
+  'charlotte': 'charlotte', 'naples': 'naples', 'sacramento': 'sacramento',
+  'sandy springs': 'sandy-springs', 'washington': 'washington', 'dc': 'washington',
+  'miami': 'miami', 'dhaka': 'dhaka', 'accra': 'accra', 'cape town': 'cape-town',
+  'rancho cordova': 'rancho-cordova'
 };
 
 function haversine(lat1, lon1, lat2, lon2) {
@@ -2407,7 +2481,8 @@ function applyFilters() {
     var timeMatch = (currentTimeTab === 'upcoming') ? isUpcoming : !isUpcoming;
     var city = row.dataset.city || '';
     var name = (row.querySelector('.event-name') || row.querySelector('.featured-title') || {}).textContent || '';
-    var typeMatch = (currentTypeFilter === 'all') || (currentTypeFilter === 'online' ? city === 'online' : currentTypeFilter === 'clawcon' ? name.indexOf('ClawCon') === 0 : currentTypeFilter === 'aicamp' ? name.indexOf('AICamp') === 0 : type === currentTypeFilter);
+    var source = row.dataset.source || '';
+    var typeMatch = (currentTypeFilter === 'all') || (currentTypeFilter === 'online' ? city === 'online' : currentTypeFilter === 'clawcon' ? name.indexOf('ClawCon') === 0 : currentTypeFilter === 'aicamp' ? source === 'aicamp' : currentTypeFilter === 'ai_collective' ? source === 'ai_collective' : currentTypeFilter === 'openclaw' ? name.indexOf('Claw') !== -1 : type === currentTypeFilter);
     row.style.display = (timeMatch && typeMatch) ? '' : 'none';
   });
   document.querySelectorAll('.month-section').forEach(function(section) {
@@ -2459,12 +2534,22 @@ function sortEventsByDistance() {
     }
   });
 
+  // Bucket sort: within 16km (~10mi) by date, within 161km (~100mi) by date, online, then rest by distance+date
+  function getBucket(dist, city) {
+    if (dist != null && dist <= 16) return 0;   // ~10 miles
+    if (dist != null && dist <= 161) return 1;  // ~100 miles
+    if (city === 'online') return 2;
+    return 3;
+  }
   allItems.sort(function(a, b) {
     var da = a._distance != null ? a._distance : Infinity;
     var db = b._distance != null ? b._distance : Infinity;
-    // Online events sort after nearby (<161km / ~100mi) but before distant events
-    if (a.dataset.city === 'online' && da === Infinity) da = 161;
-    if (b.dataset.city === 'online' && db === Infinity) db = 161;
+    var ba = getBucket(a._distance, a.dataset.city);
+    var bb = getBucket(b._distance, b.dataset.city);
+    if (ba !== bb) return ba - bb;
+    // Within same bucket: sort by date first, then distance
+    if (ba <= 2) return (a.dataset.date || '').localeCompare(b.dataset.date || '') || (da - db);
+    // Distant bucket: sort by distance, then date
     if (da !== db) return da - db;
     return (a.dataset.date || '').localeCompare(b.dataset.date || '');
   });
