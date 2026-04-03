@@ -6,8 +6,7 @@
     <a href="/events" data-nav>Schedule</a>\
     <a href="/speakers" data-nav>Speakers</a>\
     <a href="/sponsors" data-nav>Sponsors</a>\
-    <a href="/startups" data-nav>Startups</a>\
-    <a href="/host" data-nav>Host a Camp</a>\
+    <a href="/host" data-nav>Start a Camp</a>\
     <div class="nav-more">\
       <button class="nav-more-label">About <span class="chevron">&#9662;</span></button>\
       <div class="nav-more-dropdown">\
@@ -15,6 +14,7 @@
         <a href="/formats" data-nav>Formats</a>\
         <a href="/staff" data-nav>Leadership</a>\
         <a href="/curriculum" data-nav>Curriculum</a>\
+        <a href="/startups" data-nav>Startup Program</a>\
       </div>\
     </div>\
     <a href="/get-involved" class="nav-cta">Get Involved &rarr;</a>\
@@ -35,8 +35,8 @@
         <a href="/events">Schedule</a>\
         <a href="/speakers">Speakers</a>\
         <a href="/sponsors">Sponsors</a>\
-        <a href="/startups">Startups</a>\
-        <a href="/host">Host a Camp</a>\
+        <a href="/host">Start a Camp</a>\
+        <a href="/startups">Startup Program</a>\
         <a href="/about">How it Started</a>\
         <a href="/formats">Formats</a>\
         <a href="/staff">Leadership</a>\
