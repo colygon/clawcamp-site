@@ -41,7 +41,7 @@
         errorMsg.style.cssText = 'color:#b22;font-size:14px;margin-top:8px;';
         submitBtn.parentNode.insertBefore(errorMsg, submitBtn.nextSibling);
       }
-      errorMsg.textContent = 'Something went wrong. Please try again or email hello@clawcamp.ai.';
+      errorMsg.textContent = 'Something went wrong. Please try again or email hello@claw.camp.';
     });
   }
 

@@ -42,7 +42,7 @@
       </div>\
       <div class="footer-col">\
         <h4>Connect</h4>\
-        <a href="mailto:hello@clawcamp.ai">hello@clawcamp.ai</a>\
+        <a href="mailto:hello@claw.camp">hello@claw.camp</a>\
         <a href="mailto:events@clawcamp.us">events@clawcamp.us</a>\
         <a href="https://discord.gg/clawcamp" target="_blank">Discord</a>\
         <a href="https://linkedin.com/company/clawcamp" target="_blank">LinkedIn</a>\
