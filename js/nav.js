@@ -12,7 +12,7 @@
       <div class="nav-more-dropdown">\
         <a href="/about" data-nav>How it Started</a>\
         <a href="/formats" data-nav>Formats</a>\
-        <a href="/community" data-nav>Community</a>\
+        <a href="/staff" data-nav>Staff</a>\
         <a href="/curriculum" data-nav>Curriculum</a>\
       </div>\
     </div>\
@@ -37,7 +37,7 @@
         <a href="/host">Host a Camp</a>\
         <a href="/about">How it Started</a>\
         <a href="/formats">Formats</a>\
-        <a href="/community">Community</a>\
+        <a href="/staff">Staff</a>\
         <a href="/curriculum">Curriculum</a>\
       </div>\
       <div class="footer-col">\

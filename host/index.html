@@ -177,10 +177,80 @@
     line-height: 1.7;
   }
 
+  /* Form */
+  .camp-form {
+    margin: 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .form-group label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 15px;
+    padding: 12px 16px;
+    border: 1px solid var(--sand);
+    border-radius: 6px;
+    background: white;
+    color: var(--ink);
+    transition: border-color 0.15s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--rust);
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--rust);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 24px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+    align-self: flex-start;
+  }
+  .form-submit:hover { background: #a8420a; }
+  .form-note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: -8px;
+  }
+
   .spacer { height: 48px; }
 
   @media (max-width: 768px) {
     .host-intro, .content-block { padding-left: 20px; padding-right: 20px; }
+    .form-row { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -243,15 +313,72 @@
 <div class="content-block">
   <h2>How to <em>Apply</em></h2>
   <ol class="steps-list">
-    <li><strong>Fill out the Unit Head application</strong> &mdash; tell us about yourself, your city, and the event you want to run</li>
-    <li><strong>We'll reach out within 5 business days</strong> to confirm your role and answer questions</li>
-    <li><strong>Sign the Host Agreement</strong> &mdash; a one-page document that protects you and ClawCamp</li>
-    <li><strong>List your event on the global calendar</strong> &mdash; submit your Luma link before publishing</li>
-    <li><strong>Run your camp</strong> &mdash; we'll promote it to the network</li>
+    <li><span><strong>Fill out the application below</strong> &mdash; tell us about yourself, your city, and the event you want to run</span></li>
+    <li><span><strong>We'll reach out within 5 business days</strong> to confirm your role and answer questions</span></li>
+    <li><span><strong>Sign the Host Agreement</strong> &mdash; a one-page document that protects you and ClawCamp</span></li>
+    <li><span><strong>List your event on the global calendar</strong> &mdash; submit your Luma link before publishing</span></li>
+    <li><span><strong>Run your camp</strong> &mdash; we'll promote it to the network</span></li>
   </ol>
-  <div style="margin-top:24px;">
-    <a href="mailto:hello@clawcamp.ai?subject=Host%20Application" class="btn-rust">Apply to Host a Camp &rarr;</a>
-  </div>
+
+  <form class="camp-form" id="host-form" action="https://formspree.io/f/host" method="POST">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="host-name">Full Name *</label>
+        <input type="text" id="host-name" name="name" required placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <label for="host-email">Email *</label>
+        <input type="email" id="host-email" name="email" required placeholder="you@example.com">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="host-phone">Phone Number *</label>
+        <input type="tel" id="host-phone" name="phone" required placeholder="+1 (555) 000-0000">
+      </div>
+      <div class="form-group">
+        <label for="host-city">City *</label>
+        <input type="text" id="host-city" name="city" required placeholder="e.g. Oakland, CA">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="host-format">Event Format</label>
+        <select id="host-format" name="format">
+          <option value="">Select a format</option>
+          <option value="workshop">OpenClaw Workshop</option>
+          <option value="deep-dive">Deep Dive Workshop</option>
+          <option value="unconference">Unconference</option>
+          <option value="demo-day">Demo Day</option>
+          <option value="show-and-tell">Show &amp; Tell</option>
+          <option value="startup-showcase">Startup Showcase</option>
+          <option value="online">Online Event</option>
+          <option value="other">Other / Multiple</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="host-date">Proposed Date</label>
+        <input type="date" id="host-date" name="proposed_date">
+      </div>
+      <div class="form-group">
+        <label for="host-venue">Venue (if known)</label>
+        <input type="text" id="host-venue" name="venue" placeholder="Venue name or TBD">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="host-about">Tell Us About Yourself *</label>
+      <textarea id="host-about" name="about" required placeholder="What's your background? Have you organized events before? Why do you want to run a ClawCamp?"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="host-details">Event Details</label>
+      <textarea id="host-details" name="event_details" placeholder="Describe the event you want to run &mdash; expected size, target audience, any co-organizers or sponsors lined up"></textarea>
+    </div>
+    <input type="hidden" name="_subject" value="New Host Application">
+    <button type="submit" class="form-submit">Submit Application &rarr;</button>
+    <p class="form-note">We'll get back to you within 5 business days.</p>
+  </form>
 </div>
 
 <div class="content-block">
