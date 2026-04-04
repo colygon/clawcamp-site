@@ -462,6 +462,14 @@
     border-right: 1px solid var(--cream);
   }
   .event-row:hover .event-date { border-right-color: var(--sand); }
+  .date-month {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--rust);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 2px;
+  }
   .date-day {
     font-size: 24px;
     font-weight: 800;
@@ -2874,6 +2882,7 @@ function renderEventRow(ev) {
   var d = new Date(ev.event_date + 'T00:00:00');
   var day = d.getDate();
   var dow = daysOfWeek[d.getDay()];
+  var mon = monthNames[d.getMonth()].substring(0, 3).toUpperCase();
 
   var a = document.createElement('a');
   a.className = 'event-row';
@@ -2887,12 +2896,16 @@ function renderEventRow(ev) {
   // Date column
   var dateDiv = document.createElement('div');
   dateDiv.className = 'event-date';
+  var monEl = document.createElement('div');
+  monEl.className = 'date-month';
+  monEl.textContent = mon;
   var dayEl = document.createElement('div');
   dayEl.className = 'date-day';
   dayEl.textContent = day;
   var dowEl = document.createElement('div');
   dowEl.className = 'date-dow';
   dowEl.textContent = dow;
+  dateDiv.appendChild(monEl);
   dateDiv.appendChild(dayEl);
   dateDiv.appendChild(dowEl);
   a.appendChild(dateDiv);
