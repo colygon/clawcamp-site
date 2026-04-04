@@ -149,8 +149,8 @@ var TILES = {
     maxNativeZoom: 8
   },
   light: {
-    url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-    attr: '\u00a9 <a href="https://www.openstreetmap.org/copyright">OSM</a> \u00a9 <a href="https://carto.com/">CARTO</a>'
+    url: 'https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg?api_key=c752bb40-c70a-452e-98e1-9f02b1769f9e',
+    attr: '\u00a9 <a href="https://stamen.com/">Stamen Design</a> \u00a9 <a href="https://www.openstreetmap.org/copyright">OSM</a>'
   }
 };
 
