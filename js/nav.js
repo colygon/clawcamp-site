@@ -10,7 +10,7 @@
     <div class="nav-more">\
       <button class="nav-more-label">About <span class="chevron">&#9662;</span></button>\
       <div class="nav-more-dropdown">\
-        <a href="/about" data-nav>How it Started</a>\
+        <a href="/about" data-nav>About ClawCamp</a>\
         <a href="/formats" data-nav>Formats</a>\
         <a href="/staff" data-nav>Leadership</a>\
         <a href="/curriculum" data-nav>Curriculum</a>\
@@ -37,7 +37,7 @@
         <a href="/sponsors">Sponsors</a>\
         <a href="/host">Start a Camp</a>\
         <a href="/startups">Startup Program</a>\
-        <a href="/about">How it Started</a>\
+        <a href="/about">About ClawCamp</a>\
         <a href="/formats">Formats</a>\
         <a href="/staff">Leadership</a>\
         <a href="/curriculum">Curriculum</a>\
