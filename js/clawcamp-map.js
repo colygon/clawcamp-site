@@ -286,6 +286,27 @@ function initClawCampMap(containerId, opts) {
       // Longitude offsets for world copies so dots repeat as map scrolls
       var lngOffsets = autoScroll ? [-360, 0, 360] : [0];
 
+      // Collect primary markers (offset 0) for auto-cycling
+      var primaryMarkers = [];
+      var cycleTimer = null;
+      var cycleIndex = 0;
+      var userInteracted = false;
+
+      function stopCycling() {
+        userInteracted = true;
+        if (cycleTimer) { clearInterval(cycleTimer); cycleTimer = null; }
+      }
+
+      function cycleTooltips() {
+        if (userInteracted || primaryMarkers.length === 0) return;
+        // Close all tooltips first
+        primaryMarkers.forEach(function(m) { m.closeTooltip(); });
+        // Open the current one
+        var current = primaryMarkers[cycleIndex % primaryMarkers.length];
+        current.openTooltip();
+        cycleIndex++;
+      }
+
       Object.keys(cities).forEach(function(c) {
         var coords = cityCoords[c];
         if (!coords) return;
@@ -305,13 +326,38 @@ function initClawCampMap(containerId, opts) {
             offset: [0, -8]
           });
 
+          // Stop cycling on any user interaction
+          marker.on('click', function() { stopCycling(); });
+          marker.on('mouseover', function() { stopCycling(); });
+
           if (onDotClick) {
             marker.on('click', function() { onDotClick(c, coords, label); });
           }
 
           markersGroup.addLayer(marker);
+
+          // Only track primary (non-offset) markers for cycling
+          if (offset === 0) primaryMarkers.push(marker);
         });
       });
+
+      // Start auto-cycling tooltips after a short delay
+      if (primaryMarkers.length > 0 && !autoScroll) {
+        // Shuffle so it's not always the same order
+        for (var i = primaryMarkers.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var temp = primaryMarkers[i];
+          primaryMarkers[i] = primaryMarkers[j];
+          primaryMarkers[j] = temp;
+        }
+        // Show first tooltip immediately
+        setTimeout(function() { cycleTooltips(); }, 800);
+        // Cycle every 2.5 seconds
+        cycleTimer = setInterval(cycleTooltips, 2500);
+        // Also stop cycling if user clicks on the map itself
+        map.on('click', stopCycling);
+        map.on('mousedown', stopCycling);
+      }
     },
 
     destroy: function() {
