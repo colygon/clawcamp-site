@@ -342,7 +342,7 @@ function initClawCampMap(containerId, opts) {
       });
 
       // Start auto-cycling tooltips after a short delay
-      if (primaryMarkers.length > 0 && !autoScroll) {
+      if (primaryMarkers.length > 0) {
         // Shuffle so it's not always the same order
         for (var i = primaryMarkers.length - 1; i > 0; i--) {
           var j = Math.floor(Math.random() * (i + 1));
@@ -352,11 +352,13 @@ function initClawCampMap(containerId, opts) {
         }
         // Show first tooltip immediately
         setTimeout(function() { cycleTooltips(); }, 800);
-        // Cycle every 2.5 seconds
-        cycleTimer = setInterval(cycleTooltips, 2500);
-        // Also stop cycling if user clicks on the map itself
-        map.on('click', stopCycling);
-        map.on('mousedown', stopCycling);
+        // Cycle every 2 seconds
+        cycleTimer = setInterval(cycleTooltips, 2000);
+        // Stop cycling on user interaction (interactive maps only)
+        if (!autoScroll) {
+          map.on('click', stopCycling);
+          map.on('mousedown', stopCycling);
+        }
       }
     },
 
