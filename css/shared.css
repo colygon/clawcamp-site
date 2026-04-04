@@ -44,7 +44,7 @@ nav.nav-scrolled {
 .dark-hero nav:not(.nav-scrolled) .logo { color: var(--paper); }
 .dark-hero nav:not(.nav-scrolled) a { color: rgba(245,242,236,0.7); }
 .dark-hero nav:not(.nav-scrolled) a:hover { color: var(--paper); }
-.dark-hero nav:not(.nav-scrolled) .nav-cta { color: var(--paper); border-color: rgba(245,242,236,0.4); }
+.dark-hero nav:not(.nav-scrolled) .nav-cta { color: var(--paper); border-color: transparent; }
 .dark-hero nav:not(.nav-scrolled) .nav-link-active { color: var(--paper) !important; }
 .dark-hero nav:not(.nav-scrolled) .nav-hamburger { color: var(--paper); }
 .dark-hero nav:not(.nav-scrolled).menu-open .nav-hamburger { color: var(--ink); }
@@ -57,7 +57,7 @@ nav.nav-scrolled {
 /* When mobile menu is open, revert to dark text on light background */
 .dark-hero nav:not(.nav-scrolled) .nav-links.nav-open a { color: var(--ink); }
 .dark-hero nav:not(.nav-scrolled) .nav-links.nav-open a:hover { color: var(--ink); }
-.dark-hero nav:not(.nav-scrolled) .nav-links.nav-open .nav-cta { background: var(--ink) !important; color: var(--paper) !important; border-color: var(--ink); }
+.dark-hero nav:not(.nav-scrolled) .nav-links.nav-open .nav-cta { background: linear-gradient(135deg, #C4540A, #E8722A, #C4540A) !important; color: var(--paper) !important; border-color: transparent; }
 .dark-hero nav:not(.nav-scrolled) .nav-links.nav-open .nav-more-label { color: var(--ink); }
 .logo {
   font-family: 'DM Mono', monospace;
@@ -85,12 +85,19 @@ nav a:hover { color: var(--ink); }
   font-weight: 600;
 }
 .nav-cta {
-  background: var(--ink) !important;
+  background: linear-gradient(135deg, #C4540A, #E8722A, #C4540A) !important;
   color: var(--paper) !important;
   padding: 8px 18px;
   border-radius: 20px;
   font-weight: 600;
   font-size: 13px !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(196,84,10,0.3);
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+.nav-cta:hover {
+  box-shadow: 0 4px 16px rgba(196,84,10,0.5);
+  transform: translateY(-1px);
 }
 
 /* More dropdown */
