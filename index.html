@@ -74,8 +74,11 @@
   .clawcamp-tooltip strong { display: block; margin-bottom: 2px; }
   .clawcamp-tooltip .dot-count { color: var(--rust); font-size: 10px; }
   .clawcamp-tooltip::before { border-top-color: var(--ink) !important; }
-  #hero-map .leaflet-control-container { z-index: 2; }
-  .leaflet-map-toggle {
+  .hero-map-toggle {
+    position: absolute;
+    top: 90px;
+    right: 20px;
+    z-index: 101;
     background: rgba(15,14,11,0.7);
     border: 1px solid rgba(196,84,10,0.3);
     color: var(--paper);
@@ -88,16 +91,15 @@
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(4px);
-    margin-top: 80px;
   }
-  .leaflet-map-toggle:hover { background: rgba(196,84,10,0.3); }
+  .hero-map-toggle:hover { background: rgba(196,84,10,0.3); }
   .leaflet-control-attribution {
     font-size: 9px !important;
     background: rgba(0,0,0,0.4) !important;
     color: rgba(245,242,236,0.4) !important;
   }
   .leaflet-control-attribution a { color: rgba(245,242,236,0.5) !important; }
-  .hero > * { position: relative; z-index: 1; }
+  .hero > *:not(.hero-map-toggle) { position: relative; z-index: 1; }
   .hero-eyebrow {
     font-family: 'DM Mono', monospace;
     font-size: 12px;
@@ -848,6 +850,7 @@
 <!-- Hero -->
 <section class="hero">
   <div id="hero-map"></div>
+  <button id="hero-map-toggle" class="hero-map-toggle" title="Toggle map style">☆</button>
   <p class="hero-eyebrow">April 16, 2026 &middot; Oakland, CA &middot; Global Tour</p>
   <h1>The Global Network of <em>AI Community Events</em></h1>
   <p class="hero-sub">ClawCamp is a grassroots community of hands-on AI events &mdash; workshops, unconferences, demo days, and hackathons &mdash; happening in cities and online around the world. Anyone can host. Everyone builds.</p>
@@ -2893,12 +2896,25 @@ var heroMap = initClawCampMap('hero-map', {
   interactive: false,
   zoom: 2,
   center: [20, 0],
-  showToggle: true,
+  showToggle: false,
   autoScroll: true,
   onDotClick: function(cityKey) {
     window.location.href = '/events?city=' + cityKey;
   }
 });
+
+// Standalone toggle button (outside map stacking context, above nav z-index)
+(function() {
+  var btn = document.getElementById('hero-map-toggle');
+  var mode = 'dark';
+  try { var saved = localStorage.getItem('clawcamp-map-mode'); if (saved) mode = saved; } catch(e) {}
+  btn.textContent = mode === 'dark' ? '\u2606' : '\u263E';
+  btn.addEventListener('click', function() {
+    mode = mode === 'dark' ? 'light' : 'dark';
+    if (heroMap) heroMap.setMode(mode);
+    btn.textContent = mode === 'dark' ? '\u2606' : '\u263E';
+  });
+})();
 
 function haversine(lat1, lon1, lat2, lon2) {
   var R = 6371;

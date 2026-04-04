@@ -18,8 +18,11 @@
     z-index: 0;
     opacity: 0.5;
   }
-  #events-map .leaflet-control-container { z-index: 3; }
-  .leaflet-map-toggle {
+  .events-map-toggle {
+    position: absolute;
+    top: 90px;
+    right: 20px;
+    z-index: 101;
     background: rgba(15,14,11,0.7);
     border: 1px solid rgba(196,84,10,0.3);
     color: var(--paper);
@@ -33,11 +36,8 @@
     justify-content: center;
     line-height: 1;
     backdrop-filter: blur(4px);
-    margin-top: 80px;
   }
-  .leaflet-map-toggle:hover {
-    background: rgba(196,84,10,0.3);
-  }
+  .events-map-toggle:hover { background: rgba(196,84,10,0.3); }
   .clawcamp-dot {
     background: none;
     border: none;
@@ -646,6 +646,7 @@
 
 <header class="map-header">
   <div id="events-map"></div>
+  <button id="events-map-toggle" class="events-map-toggle" title="Toggle map style">☆</button>
   <h1>Schedule of<br><em>Events</em></h1>
   <div class="header-meta">
     <p>Spring 2026 Season</p>
@@ -2565,11 +2566,25 @@ var eventsMap = initClawCampMap('events-map', {
   interactive: true,
   zoom: 2,
   center: [20, 0],
+  showToggle: false,
   onDotClick: function(cityKey, coords, label) {
     setUserLocation(coords[0], coords[1], label);
     document.getElementById('location-input').value = label;
   }
 });
+
+// Standalone toggle button (above nav z-index)
+(function() {
+  var btn = document.getElementById('events-map-toggle');
+  var mode = 'dark';
+  try { var saved = localStorage.getItem('clawcamp-map-mode'); if (saved) mode = saved; } catch(e) {}
+  btn.textContent = mode === 'dark' ? '\u2606' : '\u263E';
+  btn.addEventListener('click', function() {
+    mode = mode === 'dark' ? 'light' : 'dark';
+    if (eventsMap) eventsMap.setMode(mode);
+    btn.textContent = mode === 'dark' ? '\u2606' : '\u263E';
+  });
+})();
 
 
 

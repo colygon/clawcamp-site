@@ -143,8 +143,9 @@ var cityNames = {
 /* ── Tile layer presets ── */
 var TILES = {
   dark: {
-    url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-    attr: '\u00a9 <a href="https://www.openstreetmap.org/copyright">OSM</a> \u00a9 <a href="https://carto.com/">CARTO</a>'
+    url: 'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpg',
+    attr: 'Imagery \u00a9 <a href="https://earthdata.nasa.gov">NASA EOSDIS GIBS</a>',
+    maxNativeZoom: 8
   },
   light: {
     url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
@@ -205,7 +206,9 @@ function initClawCampMap(containerId, opts) {
   function setTiles(m) {
     if (tileLayer) map.removeLayer(tileLayer);
     var t = TILES[m] || TILES.dark;
-    tileLayer = L.tileLayer(t.url, { attribution: t.attr, subdomains: 'abcd', maxZoom: 19 }).addTo(map);
+    var opts = { attribution: t.attr, subdomains: 'abcd', maxZoom: 19 };
+    if (t.maxNativeZoom) opts.maxNativeZoom = t.maxNativeZoom;
+    tileLayer = L.tileLayer(t.url, opts).addTo(map);
   }
   setTiles(mode);
 
