@@ -99,6 +99,7 @@ var cityCoords = {
   'kota-bekasi': [-6.2383, 106.9756],
   'thunder-bay': [48.3809, -89.2477],
   'vero-beach': [27.6386, -80.3973],
+  'palm-beach': [26.7056, -80.0364],
   'online': null
 };
 
@@ -137,7 +138,7 @@ var cityNames = {
   'miami': 'miami', 'dhaka': 'dhaka', 'accra': 'accra', 'cape town': 'cape-town',
   'rancho cordova': 'rancho-cordova', 'mumbai': 'mumbai', 'colombo': 'colombo',
   'manta': 'manta', 'jakarta': 'jakarta', 'taipei': 'taipei',
-  'hong kong': 'hong-kong', 'berea': 'berea'
+  'hong kong': 'hong-kong', 'berea': 'berea', 'palm beach': 'palm-beach'
 };
 
 /* ── Tile layer presets ── */
@@ -148,8 +149,9 @@ var TILES = {
     maxNativeZoom: 8
   },
   light: {
-    url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-    attr: '\u00a9 <a href="https://www.openstreetmap.org/copyright">OSM</a> \u00a9 <a href="https://carto.com/">CARTO</a>'
+    url: 'https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg',
+    attr: '\u00a9 <a href="https://stamen.com/">Stamen Design</a> \u00a9 <a href="https://www.openstreetmap.org/copyright">OSM</a>',
+    maxNativeZoom: 16
   }
 };
 

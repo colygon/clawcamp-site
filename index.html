@@ -128,6 +128,9 @@
   .hero-logos {
     margin-top: 48px;
     padding-top: 32px;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 60px, black calc(100% - 60px), transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 60px, black calc(100% - 60px), transparent);
   }
   .hero-logos-label {
     font-family: 'DM Mono', monospace;
@@ -137,19 +140,32 @@
     color: rgba(245,242,236,0.35);
     margin-bottom: 20px;
   }
-  .hero-logos-grid {
+  .hero-logos-track {
     display: flex;
-    flex-wrap: wrap;
-    gap: 24px 32px;
+    gap: 40px;
     align-items: center;
+    width: max-content;
+    animation: logoScroll 30s linear infinite;
   }
-  .hero-logos-grid img {
+  .hero-logos-track:hover { animation-play-state: paused; }
+  .hero-logos-track img {
     height: 28px;
     width: auto;
     opacity: 0.8;
+    flex-shrink: 0;
     transition: opacity 0.2s;
   }
-  .hero-logos-grid img:hover { opacity: 1; }
+  .hero-logos-track img:hover { opacity: 1; }
+  .hero-logos-track .logo-donely {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  @keyframes logoScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
 
   /* Marquee */
   .marquee {
@@ -860,7 +876,7 @@
   </div>
   <div class="hero-logos">
     <p class="hero-logos-label">Supported by</p>
-    <div class="hero-logos-grid">
+    <div class="hero-logos-track">
       <img src="/images/sponsors/nebius-logo.svg" alt="Nebius">
       <img src="/images/sponsors/youcom-logo.png" alt="You.com">
       <img src="/images/sponsors/apify-logo.png" alt="Apify">
@@ -873,13 +889,34 @@
       <img src="/images/sponsors/hackersquad-logo.png" alt="HackerSquad">
       <img src="/images/sponsors/civic-logo.png" alt="Civic">
       <img src="/images/sponsors/adanomad-logo.png" alt="AdaNomad">
-      <span style="display:inline-flex;align-items:center;gap:6px;"><img src="/images/sponsors/donely-logo.png" alt="Donely.ai"><span style="font-family:'Bricolage Grotesque',sans-serif;font-size:14px;font-weight:600;color:rgba(245,242,236,0.55);">Donely.ai</span></span>
+      <span class="logo-donely"><img src="/images/sponsors/donely-logo.png" alt="Donely.ai"><span style="font-family:'Bricolage Grotesque',sans-serif;font-size:14px;font-weight:600;color:rgba(245,242,236,0.55);">Donely.ai</span></span>
       <img src="/images/sponsors/pitchfreaks-logo.png" alt="PitchFreaks" style="height:42px;">
       <img src="/images/sponsors/foundersbay-logo.png" alt="Founders Bay" style="filter:brightness(0) invert(1);">
       <img src="/images/sponsors/moltpod-logo.svg" alt="MoltPod">
       <img src="/images/sponsors/efrontier-logo.jpg" alt="Efficient Frontier Labs">
       <img src="/images/sponsors/constructive-logo.svg" alt="Constructive">
-
+      <img src="/images/sponsors/openrouter-logo.png" alt="OpenRouter" style="filter:invert(1);height:24px;">
+      <img src="/images/sponsors/cline-logo.png" alt="Cline" style="height:24px;">
+      <img src="/images/sponsors/dabl-club.svg" alt="Dabl.club" style="height:28px;filter:invert(1);">
+      <!-- duplicate set for seamless loop -->
+      <img src="/images/sponsors/nebius-logo.svg" alt="Nebius">
+      <img src="/images/sponsors/youcom-logo.png" alt="You.com">
+      <img src="/images/sponsors/apify-logo.png" alt="Apify">
+      <img src="/images/sponsors/theagentic-logo.png" alt="The Agentic">
+      <img src="/images/sponsors/blitzscaling-logo.png" alt="Blitzscaling Ventures">
+      <img src="/images/sponsors/fetchai-logo.svg" alt="Fetch.ai" style="height:24px;">
+      <img src="/images/sponsors/asi-one-logo.png" alt="ASI:One">
+      <img src="/images/sponsors/stakventures-logo.svg" alt="STAK Ventures">
+      <img src="/images/sponsors/aiify-logo.png" alt="Aiify.io">
+      <img src="/images/sponsors/hackersquad-logo.png" alt="HackerSquad">
+      <img src="/images/sponsors/civic-logo.png" alt="Civic">
+      <img src="/images/sponsors/adanomad-logo.png" alt="AdaNomad">
+      <span class="logo-donely"><img src="/images/sponsors/donely-logo.png" alt="Donely.ai"><span style="font-family:'Bricolage Grotesque',sans-serif;font-size:14px;font-weight:600;color:rgba(245,242,236,0.55);">Donely.ai</span></span>
+      <img src="/images/sponsors/pitchfreaks-logo.png" alt="PitchFreaks" style="height:42px;">
+      <img src="/images/sponsors/foundersbay-logo.png" alt="Founders Bay" style="filter:brightness(0) invert(1);">
+      <img src="/images/sponsors/moltpod-logo.svg" alt="MoltPod">
+      <img src="/images/sponsors/efrontier-logo.jpg" alt="Efficient Frontier Labs">
+      <img src="/images/sponsors/constructive-logo.svg" alt="Constructive">
       <img src="/images/sponsors/openrouter-logo.png" alt="OpenRouter" style="filter:invert(1);height:24px;">
       <img src="/images/sponsors/cline-logo.png" alt="Cline" style="height:24px;">
       <img src="/images/sponsors/dabl-club.svg" alt="Dabl.club" style="height:28px;filter:invert(1);">
