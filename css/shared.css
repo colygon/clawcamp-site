@@ -47,6 +47,9 @@ nav.nav-scrolled {
 .dark-hero nav:not(.nav-scrolled) .nav-cta { color: var(--paper); border-color: rgba(245,242,236,0.4); }
 .dark-hero nav:not(.nav-scrolled) .nav-link-active { color: var(--paper) !important; }
 .dark-hero nav:not(.nav-scrolled) .nav-hamburger { color: var(--paper); }
+.dark-hero nav:not(.nav-scrolled).menu-open .nav-hamburger { color: var(--ink); }
+.dark-hero nav:not(.nav-scrolled).menu-open .logo { color: var(--ink); }
+.dark-hero nav:not(.nav-scrolled).menu-open .logo span { color: var(--rust); }
 .dark-hero nav:not(.nav-scrolled) .nav-more-label { color: rgba(245,242,236,0.7); }
 /* Dropdown has light background, so revert to dark text */
 .dark-hero nav:not(.nav-scrolled) .nav-more-dropdown a { color: var(--muted); }

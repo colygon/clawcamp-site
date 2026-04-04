@@ -110,7 +110,8 @@
     if (hamburger && navLinks) {
       hamburger.addEventListener('click', function () {
         var isOpen = navLinks.classList.toggle('nav-open');
-        hamburger.innerHTML = isOpen ? '&#10005;' : '&#9776;';
+        if (navNode) navNode.classList.toggle('menu-open', isOpen);
+        hamburger.textContent = isOpen ? '\u2715' : '\u2630';
         hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Menu');
       });
     }

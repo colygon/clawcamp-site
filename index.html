@@ -334,7 +334,7 @@
     .levels-grid { grid-template-columns: 1fr; }
     .section > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
     .hero-logos { display: none; }
-    .hero::after { background-size: auto 100%; }
+    .hero::after { background-size: 50% 100%; }
     .earth-dots .dot-tip { display: none; }
     .earth-dots .map-dot { pointer-events: none; }
   }
@@ -518,6 +518,34 @@
     display: grid;
     grid-template-columns: 1fr 280px;
     margin-bottom: 8px;
+  }
+  /* Flagship featured event — elevated styling */
+  .featured-event.featured-flagship {
+    border: 2px solid var(--rust);
+    box-shadow: 0 8px 32px rgba(178, 80, 48, 0.12), 0 2px 8px rgba(15, 14, 11, 0.08);
+    margin-top: 36px;
+    position: relative;
+  }
+  .featured-event.featured-flagship .featured-left {
+    background: linear-gradient(135deg, var(--ink) 0%, #1a1815 100%);
+  }
+  .featured-event.featured-flagship .featured-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+  .featured-event.featured-flagship .featured-title {
+    font-size: clamp(32px, 5vw, 48px);
+  }
+  .featured-event.featured-flagship .featured-cta {
+    background: var(--rust);
+    border-color: var(--rust);
+    color: var(--paper);
+    font-size: 14px;
+    padding: 12px 28px;
+  }
+  .featured-event.featured-flagship .featured-cta:hover {
+    background: #a04428;
+    border-color: #a04428;
   }
   .featured-left {
     padding: 32px 36px;
@@ -1166,6 +1194,41 @@
 
 <div class="main" id="events-main">
   <div style="text-align:center;padding:48px;color:var(--muted);font-size:14px;" id="events-loading">Loading events...</div>
+
+  <!-- Featured: Workshop: Running OpenClaw on Nebius (Flagship) -->
+  <div class="featured-event featured-flagship" data-type="workshop" data-date="2026-04-14" data-city="online">
+    <div class="featured-left">
+      <div class="featured-eyebrow">&#9733; Flagship Workshop &middot; Online &middot; Free</div>
+      <div class="featured-title">Running OpenClaw<br><span>on Nebius</span></div>
+      <div class="featured-details">
+        <span class="featured-detail"><span class="meta-icon">&#128197;</span> Tuesday, April 14, 2026</span>
+        <span class="featured-detail"><span class="meta-icon">&#128205;</span> Online (Zoom)</span>
+        <span class="featured-detail"><span class="meta-icon">&#9201;</span> 6:00 PM &ndash; 7:00 PM CET</span>
+      </div>
+      <p class="featured-desc">Learn how to run OpenClaw on Nebius, connect to Token Factory for fast inference, and extend with custom models. From prototype to production.</p>
+      <div class="featured-tags">
+        <span class="featured-tag">Workshop</span>
+        <span class="featured-tag">OpenClaw</span>
+        <span class="featured-tag">Nebius</span>
+        <span class="featured-tag">Infrastructure</span>
+      </div>
+      <a href="https://luma.com/l88gofex" target="_blank" class="featured-cta">RSVP &rarr;</a>
+    </div>
+    <div class="featured-right">
+      <div>
+        <div class="featured-date-block">14</div>
+        <div class="featured-month">April</div>
+        <div class="featured-year">2026 &middot; Tuesday</div>
+      </div>
+      <div class="featured-capacity">
+        <div style="font-size:13px;font-weight:600;color:#0f0e0b;margin-bottom:6px">Details</div>
+        Free online workshop<br>
+        Via Zoom<br>
+        <br>
+        Hosted by <a href="https://nebius.com" style="color:var(--rust);text-decoration:none">Nebius</a>
+      </div>
+    </div>
+  </div>
 
   <!-- Featured: ClawCamp Oakland (legacy fallback, replaced by JS) -->
   <div class="featured-event" data-type="flagship" data-date="2026-04-16" data-city="oakland">
