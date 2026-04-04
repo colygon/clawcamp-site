@@ -77,6 +77,89 @@
       gap: 6px;
     }
   }
+  /* Stats */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 40px;
+  }
+  .stat-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .stat-number {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--rust);
+    margin-bottom: 4px;
+  }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  /* What happens grid */
+  .happens-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .happens-card {
+    border: 1px solid var(--sand);
+    border-radius: 8px;
+    padding: 32px;
+  }
+  .happens-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .happens-card h3 span { color: var(--rust); }
+  .happens-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .section { padding: 64px 48px; }
+  .section-alt { background: var(--cream); }
+  .section-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .section-title em { font-style: normal; color: var(--rust); }
+  .section-desc {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 768px) {
+    .section { padding: 48px 20px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .happens-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -134,6 +217,62 @@
     <p>ClawCamp events may use OpenClaw, other open-source AI tools, or any stack the organizer chooses. We are claw-agnostic. The name reflects the spirit, not a product dependency.</p>
   </div>
 </div>
+
+<!-- What is ClawCamp -->
+<section class="section">
+  <p class="section-eyebrow">About the Network</p>
+  <h2 class="section-title">Builder Camps for the <em>OpenClaw Community</em></h2>
+  <p class="section-desc">ClawCamp is a global, chapter-based network of AI builder camps. Inspired by a proven open-franchise model &mdash; which ran 350+ events across the world &mdash; ClawCamp is built on a simple principle: the best way to learn AI is to build with other people, in the same room (or the same call), right now.</p>
+  <p class="section-desc">We are format-agnostic. A ClawCamp can be a 4-hour unconference, a Saturday hackathon, a hands-on OpenClaw workshop, a startup demo day, or an online livestream event. What makes it a ClawCamp is the culture: hands-on, inclusive, community-led, and open to everyone.</p>
+</section>
+
+<!-- By the Numbers -->
+<section class="section section-alt">
+  <p class="section-eyebrow">By the Numbers</p>
+  <h2 class="section-title">A Growing <em>Global Movement</em></h2>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number">159K+</div>
+      <div class="stat-label">Email Subscribers</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">350+</div>
+      <div class="stat-label">Blueprint Events Worldwide</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">15K+</div>
+      <div class="stat-label">Live Stream Views</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">Global</div>
+      <div class="stat-label">Chapter Network</div>
+    </div>
+  </div>
+</section>
+
+<!-- What Happens -->
+<section class="section">
+  <p class="section-eyebrow">What Happens at a ClawCamp?</p>
+  <h2 class="section-title">Learn. Ship. Connect. <em>Share.</em></h2>
+  <div class="happens-grid">
+    <div class="happens-card">
+      <h3><span>You learn.</span></h3>
+      <p>Workshops where you actually install, configure, and build &mdash; not just watch.</p>
+    </div>
+    <div class="happens-card">
+      <h3><span>You ship.</span></h3>
+      <p>Hackathons and build challenges with real outcomes and real prizes.</p>
+    </div>
+    <div class="happens-card">
+      <h3><span>You connect.</span></h3>
+      <p>Unconferences and demo days where the best conversations happen in hallways and breakout rooms.</p>
+    </div>
+    <div class="happens-card">
+      <h3><span>You share.</span></h3>
+      <p>Every ClawCamp contributes to a shared curriculum library that anyone can use and remix.</p>
+    </div>
+  </div>
+</section>
 
 <div class="cta-band">
   <div>
