@@ -283,29 +283,34 @@ function initClawCampMap(containerId, opts) {
         if (cities[c].names.length < 3) cities[c].names.push(ev.name);
       });
 
+      // Longitude offsets for world copies so dots repeat as map scrolls
+      var lngOffsets = autoScroll ? [-360, 0, 360] : [0];
+
       Object.keys(cities).forEach(function(c) {
         var coords = cityCoords[c];
         if (!coords) return;
         var isFlagship = flagshipCities.indexOf(c) !== -1;
-        var marker = L.marker(coords, { icon: makeDotIcon(isFlagship) });
-
         var label = cityLabel(c);
         var info = cities[c];
         var countText = info.count + ' event' + (info.count > 1 ? 's' : '');
+        var tooltipHtml = '<strong>' + label + '</strong><br><span class="dot-count">' + countText + '</span>';
 
-        // Build tooltip with safe DOM — Leaflet tooltips accept strings
-        // These values are from internal data (cityCoords keys + event counts), not user input
-        marker.bindTooltip('<strong>' + label + '</strong><br><span class="dot-count">' + countText + '</span>', {
-          className: 'clawcamp-tooltip',
-          direction: 'top',
-          offset: [0, -8]
+        lngOffsets.forEach(function(offset) {
+          var pos = [coords[0], coords[1] + offset];
+          var marker = L.marker(pos, { icon: makeDotIcon(isFlagship) });
+
+          marker.bindTooltip(tooltipHtml, {
+            className: 'clawcamp-tooltip',
+            direction: 'top',
+            offset: [0, -8]
+          });
+
+          if (onDotClick) {
+            marker.on('click', function() { onDotClick(c, coords, label); });
+          }
+
+          markersGroup.addLayer(marker);
         });
-
-        if (onDotClick) {
-          marker.on('click', function() { onDotClick(c, coords, label); });
-        }
-
-        markersGroup.addLayer(marker);
       });
     },
 

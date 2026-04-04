@@ -3,7 +3,19 @@
   var SUPABASE_URL = 'https://mrnccntqmkxjazznejfc.supabase.co';
   var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ybmNjbnRxbWt4amF6em5lamZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyMDA3NTksImV4cCI6MjA5MDc3Njc1OX0.T6oFTtYiFTsx6ojuogpZFXAS7tN5-dPzwvmY5V2xFGI';
 
+  function normalizeUrl(val) {
+    if (!val) return val;
+    val = val.trim();
+    if (!val) return val;
+    if (!/^https?:\/\//i.test(val)) val = 'https://' + val;
+    return val;
+  }
+
   function submitToSupabase(data, form) {
+    // Auto-prepend https:// to URL fields
+    ['website', 'linkedin', 'event_link'].forEach(function(k) {
+      if (data[k]) data[k] = normalizeUrl(data[k]);
+    });
     var submitBtn = form.querySelector('.form-submit');
     var originalText = submitBtn.textContent;
     submitBtn.textContent = 'Submitting...';
