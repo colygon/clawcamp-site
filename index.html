@@ -3009,8 +3009,17 @@ function renderEventRow(ev) {
 
 function renderEvents(events) {
   var main = document.getElementById('events-main');
+
+  // Preserve the pinned Nebius flagship card before clearing
+  var pinnedCards = main.querySelectorAll('.featured-flagship');
+  var pinnedFragment = document.createDocumentFragment();
+  pinnedCards.forEach(function(card) { pinnedFragment.appendChild(card); });
+
   // Remove loading message and hardcoded events
   main.textContent = '';
+
+  // Re-insert pinned flagship cards at the top
+  main.appendChild(pinnedFragment);
 
   // Separate featured vs regular
   var featured = events.filter(function(e) { return e.is_featured; });
