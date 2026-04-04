@@ -3319,12 +3319,11 @@ function sortEventsByDistance() {
     }
   });
 
-  // Bucket sort: within 16km (~10mi) by date, within 161km (~100mi) by date, online, then rest by distance+date
+  // Sort: within 100mi by date, online next by date, then rest by distance
   function getBucket(dist, city) {
-    if (dist != null && dist <= 16) return 0;   // ~10 miles
-    if (dist != null && dist <= 161) return 1;  // ~100 miles
-    if (city === 'online') return 2;
-    return 3;
+    if (dist != null && dist <= 161) return 0;  // ~100 miles
+    if (city === 'online') return 1;
+    return 2;
   }
   allItems.sort(function(a, b) {
     var da = a._distance != null ? a._distance : Infinity;
@@ -3332,8 +3331,8 @@ function sortEventsByDistance() {
     var ba = getBucket(a._distance, a.dataset.city);
     var bb = getBucket(b._distance, b.dataset.city);
     if (ba !== bb) return ba - bb;
-    // Within same bucket: sort by date first, then distance
-    if (ba <= 2) return (a.dataset.date || '').localeCompare(b.dataset.date || '') || (da - db);
+    // Within 100mi and online: sort by date
+    if (ba <= 1) return (a.dataset.date || '').localeCompare(b.dataset.date || '');
     // Distant bucket: sort by distance, then date
     if (da !== db) return da - db;
     return (a.dataset.date || '').localeCompare(b.dataset.date || '');
