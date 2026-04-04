@@ -7,7 +7,97 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/shared.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
+  /* Leaflet map */
+  #events-map {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.5;
+  }
+  .leaflet-map-toggle {
+    background: rgba(15,14,11,0.7);
+    border: 1px solid rgba(196,84,10,0.3);
+    color: var(--paper);
+    font-size: 18px;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    backdrop-filter: blur(4px);
+  }
+  .leaflet-map-toggle:hover {
+    background: rgba(196,84,10,0.3);
+  }
+  .clawcamp-dot {
+    background: none;
+    border: none;
+  }
+  .clawcamp-dot .dot-core,
+  .clawcamp-dot::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #C4540A;
+  }
+  .clawcamp-dot::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(196,84,10,0.4);
+    animation: clawDotPulse 3s ease-in-out infinite;
+  }
+  .clawcamp-dot.flagship::before {
+    box-shadow: 0 0 8px 2px rgba(196,84,10,0.5);
+  }
+  .clawcamp-dot.flagship::after {
+    width: 28px; height: 28px;
+  }
+  .clawcamp-dot:hover::after { animation: none; opacity: 0; }
+  @keyframes clawDotPulse {
+    0%, 100% { transform: translate(-50%,-50%) scale(1); opacity: 0.5; }
+    50% { transform: translate(-50%,-50%) scale(1.6); opacity: 0; }
+  }
+  .clawcamp-tooltip {
+    background: var(--ink) !important;
+    color: var(--paper) !important;
+    font-family: 'DM Mono', monospace !important;
+    font-size: 11px !important;
+    padding: 6px 10px !important;
+    border: 1px solid rgba(196,84,10,0.3) !important;
+    border-radius: 4px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4) !important;
+  }
+  .clawcamp-tooltip strong { display: block; margin-bottom: 2px; }
+  .clawcamp-tooltip .dot-count { color: var(--rust); font-size: 10px; }
+  .clawcamp-tooltip::before { border-top-color: var(--ink) !important; }
+  .leaflet-control-attribution {
+    font-size: 9px !important;
+    background: rgba(0,0,0,0.4) !important;
+    color: rgba(245,242,236,0.4) !important;
+  }
+  .leaflet-control-attribution a { color: rgba(245,242,236,0.5) !important; }
+  .leaflet-control-zoom a {
+    background: rgba(15,14,11,0.7) !important;
+    color: var(--paper) !important;
+    border-color: rgba(196,84,10,0.2) !important;
+    backdrop-filter: blur(4px);
+  }
+  .leaflet-control-zoom a:hover { background: rgba(196,84,10,0.3) !important; }
+
   /* Time tabs */
   .time-tabs {
     padding: 0 48px;
@@ -526,26 +616,8 @@
     align-items: flex-end;
     gap: 24px;
   }
-  .map-pan-container {
-    position: absolute !important;
-    top: 0; left: 0;
-    width: 100%;
-    z-index: 0 !important;
-    cursor: grab;
-    touch-action: pan-y;
-  }
-  .map-pan-container:active { cursor: grabbing; }
-  .map-img-layer {
-    width: 100%;
-    aspect-ratio: 2 / 1;
-    background: url('/images/earth-night.jpg') no-repeat left top;
-    background-size: 100% 100%;
-    opacity: 0.35;
-    pointer-events: none;
-  }
-  .map-dots-layer { pointer-events: auto; }
   .map-header > * { position: relative; z-index: 2; }
-  .map-pan-container { z-index: 1 !important; }
+  #events-map { z-index: 0 !important; }
   .map-header h1 {
     font-size: clamp(40px, 6vw, 72px);
     font-weight: 800;
@@ -560,73 +632,9 @@
   .map-header .header-meta p {
     color: rgba(245,242,236,0.5);
   }
-  .map-dots-layer {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    aspect-ratio: 2 / 1;
-  }
-  .map-dot-btn {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--rust);
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    transform: translate(-50%, -50%);
-    z-index: 3;
-    transition: transform 0.15s, box-shadow 0.15s;
-  }
-  .map-dot-btn::after {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    border: 1px solid rgba(196,84,10,0.4);
-    animation: mapDotPulse 3s ease-in-out infinite;
-  }
-  .map-dot-btn:hover {
-    transform: translate(-50%, -50%) scale(1.8);
-    box-shadow: 0 0 12px 3px rgba(196,84,10,0.6);
-  }
-  .map-dot-btn:hover::after { animation: none; opacity: 0; }
-  .map-dot-btn.flagship {
-    width: 12px;
-    height: 12px;
-    box-shadow: 0 0 8px 2px rgba(196,84,10,0.5);
-  }
-  .map-dot-tooltip {
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--ink);
-    color: var(--paper);
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    padding: 4px 8px;
-    border-radius: 4px;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.15s;
-    border: 1px solid rgba(196,84,10,0.3);
-  }
-  .map-dot-btn:hover .map-dot-tooltip { opacity: 1; }
-  @keyframes mapDotPulse {
-    0%, 100% { transform: translate(-50%,-50%) scale(1); opacity: 0.5; }
-    50% { transform: translate(-50%,-50%) scale(1.6); opacity: 0; }
-  }
   @media (max-width: 768px) {
     .map-header { padding: 200px 20px 32px; min-height: 420px; flex-direction: column; align-items: flex-start; }
     .map-header .header-meta { text-align: left; }
-    .map-pan-container { height: 100%; }
-    .map-img-layer { aspect-ratio: auto; width: 100%; height: 100%; background-size: cover; background-position: center top; }
-    .map-dots-layer { display: none; }
   }
 </style>
 </head>
@@ -635,52 +643,7 @@
 <div id="site-nav"></div>
 
 <header class="map-header">
-  <div class="map-pan-container" id="map-pan">
-  <div class="map-img-layer"></div>
-  <div class="map-dots-layer">
-    <button class="map-dot-btn flagship" style="left:16.0%;top:29.0%" data-city="oakland" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Oakland</span></button>
-    <button class="map-dot-btn" style="left:17.2%;top:31.1%" data-city="los-angeles" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Los Angeles</span></button>
-    <button class="map-dot-btn" style="left:25.6%;top:26.7%" data-city="chicago" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Chicago</span></button>
-    <button class="map-dot-btn" style="left:26.8%;top:26.5%" data-city="ann-arbor" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Ann Arbor</span></button>
-    <button class="map-dot-btn" style="left:30.2%;top:26.4%" data-city="boston" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Boston</span></button>
-    <button class="map-dot-btn" style="left:29.2%;top:27.8%" data-city="philadelphia" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Philadelphia</span></button>
-    <button class="map-dot-btn" style="left:28.0%;top:25.7%" data-city="toronto" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Toronto</span></button>
-    <button class="map-dot-btn" style="left:22.4%;top:39.2%" data-city="mexico-city" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Mexico City</span></button>
-    <button class="map-dot-btn" style="left:21.4%;top:38.5%" data-city="guadalajara" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Guadalajara</span></button>
-    <button class="map-dot-btn" style="left:29.4%;top:47.4%" data-city="bogota" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Bogota</span></button>
-    <button class="map-dot-btn" style="left:37.2%;top:63.1%" data-city="sao-paulo" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Sao Paulo</span></button>
-    <button class="map-dot-btn" style="left:38.0%;top:62.7%" data-city="rio-de-janeiro" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Rio de Janeiro</span></button>
-    <button class="map-dot-btn" style="left:33.8%;top:69.2%" data-city="buenos-aires" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Buenos Aires</span></button>
-    <button class="map-dot-btn" style="left:50.0%;top:21.4%" data-city="london" onclick="mapDotClick(this)"><span class="map-dot-tooltip">London</span></button>
-    <button class="map-dot-btn" style="left:50.6%;top:22.8%" data-city="paris" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Paris</span></button>
-    <button class="map-dot-btn" style="left:53.8%;top:20.8%" data-city="berlin" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Berlin</span></button>
-    <button class="map-dot-btn" style="left:53.4%;top:19.1%" data-city="copenhagen" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Copenhagen</span></button>
-    <button class="map-dot-btn" style="left:55.0%;top:17.1%" data-city="stockholm" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Stockholm</span></button>
-    <button class="map-dot-btn" style="left:49.8%;top:28.1%" data-city="valencia" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Valencia</span></button>
-    <button class="map-dot-btn" style="left:59.2%;top:27.8%" data-city="ankara" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Ankara</span></button>
-    <button class="map-dot-btn" style="left:58.2%;top:27.2%" data-city="istanbul" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Istanbul</span></button>
-    <button class="map-dot-btn" style="left:71.6%;top:42.8%" data-city="bangalore" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Bangalore</span></button>
-    <button class="map-dot-btn" style="left:78.8%;top:49.3%" data-city="singapore" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Singapore</span></button>
-    <button class="map-dot-btn" style="left:83.8%;top:32.7%" data-city="shanghai" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Shanghai</span></button>
-    <button class="map-dot-btn" style="left:85.2%;top:29.1%" data-city="seoul" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Seoul</span></button>
-    <button class="map-dot-btn" style="left:21.6%;top:33.3%" data-city="austin" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Austin</span></button>
-    <button class="map-dot-btn" style="left:15.6%;top:26.4%" data-city="seattle" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Seattle</span></button>
-    <button class="map-dot-btn" style="left:30.0%;top:27.5%" data-city="new-york" onclick="mapDotClick(this)"><span class="map-dot-tooltip">New York</span></button>
-    <button class="map-dot-btn" style="left:19.2%;top:28.9%" data-city="boulder" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Boulder</span></button>
-    <button class="map-dot-btn" style="left:27.0%;top:30.3%" data-city="raleigh" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Raleigh</span></button>
-    <button class="map-dot-btn" style="left:23.2%;top:30.0%" data-city="bentonville" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Bentonville</span></button>
-    <button class="map-dot-btn" style="left:15.2%;top:23.9%" data-city="vancouver" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Vancouver</span></button>
-    <button class="map-dot-btn" style="left:27.8%;top:26.2%" data-city="kitchener" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Kitchener</span></button>
-    <button class="map-dot-btn" style="left:51.4%;top:20.6%" data-city="amsterdam" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Amsterdam</span></button>
-    <button class="map-dot-btn" style="left:52.8%;top:16.7%" data-city="oslo" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Oslo</span></button>
-    <button class="map-dot-btn" style="left:51.0%;top:21.6%" data-city="ghent" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Ghent</span></button>
-    <button class="map-dot-btn" style="left:50.4%;top:25.8%" data-city="toulouse" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Toulouse</span></button>
-    <button class="map-dot-btn" style="left:57.2%;top:25.3%" data-city="bucharest" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Bucharest</span></button>
-    <button class="map-dot-btn" style="left:88.8%;top:30.2%" data-city="tokyo" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Tokyo</span></button>
-    <button class="map-dot-btn" style="left:79.4%;top:44.2%" data-city="ho-chi-minh-city" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Ho Chi Minh City</span></button>
-    <button class="map-dot-btn" style="left:77.4%;top:39.5%" data-city="chiang-mai" onclick="mapDotClick(this)"><span class="map-dot-tooltip">Chiang Mai</span></button>
-  </div>
-  </div>
+  <div id="events-map"></div>
   <h1>Schedule of<br><em>Events</em></h1>
   <div class="header-meta">
     <p>Spring 2026 Season</p>
@@ -2257,6 +2220,8 @@
 
 <script src="/js/nav.js"></script>
 <script src="/js/supabase.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/js/clawcamp-map.js"></script>
 <script>
 var SUPABASE_URL = 'https://mrnccntqmkxjazznejfc.supabase.co';
 var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ybmNjbnRxbWt4amF6em5lamZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyMDA3NTksImV4cCI6MjA5MDc3Njc1OX0.T6oFTtYiFTsx6ojuogpZFXAS7tN5-dPzwvmY5V2xFGI';
@@ -2556,6 +2521,8 @@ fetch(SUPABASE_URL + '/rest/v1/events?select=*&order=event_date.asc', {
   renderEvents(events);
   updateCounts();
   applyFilters();
+  // Populate map dots from live event data
+  if (eventsMap) eventsMap.addEventDots(events, ['oakland']);
   // Check for ?city= URL param from homepage map clicks
   var urlParams = new URLSearchParams(window.location.search);
   var cityParam = urlParams.get('city');
@@ -2590,128 +2557,19 @@ var userLon = null;
 var sortByDistance = false;
 var useMetric = true;
 
-// City coordinates lookup
-var cityCoords = {
-  'oakland': [37.8044, -122.2712],
-  'san-francisco': [37.7749, -122.4194],
-  'ho-chi-minh-city': [10.8231, 106.6297],
-  'austin': [30.2672, -97.7431],
-  'bentonville': [36.3729, -94.2088],
-  'seattle': [47.6062, -122.3321],
-  'singapore': [1.3521, 103.8198],
-  'tokyo': [35.6762, 139.6503],
-  'bucharest': [44.4268, 26.1025],
-  'istanbul': [41.0082, 28.9784],
-  'ghent': [51.0543, 3.7174],
-  'toulouse': [43.6047, 1.4442],
-  'new-york': [40.7128, -74.0060],
-  'berlin': [52.5200, 13.4050],
-  'victoria': [48.4284, -123.3656],
-  'raleigh': [35.7796, -78.6382],
-  'kitchener': [43.4516, -80.4925],
-  'boulder': [40.0150, -105.2705],
-  'amsterdam': [52.3676, 4.9041],
-  'toronto': [43.6532, -79.3832],
-  'vancouver': [49.2827, -123.1207],
-  'chiang-mai': [18.7883, 98.9853],
-  'oslo': [59.9139, 10.7522],
-  'bangalore': [12.9716, 77.5946],
-  'bengaluru': [12.9716, 77.5946],
-  'london': [51.5074, -0.1278],
-  'los-angeles': [34.0522, -118.2437],
-  'valencia': [39.4699, -0.3763],
-  'ann-arbor': [42.2808, -83.7430],
-  'sao-paulo': [-23.5505, -46.6333],
-  'guadalajara': [20.6597, -103.3496],
-  'rio-de-janeiro': [-22.9068, -43.1729],
-  'copenhagen': [55.6761, 12.5683],
-  'chicago': [41.8781, -87.6298],
-  'ankara': [39.9334, 32.8597],
-  'belo-horizonte': [-19.9167, -43.9345],
-  'boston': [42.3601, -71.0589],
-  'philadelphia': [39.9526, -75.1652],
-  'seoul': [37.5665, 126.9780],
-  'mexico-city': [19.4326, -99.1332],
-  'bogota': [4.7110, -74.0721],
-  'porto-alegre': [-30.0346, -51.2177],
-  'shanghai': [31.2304, 121.4737],
-  'buenos-aires': [-34.6037, -58.3816],
-  'paris': [48.8566, 2.3522],
-  'stockholm': [59.3293, 18.0686],
-  'melbourne': [-37.8136, 144.9631],
-  'dallas': [32.7767, -96.7970],
-  'atlanta': [33.7490, -84.3880],
-  'houston': [29.7604, -95.3698],
-  'portland': [45.5152, -122.6784],
-  'san-diego': [32.7157, -117.1611],
-  'auckland': [-36.8485, 174.7633],
-  'waterloo': [43.4643, -80.5204],
-  'helsinki': [60.1699, 24.9384],
-  'stamford': [41.0534, -73.5387],
-  'peoria': [40.6936, -89.5890],
-  'virginia-beach': [36.8529, -75.9780],
-  'hartford': [41.7658, -72.6734],
-  'wellington': [-41.2865, 174.7762],
-  'dunedin': [-45.8788, 170.5028],
-  'christchurch': [-43.5321, 172.6362],
-  'goteborg': [57.7089, 11.9746],
-  'toledo': [41.6528, -83.5379],
-  'mountain-view': [37.3861, -122.0839],
-  'salt-lake-city': [40.7608, -111.8910],
-  'dublin': [53.3498, -6.2603],
-  'adelaide': [-34.9285, 138.6007],
-  'delhi': [28.7041, 77.1025],
-  'nairobi': [-1.2921, 36.8219],
-  'innsbruck': [47.2692, 11.4041],
-  'barcelona': [41.3874, 2.1686],
-  'charlotte': [35.2271, -80.8431],
-  'naples': [26.1420, -81.7948],
-  'sacramento': [38.5816, -121.4944],
-  'sandy-springs': [33.9304, -84.3733],
-  'washington': [38.9072, -77.0369],
-  'miami': [25.7617, -80.1918],
-  'dhaka': [23.8103, 90.4125],
-  'accra': [5.6037, -0.1870],
-  'cape-town': [-33.9249, 18.4241],
-  'rancho-cordova': [38.5891, -121.3028],
-  'online': null
-};
+// Initialize Leaflet map
+var eventsMap = initClawCampMap('events-map', {
+  mode: 'dark',
+  interactive: true,
+  zoom: 2,
+  center: [20, 0],
+  onDotClick: function(cityKey, coords, label) {
+    setUserLocation(coords[0], coords[1], label);
+    document.getElementById('location-input').value = label;
+  }
+});
 
-// Known city names for input matching
-var cityNames = {
-  'oakland': 'oakland', 'san francisco': 'san-francisco', 'sf': 'san-francisco',
-  'ho chi minh': 'ho-chi-minh-city', 'saigon': 'ho-chi-minh-city',
-  'austin': 'austin', 'bentonville': 'bentonville', 'seattle': 'seattle',
-  'singapore': 'singapore', 'tokyo': 'tokyo', 'bucharest': 'bucharest',
-  'istanbul': 'istanbul', 'ghent': 'ghent', 'toulouse': 'toulouse',
-  'new york': 'new-york', 'nyc': 'new-york', 'berlin': 'berlin',
-  'victoria': 'victoria', 'raleigh': 'raleigh', 'kitchener': 'kitchener',
-  'waterloo': 'kitchener', 'boulder': 'boulder', 'amsterdam': 'amsterdam',
-  'toronto': 'toronto', 'vancouver': 'vancouver', 'chiang mai': 'chiang-mai',
-  'oslo': 'oslo', 'bangalore': 'bangalore', 'bengaluru': 'bangalore',
-  'london': 'london', 'los angeles': 'los-angeles', 'la': 'los-angeles',
-  'valencia': 'valencia', 'ann arbor': 'ann-arbor', 'sao paulo': 'sao-paulo',
-  'guadalajara': 'guadalajara', 'rio de janeiro': 'rio-de-janeiro', 'rio': 'rio-de-janeiro',
-  'copenhagen': 'copenhagen', 'chicago': 'chicago', 'ankara': 'ankara',
-  'belo horizonte': 'belo-horizonte', 'boston': 'boston', 'philadelphia': 'philadelphia',
-  'philly': 'philadelphia', 'seoul': 'seoul', 'mexico city': 'mexico-city',
-  'cdmx': 'mexico-city', 'bogota': 'bogota', 'porto alegre': 'porto-alegre',
-  'shanghai': 'shanghai', 'buenos aires': 'buenos-aires', 'paris': 'paris',
-  'stockholm': 'stockholm', 'melbourne': 'melbourne', 'dallas': 'dallas',
-  'atlanta': 'atlanta', 'houston': 'houston', 'portland': 'portland',
-  'san diego': 'san-diego', 'auckland': 'auckland',
-  'helsinki': 'helsinki', 'stamford': 'stamford', 'peoria': 'peoria',
-  'virginia beach': 'virginia-beach', 'hartford': 'hartford', 'wellington': 'wellington',
-  'dunedin': 'dunedin', 'christchurch': 'christchurch', 'goteborg': 'goteborg',
-  'gothenburg': 'goteborg', 'toledo': 'toledo', 'mountain view': 'mountain-view',
-  'salt lake city': 'salt-lake-city', 'slc': 'salt-lake-city', 'dublin': 'dublin',
-  'adelaide': 'adelaide', 'delhi': 'delhi', 'new delhi': 'delhi',
-  'nairobi': 'nairobi', 'innsbruck': 'innsbruck', 'barcelona': 'barcelona',
-  'charlotte': 'charlotte', 'naples': 'naples', 'sacramento': 'sacramento',
-  'sandy springs': 'sandy-springs', 'washington': 'washington', 'dc': 'washington',
-  'miami': 'miami', 'dhaka': 'dhaka', 'accra': 'accra', 'cape town': 'cape-town',
-  'rancho cordova': 'rancho-cordova'
-};
+
 
 function haversine(lat1, lon1, lat2, lon2) {
   var R = 6371;
@@ -2852,81 +2710,6 @@ function setUserLocation(lat, lon, label) {
   document.getElementById('location-clear').classList.add('visible');
   sortEventsByDistance();
 }
-
-function mapDotClick(btn) {
-  var cityKey = btn.dataset.city;
-  var coords = cityCoords[cityKey];
-  if (coords) {
-    var label = btn.querySelector('.map-dot-tooltip').textContent || cityKey;
-    setUserLocation(coords[0], coords[1], label);
-    document.getElementById('location-input').value = label;
-  }
-}
-
-// Map drag/pan
-(function() {
-  var pan = document.getElementById('map-pan');
-  if (!pan) return;
-  var header = pan.parentElement;
-  var isDragging = false;
-  var startY = 0;
-  var currentY = 0;
-  var dragDistance = 0;
-
-  function clampY() {
-    var panH = pan.offsetHeight;
-    var headerH = header.offsetHeight;
-    var minY = -(panH - headerH);
-    var maxY = 0;
-    currentY = Math.max(minY, Math.min(maxY, currentY));
-  }
-
-  function applyTransform() {
-    pan.style.transform = 'translateY(' + currentY + 'px)';
-  }
-
-  function onStart(e) {
-    // Don't interfere with dot button clicks
-    if (e.target.closest('.map-dot-btn')) return;
-    isDragging = true;
-    dragDistance = 0;
-    startY = (e.touches ? e.touches[0].clientY : e.clientY) - currentY;
-    pan.style.transition = 'none';
-  }
-
-  function onMove(e) {
-    if (!isDragging) return;
-    var clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    var newY = clientY - startY;
-    dragDistance += Math.abs(newY - currentY);
-    currentY = newY;
-    clampY();
-    applyTransform();
-  }
-
-  function onEnd() {
-    if (!isDragging) return;
-    isDragging = false;
-    pan.style.transition = 'transform 0.2s ease-out';
-    clampY();
-    applyTransform();
-  }
-
-  // Suppress click on dots after a drag
-  pan.addEventListener('click', function(e) {
-    if (dragDistance > 5) {
-      e.stopPropagation();
-      e.preventDefault();
-    }
-  }, true);
-
-  pan.addEventListener('mousedown', onStart);
-  window.addEventListener('mousemove', onMove);
-  window.addEventListener('mouseup', onEnd);
-  pan.addEventListener('touchstart', onStart, { passive: true });
-  window.addEventListener('touchmove', onMove, { passive: true });
-  window.addEventListener('touchend', onEnd);
-})();
 
 function detectLocation() {
   var btn = document.querySelector('.location-btn-detect');
