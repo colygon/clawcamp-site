@@ -3269,6 +3269,9 @@ function getToday() {
     String(d.getDate()).padStart(2, '0');
 }
 
+var MAX_DISTANCE_MI = 300;
+var MAX_DISTANCE_KM = MAX_DISTANCE_MI * 1.60934; // ~483 km
+
 function applyFilters() {
   var today = getToday();
   var allItems = document.querySelectorAll('.event-row, .featured-event');
@@ -3281,7 +3284,17 @@ function applyFilters() {
     var name = (row.querySelector('.event-name') || row.querySelector('.featured-title') || {}).textContent || '';
     var source = row.dataset.source || '';
     var typeMatch = (currentTypeFilter === 'all') || (currentTypeFilter === 'online' ? city === 'online' : currentTypeFilter === 'clawcon' ? name.indexOf('ClawCon') === 0 : currentTypeFilter === 'aicamp' ? source === 'aicamp' : currentTypeFilter === 'ai_collective' ? source === 'ai_collective' : currentTypeFilter === 'openclaw' ? name.indexOf('Claw') !== -1 : type === currentTypeFilter);
-    row.style.display = (timeMatch && typeMatch) ? '' : 'none';
+    // Distance filter: only show events within 300 mi, or online events
+    var distMatch = true;
+    if (userLat && userLon) {
+      if (city === 'online') {
+        distMatch = true;
+      } else {
+        var dist = getDistanceForCity(city);
+        distMatch = (dist <= MAX_DISTANCE_KM);
+      }
+    }
+    row.style.display = (timeMatch && typeMatch && distMatch) ? '' : 'none';
   });
   document.querySelectorAll('.month-section').forEach(function(section) {
     var visible = section.querySelectorAll('.event-row:not([style*="display: none"])');
