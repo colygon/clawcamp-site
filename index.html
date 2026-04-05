@@ -415,6 +415,47 @@
   .time-tab.active .tab-count { color: var(--rust); }
 
   /* Filter bar */
+  .filters-toggle-bar {
+    padding: 12px 48px;
+    border-bottom: 1px solid var(--sand);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .filters-toggle-bar .location-bar {
+    flex: 1;
+    padding: 0;
+    border-bottom: none;
+    background: transparent;
+  }
+  .filters-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: 1px solid var(--sand);
+    background: transparent;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filters-toggle-btn:hover { border-color: var(--ink); color: var(--ink); }
+  .filters-toggle-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .filters-toggle-btn .chevron {
+    font-size: 10px;
+    transition: transform 0.2s;
+  }
+  .filters-toggle-btn.active .chevron { transform: rotate(180deg); }
+  .filters-panel {
+    display: none;
+  }
+  .filters-panel.open {
+    display: block;
+  }
   .filter-bar {
     padding: 16px 48px;
     border-bottom: 1px solid var(--sand);
@@ -1028,30 +1069,34 @@
 </section>
 
 <!-- Events Schedule -->
-<div class="time-tabs">
-  <button class="time-tab active" onclick="switchTimeTab('upcoming', this)">Upcoming <span class="tab-count" id="upcoming-count"></span></button>
-  <button class="time-tab" onclick="switchTimeTab('past', this)">Past Events <span class="tab-count" id="past-count"></span></button>
+<div class="filters-toggle-bar">
+  <div class="location-bar" id="location-bar">
+    <span class="location-label">Sort by nearest:</span>
+    <div class="location-input-wrap">
+      <input type="text" id="location-input" placeholder="Enter your city..." autocomplete="off">
+      <button class="location-btn location-btn-detect" onclick="detectLocation()">&#128205; Use My Location</button>
+    </div>
+  </div>
+  <button class="filters-toggle-btn" id="filters-toggle" onclick="toggleFilters()">Filters <span class="chevron">&#9662;</span></button>
 </div>
 
-<div class="filter-bar">
-  <span class="filter-label">Filter:</span>
-  <button class="filter-btn active" onclick="filterEvents('all', this)">All Events</button>
-  <button class="filter-btn" onclick="filterEvents('flagship', this)">ClawCamp</button>
-  <button class="filter-btn" onclick="filterEvents('workshop', this)">Workshops</button>
-  <button class="filter-btn" onclick="filterEvents('community', this)">Community</button>
-  <button class="filter-btn" onclick="filterEvents('online', this)">Online</button>
-  <button class="filter-btn" onclick="filterEvents('clawcon', this)">ClawCon</button>
-  <button class="filter-btn" onclick="filterEvents('aicamp', this)">AI Camp</button>
-  <button class="filter-btn" onclick="filterEvents('ai_collective', this)">AI Collective</button>
-  <button class="filter-btn" onclick="filterEvents('openclaw', this)">OpenClaw</button>
-</div>
+<div class="filters-panel" id="filters-panel">
+  <div class="time-tabs">
+    <button class="time-tab active" onclick="switchTimeTab('upcoming', this)">Upcoming <span class="tab-count" id="upcoming-count"></span></button>
+    <button class="time-tab" onclick="switchTimeTab('past', this)">Past Events <span class="tab-count" id="past-count"></span></button>
+  </div>
 
-<div class="location-bar" id="location-bar">
-  <span class="location-label">Sort by nearest:</span>
-  <div class="location-input-wrap">
-    <input type="text" id="location-input" placeholder="Enter your city..." autocomplete="off">
-    <button class="location-btn location-btn-detect" onclick="detectLocation()">&#128205; Use My Location</button>
-    <button class="location-btn location-btn-clear" id="location-clear" onclick="clearLocation()">Clear</button>
+  <div class="filter-bar">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-btn active" onclick="filterEvents('all', this)">All Events</button>
+    <button class="filter-btn" onclick="filterEvents('flagship', this)">ClawCamp</button>
+    <button class="filter-btn" onclick="filterEvents('workshop', this)">Workshops</button>
+    <button class="filter-btn" onclick="filterEvents('community', this)">Community</button>
+    <button class="filter-btn" onclick="filterEvents('online', this)">Online</button>
+    <button class="filter-btn" onclick="filterEvents('clawcon', this)">ClawCon</button>
+    <button class="filter-btn" onclick="filterEvents('aicamp', this)">AI Camp</button>
+    <button class="filter-btn" onclick="filterEvents('ai_collective', this)">AI Collective</button>
+    <button class="filter-btn" onclick="filterEvents('openclaw', this)">OpenClaw</button>
   </div>
 </div>
 
@@ -3223,6 +3268,13 @@ function updateCounts() {
   });
   document.getElementById('upcoming-count').textContent = '(' + upcoming + ')';
   document.getElementById('past-count').textContent = '(' + past + ')';
+}
+
+function toggleFilters() {
+  var panel = document.getElementById('filters-panel');
+  var btn = document.getElementById('filters-toggle');
+  panel.classList.toggle('open');
+  btn.classList.toggle('active');
 }
 
 function switchTimeTab(tab, btn) {
