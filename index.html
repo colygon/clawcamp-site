@@ -3120,14 +3120,109 @@ function promoteNearbyEvents() {
       }
     }
 
-    // Promote the closest flagship to a featured card at the top
+    // Promote the closest flagship — build a proper featured card using DOM methods
     if (closestFlagship) {
-      // Convert the event-row to a featured card style
+      var nameEl = closestFlagship.querySelector('.event-name');
+      var descEl = closestFlagship.querySelector('.event-desc');
+      var imgEl = closestFlagship.querySelector('.event-img');
+      var evName = nameEl ? nameEl.textContent : '';
+      var evDesc = descEl ? descEl.textContent : '';
+      var evHref = closestFlagship.getAttribute('href') || '#';
+      var evTarget = closestFlagship.getAttribute('target') || '';
+      var evCity = closestFlagship.dataset.city || '';
+      var evDate = closestFlagship.dataset.date || '';
+      var cityLabel = evCity.replace(/-/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+
+      var dd = new Date(evDate + 'T00:00:00');
+      var dayNum = dd.getDate();
+      var monName = monthNames[dd.getMonth()];
+      var yearNum = dd.getFullYear();
+      var dowName = daysOfWeek[dd.getDay()];
+
+      var card = document.createElement('div');
+      card.className = 'featured-event featured-flagship';
+      card.dataset.type = 'flagship';
+      card.dataset.date = evDate;
+      card.dataset.city = evCity;
+
+      var left = document.createElement('div');
+      left.className = 'featured-left';
+
+      if (imgEl) {
+        var bg = document.createElement('img');
+        bg.className = 'featured-bg';
+        bg.src = imgEl.src;
+        left.appendChild(bg);
+      }
+
+      var eyebrow = document.createElement('div');
+      eyebrow.className = 'featured-eyebrow';
+      eyebrow.textContent = 'Flagship Event \u00B7 ' + cityLabel;
+      left.appendChild(eyebrow);
+
+      var title = document.createElement('div');
+      title.className = 'featured-title';
+      var parts = evName.split(' ');
+      title.textContent = parts[0];
+      if (parts.length > 1) {
+        title.appendChild(document.createElement('br'));
+        var span = document.createElement('span');
+        span.textContent = parts.slice(1).join(' ');
+        title.appendChild(span);
+      }
+      left.appendChild(title);
+
+      var details = document.createElement('div');
+      details.className = 'featured-details';
+      ['\uD83D\uDCC5 ' + dowName + ', ' + monName + ' ' + dayNum + ', ' + yearNum,
+       '\uD83D\uDCCD ' + cityLabel,
+       '\u23F1 Full Day'].forEach(function(txt) {
+        var s = document.createElement('span');
+        s.className = 'featured-detail';
+        s.textContent = txt;
+        details.appendChild(s);
+      });
+      left.appendChild(details);
+
+      if (evDesc) {
+        var desc = document.createElement('p');
+        desc.className = 'featured-desc';
+        desc.textContent = evDesc;
+        left.appendChild(desc);
+      }
+
+      var cta = document.createElement('a');
+      cta.className = 'featured-cta';
+      cta.href = evHref;
+      cta.textContent = 'View Details \u2192';
+      if (evTarget) cta.target = evTarget;
+      left.appendChild(cta);
+
+      var right = document.createElement('div');
+      right.className = 'featured-right';
+      var dateBlock = document.createElement('div');
+      var dn = document.createElement('div');
+      dn.className = 'featured-date-block';
+      dn.textContent = dayNum;
+      dateBlock.appendChild(dn);
+      var mn = document.createElement('div');
+      mn.className = 'featured-month';
+      mn.textContent = monName.toUpperCase();
+      dateBlock.appendChild(mn);
+      var yr = document.createElement('div');
+      yr.className = 'featured-year';
+      yr.textContent = yearNum + ' \u00B7 ' + dowName;
+      dateBlock.appendChild(yr);
+      right.appendChild(dateBlock);
+
+      card.appendChild(left);
+      card.appendChild(right);
+
+      // Hide original row, insert featured card at top
+      closestFlagship.style.display = 'none';
       closestFlagship.classList.add('promoted-featured');
-      closestFlagship.style.cssText = 'display:grid;grid-template-columns:1fr 200px;border:1.5px solid var(--rust);border-radius:8px;overflow:hidden;background:var(--ink);color:var(--paper);text-decoration:none;margin-bottom:24px;';
-      // Move to top
       var firstChild = eventsMain.querySelector('.month-section, .featured-event');
-      if (firstChild) eventsMain.insertBefore(closestFlagship, firstChild);
+      if (firstChild) eventsMain.insertBefore(card, firstChild);
     }
 
     // Also promote other nearby (non-flagship) events above month sections
