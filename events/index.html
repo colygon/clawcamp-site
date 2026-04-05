@@ -656,7 +656,7 @@
     padding: 80px 48px 60px;
     padding-top: 140px;
     margin-top: -73px;
-    min-height: 480px;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -672,10 +672,16 @@
     letter-spacing: -0.04em;
     color: var(--paper);
     text-align: left;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    transition: color 0.3s;
   }
   .map-header h1 em {
     font-style: normal;
     color: var(--rust);
+  }
+  .map-header.light-mode h1 {
+    color: var(--ink);
+    text-shadow: 0 2px 8px rgba(255,255,255,0.5);
   }
   .map-header .header-meta p {
     color: rgba(245,242,236,0.5);
@@ -694,11 +700,6 @@
   <div id="events-map"></div>
   <button id="events-map-toggle" class="events-map-toggle" title="Toggle map style">☆</button>
   <h1>Schedule of<br><em>Events</em></h1>
-  <div class="header-meta">
-    <p>Spring 2026 Season</p>
-    <p>Oakland &middot; Worldwide</p>
-    <p>Personal AI Agents</p>
-  </div>
 </header>
 
 <div class="filters-toggle-bar">
@@ -2627,13 +2628,16 @@ var eventsMap = initClawCampMap('events-map', {
 // Standalone toggle button (above nav z-index)
 (function() {
   var btn = document.getElementById('events-map-toggle');
+  var header = document.querySelector('.map-header');
   var mode = 'dark';
   try { var saved = localStorage.getItem('clawcamp-map-mode'); if (saved) mode = saved; } catch(e) {}
   btn.textContent = mode === 'dark' ? '\u2606' : '\u263E';
+  if (mode === 'light' && header) header.classList.add('light-mode');
   btn.addEventListener('click', function() {
     mode = mode === 'dark' ? 'light' : 'dark';
     if (eventsMap) eventsMap.setMode(mode);
     btn.textContent = mode === 'dark' ? '\u2606' : '\u263E';
+    if (header) header.classList.toggle('light-mode', mode === 'light');
   });
 })();
 
