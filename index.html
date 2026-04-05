@@ -1042,16 +1042,15 @@
 <!-- Events Schedule -->
 <div class="filters-toggle-bar">
   <div class="location-bar" id="location-bar">
-    <span class="location-label">Sort by nearest:</span>
     <div class="location-input-wrap">
       <input type="text" id="location-input" placeholder="Enter your city..." autocomplete="off">
       <button class="location-btn location-btn-detect" onclick="detectLocation()">&#128205; Use My Location</button>
     </div>
   </div>
-  <button class="filters-toggle-btn" id="filters-toggle" onclick="toggleFilters()">Filters <span class="chevron">&#9662;</span></button>
+
 </div>
 
-<div class="filters-panel" id="filters-panel">
+<div class="filters-panel" id="filters-panel" style="display:none;">
   <div class="time-tabs">
     <button class="time-tab active" onclick="switchTimeTab('upcoming', this)">Upcoming <span class="tab-count" id="upcoming-count"></span></button>
     <button class="time-tab" onclick="switchTimeTab('past', this)">Past Events <span class="tab-count" id="past-count"></span></button>
