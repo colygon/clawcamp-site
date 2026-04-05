@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda — ETH Yosemite</title>
+  <meta name="description" content="The full schedule for ETH Yosemite Festival. Talks, hackathons, Vibez sessions, poker, and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="https://images.squarespace-cdn.com/content/v1/663acbf2e6fc1450d5bc052e/1715129464221-U9L296VG97UL08273I7Q/IMG_7201.jpeg?format=100w" type="image/jpeg">
+</head>
+<body>
+
+  <header class="site-header scrolled" id="header">
+    <div class="header-inner">
+      <a href="/zusemite/" class="logo"><img src="https://images.squarespace-cdn.com/content/v1/663acbf2e6fc1450d5bc052e/3cf88fc0-7a7e-4384-aee6-082cdbe5812e/eth-yosemite.png?format=500w" alt="ETH Yosemite"></a>
+      <nav class="nav-links">
+        <a href="/zusemite/festival/">Festival</a><a href="/zusemite/spaces/">Tour</a><a href="/zusemite/vibez/">Vibez</a><a href="/zusemite/poker/">Poker</a><a href="/zusemite/lodging/">Stay</a><a href="/zusemite/attractions/">Explore</a>
+        <a href="https://t.me/+NOdOJc8yw4Y3YjBh" target="_blank" class="cta-link">Chat with Us</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="/zusemite/festival/">Festival</a><a href="/zusemite/spaces/">Tour</a><a href="/zusemite/vibez/">Vibez</a><a href="/zusemite/poker/">Poker</a><a href="/zusemite/lodging/">Stay</a><a href="/zusemite/attractions/">Explore</a>
+    <a href="https://t.me/+NOdOJc8yw4Y3YjBh" target="_blank">Chat with Us</a>
+  </nav>
+
+  <!-- Header Section (no hero image, just typography) -->
+  <section class="section bg-deep" style="padding-top: 10rem; text-align: center;">
+    <div class="container">
+      <p class="overline" style="color: var(--accent-hot);">ETH Yosemite Festival</p>
+      <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem;">Agenda</h1>
+      <p style="max-width: 55ch; margin: 0 auto 2rem;">Three days of talks, workshops, hackathons, music, and adventure. Here's what each day looks like.</p>
+
+      <!-- Day Tabs -->
+      <div class="agenda-day-tabs">
+        <button class="agenda-tab active" onclick="showDay('day1', this)">Day 1 — Arrival</button>
+        <button class="agenda-tab" onclick="showDay('day2', this)">Day 2 — Build</button>
+        <button class="agenda-tab" onclick="showDay('day3', this)">Day 3 — Ship</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Day 1 -->
+  <section class="section bg-deep day-schedule" id="day1" style="padding-top: 0;">
+    <div class="container">
+      <div class="agenda-grid">
+        <div class="agenda-time">9:00 AM</div>
+        <div class="agenda-item"><h4>Gates Open &amp; Check-In</h4><p class="agenda-meta">Claim your cabin, tent, or lodge room. Get your wristband. <span class="venue-tag">Main Gate</span></p></div>
+
+        <div class="agenda-time">11:00</div>
+        <div class="agenda-item"><h4>Camp Tour &amp; Orientation</h4><p class="agenda-meta">Walk the 132 acres. Find the pools, MakerSpace, stages, and secret spots. <span class="venue-tag">Base Camp</span></p></div>
+
+        <div class="agenda-time">12:30</div>
+        <div class="agenda-item"><h4>Lunch</h4><p class="agenda-meta">Catered meal at the Lodge Dining Hall. <span class="venue-tag">Lodge</span></p></div>
+
+        <div class="agenda-time">2:00 PM</div>
+        <div class="agenda-item"><h4>Opening Ceremony</h4><p class="agenda-meta">Welcome address, festival overview, and community introductions. <span class="venue-tag">Amphitheater</span></p></div>
+
+        <div class="agenda-time">3:30</div>
+        <div class="agenda-item"><h4>Hackathon Kickoff</h4><p class="agenda-meta">Teams form, bounties announced, MakerSpace opens. 48-hour clock starts. <span class="venue-tag">Event Center</span></p></div>
+
+        <div class="agenda-time">4:30</div>
+        <div class="agenda-item"><h4>Camp BUIDL: Session 1</h4><p class="agenda-meta">Smart Contracts 101 or DeFi Architecture (choose your track). <span class="venue-tag">Pavilion</span></p></div>
+
+        <div class="agenda-time">6:00</div>
+        <div class="agenda-item"><h4>Dinner &amp; Free Time</h4><p class="agenda-meta">Pool, hot tub, archery, hiking, or just decompress. <span class="venue-tag">Camp-wide</span></p></div>
+
+        <div class="agenda-time">8:00 PM</div>
+        <div class="agenda-item"><h4>Opening Night Vibez Set</h4><p class="agenda-meta">DJ set at the A-Frame with sunset pool session warmup. <span class="venue-tag">A-Frame</span></p></div>
+
+        <div class="agenda-time">9:00</div>
+        <div class="agenda-item"><h4>Poker Night: Tournament 1</h4><p class="agenda-meta">Free-to-play Texas Hold'em. Walk-ups welcome. <span class="venue-tag">Lodge</span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Day 2 -->
+  <section class="section bg-deep day-schedule" id="day2" style="padding-top: 0; display: none;">
+    <div class="container">
+      <div class="agenda-grid">
+        <div class="agenda-time">7:00 AM</div>
+        <div class="agenda-item"><h4>Sunrise Yoga &amp; Cold Plunge</h4><p class="agenda-meta">Start the day right. Guided session by the pool. <span class="venue-tag">Sunset Pool</span></p></div>
+
+        <div class="agenda-time">8:30</div>
+        <div class="agenda-item"><h4>Breakfast</h4><p class="agenda-meta">Fueled by the espresso bar and catered breakfast. <span class="venue-tag">Lodge</span></p></div>
+
+        <div class="agenda-time">10:00</div>
+        <div class="agenda-item"><h4>Main Stage: Talk Block 1</h4><p class="agenda-meta">3 talks on L2 Scaling, ZK Proofs, and Oracle Networks. 20 min each. <span class="venue-tag">Event Center</span></p></div>
+
+        <div class="agenda-time">11:30</div>
+        <div class="agenda-item"><h4>Fireside Chat: The Future of Ethereum</h4><p class="agenda-meta">Panel discussion around the bonfire pit. <span class="venue-tag">Great Lawn</span></p></div>
+
+        <div class="agenda-time">12:30</div>
+        <div class="agenda-item"><h4>Lunch</h4><p class="agenda-meta"><span class="venue-tag">Lodge</span></p></div>
+
+        <div class="agenda-time">2:00 PM</div>
+        <div class="agenda-item"><h4>Yosemite Day Trip (Optional)</h4><p class="agenda-meta">Guided group excursion to Yosemite National Park. Returns by 6PM. <span class="venue-tag">Off-site</span></p></div>
+
+        <div class="agenda-time">2:00</div>
+        <div class="agenda-item"><h4>Camp BUIDL: Session 2</h4><p class="agenda-meta">AI Agents workshop or Full-Stack dApp building. <span class="venue-tag">Pavilion</span></p></div>
+
+        <div class="agenda-time">4:00</div>
+        <div class="agenda-item"><h4>Podcast Lounge: Live Recording</h4><p class="agenda-meta">Drop-in interviews and live shows all afternoon. <span class="venue-tag">Media Lounge</span></p></div>
+
+        <div class="agenda-time">5:30</div>
+        <div class="agenda-item"><h4>Art Gallery Opening</h4><p class="agenda-meta">Curated walk through installations across camp. <span class="venue-tag">Camp-wide</span></p></div>
+
+        <div class="agenda-time">7:00 PM</div>
+        <div class="agenda-item"><h4>Dinner</h4><p class="agenda-meta"><span class="venue-tag">Lodge</span></p></div>
+
+        <div class="agenda-time">9:00</div>
+        <div class="agenda-item"><h4>Vibez: Late Night Sessions</h4><p class="agenda-meta">Deep house, ambient sets, and bonfire acoustics till late. <span class="venue-tag">A-Frame + Pool</span></p></div>
+
+        <div class="agenda-time">9:00</div>
+        <div class="agenda-item"><h4>Poker Night: Tournament 2</h4><p class="agenda-meta"><span class="venue-tag">Lodge</span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Day 3 -->
+  <section class="section bg-deep day-schedule" id="day3" style="padding-top: 0; display: none;">
+    <div class="container">
+      <div class="agenda-grid">
+        <div class="agenda-time">7:00 AM</div>
+        <div class="agenda-item"><h4>Morning Yoga</h4><p class="agenda-meta"><span class="venue-tag">Sunset Pool</span></p></div>
+
+        <div class="agenda-time">9:00</div>
+        <div class="agenda-item"><h4>Main Stage: Talk Block 2</h4><p class="agenda-meta">Governance, On-Chain Art, and Smart Contract Security. <span class="venue-tag">Event Center</span></p></div>
+
+        <div class="agenda-time">11:00</div>
+        <div class="agenda-item"><h4>Hackathon Demos &amp; Judging</h4><p class="agenda-meta">Teams present what they built. Community votes on winners. <span class="venue-tag">Event Center</span></p></div>
+
+        <div class="agenda-time">1:00 PM</div>
+        <div class="agenda-item"><h4>Lunch &amp; Awards</h4><p class="agenda-meta">Hackathon winners, poker champion, and community awards announced. <span class="venue-tag">Lodge</span></p></div>
+
+        <div class="agenda-time">3:00</div>
+        <div class="agenda-item"><h4>Poker Championship: Final Table</h4><p class="agenda-meta">Top players from Nights 1 &amp; 2 battle for the title. <span class="venue-tag">Lodge</span></p></div>
+
+        <div class="agenda-time">4:00</div>
+        <div class="agenda-item"><h4>Unconference Sessions</h4><p class="agenda-meta">Open floor. Pitch a topic, find a room, lead a discussion. <span class="venue-tag">Camp-wide</span></p></div>
+
+        <div class="agenda-time">6:00</div>
+        <div class="agenda-item"><h4>Closing Ceremony</h4><p class="agenda-meta">Reflections, thank-yous, and what's next. <span class="venue-tag">Amphitheater</span></p></div>
+
+        <div class="agenda-time">7:30 PM</div>
+        <div class="agenda-item"><h4>Farewell Dinner</h4><p class="agenda-meta"><span class="venue-tag">Lodge</span></p></div>
+
+        <div class="agenda-time">9:00</div>
+        <div class="agenda-item"><h4>The Last Night Party</h4><p class="agenda-meta">The legendary closing set. All stages. All night. <span class="venue-tag">A-Frame + Pool + Bonfire</span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <!-- Newsletter -->
+  <div class="newsletter-bar">
+    <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 600;">Get Schedule Updates</h3>
+    <form class="newsletter-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Subscribed!'; this.querySelector('input').value='';">
+      <input type="email" placeholder="your@email.com" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+
+  <footer class="site-footer" style="background: var(--bg-deep);">
+    <div class="footer-inner">
+      <div class="footer-brand"><h2>ETH Yosemite</h2></div>
+      <div class="footer-col">
+        <h4>Festival</h4>
+        <a href="/zusemite/festival/">The Festival</a>
+        <a href="/zusemite/vibez/">Vibez</a>
+        <a href="/zusemite/poker/">Poker Nights</a>
+        <a href="/zusemite/speakers/">Speakers</a>
+        <a href="/zusemite/agenda/">Agenda</a>
+      </div>
+      <div class="footer-col">
+        <h4>Experience</h4>
+        <a href="/zusemite/buidl/">Camp BUIDL</a>
+        <a href="/zusemite/makerspace/">MakerSpace</a>
+        <a href="/zusemite/podcast/">Podcast Lounge</a>
+        <a href="/zusemite/art/">Art Gallery</a>
+        <a href="/zusemite/sponsors/">Sponsors</a>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2025 ETH Yosemite. All rights reserved.</div>
+  </footer>
+
+  <script>
+    // Day tab switching
+    function showDay(dayId, btn) {
+      document.querySelectorAll('.day-schedule').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.agenda-tab').forEach(el => el.classList.remove('active'));
+      document.getElementById(dayId).style.display = 'block';
+      btn.classList.add('active');
+    }
+
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => { hamburger.classList.toggle('active'); mobileNav.classList.toggle('active'); document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : ''; });
+    mobileNav.querySelectorAll('a').forEach(l => l.addEventListener('click', () => { hamburger.classList.remove('active'); mobileNav.classList.remove('active'); document.body.style.overflow = ''; }));
+  </script>
+</body>
+</html>

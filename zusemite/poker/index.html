@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poker Nights — ETH Yosemite</title>
+  <meta name="description" content="Free-to-play poker league at ETH Yosemite. Texas Hold'em under the stars. All skill levels welcome.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="https://images.squarespace-cdn.com/content/v1/663acbf2e6fc1450d5bc052e/1715129464221-U9L296VG97UL08273I7Q/IMG_7201.jpeg?format=100w" type="image/jpeg">
+  <style>
+    .poker-page { --accent-local: #1a6b3c; }
+    .hero-poker .hero-content h1 { color: var(--gold); }
+  </style>
+</head>
+<body class="poker-page">
+
+  <header class="site-header" id="header">
+    <div class="header-inner">
+      <a href="/zusemite/" class="logo">
+        <img src="https://images.squarespace-cdn.com/content/v1/663acbf2e6fc1450d5bc052e/3cf88fc0-7a7e-4384-aee6-082cdbe5812e/eth-yosemite.png?format=500w" alt="ETH Yosemite">
+      </a>
+      <nav class="nav-links">
+        <a href="/zusemite/festival/">Festival</a>
+        <a href="/zusemite/spaces/">Tour</a>
+        <a href="/zusemite/vibez/">Vibez</a>
+        <a href="/zusemite/poker/">Poker</a>
+        <a href="/zusemite/lodging/">Stay</a>
+        <a href="/zusemite/attractions/">Explore</a>
+        <a href="https://t.me/+NOdOJc8yw4Y3YjBh" target="_blank" class="cta-link">Chat with Us</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="/zusemite/festival/">Festival</a>
+    <a href="/zusemite/spaces/">Tour</a>
+    <a href="/zusemite/vibez/">Vibez</a>
+    <a href="/zusemite/poker/">Poker</a>
+    <a href="/zusemite/lodging/">Stay</a>
+    <a href="/zusemite/attractions/">Explore</a>
+    <a href="https://t.me/+NOdOJc8yw4Y3YjBh" target="_blank">Chat with Us</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero hero-poker" style="min-height: 80vh;">
+    <div class="hero-bg">
+      <img src="https://images.squarespace-cdn.com/content/v1/6739609d2a09661be32a9cd7/3ee3035a-eff3-4c07-9d85-26a5a9244842/Tezza-0089.JPG?format=2500w" alt="Games at camp">
+    </div>
+    <div class="hero-content">
+      <p class="subtitle" style="margin-bottom: 0.5rem; color: var(--gold);">ETH Yosemite</p>
+      <h1 style="font-size: clamp(3.5rem, 10vw, 8rem); letter-spacing: 0.08em;">POKER NIGHTS</h1>
+      <p class="subtitle">Free-to-Play. Real Vibes. No Bluffing Required.</p>
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <!-- How It Works -->
+  <section class="section bg-deep">
+    <div class="container">
+      <div class="section-header">
+        <p class="overline" style="color: var(--gold);">How It Works</p>
+        <h2>Three Steps to the Table</h2>
+      </div>
+      <div class="steps-grid">
+        <div class="glass-panel step-card">
+          <div class="step-number">01</div>
+          <h3>Show Up</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Walk up to any table during poker hours. No registration, no buy-in, no barriers. First come, first seated.</p>
+        </div>
+        <div class="glass-panel step-card">
+          <div class="step-number">02</div>
+          <h3>Play Free</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">100% free-to-play Texas Hold'em. Everyone starts with the same chip stack. Skill and strategy only.</p>
+        </div>
+        <div class="glass-panel step-card">
+          <div class="step-number">03</div>
+          <h3>Win Glory</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Take home bragging rights, camp perks, custom chips, and the respect of your fellow degens.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats-banner" style="background: var(--bg-elevated);">
+    <div class="stat-item">
+      <div class="stat-number" style="color: var(--gold);">Free</div>
+      <div class="stat-label">Buy-in</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">NLH</div>
+      <div class="stat-label">Format</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">4</div>
+      <div class="stat-label">Tables</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" style="font-family: 'JetBrains Mono', monospace;">9PM</div>
+      <div class="stat-label">Nightly</div>
+    </div>
+  </div>
+
+  <!-- Tournament Structure -->
+  <section class="section bg-deep">
+    <div class="container" style="max-width: 900px;">
+      <div class="section-header">
+        <p class="overline" style="color: var(--gold);">Tournament Structure</p>
+        <h2>Blind Schedule</h2>
+      </div>
+      <div class="glass-panel">
+        <table class="rules-table">
+          <thead>
+            <tr>
+              <th>Level</th>
+              <th>Small Blind</th>
+              <th>Big Blind</th>
+              <th>Ante</th>
+              <th>Duration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>25</td><td>50</td><td>-</td><td>20 min</td></tr>
+            <tr><td>2</td><td>50</td><td>100</td><td>-</td><td>20 min</td></tr>
+            <tr><td>3</td><td>100</td><td>200</td><td>25</td><td>20 min</td></tr>
+            <tr><td>4</td><td>150</td><td>300</td><td>50</td><td>15 min</td></tr>
+            <tr><td>5</td><td>200</td><td>400</td><td>50</td><td>15 min</td></tr>
+            <tr><td>6</td><td>300</td><td>600</td><td>75</td><td>15 min</td></tr>
+            <tr><td>7</td><td>500</td><td>1000</td><td>100</td><td>15 min</td></tr>
+            <tr><td>8</td><td>1000</td><td>2000</td><td>200</td><td>Till done</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="text-align: center; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.85rem;">Starting stack: 10,000 chips per player. 15-minute break after Level 4.</p>
+    </div>
+  </section>
+
+  <!-- Prizes -->
+  <section class="section bg-surface">
+    <div class="split">
+      <div class="split-text">
+        <p class="overline" style="color: var(--gold);">The Stakes</p>
+        <h2>What You Win</h2>
+        <p>This isn't about money. It's about glory.</p>
+        <ul class="feature-list" style="grid-template-columns: 1fr;">
+          <li>Custom ETH Yosemite poker chip set</li>
+          <li>Champion's seat at the final table</li>
+          <li>Priority housing upgrade for your next visit</li>
+          <li>Eternal bragging rights in the Telegram</li>
+          <li>Your name on the Camp Leaderboard</li>
+        </ul>
+      </div>
+      <div class="split-image">
+        <img src="https://images.squarespace-cdn.com/content/v1/6739609d2a09661be32a9cd7/1736840774518-3BD8ML5PAV27AOD5CQN9/BaseCamp+Great+Lawn+Games+6.jpg?format=2500w" alt="Games on the lawn">
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section bg-deep" style="text-align: center; padding: 6rem var(--gutter);">
+    <h2>Reserve Your Seat</h2>
+    <p style="max-width: 50ch; margin: 0 auto 2rem; color: var(--text-muted);">Tables open nightly at 9PM. Walk-ups welcome, but let us know you're coming so we can deal you in.</p>
+    <a href="https://t.me/+NOdOJc8yw4Y3YjBh" target="_blank" class="btn btn-gold">Join the Table</a>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer" style="background: var(--bg-deep);">
+    <div class="footer-inner">
+      <div class="footer-brand"><h2>ETH Yosemite</h2></div>
+      <div class="footer-col">
+        <h4>Festival</h4>
+        <a href="/zusemite/festival/">The Festival</a>
+        <a href="/zusemite/vibez/">Vibez</a>
+        <a href="/zusemite/poker/">Poker Nights</a>
+        <a href="/zusemite/speakers/">Speakers</a>
+        <a href="/zusemite/agenda/">Agenda</a>
+      </div>
+      <div class="footer-col">
+        <h4>Experience</h4>
+        <a href="/zusemite/buidl/">Camp BUIDL</a>
+        <a href="/zusemite/makerspace/">MakerSpace</a>
+        <a href="/zusemite/podcast/">Podcast Lounge</a>
+        <a href="/zusemite/art/">Art Gallery</a>
+        <a href="/zusemite/sponsors/">Sponsors</a>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2025 ETH Yosemite. All rights reserved.</div>
+  </footer>
+
+  <script>
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => { hamburger.classList.toggle('active'); mobileNav.classList.toggle('active'); document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : ''; });
+    mobileNav.querySelectorAll('a').forEach(l => l.addEventListener('click', () => { hamburger.classList.remove('active'); mobileNav.classList.remove('active'); document.body.style.overflow = ''; }));
+  </script>
+
+</body>
+</html>
