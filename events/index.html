@@ -137,6 +137,15 @@
   .filters-toggle-bar {
     padding: 12px 48px;
     border-bottom: 1px solid var(--sand);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .filters-toggle-bar .location-bar {
+    flex: 1;
+    padding: 0;
+    border-bottom: none;
+    background: transparent;
   }
   .filters-toggle-btn {
     display: inline-flex;
@@ -556,7 +565,7 @@
 
   /* Responsive */
   @media (max-width: 768px) {
-    .filters-toggle-bar { padding: 12px 20px; }
+    .filters-toggle-bar { padding: 12px 20px; flex-wrap: wrap; }
     .time-tabs { padding: 0 20px; }
     .filter-bar { padding: 16px 20px; }
     .featured-event { grid-template-columns: 1fr; }
@@ -649,8 +658,9 @@
     margin-top: -73px;
     min-height: 480px;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
     gap: 24px;
   }
   .map-header > * { position: relative; z-index: 2; }
@@ -692,6 +702,14 @@
 </header>
 
 <div class="filters-toggle-bar">
+  <div class="location-bar" id="location-bar">
+    <span class="location-label">Sort by nearest:</span>
+    <div class="location-input-wrap">
+      <input type="text" id="location-input" placeholder="Enter your city..." autocomplete="off">
+      <button class="location-btn location-btn-detect" onclick="detectLocation()">&#128205; Use My Location</button>
+      <button class="location-btn location-btn-clear" id="location-clear" onclick="clearLocation()">Clear</button>
+    </div>
+  </div>
   <button class="filters-toggle-btn" id="filters-toggle" onclick="toggleFilters()">Filters <span class="chevron">&#9662;</span></button>
 </div>
 
@@ -712,15 +730,6 @@
     <button class="filter-btn" onclick="filterEvents('aicamp', this)">AI Camp</button>
     <button class="filter-btn" onclick="filterEvents('ai_collective', this)">AI Collective</button>
     <button class="filter-btn" onclick="filterEvents('openclaw', this)">OpenClaw</button>
-  </div>
-
-  <div class="location-bar" id="location-bar">
-    <span class="location-label">Sort by nearest:</span>
-    <div class="location-input-wrap">
-      <input type="text" id="location-input" placeholder="Enter your city..." autocomplete="off">
-      <button class="location-btn location-btn-detect" onclick="detectLocation()">&#128205; Use My Location</button>
-      <button class="location-btn location-btn-clear" id="location-clear" onclick="clearLocation()">Clear</button>
-    </div>
   </div>
 </div>
 

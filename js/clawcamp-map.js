@@ -326,9 +326,11 @@ function initClawCampMap(containerId, opts) {
             offset: [0, -8]
           });
 
-          // Stop cycling on any user interaction
-          marker.on('click', function() { stopCycling(); });
-          marker.on('mouseover', function() { stopCycling(); });
+          // Stop cycling on user interaction (interactive maps only)
+          if (!autoScroll) {
+            marker.on('click', function() { stopCycling(); });
+            marker.on('mouseover', function() { stopCycling(); });
+          }
 
           if (onDotClick) {
             marker.on('click', function() { onDotClick(c, coords, label); });
@@ -336,8 +338,8 @@ function initClawCampMap(containerId, opts) {
 
           markersGroup.addLayer(marker);
 
-          // Only track primary (non-offset) markers for cycling
-          if (offset === 0) primaryMarkers.push(marker);
+          // Track markers for cycling — all copies for autoScroll, primary only otherwise
+          if (autoScroll || offset === 0) primaryMarkers.push(marker);
         });
       });
 
