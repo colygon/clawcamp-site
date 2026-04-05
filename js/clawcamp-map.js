@@ -184,7 +184,7 @@ function initClawCampMap(containerId, opts) {
     zoom: zoom,
     zoomControl: false,
     attributionControl: false,
-    scrollWheelZoom: interactive,
+    scrollWheelZoom: false,
     dragging: interactive,
     touchZoom: interactive,
     doubleClickZoom: interactive,
@@ -284,7 +284,7 @@ function initClawCampMap(containerId, opts) {
       });
 
       // Longitude offsets for world copies so dots repeat as map scrolls
-      var lngOffsets = autoScroll ? [-360, 0, 360] : [0];
+      var lngOffsets = autoScroll ? [-720, -360, 0, 360, 720, 1080, 1440, 1800, 2160, 2520] : [0];
 
       // Collect primary markers (offset 0) for auto-cycling
       var primaryMarkers = [];
@@ -301,8 +301,14 @@ function initClawCampMap(containerId, opts) {
         if (userInteracted || primaryMarkers.length === 0) return;
         // Close all tooltips first
         primaryMarkers.forEach(function(m) { m.closeTooltip(); });
-        // Open the current one
-        var current = primaryMarkers[cycleIndex % primaryMarkers.length];
+        // Filter to markers currently visible on screen
+        var bounds = map.getBounds();
+        var visible = primaryMarkers.filter(function(m) {
+          return bounds.contains(m.getLatLng());
+        });
+        if (visible.length === 0) return;
+        // Open the current one from visible set
+        var current = visible[cycleIndex % visible.length];
         current.openTooltip();
         cycleIndex++;
       }
