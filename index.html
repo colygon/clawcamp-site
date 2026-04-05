@@ -3089,35 +3089,69 @@ function promoteNearbyEvents() {
     var eventsMain = document.getElementById('events-main');
     if (!eventsMain) { showNebiusFeatured(); return; }
 
-    var allRows = eventsMain.querySelectorAll('.event-row[data-city]');
+    // Find the closest flagship event within range
+    var flagshipRows = eventsMain.querySelectorAll('.event-row[data-type="flagship"]');
+    var closestFlagship = null;
+    var closestDist = Infinity;
+    flagshipRows.forEach(function(row) {
+      var city = row.dataset.city;
+      if (!city || !cityCoords[city]) return;
+      var c = cityCoords[city];
+      var dist = haversine(lat, lon, c[0], c[1]);
+      if (dist <= PROMO_KM && dist < closestDist) {
+        closestFlagship = row;
+        closestDist = dist;
+      }
+    });
+
+    if (!closestFlagship) {
+      // Also check all events for nearby ones
+      var allRows = eventsMain.querySelectorAll('.event-row[data-city]');
+      var hasNearby = false;
+      allRows.forEach(function(row) {
+        var city = row.dataset.city;
+        if (!city || city === 'online' || !cityCoords[city]) return;
+        var c = cityCoords[city];
+        if (haversine(lat, lon, c[0], c[1]) <= PROMO_KM) hasNearby = true;
+      });
+      if (!hasNearby) {
+        showNebiusFeatured();
+        return;
+      }
+    }
+
+    // Promote the closest flagship to a featured card at the top
+    if (closestFlagship) {
+      // Convert the event-row to a featured card style
+      closestFlagship.classList.add('promoted-featured');
+      closestFlagship.style.cssText = 'display:grid;grid-template-columns:1fr 200px;border:1.5px solid var(--rust);border-radius:8px;overflow:hidden;background:var(--ink);color:var(--paper);text-decoration:none;margin-bottom:24px;';
+      // Move to top
+      var firstChild = eventsMain.querySelector('.month-section, .featured-event');
+      if (firstChild) eventsMain.insertBefore(closestFlagship, firstChild);
+    }
+
+    // Also promote other nearby (non-flagship) events above month sections
+    var allRows = eventsMain.querySelectorAll('.event-row[data-city]:not(.promoted-featured)');
     var promoted = [];
     allRows.forEach(function(row) {
       var city = row.dataset.city;
       if (!city || city === 'online' || !cityCoords[city]) return;
       var c = cityCoords[city];
-      var dist = haversine(lat, lon, c[0], c[1]);
-      if (dist <= PROMO_KM) promoted.push(row);
+      if (haversine(lat, lon, c[0], c[1]) <= PROMO_KM) promoted.push(row);
     });
 
-    if (promoted.length === 0) {
-      // No nearby events — show Nebius as default featured
-      showNebiusFeatured();
-      return;
+    if (promoted.length > 0) {
+      promoted.sort(function(a, b) {
+        var ca = cityCoords[a.dataset.city];
+        var cb = cityCoords[b.dataset.city];
+        return haversine(lat, lon, ca[0], ca[1]) - haversine(lat, lon, cb[0], cb[1]);
+      });
+      var firstSection = eventsMain.querySelector('.month-section');
+      promoted.forEach(function(row) {
+        if (firstSection) eventsMain.insertBefore(row, firstSection);
+      });
     }
-
-    // Move nearby events to top, closest first
-    promoted.sort(function(a, b) {
-      var ca = cityCoords[a.dataset.city];
-      var cb = cityCoords[b.dataset.city];
-      return haversine(lat, lon, ca[0], ca[1]) - haversine(lat, lon, cb[0], cb[1]);
-    });
-
-    var firstSection = eventsMain.querySelector('.month-section');
-    promoted.forEach(function(row) {
-      if (firstSection) eventsMain.insertBefore(row, firstSection);
-    });
   }, function() {
-    // Geolocation denied or failed — show Nebius as default
     showNebiusFeatured();
   }, { timeout: 5000 });
 }
