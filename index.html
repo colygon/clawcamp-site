@@ -3181,7 +3181,8 @@ function setUserLocation(lat, lon, label) {
   useMetric = !isInUSA(lat, lon);
   var input = document.getElementById('location-input');
   input.value = label || (lat.toFixed(2) + ', ' + lon.toFixed(2));
-  document.getElementById('location-clear').classList.add('visible');
+  var clearBtn = document.getElementById('location-clear');
+  if (clearBtn) clearBtn.classList.add('visible');
   sortEventsByDistance();
 }
 
