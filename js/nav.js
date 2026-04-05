@@ -4,7 +4,6 @@
   <a href="/" class="logo"><img src="/images/clawcamp-logo.svg" alt="ClawCamp" class="logo-img"></a>\
   <div class="nav-links">\
     <a href="/events" data-nav>Schedule</a>\
-    <a href="https://claw.rsvp" data-nav>RSVP</a>\
     <a href="/curriculum" data-nav>Tutorials</a>\
     <a href="/speakers" data-nav>Speakers</a>\
     <a href="/sponsors" data-nav>Sponsors</a>\
