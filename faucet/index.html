@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Faucet — $100 Daily AI Hackathon</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Bebas+Neue&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#060c07;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:#00ff88;border-radius:2px;}
+@keyframes glow{0%,100%{text-shadow:0 0 8px #00ff88,0 0 16px #00ff8840;}50%{text-shadow:0 0 18px #00ff88,0 0 36px #00ff8870;}}
+@keyframes fadein{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+@keyframes slideup{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,255,136,0.25);}50%{box-shadow:0 0 0 10px rgba(0,255,136,0);}}
+@keyframes drip{0%{height:0;opacity:1;}80%{opacity:1;}100%{height:52px;opacity:0;}}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+@keyframes scoreIn{from{opacity:0;transform:scale(0.6);}to{opacity:1;transform:scale(1);}}
+.glow{animation:glow 3s ease-in-out infinite;}
+.fadein{animation:fadein 0.4s ease both;}
+.slideup{animation:slideup 0.5s ease both;}
+.pulse-btn{animation:pulse 2.5s ease infinite;}
+.inp{background:#080f09;border:1px solid #162118;border-radius:5px;color:#c8e6c9;padding:11px 14px;font-family:'IBM Plex Mono',monospace;font-size:13px;width:100%;outline:none;transition:border-color 0.2s,box-shadow 0.2s;}
+.inp:focus{border-color:#00ff88;box-shadow:0 0 0 3px rgba(0,255,136,0.07);}
+.inp::placeholder{color:#1e2e22;}
+.inp-err{border-color:#ff5722!important;}
+.btn-p{background:#00ff88;color:#060c07;border:none;border-radius:5px;padding:12px 26px;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;letter-spacing:0.07em;cursor:pointer;transition:all 0.18s;white-space:nowrap;}
+.btn-p:hover:not(:disabled){background:#00e87a;transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,255,136,0.2);}
+.btn-p:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-g{background:transparent;color:#00ff88;border:1px solid #00ff8845;border-radius:5px;padding:9px 18px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.05em;cursor:pointer;transition:all 0.18s;}
+.btn-g:hover:not(:disabled){background:#00ff8810;border-color:#00ff88;}
+.btn-g:disabled{opacity:0.35;cursor:not-allowed;}
+.btn-dim{background:transparent;color:#3d6644;border:1px solid #111d13;border-radius:5px;padding:9px 18px;font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;transition:all 0.18s;}
+.btn-dim:hover{color:#00ff88;border-color:#00ff8840;}
+.card{background:#080f09;border:1px solid #111d13;border-radius:8px;}
+.card-hi{background:#080f09;border:1px solid #00ff8840;border-radius:8px;box-shadow:0 0 24px rgba(0,255,136,0.05);}
+.tag{background:#080f09;border:1px solid #162118;border-radius:3px;padding:3px 9px;font-size:11px;color:#3d6644;letter-spacing:0.05em;display:inline-block;}
+.ntab{background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.06em;padding:10px 16px;color:#3d6644;transition:all 0.18s;white-space:nowrap;}
+.ntab:hover{color:#00ff88;}
+.ntab.act{color:#00ff88;border-bottom-color:#00ff88;}
+.strack{height:4px;background:#0a120b;border-radius:2px;overflow:hidden;}
+.sfill{height:100%;background:linear-gradient(90deg,#00ff88,#00cc6e);border-radius:2px;transition:width 1.2s cubic-bezier(.16,1,.3,1);}
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
+.you{background:#00ff8818;border:1px solid #00ff8850;border-radius:3px;padding:1px 7px;font-size:10px;color:#00ff88;letter-spacing:0.08em;}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-type="module">
+const { useState, useEffect, useRef, useCallback } = React;
+
+const CHALLENGE = {
+  id: "DAY-0247", day: 247,
+  title: "Build a Voice-to-Code Agent",
+  description: "Create an app where a user speaks a feature request in plain English and an AI agent writes, runs, and deploys working code \u2014 no typing required. Must include a live demo URL.",
+  tags: ["AI Agents", "Voice UI", "Code Gen"],
+  prize: 100, prizeType: "Nebius Token Factory Credits",
+  sponsor: "Nebius AI",
+  criteria: [
+    { label: "Working Demo", key: "demo", max: 25 },
+    { label: "Code Quality", key: "code", max: 25 },
+    { label: "Creativity",   key: "creat", max: 25 },
+    { label: "Social Reach", key: "social", max: 25 },
+  ],
+};
+
+const SEED_SUBMISSIONS = [
+  { id: "s1", userId: "u_devansh", handle: "@devansh_builds", name: "Devansh R.", avatar: "DR", title: "VocalDeploy \u2014 speak to ship", demo: "https://vocaldeploy.vercel.app", github: "https://github.com/devansh/vocaldeploy", tweet: "Built a full voice\u2192deploy pipeline using @Nebius_AI in 8hrs \ud83c\udfd9\ufe0f\ud83d\udcbb #AIFaucet #DAY247", scores: { demo: 23, code: 22, creat: 24, social: 22 }, total: 91, status: "judged", time: "3h ago", verified: true },
+  { id: "s2", userId: "u_zero", handle: "@zerotocode_ai", name: "Zero T.", avatar: "ZC", title: "WhisperForge", demo: "https://whisperforge.io", github: "https://github.com/zero/whisperforge", tweet: "Whisper \u2192 Claude \u2192 Vercel in one breath. AI Faucet challenge #247 \ud83d\udd25 @Nebius_AI #AIFaucet", scores: { demo: 22, code: 21, creat: 22, social: 21 }, total: 86, status: "judged", time: "5h ago", verified: true },
+  { id: "s3", userId: "u_mira", handle: "@mira_hacks", name: "Mira K.", avatar: "MK", title: "NLDeploy", demo: "https://nldeploy.dev", github: "https://github.com/mira/nldeploy", tweet: "Solo devved a voice\u2192code agent in 6hrs. Let's gooo \ud83d\udd25 #AIFaucet @Nebius_AI", scores: { demo: 19, code: 20, creat: 21, social: 18 }, total: 78, status: "judged", time: "7h ago", verified: true },
+  { id: "s4", userId: "u_sam", handle: "@buildwithsam", name: "Sam L.", avatar: "SL", title: "TalkStack", demo: "https://talkstack.app", github: "https://github.com/sam/talkstack", tweet: "Powered by @Nebius_AI \u2014 speak your startup into existence now #AIFaucet", scores: { demo: 18, code: 19, creat: 18, social: 17 }, total: 72, status: "judged", time: "9h ago", verified: false },
+];
+
+const PAST_CHALLENGES = [
+  { id: "DAY-0246", day: 246, title: "Real-time Collaborative AI Editor", winner: "@devansh_builds", prize: 100, submissions: 31, date: "Apr 2" },
+  { id: "DAY-0245", day: 245, title: "AI Receipt Scanner \u2192 Expense Report", winner: "@codewithjoy", prize: 100, submissions: 28, date: "Apr 1" },
+  { id: "DAY-0244", day: 244, title: "Browser Agent That Books Flights", winner: "@zerotocode_ai", prize: 100, submissions: 22, date: "Mar 31" },
+  { id: "DAY-0243", day: 243, title: "LLM-Powered Code Review Bot for GitHub", winner: "@mira_hacks", prize: 100, submissions: 19, date: "Mar 30" },
+];
+
+function pad(n) { return String(n).padStart(2, "0"); }
+function getUTCCountdown() {
+  const now = new Date();
+  const midnight = new Date(now); midnight.setUTCHours(24, 0, 0, 0);
+  const diff = midnight - now;
+  return { h: Math.floor(diff / 3600000), m: Math.floor((diff % 3600000) / 60000), s: Math.floor((diff % 60000) / 1000), pct: (1 - diff / 86400000) * 100 };
+}
+function generateAIScore(formData) {
+  const demo   = formData.demo?.length   > 5  ? Math.floor(Math.random() * 4) + 20 : Math.floor(Math.random() * 6) + 12;
+  const code   = formData.github?.length > 5  ? Math.floor(Math.random() * 4) + 19 : Math.floor(Math.random() * 6) + 11;
+  const creat  = Math.floor(Math.random() * 5) + 18;
+  const social = formData.tweet?.includes("#AIFaucet") ? Math.floor(Math.random() * 5) + 18 : Math.floor(Math.random() * 6) + 10;
+  return { demo, code, creat, social, total: demo + code + creat + social };
+}
+
+function Spin() {
+  return React.createElement("span", { style: { display:"inline-block",width:13,height:13,border:"2px solid #00ff8825",borderTopColor:"#00ff88",borderRadius:"50%",animation:"spin 0.7s linear infinite",verticalAlign:"middle",marginRight:7 } });
+}
+
+function FaucetLogo({ size = 26 }) {
+  return (
+    <div style={{ position:"relative",width:size,height:size*1.18,flexShrink:0 }}>
+      <div style={{ width:size*0.76,height:size*0.6,border:"2px solid #00ff88",borderRadius:"4px 4px 0 0",position:"absolute",top:0,left:size*0.12 }} />
+      <div style={{ width:size*0.38,height:size*0.44,border:"2px solid #00ff88",borderTop:"none",borderRadius:"0 0 3px 3px",position:"absolute",top:size*0.55,left:size*0.31 }} />
+      <div style={{ position:"absolute",width:3,height:0,background:"linear-gradient(to bottom,#00ff88,transparent)",borderRadius:999,left:size*0.48,top:size*0.97,animation:"drip 1.9s ease-in infinite" }} />
+    </div>
+  );
+}
+
+function CDTimer({ time }) {
+  return (
+    <div style={{ display:"inline-flex",alignItems:"center",gap:3 }}>
+      {[pad(time.h),":",pad(time.m),":",pad(time.s)].map((v,i) => (
+        <span key={i} style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:20,color:v===":"?"#1a3320":"#00ff88",lineHeight:1 }}>{v}</span>
+      ))}
+      <span style={{ fontSize:9,color:"#233328",letterSpacing:"0.12em",marginLeft:5 }}>UTC</span>
+    </div>
+  );
+}
+
+function AuthScreen({ onAuth }) {
+  const [mode, setMode] = useState("signup");
+  const [f, setF] = useState({ name:"", email:"", handle:"", pass:"" });
+  const [loading, setLoading] = useState(false);
+  const [errs, setErrs] = useState({});
+
+  const go = () => {
+    const e = {};
+    if (mode==="signup" && !f.name.trim()) e.name=1;
+    if (!f.email.includes("@")) e.email=1;
+    if (f.pass.length < 4) e.pass=1;
+    setErrs(e);
+    if (Object.keys(e).length) return;
+    setLoading(true);
+    setTimeout(() => onAuth({
+      id: "u_"+f.email.split("@")[0].replace(/\W/g,""),
+      name: f.name || f.email.split("@")[0],
+      email: f.email,
+      handle: "@"+(f.handle || f.email.split("@")[0]),
+      avatar: (f.name||f.email).slice(0,2).toUpperCase(),
+      credits:0, wins:0, joinedDay:247,
+    }), 1100);
+  };
+
+  const demo = () => onAuth({ id:"u_demo",name:"Demo User",email:"demo@aifaucet.io",handle:"@demo_builder",avatar:"DU",credits:0,wins:0,joinedDay:247,isDemo:true });
+
+  return (
+    <div style={{ minHeight:"100vh",background:"#060c07",display:"flex",alignItems:"center",justifyContent:"center",padding:24,fontFamily:"'IBM Plex Mono',monospace" }}>
+      <div style={{ width:"100%",maxWidth:400 }}>
+        <div style={{ textAlign:"center",marginBottom:36 }}>
+          <div style={{ display:"flex",alignItems:"center",justifyContent:"center",gap:10,marginBottom:10 }}>
+            <FaucetLogo size={30} />
+            <span style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:30,color:"#00ff88",letterSpacing:"0.05em" }}>AI FAUCET</span>
+          </div>
+          <p style={{ fontSize:11,color:"#3d6644",letterSpacing:"0.08em" }}>$100 NEBIUS CREDITS &middot; DAILY &middot; AI-JUDGED &middot; FOREVER</p>
+        </div>
+
+        <div className="card slideup" style={{ padding:26 }}>
+          <div style={{ display:"flex",borderBottom:"1px solid #111d13",marginBottom:22 }}>
+            {["signup","login"].map(m => (
+              <button key={m} className={"ntab "+(mode===m?"act":"")} style={{ flex:1,textAlign:"center" }} onClick={() => { setMode(m); setErrs({}); }}>
+                {m==="signup"?"CREATE ACCOUNT":"SIGN IN"}
+              </button>
+            ))}
+          </div>
+
+          <div style={{ display:"grid",gap:11 }}>
+            {mode==="signup" && (
+              <>
+                <div>
+                  <label style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.1em",display:"block",marginBottom:4 }}>FULL NAME *</label>
+                  <input className={"inp"+(errs.name?" inp-err":"")} placeholder="Ada Lovelace" value={f.name} onChange={e=>setF({...f,name:e.target.value})} />
+                </div>
+                <div>
+                  <label style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.1em",display:"block",marginBottom:4 }}>HANDLE <span style={{color:"#1e2e22"}}>OPTIONAL</span></label>
+                  <input className="inp" placeholder="ada_builds" value={f.handle} onChange={e=>setF({...f,handle:e.target.value})} />
+                </div>
+              </>
+            )}
+            <div>
+              <label style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.1em",display:"block",marginBottom:4 }}>EMAIL *</label>
+              <input className={"inp"+(errs.email?" inp-err":"")} placeholder="you@example.com" type="email" value={f.email} onChange={e=>setF({...f,email:e.target.value})} />
+            </div>
+            <div>
+              <label style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.1em",display:"block",marginBottom:4 }}>PASSWORD *</label>
+              <input className={"inp"+(errs.pass?" inp-err":"")} placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022" type="password" value={f.pass} onChange={e=>setF({...f,pass:e.target.value})} />
+            </div>
+          </div>
+
+          <button className="btn-p pulse-btn" style={{ width:"100%",marginTop:18,padding:14 }} onClick={go} disabled={loading}>
+            {loading ? <><Spin />ENTERING THE FAUCET&hellip;</> : mode==="signup" ? "\u2192 CREATE ACCOUNT & COMPETE" : "\u2192 SIGN IN"}
+          </button>
+
+          <div style={{ display:"flex",alignItems:"center",gap:10,margin:"16px 0" }}>
+            <div style={{ flex:1,height:1,background:"#111d13" }} />
+            <span style={{ fontSize:10,color:"#1e2e22" }}>OR</span>
+            <div style={{ flex:1,height:1,background:"#111d13" }} />
+          </div>
+
+          <button className="btn-dim" style={{ width:"100%",padding:12 }} onClick={demo}>
+            &#9889; INVESTOR DEMO &mdash; SKIP AUTH
+          </button>
+        </div>
+
+        <div style={{ textAlign:"center",marginTop:18,fontSize:11,color:"#1e2e22",lineHeight:1.9 }}>
+          247 builders this month &middot; $24,700 in prizes paid out<br/>
+          <span style={{color:"#3d6644"}}>AI generates challenges. AI judges. AI pays. No humans.</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TodayTab({ time, onSubmit }) {
+  return (
+    <div className="fadein">
+      <div className="card" style={{ padding:"20px 22px",marginBottom:14,display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:14 }}>
+        <div>
+          <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.14em",marginBottom:5 }}>{"\u25b8"} {CHALLENGE.id} &middot; POWERED BY {CHALLENGE.sponsor.toUpperCase()}</div>
+          <div style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:26,color:"#fff",letterSpacing:"0.03em",lineHeight:1 }}>{CHALLENGE.title}</div>
+        </div>
+        <div style={{ textAlign:"right" }}>
+          <div style={{ fontSize:9,color:"#3d6644",letterSpacing:"0.1em",marginBottom:4 }}>RESETS IN</div>
+          <CDTimer time={time} />
+        </div>
+      </div>
+
+      <div style={{ marginBottom:16 }}>
+        <div style={{ display:"flex",justifyContent:"space-between",fontSize:9,color:"#233328",letterSpacing:"0.1em",marginBottom:5 }}>
+          <span>00:00 UTC</span><span>{Math.round(time.pct)}% ELAPSED</span><span>23:59 UTC</span>
+        </div>
+        <div className="strack"><div className="sfill" style={{ width:time.pct+"%" }} /></div>
+      </div>
+
+      <div style={{ display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12 }}>
+        <div className="card" style={{ padding:20,gridColumn:"1/-1" }}>
+          <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.12em",marginBottom:10 }}>THE BRIEF</div>
+          <p style={{ fontSize:13,color:"#6a9a72",lineHeight:1.8 }}>{CHALLENGE.description}</p>
+          <div style={{ marginTop:12,display:"flex",flexWrap:"wrap",gap:6 }}>
+            {CHALLENGE.tags.map(t=><span key={t} className="tag">{t}</span>)}
+          </div>
+        </div>
+
+        <div className="card-hi" style={{ padding:20 }}>
+          <div style={{ fontSize:9,color:"#3d6644",letterSpacing:"0.1em",marginBottom:8 }}>TODAY'S PRIZE</div>
+          <div className="glow" style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:48,color:"#00ff88",lineHeight:1 }}>${CHALLENGE.prize}</div>
+          <div style={{ fontSize:11,color:"#4a7a55",marginTop:4 }}>{CHALLENGE.prizeType}</div>
+          <div style={{ marginTop:10,fontSize:10,color:"#3d6644" }}>Paid within 10 min of judging</div>
+        </div>
+
+        <div className="card" style={{ padding:20 }}>
+          <div style={{ fontSize:9,color:"#3d6644",letterSpacing:"0.1em",marginBottom:12 }}>AI JUDGE CRITERIA</div>
+          {CHALLENGE.criteria.map(c=>(
+            <div key={c.key} style={{ display:"flex",justifyContent:"space-between",fontSize:12,color:"#4a7a55",marginBottom:7 }}>
+              <span>{"\u25c6"} {c.label}</span><span style={{color:"#3d6644"}}>{c.max}pts</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="card" style={{ padding:18,marginBottom:14 }}>
+        <div style={{ display:"flex",gap:14,alignItems:"flex-start" }}>
+          <div style={{ width:38,height:38,background:"#0d1a10",border:"1px solid #00ff8835",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0 }}>{"\u2696"}</div>
+          <div>
+            <div style={{ fontSize:10,color:"#00ff88",letterSpacing:"0.08em",marginBottom:5 }}>AI JUDGE &middot; INSTANCE #8821 &middot; LIVE</div>
+            <div style={{ fontSize:13,color:"#6a9a72",lineHeight:1.75 }}>"I evaluate every submission in real-time &mdash; GitHub repos, demo links, code quality, social proof. Top score wins $100 at 00:05 UTC. I don't sleep. I don't have favorites. I don't take bribes."</div>
+            <div style={{ marginTop:8,fontSize:10,color:"#3d6644" }}>{SEED_SUBMISSIONS.length} SUBMISSIONS RECEIVED &middot; JUDGING IN PROGRESS</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="card" style={{ padding:20,marginBottom:18 }}>
+        <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.12em",marginBottom:12 }}>WHAT YOU NEED TO SUBMIT</div>
+        {[["\u2713","Working live demo URL \u2014 must be accessible"],["\u2713","Public GitHub repo with README"],["\u2713","X/Twitter post with #AIFaucet + @Nebius_AI"],["\u2713","Built today \u2014 AI timestamps your commits"]].map(([ic,t])=>(
+          <div key={t} style={{ display:"flex",gap:10,fontSize:12,color:"#4a7a55",marginBottom:8 }}>
+            <span style={{color:"#00ff88"}}>{ic}</span>{t}
+          </div>
+        ))}
+      </div>
+
+      <button className="btn-p pulse-btn" style={{ width:"100%",padding:14,fontSize:14 }} onClick={onSubmit}>
+        {"\u2197"} SUBMIT YOUR BUILD FOR $100 {"\u2192"}
+      </button>
+    </div>
+  );
+}
+
+function SubmitTab({ user, onSubmitted, existing }) {
+  const [step, setStep] = useState(existing ? "done" : "form");
+  const [f, setF] = useState({ title:"", demo:"", github:"", tweet:"" });
+  const [genPost, setGenPost] = useState(false);
+  const [judgeLog, setJudgeLog] = useState([]);
+  const [scores, setScores] = useState(null);
+  const [errs, setErrs] = useState({});
+
+  const JUDGE_STEPS = [
+    "Fetching GitHub repo\u2026",
+    "Scanning commit history \u2014 verifying timestamps\u2026",
+    "Analyzing code structure and dependencies\u2026",
+    "Loading live demo URL\u2026",
+    "Running performance and UX checks\u2026",
+    "Verifying social post \u2014 checking #AIFaucet tag\u2026",
+    "Cross-referencing against all submissions\u2026",
+    "Computing final score\u2026",
+  ];
+
+  const handleGenPost = () => {
+    setGenPost(true);
+    const post = 'Just shipped "' + (f.title||"my build") + '" for the #AIFaucet daily hackathon \ud83d\udd25\n\nVoice-to-code agent built on @Nebius_AI Token Factory. 24hrs. Zero sleep. Live demo: ' + (f.demo||"[url]") + '\nCode: ' + (f.github||"[github]") + '\n\n#BuildInPublic #AIFaucet #DAY247 #NebiusAI';
+    setTimeout(() => { setF(p=>({...p,tweet:post})); setGenPost(false); }, 1400);
+  };
+
+  const submit = () => {
+    const e = {};
+    if (!f.title.trim()) e.title=1;
+    if (!f.demo.trim()) e.demo=1;
+    if (!f.github.trim()) e.github=1;
+    if (!f.tweet.trim()) e.tweet=1;
+    setErrs(e);
+    if (Object.keys(e).length) return;
+    setStep("judging");
+    setJudgeLog([]);
+    const s = generateAIScore(f);
+    let i = 0;
+    const iv = setInterval(() => {
+      setJudgeLog(p=>[...p,JUDGE_STEPS[i]]);
+      i++;
+      if (i >= JUDGE_STEPS.length) {
+        clearInterval(iv);
+        setTimeout(() => { setScores(s); setStep("done"); onSubmitted({...f,scores:s}); }, 500);
+      }
+    }, 520);
+  };
+
+  if (step === "judging") return (
+    <div className="fadein">
+      <div className="card" style={{ padding:30 }}>
+        <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.14em",marginBottom:20 }}>{"\u2696"} AI JUDGE EVALUATING YOUR SUBMISSION</div>
+        {judgeLog.map((msg,i)=>(
+          <div key={i} className="fadein" style={{ display:"flex",gap:10,alignItems:"center",marginBottom:11,animationDelay:i*0.08+"s" }}>
+            <span style={{ color:"#00ff88",fontSize:11 }}>{"\u2713"}</span>
+            <span style={{ fontSize:13,color:"#4a7a55" }}>{msg}</span>
+          </div>
+        ))}
+        {judgeLog.length < JUDGE_STEPS.length && (
+          <div style={{ display:"flex",gap:10,alignItems:"center",marginTop:4 }}>
+            <Spin /><span style={{ fontSize:13,color:"#233328" }}>Processing&hellip;</span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+  if (step === "done") {
+    const sub = existing || { scores: scores||{}, title:f.title };
+    const total = sub.total || (sub.scores ? Object.values(sub.scores).reduce((a,b)=>a+b,0) : 0);
+    return (
+      <div className="fadein">
+        <div className="card-hi" style={{ padding:30,textAlign:"center",marginBottom:14 }}>
+          <div style={{ fontSize:36,marginBottom:10 }}>{"\u2713"}</div>
+          <div style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:24,color:"#00ff88",letterSpacing:"0.05em" }}>SUBMISSION LIVE</div>
+          <div style={{ fontSize:12,color:"#4a7a55",marginTop:6 }}>You're on the leaderboard. Winner announced at 00:05 UTC.</div>
+          <div style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:60,color:"#00ff88",margin:"18px 0 2px",animation:"scoreIn 0.5s ease" }}>{total}</div>
+          <div style={{ fontSize:11,color:"#3d6644" }}>/ 100 POINTS</div>
+        </div>
+        {sub.scores && (
+          <div className="card" style={{ padding:22 }}>
+            <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.12em",marginBottom:14 }}>SCORE BREAKDOWN</div>
+            {CHALLENGE.criteria.map(c=>(
+              <div key={c.key} style={{ marginBottom:12 }}>
+                <div style={{ display:"flex",justifyContent:"space-between",fontSize:12,color:"#4a7a55",marginBottom:4 }}>
+                  <span>{c.label}</span><span style={{color:"#00ff88"}}>{sub.scores[c.key]}/{c.max}</span>
+                </div>
+                <div className="strack"><div className="sfill" style={{ width:(sub.scores[c.key]/c.max)*100+"%" }} /></div>
+              </div>
+            ))}
+            {total >= 78 && (
+              <div style={{ marginTop:12,padding:"10px 14px",background:"#00ff8810",borderLeft:"2px solid #00ff88",borderRadius:3,fontSize:12,color:"#6a9a72" }}>
+                {"\u26a1"} Strong score &mdash; you're in contention for today's $100 prize.
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="fadein">
+      <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.12em",marginBottom:14 }}>SUBMIT TO {CHALLENGE.id} &middot; CLOSES 23:59 UTC</div>
+
+      <div className="card" style={{ padding:22,marginBottom:12 }}>
+        <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.12em",marginBottom:14 }}>YOUR BUILD</div>
+        <div style={{ display:"grid",gap:11 }}>
+          <div>
+            <label style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.1em",display:"block",marginBottom:4 }}>PROJECT NAME *</label>
+            <input className={"inp"+(errs.title?" inp-err":"")} placeholder="VocalDeploy" value={f.title} onChange={e=>setF({...f,title:e.target.value})} />
+          </div>
+          <div>
+            <label style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.1em",display:"block",marginBottom:4 }}>LIVE DEMO URL *</label>
+            <input className={"inp"+(errs.demo?" inp-err":"")} placeholder="https://yourproject.vercel.app" value={f.demo} onChange={e=>setF({...f,demo:e.target.value})} />
+          </div>
+          <div>
+            <label style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.1em",display:"block",marginBottom:4 }}>GITHUB REPO *</label>
+            <input className={"inp"+(errs.github?" inp-err":"")} placeholder="https://github.com/you/project" value={f.github} onChange={e=>setF({...f,github:e.target.value})} />
+          </div>
+        </div>
+      </div>
+
+      <div className="card" style={{ padding:22,marginBottom:12 }}>
+        <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8 }}>
+          <div>
+            <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.12em" }}>SOCIAL POST <span style={{color:"#ff5722"}}>REQUIRED</span></div>
+            <div style={{ fontSize:10,color:"#1e2e22",marginTop:3 }}>Must include #AIFaucet + @Nebius_AI</div>
+          </div>
+          <button className="btn-g" onClick={handleGenPost} disabled={genPost} style={{ fontSize:11 }}>
+            {genPost ? <><Spin />WRITING&hellip;</> : "\u2726 AI WRITE"}
+          </button>
+        </div>
+        <textarea className={"inp"+(errs.tweet?" inp-err":"")} rows={5} placeholder="Paste your tweet / X post here \u2014 or let AI write it \u2192" value={f.tweet} onChange={e=>setF({...f,tweet:e.target.value})} style={{ resize:"vertical" }} />
+        {f.tweet && (
+          <div style={{ marginTop:8,fontSize:11,lineHeight:1.7 }}>
+            <span style={{color:f.tweet.includes("#AIFaucet")?"#00ff88":"#ff5722"}}>{f.tweet.includes("#AIFaucet")?"\u2713 #AIFaucet":"\u2717 Missing #AIFaucet"}</span>
+            {" \u00b7 "}
+            <span style={{color:f.tweet.includes("@Nebius")?"#00ff88":"#ff5722"}}>{f.tweet.includes("@Nebius")?"\u2713 @Nebius_AI":"\u2717 Missing @Nebius_AI"}</span>
+          </div>
+        )}
+      </div>
+
+      <div style={{ padding:"12px 16px",background:"#080f09",border:"1px solid #111d13",borderRadius:6,marginBottom:14,fontSize:11,color:"#3d6644",lineHeight:1.7 }}>
+        By submitting you agree to your contact info being shared with today's sponsor ({CHALLENGE.sponsor}) for follow-up. This is how AI Faucet stays free.
+      </div>
+
+      <button className="btn-p pulse-btn" style={{ width:"100%",padding:14,fontSize:14 }} onClick={submit}>
+        {"\u2197"} SUBMIT & GET AI-JUDGED {"\u2192"}
+      </button>
+    </div>
+  );
+}
+
+function LeaderboardTab({ user, allSubmissions }) {
+  const [view, setView] = useState("today");
+  const sorted = [...allSubmissions].sort((a,b)=>b.total-a.total);
+
+  return (
+    <div className="fadein">
+      <div style={{ display:"flex",borderBottom:"1px solid #111d13",marginBottom:20 }}>
+        {[["today","DAY #247 \u2014 LIVE"],["history","PAST WINNERS"]].map(([k,l])=>(
+          <button key={k} className={"ntab "+(view===k?"act":"")} onClick={()=>setView(k)}>{l}</button>
+        ))}
+      </div>
+
+      {view==="today" && (
+        <div>
+          <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14,flexWrap:"wrap",gap:8 }}>
+            <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.12em" }}>{sorted.length} SUBMISSIONS &middot; JUDGING LIVE</div>
+            <div style={{ display:"flex",gap:6,alignItems:"center" }}>
+              <div style={{ width:6,height:6,borderRadius:"50%",background:"#00ff88",animation:"pulse 2s ease infinite" }} />
+              <span style={{ fontSize:11,color:"#00ff88" }}>LIVE</span>
+            </div>
+          </div>
+
+          {sorted.map((sub,i)=>{
+            const isYou = sub.userId===user.id;
+            return (
+              <div key={sub.id} className={isYou?"card-hi":"card"} style={{ padding:18,marginBottom:10 }}>
+                <div style={{ display:"flex",gap:12,alignItems:"flex-start" }}>
+                  <div style={{ minWidth:26,paddingTop:1 }}>
+                    <div style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:20,color:i===0?"#00ff88":"#1e2e22",lineHeight:1 }}>#{i+1}</div>
+                  </div>
+                  <div className="av" style={{ width:36,height:36,background:isYou?"#00ff8818":"#0a130b",border:"1px solid "+(isYou?"#00ff8850":"#162118"),color:isYou?"#00ff88":"#4a7a55",fontSize:12 }}>{sub.avatar}</div>
+                  <div style={{ flex:1,minWidth:0 }}>
+                    <div style={{ display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:6,marginBottom:4 }}>
+                      <div>
+                        <div style={{ display:"flex",alignItems:"center",gap:7,flexWrap:"wrap" }}>
+                          <span style={{ fontSize:14,color:"#c8e6c9",fontWeight:600 }}>{sub.title}</span>
+                          {isYou && <span className="you">YOU</span>}
+                          {i===0 && <span style={{ fontSize:10,color:"#00ff88",letterSpacing:"0.06em" }}>{"\u26a1"} LEADING</span>}
+                        </div>
+                        <div style={{ fontSize:11,color:"#3d6644",marginTop:2 }}>{sub.handle} &middot; {sub.time}</div>
+                      </div>
+                      <div style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:26,color:isYou||i===0?"#00ff88":"#4a7a55",lineHeight:1 }}>{sub.total}</div>
+                    </div>
+                    <div className="strack" style={{ margin:"8px 0 7px" }}>
+                      <div className="sfill" style={{ width:sub.total+"%",background:isYou||i===0?"linear-gradient(90deg,#00ff88,#00cc6e)":"linear-gradient(90deg,#162118,#0d1510)" }} />
+                    </div>
+                    <div style={{ display:"flex",gap:12,flexWrap:"wrap",marginBottom:6 }}>
+                      {CHALLENGE.criteria.map(c=>(
+                        <span key={c.key} style={{ fontSize:10,color:"#3d6644" }}>{c.label.split(" ")[0]}: <span style={{color:isYou?"#00ff88":"#4a7a55"}}>{sub.scores[c.key]}</span></span>
+                      ))}
+                    </div>
+                    <div style={{ fontSize:12,color:"#3d6644",fontStyle:"italic" }}>"{sub.tweet.slice(0,80)}{sub.tweet.length>80?"\u2026":""}"</div>
+                    {sub.verified && <div style={{ fontSize:10,color:"#00ff88",marginTop:5 }}>{"\u2713"} SOCIAL POST VERIFIED</div>}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {view==="history" && (
+        <div>
+          <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.12em",marginBottom:14 }}>30 DAYS &middot; $3,000 PAID &middot; 247 CONTACTS CAPTURED</div>
+          {PAST_CHALLENGES.map((c,i)=>(
+            <div key={c.id} className="card" style={{ padding:18,marginBottom:10 }}>
+              <div style={{ display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:10 }}>
+                <div>
+                  <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.1em",marginBottom:4 }}>{c.id} &middot; {c.date}</div>
+                  <div style={{ fontSize:14,color:"#c8e6c9" }}>{c.title}</div>
+                  <div style={{ fontSize:12,color:"#3d6644",marginTop:4 }}>
+                    Winner: <span style={{color:"#00ff88"}}>{c.winner}</span> &middot; {c.submissions} submissions
+                  </div>
+                </div>
+                <div style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:22,color:"#4a7a55" }}>${c.prize}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ProfileTab({ user, userSubmission, onLogout }) {
+  return (
+    <div className="fadein">
+      <div className="card" style={{ padding:24,marginBottom:14 }}>
+        <div style={{ display:"flex",gap:16,alignItems:"center",marginBottom:20 }}>
+          <div className="av" style={{ width:50,height:50,background:"#0d1a10",border:"2px solid #00ff8855",color:"#00ff88",fontSize:18 }}>{user.avatar}</div>
+          <div>
+            <div style={{ fontSize:17,color:"#c8e6c9",fontWeight:600 }}>{user.name}</div>
+            <div style={{ fontSize:12,color:"#3d6644" }}>{user.handle}</div>
+            <div style={{ fontSize:11,color:"#1e2e22",marginTop:2 }}>{user.email}</div>
+          </div>
+        </div>
+        <div style={{ display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:10 }}>
+          {[["JOINED","#"+user.joinedDay],["WINS",user.wins||"0"],["CREDITS","$"+(user.credits||0)]].map(([l,v])=>(
+            <div key={l} style={{ textAlign:"center",padding:"12px 6px",background:"#060c07",borderRadius:6,border:"1px solid #111d13" }}>
+              <div style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:22,color:"#00ff88" }}>{v}</div>
+              <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.1em",marginTop:2 }}>{l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {userSubmission ? (
+        <div className="card-hi" style={{ padding:22,marginBottom:14 }}>
+          <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.12em",marginBottom:12 }}>YOUR DAY #{CHALLENGE.day} SUBMISSION</div>
+          <div style={{ fontSize:15,color:"#c8e6c9",marginBottom:4 }}>{userSubmission.title}</div>
+          <div style={{ display:"flex",gap:14,fontSize:11,color:"#3d6644",marginBottom:14,flexWrap:"wrap" }}>
+            {userSubmission.demo && <span>Demo <span style={{color:"#4a7a55"}}>{"\u2713"} linked</span></span>}
+            {userSubmission.github && <span>GitHub <span style={{color:"#4a7a55"}}>{"\u2713"} linked</span></span>}
+            {userSubmission.verified && <span>Social <span style={{color:"#00ff88"}}>{"\u2713"} verified</span></span>}
+          </div>
+          {userSubmission.scores && CHALLENGE.criteria.map(c=>(
+            <div key={c.key} style={{ marginBottom:10 }}>
+              <div style={{ display:"flex",justifyContent:"space-between",fontSize:11,color:"#4a7a55",marginBottom:4 }}>
+                <span>{c.label}</span><span style={{color:"#00ff88"}}>{userSubmission.scores[c.key]}/{c.max}</span>
+              </div>
+              <div className="strack"><div className="sfill" style={{ width:(userSubmission.scores[c.key]/c.max)*100+"%" }} /></div>
+            </div>
+          ))}
+          <div style={{ textAlign:"right",fontFamily:"'Bebas Neue',sans-serif",fontSize:26,color:"#00ff88",marginTop:8 }}>
+            {userSubmission.total} <span style={{ fontSize:13,color:"#3d6644",fontFamily:"IBM Plex Mono",fontWeight:400 }}>/100</span>
+          </div>
+        </div>
+      ) : (
+        <div className="card" style={{ padding:22,textAlign:"center",marginBottom:14 }}>
+          <div style={{ fontSize:13,color:"#3d6644",marginBottom:8 }}>No submission yet for DAY #{CHALLENGE.day}</div>
+          <div style={{ fontSize:11,color:"#233328" }}>Prize pool closes at 23:59 UTC</div>
+        </div>
+      )}
+
+      <div className="card" style={{ padding:20,marginBottom:14 }}>
+        <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.12em",marginBottom:12 }}>NEBIUS AI ACCOUNT</div>
+        <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:10 }}>
+          <span style={{ fontSize:13,color:"#4a7a55" }}>
+            {user.credits>0 ? "$"+user.credits+" in credits waiting" : "Win to earn Nebius credits"}
+          </span>
+          <button className="btn-g" style={{ fontSize:11 }}>CONNECT NEBIUS {"\u2192"}</button>
+        </div>
+        <div style={{ marginTop:12,padding:"10px 14px",background:"#060c07",borderRadius:5,border:"1px solid #111d13",fontSize:11,color:"#233328",lineHeight:1.7 }}>
+          Winners receive credits to their Nebius AI Cloud or Token Factory account within 10 min of the 00:05 UTC announcement.
+        </div>
+      </div>
+
+      <button className="btn-dim" style={{ width:"100%",padding:11 }} onClick={onLogout}>
+        SIGN OUT
+      </button>
+    </div>
+  );
+}
+
+function SponsorTab() {
+  const [view, setView] = useState("dash");
+  return (
+    <div className="fadein">
+      <div style={{ display:"flex",borderBottom:"1px solid #111d13",marginBottom:20 }}>
+        {[["dash","SPONSOR DASHBOARD"],["launch","LAUNCH YOUR FAUCET"]].map(([k,l])=>(
+          <button key={k} className={"ntab "+(view===k?"act":"")} onClick={()=>setView(k)}>{l}</button>
+        ))}
+      </div>
+
+      {view==="dash" && (
+        <div>
+          <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16,flexWrap:"wrap",gap:10 }}>
+            <div>
+              <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.1em" }}>CURRENT SPONSOR</div>
+              <div style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:22,color:"#fff",letterSpacing:"0.03em" }}>NEBIUS AI &middot; APRIL 2025</div>
+            </div>
+            <div style={{ padding:"5px 12px",background:"#00ff8812",border:"1px solid #00ff8835",borderRadius:4,fontSize:11,color:"#00ff88" }}>CAMPAIGN ACTIVE</div>
+          </div>
+
+          <div style={{ display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:10,marginBottom:12 }}>
+            {[["$3,000","Total Spent","#00ff88"],["247","Contacts Captured","#00ff88"],["94,200","Social Impressions","#00ff88"],["$12.15","Cost Per Contact","#00ff88"],["30","Days Run","#4a7a55"],["100%","Attribution","#4a7a55"]].map(([v,l,c])=>(
+              <div key={l} className="card" style={{ padding:16 }}>
+                <div style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:28,color:c,lineHeight:1 }}>{v}</div>
+                <div style={{ fontSize:11,color:"#3d6644",marginTop:3 }}>{l}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="card" style={{ padding:20,marginBottom:12 }}>
+            <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.12em",marginBottom:14 }}>SUBMITTER BREAKDOWN</div>
+            {[["Engineers / Developers",78],["Founders",14],["Students",8]].map(([l,p])=>(
+              <div key={l} style={{ marginBottom:11 }}>
+                <div style={{ display:"flex",justifyContent:"space-between",fontSize:12,color:"#4a7a55",marginBottom:4 }}>
+                  <span>{l}</span><span style={{color:"#00ff88"}}>{p}%</span>
+                </div>
+                <div className="strack"><div className="sfill" style={{ width:p+"%" }} /></div>
+              </div>
+            ))}
+            <div style={{ marginTop:12,display:"flex",flexWrap:"wrap",gap:6 }}>
+              {["\ud83c\uddfa\ud83c\uddf8 USA","\ud83c\uddee\ud83c\uddf3 India","\ud83c\udde9\ud83c\uddea Germany","\ud83c\udde7\ud83c\uddf7 Brazil"].map(c=><span key={c} className="tag">{c}</span>)}
+            </div>
+          </div>
+
+          <div className="card" style={{ padding:20,marginBottom:12 }}>
+            <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.12em",marginBottom:12 }}>TODAY'S SUBMISSIONS (LIVE FEED)</div>
+            {SEED_SUBMISSIONS.slice(0,3).map((s,i)=>(
+              <div key={s.id} style={{ display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 0",borderBottom:i<2?"1px solid #0d1a10":"none" }}>
+                <div>
+                  <div style={{ fontSize:13,color:"#c8e6c9" }}>{s.title}</div>
+                  <div style={{ fontSize:10,color:"#3d6644",marginTop:2 }}>{s.handle} &middot; {s.name} &middot; {s.time}</div>
+                </div>
+                <div style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:22,color:"#4a7a55" }}>{s.total}</div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ padding:"14px 18px",background:"#00ff8806",border:"1px solid #00ff8820",borderRadius:6,fontSize:12,color:"#4a7a55",lineHeight:1.75 }}>
+            <strong style={{color:"#00ff88"}}>vs. conference sponsorship:</strong> A booth costs $15k&ndash;$50k with zero attribution. This campaign: 247 opted-in developers with full name, email, GitHub, and social &mdash; all actively building with your product &mdash; at $12.15 each.
+          </div>
+        </div>
+      )}
+
+      {view==="launch" && (
+        <div>
+          <div style={{ marginBottom:18 }}>
+            <div style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:24,color:"#fff",letterSpacing:"0.03em",marginBottom:6 }}>LAUNCH YOUR FOREVER HACKATHON</div>
+            <p style={{ fontSize:13,color:"#4a7a55",lineHeight:1.8 }}>Any company can white-label AI Faucet. Set your prize, your challenge domain, your branding. AI runs it 24/7 with zero ops overhead.</p>
+          </div>
+
+          <div style={{ display:"grid",gap:10,marginBottom:18 }}>
+            {[
+              ["$3,000/mo","STARTER","$100/day prize \u00b7 AI-generated daily challenges \u00b7 Full contact capture \u00b7 Social post enforcement \u00b7 AI judging \u00b7 Sponsor dashboard","btn-p"],
+              ["$9,000/mo","GROWTH","$300/day \u00b7 Custom challenge themes \u00b7 Co-branded social assets \u00b7 Branded AI judge persona \u00b7 Weekly digest emails","btn-g"],
+              ["$30,000/mo","ENTERPRISE","$1,000/day \u00b7 White-labeled domain \u00b7 Custom judging rubric \u00b7 Slack/CRM push \u00b7 Priority support \u00b7 Dedicated account manager","btn-dim"],
+            ].map(([price,tier,desc,btn],i)=>(
+              <div key={price} className={i===0?"card-hi":"card"} style={{ padding:20 }}>
+                <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4 }}>
+                  <div style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:22,color:i===0?"#00ff88":"#fff",letterSpacing:"0.03em" }}>{price}</div>
+                  <span style={{ fontSize:10,color:i===0?"#00ff88":"#3d6644",border:"1px solid "+(i===0?"#00ff8840":"#162118"),padding:"2px 8px",borderRadius:3 }}>{tier}</span>
+                </div>
+                <div style={{ fontSize:12,color:"#4a7a55",lineHeight:1.7,marginBottom:14 }}>{desc}</div>
+                <button className={btn} style={{ width:"100%",padding:"10px" }}>GET STARTED {"\u2192"}</button>
+              </div>
+            ))}
+          </div>
+
+          <div className="card" style={{ padding:20 }}>
+            <div style={{ fontSize:10,color:"#3d6644",letterSpacing:"0.12em",marginBottom:12 }}>WHAT'S INCLUDED IN EVERY PLAN</div>
+            {["AI generates a fresh relevant challenge every day at midnight UTC","AI judges all submissions \u2014 no human reviewer bottleneck","Every submitter: name, email, GitHub, Twitter captured","Required social posts = free amplification to developer audience","Winner paid automatically within 10 minutes of judging","Sponsor dashboard: live stats, contact export, ROI tracking"].map(t=>(
+              <div key={t} style={{ display:"flex",gap:10,fontSize:12,color:"#4a7a55",marginBottom:8 }}>
+                <span style={{color:"#00ff88",flexShrink:0}}>{"\u25c6"}</span>{t}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AIFaucet() {
+  const [user, setUser] = useState(null);
+  const [tab, setTab] = useState("today");
+  const [time, setTime] = useState(getUTCCountdown());
+  const [userSub, setUserSub] = useState(null);
+  const [allSubs, setAllSubs] = useState(SEED_SUBMISSIONS);
+
+  useEffect(() => {
+    const iv = setInterval(()=>setTime(getUTCCountdown()),1000);
+    return ()=>clearInterval(iv);
+  }, []);
+
+  const handleSubmitted = useCallback((formData) => {
+    const s = formData.scores;
+    const total = Object.values(s).reduce((a,b)=>a+b,0);
+    const newSub = {
+      id:"s_"+user.id, userId:user.id,
+      handle:user.handle, name:user.name, avatar:user.avatar,
+      title:formData.title, demo:formData.demo,
+      github:formData.github, tweet:formData.tweet,
+      scores:s, total, status:"judged",
+      time:"just now",
+      verified:formData.tweet?.includes("#AIFaucet")&&formData.tweet?.includes("@Nebius"),
+    };
+    setUserSub(newSub);
+    setAllSubs(prev=>[newSub,...prev]);
+  }, [user]);
+
+  const handleLogout = () => { setUser(null); setUserSub(null); setAllSubs(SEED_SUBMISSIONS); setTab("today"); };
+
+  if (!user) return <AuthScreen onAuth={setUser} />;
+
+  const TABS = [["today","\u26a1 TODAY"],["\u0073ubmit","\u2197 SUBMIT"],["leaderboard","\u25ce BOARD"],["profile","\u25cb PROFILE"],["sponsor","$ SPONSOR"]];
+
+  return (
+    <div style={{ background:"#060c07",minHeight:"100vh",fontFamily:"'IBM Plex Mono',monospace",color:"#e8f5e9" }}>
+      <div style={{ background:"#060c07",borderBottom:"1px solid #0e1a10",position:"sticky",top:0,zIndex:100 }}>
+        <div style={{ maxWidth:860,margin:"0 auto",padding:"0 18px" }}>
+          <div style={{ display:"flex",alignItems:"center",justifyContent:"space-between",paddingTop:13,paddingBottom:8 }}>
+            <div style={{ display:"flex",alignItems:"center",gap:10 }}>
+              <FaucetLogo size={21} />
+              <span style={{ fontFamily:"'Bebas Neue',sans-serif",fontSize:19,color:"#00ff88",letterSpacing:"0.05em" }}>AI FAUCET</span>
+              <span style={{ fontSize:10,color:"#1e2e22",letterSpacing:"0.1em",marginLeft:2 }}>DAY #{CHALLENGE.day}</span>
+            </div>
+            <div style={{ display:"flex",gap:10,alignItems:"center" }}>
+              <CDTimer time={time} />
+              <div className="av" style={{ width:28,height:28,background:"#0d1a10",border:"1px solid #00ff8840",color:"#00ff88",fontSize:11,cursor:"pointer" }} onClick={()=>setTab("profile")}>{user.avatar}</div>
+            </div>
+          </div>
+          <div style={{ display:"flex",overflowX:"auto" }}>
+            {[["today","\u26a1 TODAY"],["submit","\u2197 SUBMIT"],["leaderboard","\u25ce BOARD"],["profile","\u25cb PROFILE"],["sponsor","$ SPONSOR"]].map(([k,l])=>(
+              <button key={k} className={"ntab "+(tab===k?"act":"")} onClick={()=>setTab(k)} style={{ position:"relative" }}>
+                {l}
+                {k==="submit"&&userSub&&<span style={{ position:"absolute",top:6,right:6,width:5,height:5,borderRadius:"50%",background:"#00ff88" }} />}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div style={{ maxWidth:860,margin:"0 auto",padding:"24px 18px 80px" }}>
+        {tab==="today"       && <TodayTab time={time} onSubmit={()=>setTab("submit")} />}
+        {tab==="submit"      && <SubmitTab user={user} onSubmitted={handleSubmitted} existing={userSub} />}
+        {tab==="leaderboard" && <LeaderboardTab user={user} allSubmissions={allSubs} />}
+        {tab==="profile"     && <ProfileTab user={user} userSubmission={userSub} onLogout={handleLogout} />}
+        {tab==="sponsor"     && <SponsorTab />}
+      </div>
+
+      <div style={{ position:"fixed",bottom:0,left:0,right:0,background:"#060c07",borderTop:"1px solid #0e1a10",padding:"7px 0",zIndex:100 }}>
+        <div style={{ maxWidth:860,margin:"0 auto",padding:"0 18px",display:"flex",justifyContent:"space-between",alignItems:"center" }}>
+          <span style={{ fontSize:10,color:"#1e2e22" }}>Powered by <span style={{color:"#3d6644"}}>Nebius AI</span></span>
+          <span style={{ fontSize:10,color:"#1e2e22" }}>{allSubs.length} submissions today</span>
+          <span style={{ fontSize:10,color:"#00ff88" }}>${CHALLENGE.prize} LIVE</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(React.createElement(AIFaucet));
+</script>
+</body>
+</html>
