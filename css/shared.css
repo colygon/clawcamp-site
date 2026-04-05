@@ -68,6 +68,10 @@ nav.nav-scrolled {
   letter-spacing: -0.02em;
 }
 .logo span { color: var(--rust); }
+.logo-img { height: 28px; display: block; }
+.logo-img-footer { filter: brightness(0) invert(1); height: 24px; }
+.dark-hero nav:not(.nav-scrolled) .logo-img { filter: brightness(0) invert(1); }
+.dark-hero nav:not(.nav-scrolled).menu-open .logo-img { filter: none; }
 nav a {
   font-size: 13px;
   color: var(--muted);

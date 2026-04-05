@@ -1,7 +1,7 @@
 (function () {
   var navHTML = '\
 <nav>\
-  <a href="/" class="logo">Claw<span>Camp</span></a>\
+  <a href="/" class="logo"><img src="/images/clawcamp-logo.svg" alt="ClawCamp" class="logo-img"></a>\
   <div class="nav-links">\
     <a href="/events" data-nav>Schedule</a>\
     <a href="/speakers" data-nav>Speakers</a>\
@@ -26,7 +26,7 @@
 <footer class="site-footer">\
   <div class="footer-inner">\
     <div class="footer-brand">\
-      <a href="/" class="logo">Claw<span>Camp</span></a>\
+      <a href="/" class="logo"><img src="/images/clawcamp-logo.svg" alt="ClawCamp" class="logo-img logo-img-footer"></a>\
       <p class="footer-tagline">A global network of AI builder camps &mdash; workshops, demo days, hackathons, and startup showcases for the OpenClaw community.</p>\
     </div>\
     <div class="footer-links">\
