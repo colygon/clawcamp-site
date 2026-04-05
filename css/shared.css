@@ -244,6 +244,9 @@ nav a:hover { color: var(--ink); }
   font-size: 15px;
   text-decoration: none;
   transition: background 0.15s;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 .btn-rust:hover { background: #a8420a; }
 
