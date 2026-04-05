@@ -292,5 +292,22 @@
       });
     }
 
+    // Tutorial submission form
+    var tutorialForm = document.getElementById('tutorial-form');
+    if (tutorialForm) {
+      tutorialForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        submitToSupabase({
+          form_type: 'tutorial',
+          name: tutorialForm.querySelector('[name="name"]').value,
+          email: tutorialForm.querySelector('[name="email"]').value,
+          website: tutorialForm.querySelector('[name="url"]').value,
+          title: tutorialForm.querySelector('[name="title"]').value,
+          bio: tutorialForm.querySelector('[name="description"]').value,
+          email_opt_in: tutorialForm.querySelector('[name="email_opt_in"]') ? tutorialForm.querySelector('[name="email_opt_in"]').checked : null
+        }, tutorialForm);
+      });
+    }
+
   });
 })();

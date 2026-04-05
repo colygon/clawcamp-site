@@ -10,6 +10,39 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/shared.css">
 <style>
+  /* Form styles */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 15px;
+    padding: 12px 16px;
+    border: 1px solid var(--sand);
+    border-radius: 6px;
+    background: white;
+    color: var(--ink);
+    transition: border-color 0.15s;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--rust);
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+</style>
+<style>
   /* Workshop cards */
   .workshop-grid {
     display: grid;
@@ -744,18 +777,35 @@
 
 </div>
 
-<div class="cta-band">
-  <div>
-    <h3>Have a curriculum to share?</h3>
-    <p>Built a great workshop or session guide? Share it with the global network.</p>
-  </div>
-  <div class="cta-band-actions">
-    <a href="mailto:hello@claw.camp?subject=Curriculum%20Contribution" class="btn-dark">Contribute Yours &rarr;</a>
-    <a href="/host" class="btn-outline">Start a Camp</a>
-  </div>
+<div class="section" id="submit" style="max-width:640px;">
+  <h2 style="font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-0.03em;margin-bottom:8px;">Submit a Tutorial</h2>
+  <p style="color:var(--muted);font-size:15px;line-height:1.6;margin-bottom:32px;">Built a workshop, tutorial, or guide? Paste a link below and we'll add it to the library.</p>
+  <form id="tutorial-form">
+    <div class="form-group">
+      <input type="text" name="name" placeholder="Your name" required>
+    </div>
+    <div class="form-group">
+      <input type="email" name="email" placeholder="Email" required>
+    </div>
+    <div class="form-group">
+      <input type="url" name="url" placeholder="Link to your tutorial (GitHub, YouTube, blog, etc.)" required>
+    </div>
+    <div class="form-group">
+      <input type="text" name="title" placeholder="Title of the tutorial">
+    </div>
+    <div class="form-group">
+      <textarea name="description" rows="3" placeholder="Brief description (optional)"></textarea>
+    </div>
+    <div class="form-group" style="display:flex;align-items:center;gap:8px;">
+      <input type="checkbox" name="email_opt_in" id="tutorial-opt-in" checked>
+      <label for="tutorial-opt-in" style="font-size:13px;color:var(--muted);cursor:pointer;">Keep me updated on ClawCamp news</label>
+    </div>
+    <button type="submit" class="btn-rust form-submit" style="margin-top:8px;">Submit Tutorial &rarr;</button>
+  </form>
 </div>
 
 <div id="site-footer"></div>
 <script src="/js/nav.js"></script>
+<script src="/js/supabase.js"></script>
 </body>
 </html>
