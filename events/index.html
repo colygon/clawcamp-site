@@ -663,7 +663,7 @@
     align-items: flex-start;
     gap: 24px;
   }
-  .map-header > * { position: relative; z-index: 2; }
+  .map-header > *:not(.events-map-toggle) { position: relative; z-index: 2; }
   #events-map { z-index: 0 !important; }
   .map-header h1 {
     font-size: clamp(40px, 6vw, 72px);
@@ -682,6 +682,16 @@
   .map-header.light-mode h1 {
     color: var(--ink);
     text-shadow: 0 2px 8px rgba(255,255,255,0.5);
+  }
+  body.map-light-mode.dark-hero nav:not(.nav-scrolled) .logo,
+  body.map-light-mode.dark-hero nav:not(.nav-scrolled) .nav-hamburger {
+    color: var(--ink) !important;
+  }
+  body.map-light-mode.dark-hero nav:not(.nav-scrolled) .logo span {
+    color: var(--rust) !important;
+  }
+  body.map-light-mode.dark-hero nav:not(.nav-scrolled) a {
+    color: rgba(15,14,11,0.7) !important;
   }
   .map-header .header-meta p {
     color: rgba(245,242,236,0.5);
@@ -708,7 +718,6 @@
     <div class="location-input-wrap">
       <input type="text" id="location-input" placeholder="Enter your city..." autocomplete="off">
       <button class="location-btn location-btn-detect" onclick="detectLocation()">&#128205; Use My Location</button>
-      <button class="location-btn location-btn-clear" id="location-clear" onclick="clearLocation()">Clear</button>
     </div>
   </div>
   <button class="filters-toggle-btn" id="filters-toggle" onclick="toggleFilters()">Filters <span class="chevron">&#9662;</span></button>
@@ -2632,12 +2641,16 @@ var eventsMap = initClawCampMap('events-map', {
   var mode = 'dark';
   try { var saved = localStorage.getItem('clawcamp-map-mode'); if (saved) mode = saved; } catch(e) {}
   btn.textContent = mode === 'dark' ? '\u2606' : '\u263E';
-  if (mode === 'light' && header) header.classList.add('light-mode');
+  if (mode === 'light') {
+    if (header) header.classList.add('light-mode');
+    document.body.classList.add('map-light-mode');
+  }
   btn.addEventListener('click', function() {
     mode = mode === 'dark' ? 'light' : 'dark';
     if (eventsMap) eventsMap.setMode(mode);
     btn.textContent = mode === 'dark' ? '\u2606' : '\u263E';
     if (header) header.classList.toggle('light-mode', mode === 'light');
+    document.body.classList.toggle('map-light-mode', mode === 'light');
   });
 })();
 

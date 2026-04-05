@@ -139,6 +139,20 @@
     color: rgba(15,14,11,0.6);
     text-shadow: 0 1px 4px rgba(255,255,255,0.3);
   }
+  .hero.light-mode .btn-outline {
+    color: var(--ink) !important;
+    border-color: rgba(15,14,11,0.3) !important;
+  }
+  body.map-light-mode.dark-hero nav:not(.nav-scrolled) .logo,
+  body.map-light-mode.dark-hero nav:not(.nav-scrolled) .nav-hamburger {
+    color: var(--ink) !important;
+  }
+  body.map-light-mode.dark-hero nav:not(.nav-scrolled) .logo span {
+    color: var(--rust) !important;
+  }
+  body.map-light-mode.dark-hero nav:not(.nav-scrolled) a {
+    color: rgba(15,14,11,0.7) !important;
+  }
   .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
   .hero-logos {
     margin-top: 48px;
@@ -2961,12 +2975,16 @@ var heroMap = initClawCampMap('hero-map', {
   var mode = 'dark';
   try { var saved = localStorage.getItem('clawcamp-map-mode'); if (saved) mode = saved; } catch(e) {}
   btn.textContent = mode === 'dark' ? '\u2606' : '\u263E';
-  if (mode === 'light' && heroEl) heroEl.classList.add('light-mode');
+  if (mode === 'light') {
+    if (heroEl) heroEl.classList.add('light-mode');
+    document.body.classList.add('map-light-mode');
+  }
   btn.addEventListener('click', function() {
     mode = mode === 'dark' ? 'light' : 'dark';
     if (heroMap) heroMap.setMode(mode);
     btn.textContent = mode === 'dark' ? '\u2606' : '\u263E';
     if (heroEl) heroEl.classList.toggle('light-mode', mode === 'light');
+    document.body.classList.toggle('map-light-mode', mode === 'light');
   });
 })();
 
