@@ -63,15 +63,29 @@
   .star-prompt-card p { font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 20px; }
   .star-prompt-actions { display: flex; gap: 12px; justify-content: center; }
   .loading-msg { text-align: center; padding: 48px; color: var(--muted); font-size: 14px; }
-  .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+  .camp-form { margin: 24px 0; display: flex; flex-direction: column; gap: 20px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label {
+    font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted);
+  }
   .form-group input, .form-group textarea {
     font-family: 'Bricolage Grotesque', sans-serif; font-size: 15px; padding: 12px 16px;
     border: 1px solid var(--sand); border-radius: 6px; background: white; color: var(--ink);
-    transition: border-color 0.15s; width: 100%; box-sizing: border-box;
+    transition: border-color 0.15s;
   }
   .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--rust); }
-  .form-group textarea { resize: vertical; min-height: 80px; }
-  @media (max-width: 768px) { .tutorial-grid, .featured-grid { grid-template-columns: 1fr; } }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-submit {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--rust); color: white;
+    padding: 14px 28px; border-radius: 24px; font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700; font-size: 15px; border: none; cursor: pointer; transition: background 0.15s;
+    align-self: flex-start;
+  }
+  .form-submit:hover { background: #a8420a; }
+  .form-note { font-size: 13px; color: var(--muted); margin-top: -8px; }
+  @media (max-width: 768px) { .tutorial-grid, .featured-grid { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -116,18 +130,35 @@
 
 <div class="section" id="submit" style="max-width:640px;">
   <h2 style="font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-0.03em;margin-bottom:8px;">Submit a Tutorial</h2>
-  <p style="color:var(--muted);font-size:15px;line-height:1.6;margin-bottom:32px;">Built a workshop, tutorial, or guide? Paste a link below and we'll add it to the library.</p>
-  <form id="tutorial-form">
-    <div class="form-group"><input type="text" name="name" placeholder="Your name" required></div>
-    <div class="form-group"><input type="email" name="email" placeholder="Email" required></div>
-    <div class="form-group"><input type="url" name="url" placeholder="Link to your tutorial (GitHub, YouTube, blog, etc.)" required></div>
-    <div class="form-group"><input type="text" name="title" placeholder="Title of the tutorial"></div>
-    <div class="form-group"><textarea name="description" rows="3" placeholder="Brief description (optional)"></textarea></div>
-    <div class="form-group" style="display:flex;align-items:center;gap:8px;">
-      <input type="checkbox" name="email_opt_in" id="tutorial-opt-in" checked>
-      <label for="tutorial-opt-in" style="font-size:13px;color:var(--muted);cursor:pointer;">Keep me updated on ClawCamp news</label>
+  <p style="color:var(--muted);font-size:15px;line-height:1.6;margin-bottom:24px;">Built a workshop, tutorial, or guide? Paste a link below and we'll add it to the library.</p>
+  <form class="camp-form" id="tutorial-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="tut-name">Full Name *</label>
+        <input type="text" id="tut-name" name="name" required placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <label for="tut-email">Email *</label>
+        <input type="email" id="tut-email" name="email" required placeholder="you@example.com">
+      </div>
     </div>
-    <button type="submit" class="btn-rust form-submit" style="margin-top:8px;">Submit Tutorial &rarr;</button>
+    <div class="form-group">
+      <label for="tut-url">Tutorial Link *</label>
+      <input type="url" id="tut-url" name="url" required placeholder="GitHub, YouTube, blog, or any URL">
+    </div>
+    <div class="form-group">
+      <label for="tut-title">Title</label>
+      <input type="text" id="tut-title" name="title" placeholder="Title of the tutorial">
+    </div>
+    <div class="form-group">
+      <label for="tut-desc">Description</label>
+      <textarea id="tut-desc" name="description" placeholder="Brief description of what the tutorial covers"></textarea>
+    </div>
+    <label style="font-size:14px;color:var(--ink);text-transform:none;letter-spacing:0;display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;">
+      <input type="checkbox" name="email_opt_in" value="yes" checked> Yes, send me updates about ClawCamp events and community news
+    </label>
+    <button type="submit" class="form-submit">Submit Tutorial &rarr;</button>
+    <p class="form-note">We'll review and add it to the library within a few days.</p>
   </form>
 </div>
 
