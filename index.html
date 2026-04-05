@@ -2912,6 +2912,7 @@ fetch(SUPABASE_URL + '/rest/v1/events?select=*&order=event_date.asc', {
   renderEvents(events);
   updateCounts();
   applyFilters();
+  promoteOaklandIfNearby();
   // Populate hero map dots from live event data
   if (heroMap) heroMap.addEventDots(events, ['oakland']);
   // Check for ?city= URL param from homepage map clicks
@@ -3090,7 +3091,6 @@ function promoteOaklandIfNearby() {
     }
   }, function() {}, { timeout: 5000 });
 }
-promoteOaklandIfNearby();
 
 function sortEventsByDistance() {
   if (!sortByDistance || !userLat) return;
