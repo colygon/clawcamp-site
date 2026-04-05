@@ -1071,8 +1071,8 @@
 <div class="main" id="events-main">
   <div style="text-align:center;padding:48px;color:var(--muted);font-size:14px;" id="events-loading">Loading events...</div>
 
-  <!-- Featured: Workshop: Running OpenClaw on Nebius (Flagship) -->
-  <div class="featured-event featured-flagship" data-type="workshop" data-date="2026-04-14" data-city="online">
+  <!-- Featured: Workshop: Running OpenClaw on Nebius (Flagship) — shown when no nearby events -->
+  <div class="featured-event featured-flagship" id="nebius-featured" data-type="workshop" data-date="2026-04-14" data-city="online" style="display:none;">
     <div class="featured-left">
       <div class="featured-eyebrow">&#9733; Flagship Workshop &middot; Online &middot; Free</div>
       <div class="featured-title">Running OpenClaw<br><span>on Nebius</span></div>
@@ -3072,16 +3072,23 @@ function applyFilters() {
   });
 }
 
+function showNebiusFeatured() {
+  var el = document.getElementById('nebius-featured');
+  if (el) el.style.display = '';
+}
+
 function promoteNearbyEvents() {
-  if (!navigator.geolocation) return;
+  if (!navigator.geolocation) {
+    showNebiusFeatured();
+    return;
+  }
   navigator.geolocation.getCurrentPosition(function(pos) {
     var lat = pos.coords.latitude;
     var lon = pos.coords.longitude;
     var PROMO_KM = 100 * 1.60934; // 100 miles
     var eventsMain = document.getElementById('events-main');
-    if (!eventsMain) return;
+    if (!eventsMain) { showNebiusFeatured(); return; }
 
-    // Find all event rows with a city and check distance
     var allRows = eventsMain.querySelectorAll('.event-row[data-city]');
     var promoted = [];
     allRows.forEach(function(row) {
@@ -3089,14 +3096,16 @@ function promoteNearbyEvents() {
       if (!city || city === 'online' || !cityCoords[city]) return;
       var c = cityCoords[city];
       var dist = haversine(lat, lon, c[0], c[1]);
-      if (dist <= PROMO_KM) {
-        promoted.push(row);
-      }
+      if (dist <= PROMO_KM) promoted.push(row);
     });
 
-    if (promoted.length === 0) return;
+    if (promoted.length === 0) {
+      // No nearby events — show Nebius as default featured
+      showNebiusFeatured();
+      return;
+    }
 
-    // Move nearby events to top (before first month-section), closest first
+    // Move nearby events to top, closest first
     promoted.sort(function(a, b) {
       var ca = cityCoords[a.dataset.city];
       var cb = cityCoords[b.dataset.city];
@@ -3105,11 +3114,12 @@ function promoteNearbyEvents() {
 
     var firstSection = eventsMain.querySelector('.month-section');
     promoted.forEach(function(row) {
-      if (firstSection) {
-        eventsMain.insertBefore(row, firstSection);
-      }
+      if (firstSection) eventsMain.insertBefore(row, firstSection);
     });
-  }, function() {}, { timeout: 5000 });
+  }, function() {
+    // Geolocation denied or failed — show Nebius as default
+    showNebiusFeatured();
+  }, { timeout: 5000 });
 }
 
 function sortEventsByDistance() {
