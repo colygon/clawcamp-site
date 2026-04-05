@@ -2994,8 +2994,11 @@ var heroMap = initClawCampMap('hero-map', {
   center: [20, 0],
   showToggle: false,
   autoScroll: true,
-  onDotClick: function(cityKey) {
-    window.location.href = '/events?city=' + cityKey;
+  onDotClick: function(cityKey, coords, label) {
+    document.getElementById('events-main').scrollIntoView({behavior:'smooth'});
+    setTimeout(function() {
+      setUserLocation(coords[0], coords[1], label);
+    }, 400);
   }
 });
 
