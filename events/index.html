@@ -2719,11 +2719,14 @@ function promoteOaklandIfNearby() {
     var dist = haversine(pos.coords.latitude, pos.coords.longitude, oaklandCoords[0], oaklandCoords[1]);
     var PROMO_RANGE_KM = 100 * 1.60934;
     if (dist > PROMO_RANGE_KM) return;
-    var allRows = document.querySelectorAll('.event-row[data-city="oakland"][data-type="flagship"]');
-    allRows.forEach(function(row) {
-      var parent = row.parentElement;
-      if (parent) parent.insertBefore(row, parent.firstChild);
-    });
+    var oaklandRow = document.querySelector('.event-row[data-city="oakland"][data-type="flagship"]');
+    var eventsMain = document.getElementById('events-main');
+    if (oaklandRow && eventsMain) {
+      var firstSection = eventsMain.querySelector('.month-section, .featured-event');
+      if (firstSection) {
+        eventsMain.insertBefore(oaklandRow, firstSection);
+      }
+    }
   }, function() {}, { timeout: 5000 });
 }
 promoteOaklandIfNearby();
