@@ -7,9 +7,12 @@
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://unpkg.com">
+<link rel="preconnect" href="https://mrnccntqmkxjazznejfc.supabase.co">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/shared.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" media="print" onload="this.media='all'">
 <style>
   /* Hero */
   .hero {
@@ -946,7 +949,7 @@
   <div id="hero-map"></div>
   <button id="hero-map-toggle" class="hero-map-toggle" title="Toggle map style">☆</button>
   <h1>Join the personal <em>AI</em> revolution.</h1>
-  <p class="hero-sub">Learn and share with a global community of AI builders.</p>
+  <p class="hero-sub">Learn and share with your local community of AI experts on OpenClaw and other agents.</p>
   <div class="hero-actions">
     <button class="btn-rust" onclick="document.getElementById('events-main').scrollIntoView({behavior:'smooth'});setTimeout(detectLocation,400);">Find a Camp Near You &rarr;</button>
     <a href="/get-involved" class="btn-dark">Sign Up / Sign In</a>
@@ -954,49 +957,49 @@
   <div class="hero-logos">
     <p class="hero-logos-label">Supported by</p>
     <div class="hero-logos-track">
-      <img src="/images/sponsors/nebius-logo.svg" alt="Nebius">
-      <img src="/images/sponsors/youcom-logo.png" alt="You.com">
-      <img src="/images/sponsors/apify-logo.png" alt="Apify">
-      <img src="/images/sponsors/theagentic-logo.png" alt="The Agentic">
-      <img src="/images/sponsors/blitzscaling-logo.png" alt="Blitzscaling Ventures">
-      <img src="/images/sponsors/fetchai-logo.svg" alt="Fetch.ai" style="height:24px;">
-      <img src="/images/sponsors/asi-one-logo.png" alt="ASI:One">
-      <img src="/images/sponsors/stakventures-logo.svg" alt="STAK Ventures">
-      <img src="/images/sponsors/aiify-logo.png" alt="Aiify.io">
-      <img src="/images/sponsors/hackersquad-logo.png" alt="HackerSquad">
-      <img src="/images/sponsors/civic-logo.png" alt="Civic">
-      <img src="/images/sponsors/adanomad-logo.png" alt="AdaNomad">
-      <span class="logo-donely"><img src="/images/sponsors/donely-logo.png" alt="Donely.ai"><span style="font-family:'Bricolage Grotesque',sans-serif;font-size:14px;font-weight:600;color:rgba(245,242,236,0.55);">Donely.ai</span></span>
-      <img src="/images/sponsors/pitchfreaks-logo.png" alt="PitchFreaks" style="height:42px;">
-      <img src="/images/sponsors/foundersbay-logo.png" alt="Founders Bay" style="filter:brightness(0) invert(1);">
-      <img src="/images/sponsors/moltpod-logo.svg" alt="MoltPod">
-      <img src="/images/sponsors/efrontier-logo.jpg" alt="Efficient Frontier Labs">
-      <img src="/images/sponsors/constructive-logo.svg" alt="Constructive">
-      <img src="/images/sponsors/openrouter-logo.png" alt="OpenRouter" style="filter:invert(1);height:24px;">
-      <img src="/images/sponsors/cline-logo.png" alt="Cline" style="height:24px;">
-      <img src="/images/sponsors/dabl-club.svg" alt="Dabl.club" style="height:28px;filter:invert(1);">
+      <img loading="lazy" src="/images/sponsors/nebius-logo.svg" alt="Nebius">
+      <img loading="lazy" src="/images/sponsors/youcom-logo.png" alt="You.com">
+      <img loading="lazy" src="/images/sponsors/apify-logo.png" alt="Apify">
+      <img loading="lazy" src="/images/sponsors/theagentic-logo.png" alt="The Agentic">
+      <img loading="lazy" src="/images/sponsors/blitzscaling-logo.png" alt="Blitzscaling Ventures">
+      <img loading="lazy" src="/images/sponsors/fetchai-logo.svg" alt="Fetch.ai" style="height:24px;">
+      <img loading="lazy" src="/images/sponsors/asi-one-logo.png" alt="ASI:One">
+      <img loading="lazy" src="/images/sponsors/stakventures-logo.svg" alt="STAK Ventures">
+      <img loading="lazy" src="/images/sponsors/aiify-logo.png" alt="Aiify.io">
+      <img loading="lazy" src="/images/sponsors/hackersquad-logo.png" alt="HackerSquad">
+      <img loading="lazy" src="/images/sponsors/civic-logo.png" alt="Civic">
+      <img loading="lazy" src="/images/sponsors/adanomad-logo.png" alt="AdaNomad">
+      <span class="logo-donely"><img loading="lazy" src="/images/sponsors/donely-logo.png" alt="Donely.ai"><span style="font-family:'Bricolage Grotesque',sans-serif;font-size:14px;font-weight:600;color:rgba(245,242,236,0.55);">Donely.ai</span></span>
+      <img loading="lazy" src="/images/sponsors/pitchfreaks-logo.png" alt="PitchFreaks" style="height:42px;">
+      <img loading="lazy" src="/images/sponsors/foundersbay-logo.png" alt="Founders Bay" style="filter:brightness(0) invert(1);">
+      <img loading="lazy" src="/images/sponsors/moltpod-logo.svg" alt="MoltPod">
+      <img loading="lazy" src="/images/sponsors/efrontier-logo.jpg" alt="Efficient Frontier Labs">
+      <img loading="lazy" src="/images/sponsors/constructive-logo.svg" alt="Constructive">
+      <img loading="lazy" src="/images/sponsors/openrouter-logo.png" alt="OpenRouter" style="filter:invert(1);height:24px;">
+      <img loading="lazy" src="/images/sponsors/cline-logo.png" alt="Cline" style="height:24px;">
+      <img loading="lazy" src="/images/sponsors/dabl-club.svg" alt="Dabl.club" style="height:28px;filter:invert(1);">
       <!-- duplicate set for seamless loop -->
-      <img src="/images/sponsors/nebius-logo.svg" alt="Nebius">
-      <img src="/images/sponsors/youcom-logo.png" alt="You.com">
-      <img src="/images/sponsors/apify-logo.png" alt="Apify">
-      <img src="/images/sponsors/theagentic-logo.png" alt="The Agentic">
-      <img src="/images/sponsors/blitzscaling-logo.png" alt="Blitzscaling Ventures">
-      <img src="/images/sponsors/fetchai-logo.svg" alt="Fetch.ai" style="height:24px;">
-      <img src="/images/sponsors/asi-one-logo.png" alt="ASI:One">
-      <img src="/images/sponsors/stakventures-logo.svg" alt="STAK Ventures">
-      <img src="/images/sponsors/aiify-logo.png" alt="Aiify.io">
-      <img src="/images/sponsors/hackersquad-logo.png" alt="HackerSquad">
-      <img src="/images/sponsors/civic-logo.png" alt="Civic">
-      <img src="/images/sponsors/adanomad-logo.png" alt="AdaNomad">
-      <span class="logo-donely"><img src="/images/sponsors/donely-logo.png" alt="Donely.ai"><span style="font-family:'Bricolage Grotesque',sans-serif;font-size:14px;font-weight:600;color:rgba(245,242,236,0.55);">Donely.ai</span></span>
-      <img src="/images/sponsors/pitchfreaks-logo.png" alt="PitchFreaks" style="height:42px;">
-      <img src="/images/sponsors/foundersbay-logo.png" alt="Founders Bay" style="filter:brightness(0) invert(1);">
-      <img src="/images/sponsors/moltpod-logo.svg" alt="MoltPod">
-      <img src="/images/sponsors/efrontier-logo.jpg" alt="Efficient Frontier Labs">
-      <img src="/images/sponsors/constructive-logo.svg" alt="Constructive">
-      <img src="/images/sponsors/openrouter-logo.png" alt="OpenRouter" style="filter:invert(1);height:24px;">
-      <img src="/images/sponsors/cline-logo.png" alt="Cline" style="height:24px;">
-      <img src="/images/sponsors/dabl-club.svg" alt="Dabl.club" style="height:28px;filter:invert(1);">
+      <img loading="lazy" src="/images/sponsors/nebius-logo.svg" alt="Nebius">
+      <img loading="lazy" src="/images/sponsors/youcom-logo.png" alt="You.com">
+      <img loading="lazy" src="/images/sponsors/apify-logo.png" alt="Apify">
+      <img loading="lazy" src="/images/sponsors/theagentic-logo.png" alt="The Agentic">
+      <img loading="lazy" src="/images/sponsors/blitzscaling-logo.png" alt="Blitzscaling Ventures">
+      <img loading="lazy" src="/images/sponsors/fetchai-logo.svg" alt="Fetch.ai" style="height:24px;">
+      <img loading="lazy" src="/images/sponsors/asi-one-logo.png" alt="ASI:One">
+      <img loading="lazy" src="/images/sponsors/stakventures-logo.svg" alt="STAK Ventures">
+      <img loading="lazy" src="/images/sponsors/aiify-logo.png" alt="Aiify.io">
+      <img loading="lazy" src="/images/sponsors/hackersquad-logo.png" alt="HackerSquad">
+      <img loading="lazy" src="/images/sponsors/civic-logo.png" alt="Civic">
+      <img loading="lazy" src="/images/sponsors/adanomad-logo.png" alt="AdaNomad">
+      <span class="logo-donely"><img loading="lazy" src="/images/sponsors/donely-logo.png" alt="Donely.ai"><span style="font-family:'Bricolage Grotesque',sans-serif;font-size:14px;font-weight:600;color:rgba(245,242,236,0.55);">Donely.ai</span></span>
+      <img loading="lazy" src="/images/sponsors/pitchfreaks-logo.png" alt="PitchFreaks" style="height:42px;">
+      <img loading="lazy" src="/images/sponsors/foundersbay-logo.png" alt="Founders Bay" style="filter:brightness(0) invert(1);">
+      <img loading="lazy" src="/images/sponsors/moltpod-logo.svg" alt="MoltPod">
+      <img loading="lazy" src="/images/sponsors/efrontier-logo.jpg" alt="Efficient Frontier Labs">
+      <img loading="lazy" src="/images/sponsors/constructive-logo.svg" alt="Constructive">
+      <img loading="lazy" src="/images/sponsors/openrouter-logo.png" alt="OpenRouter" style="filter:invert(1);height:24px;">
+      <img loading="lazy" src="/images/sponsors/cline-logo.png" alt="Cline" style="height:24px;">
+      <img loading="lazy" src="/images/sponsors/dabl-club.svg" alt="Dabl.club" style="height:28px;filter:invert(1);">
     </div>
   </div>
 </section>
@@ -2608,7 +2611,7 @@
 <div id="site-footer"></div>
 <script src="/js/nav.js"></script>
 <script src="/js/supabase.js"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 <script src="/js/clawcamp-map.js"></script>
 <script>
 var SUPABASE_URL = 'https://mrnccntqmkxjazznejfc.supabase.co';
