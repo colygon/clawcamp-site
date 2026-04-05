@@ -735,11 +735,8 @@
   </div>
 
   <div class="filter-bar">
-    <span class="filter-label">Filter:</span>
     <button class="filter-btn active" onclick="filterEvents('all', this)">All Events</button>
     <button class="filter-btn" onclick="filterEvents('flagship', this)">ClawCamp</button>
-    <button class="filter-btn" onclick="filterEvents('workshop', this)">Workshops</button>
-    <button class="filter-btn" onclick="filterEvents('community', this)">Community</button>
     <button class="filter-btn" onclick="filterEvents('online', this)">Online</button>
     <button class="filter-btn" onclick="filterEvents('clawcon', this)">ClawCon</button>
     <button class="filter-btn" onclick="filterEvents('aicamp', this)">AI Camp</button>
@@ -2689,7 +2686,24 @@ function applyFilters() {
     var city = row.dataset.city || '';
     var name = (row.querySelector('.event-name') || row.querySelector('.featured-title') || {}).textContent || '';
     var source = row.dataset.source || '';
-    var typeMatch = (currentTypeFilter === 'all') || (currentTypeFilter === 'online' ? city === 'online' : currentTypeFilter === 'clawcon' ? name.indexOf('ClawCon') === 0 : currentTypeFilter === 'aicamp' ? source === 'aicamp' : currentTypeFilter === 'ai_collective' ? source === 'ai_collective' : currentTypeFilter === 'openclaw' ? name.indexOf('Claw') !== -1 : type === currentTypeFilter);
+    var href = (row.getAttribute('href') || '').toLowerCase();
+    var nameLower = name.toLowerCase();
+    var typeMatch;
+    if (currentTypeFilter === 'all') {
+      typeMatch = true;
+    } else if (currentTypeFilter === 'online') {
+      typeMatch = city === 'online';
+    } else if (currentTypeFilter === 'clawcon') {
+      typeMatch = nameLower.indexOf('clawcon') !== -1 || href.indexOf('luma.com/clawcon') !== -1;
+    } else if (currentTypeFilter === 'openclaw') {
+      typeMatch = nameLower.indexOf('claw') !== -1 || nameLower.indexOf('openclaw') !== -1 || href.indexOf('luma.com/claw') !== -1 || type === 'openclaw';
+    } else if (currentTypeFilter === 'aicamp') {
+      typeMatch = source === 'aicamp';
+    } else if (currentTypeFilter === 'ai_collective') {
+      typeMatch = source === 'ai_collective';
+    } else {
+      typeMatch = type === currentTypeFilter;
+    }
     row.style.display = (timeMatch && typeMatch) ? '' : 'none';
   });
   document.querySelectorAll('.month-section').forEach(function(section) {
