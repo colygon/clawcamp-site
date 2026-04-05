@@ -2912,7 +2912,7 @@ fetch(SUPABASE_URL + '/rest/v1/events?select=*&order=event_date.asc', {
   renderEvents(events);
   updateCounts();
   applyFilters();
-  promoteOaklandIfNearby();
+  promoteNearbyEvents();
   // Populate hero map dots from live event data
   if (heroMap) heroMap.addEventDots(events, ['oakland']);
   // Check for ?city= URL param from homepage map clicks
@@ -3072,23 +3072,43 @@ function applyFilters() {
   });
 }
 
-function promoteOaklandIfNearby() {
-  var oaklandCoords = cityCoords['oakland'];
-  if (!oaklandCoords || !navigator.geolocation) return;
+function promoteNearbyEvents() {
+  if (!navigator.geolocation) return;
   navigator.geolocation.getCurrentPosition(function(pos) {
-    var dist = haversine(pos.coords.latitude, pos.coords.longitude, oaklandCoords[0], oaklandCoords[1]);
-    var PROMO_RANGE_KM = 100 * 1.60934; // 100 miles
-    if (dist > PROMO_RANGE_KM) return;
-    // Move ClawCamp Oakland to top of events list (after featured, before month sections)
-    var oaklandRow = document.querySelector('.event-row[data-city="oakland"][data-type="flagship"]');
+    var lat = pos.coords.latitude;
+    var lon = pos.coords.longitude;
+    var PROMO_KM = 100 * 1.60934; // 100 miles
     var eventsMain = document.getElementById('events-main');
-    if (oaklandRow && eventsMain) {
-      // Find first month-section or event-row in events-main
-      var firstSection = eventsMain.querySelector('.month-section, .featured-event');
-      if (firstSection) {
-        eventsMain.insertBefore(oaklandRow, firstSection);
+    if (!eventsMain) return;
+
+    // Find all event rows with a city and check distance
+    var allRows = eventsMain.querySelectorAll('.event-row[data-city]');
+    var promoted = [];
+    allRows.forEach(function(row) {
+      var city = row.dataset.city;
+      if (!city || city === 'online' || !cityCoords[city]) return;
+      var c = cityCoords[city];
+      var dist = haversine(lat, lon, c[0], c[1]);
+      if (dist <= PROMO_KM) {
+        promoted.push(row);
       }
-    }
+    });
+
+    if (promoted.length === 0) return;
+
+    // Move nearby events to top (before first month-section), closest first
+    promoted.sort(function(a, b) {
+      var ca = cityCoords[a.dataset.city];
+      var cb = cityCoords[b.dataset.city];
+      return haversine(lat, lon, ca[0], ca[1]) - haversine(lat, lon, cb[0], cb[1]);
+    });
+
+    var firstSection = eventsMain.querySelector('.month-section');
+    promoted.forEach(function(row) {
+      if (firstSection) {
+        eventsMain.insertBefore(row, firstSection);
+      }
+    });
   }, function() {}, { timeout: 5000 });
 }
 
