@@ -3295,7 +3295,6 @@ function detectLocation() {
   if (!navigator.geolocation) {
     btn.textContent = origText;
     btn.disabled = false;
-    alert('Geolocation is not supported by your browser.');
     return;
   }
 
@@ -3308,7 +3307,7 @@ function detectLocation() {
     function() {
       btn.textContent = origText;
       btn.disabled = false;
-      alert('Unable to get your location. Please enter a city name instead.');
+      document.getElementById('location-input').placeholder = 'Enter your city...';
     },
     { timeout: 10000 }
   );
