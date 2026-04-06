@@ -617,6 +617,9 @@
     display: grid;
     grid-template-columns: 1fr 280px;
     margin-bottom: 8px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
   }
   /* Flagship featured event — elevated styling */
   .featured-event.featured-flagship {
@@ -1095,7 +1098,7 @@
   <div style="text-align:center;padding:48px;color:var(--muted);font-size:14px;" id="events-loading">Loading events...</div>
 
   <!-- Featured: Workshop: Running OpenClaw on Nebius (Flagship) — shown when no nearby events -->
-  <div class="featured-event featured-flagship" id="nebius-featured" data-type="workshop" data-date="2026-04-14" data-city="online" style="display:none;">
+  <a class="featured-event featured-flagship" id="nebius-featured" href="https://luma.com/l88gofex" target="_blank" data-type="workshop" data-date="2026-04-14" data-city="online" style="display:none;text-decoration:none;color:inherit;">
     <div class="featured-left">
       <img class="featured-bg" src="https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=500,height=500/event-covers/dc/b9f174e3-5aae-4271-82bb-740e52cec246.jpg" alt="">
       <div class="featured-eyebrow">&#9733; Flagship Workshop &middot; Online &middot; Free</div>
@@ -1115,7 +1118,7 @@
         <div class="featured-year">2026 &middot; Tue</div>
       </div>
     </div>
-  </div>
+  </a>
 
 
   <!-- February -->
@@ -2649,8 +2652,10 @@ function renderFeaturedEvent(ev) {
   var year = d.getFullYear();
   var dow = daysOfWeek[d.getDay()];
 
-  var div = document.createElement('div');
+  var div = document.createElement('a');
   div.className = 'featured-event';
+  div.href = ev.link || '#';
+  if (ev.is_external) div.target = '_blank';
   div.dataset.type = ev.event_type;
   div.dataset.date = ev.event_date;
   div.dataset.city = ev.city;
@@ -3154,8 +3159,10 @@ function buildFeaturedCard(row) {
   var yearNum = dd.getFullYear();
   var dowName = daysOfWeek[dd.getDay()];
 
-  var card = document.createElement('div');
+  var card = document.createElement('a');
   card.className = 'featured-event featured-flagship';
+  card.href = evHref;
+  if (evTarget) card.target = evTarget;
   card.dataset.type = 'flagship';
   card.dataset.date = evDate;
   card.dataset.city = evCity;
