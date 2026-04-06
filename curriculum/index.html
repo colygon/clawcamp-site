@@ -122,6 +122,10 @@
     <button class="filter-tab" data-filter="guide">Guides <span class="tab-count" id="count-guide"></span></button>
     <button class="filter-tab" data-filter="tool">Tools <span class="tab-count" id="count-tool"></span></button>
     <button class="filter-tab" data-filter="thread">Threads <span class="tab-count" id="count-thread"></span></button>
+    <span style="width:1px;height:20px;background:var(--sand);margin:0 4px;"></span>
+    <button class="filter-tab" data-tier="beginner">Beginner</button>
+    <button class="filter-tab" data-tier="intermediate">Intermediate</button>
+    <button class="filter-tab" data-tier="advanced">Advanced</button>
   </div>
 
   <div class="loading-msg" id="loading-msg">Loading tutorials...</div>
@@ -272,11 +276,15 @@
   }
 
   var typeOrder = { workshop: 0, guide: 1, tool: 2, thread: 3 };
+  var currentTier = null;
 
   function render() {
     var grid = document.getElementById('tutorial-grid');
     grid.replaceChildren();
     var filtered = currentFilter === 'all' ? tutorials.slice() : tutorials.filter(function(t) { return t.item_type === currentFilter; });
+    if (currentTier) {
+      filtered = filtered.filter(function(t) { return t.tier === currentTier; });
+    }
     if (currentFilter === 'all') {
       filtered.sort(function(a, b) {
         var ta = typeOrder[a.item_type] || 9;
@@ -310,9 +318,23 @@
   document.getElementById('filter-tabs').addEventListener('click', function(e) {
     var btn = e.target.closest('.filter-tab');
     if (!btn) return;
-    document.querySelectorAll('.filter-tab').forEach(function(b) { b.classList.remove('active'); });
-    btn.classList.add('active');
-    currentFilter = btn.dataset.filter;
+
+    if (btn.dataset.tier) {
+      // Tier filter — toggle on/off
+      if (currentTier === btn.dataset.tier) {
+        currentTier = null;
+        btn.classList.remove('active');
+      } else {
+        document.querySelectorAll('.filter-tab[data-tier]').forEach(function(b) { b.classList.remove('active'); });
+        currentTier = btn.dataset.tier;
+        btn.classList.add('active');
+      }
+    } else {
+      // Type filter
+      document.querySelectorAll('.filter-tab[data-filter]').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+    }
     render();
   });
 
