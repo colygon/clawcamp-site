@@ -611,61 +611,40 @@
   /* Featured event card */
   .featured-event {
     margin-top: 32px;
-    border: 1.5px solid var(--ink);
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
     margin-bottom: 8px;
     text-decoration: none;
     color: inherit;
     cursor: pointer;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--ink);
   }
-  /* Flagship featured event — elevated styling */
   .featured-event.featured-flagship {
     border: 2px solid var(--rust);
     box-shadow: 0 8px 32px rgba(178, 80, 48, 0.12), 0 2px 8px rgba(15, 14, 11, 0.08);
     margin-top: 36px;
-    position: relative;
-  }
-  .featured-right { display: none; }
-  .featured-event.featured-flagship .featured-left {
-    background: linear-gradient(135deg, var(--ink) 0%, #1a1815 100%);
-    padding: 24px 28px;
-  }
-  .featured-event.featured-flagship .featured-eyebrow {
-    font-size: 11px;
-    letter-spacing: 0.14em;
-  }
-  .featured-event.featured-flagship .featured-title {
-    font-size: clamp(32px, 5vw, 48px);
-  }
-  .featured-event.featured-flagship .featured-cta {
-    background: var(--rust);
-    border-color: var(--rust);
-    color: var(--paper);
-    font-size: 14px;
-    padding: 12px 28px;
-  }
-  .featured-event.featured-flagship .featured-cta:hover {
-    background: #a04428;
-    border-color: #a04428;
   }
   .featured-left {
-    padding: 32px calc(50% + 24px) 32px 36px;
-    background: var(--ink);
+    padding: 32px 36px;
     color: var(--paper);
-    position: relative;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .featured-img-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
   }
   .featured-bg {
-    position: absolute;
-    top: 12px; right: 12px;
-    width: calc(50% - 24px);
+    width: 100%;
     aspect-ratio: 1;
-    height: auto;
     object-fit: cover;
-    opacity: 1;
     border-radius: 12px;
-    pointer-events: none;
+    display: block;
   }
   .featured-eyebrow {
     font-family: 'DM Mono', monospace;
@@ -861,37 +840,9 @@
     .time-tabs { padding: 0 20px; }
     .filter-bar { padding: 16px 20px; }
     .featured-event { grid-template-columns: 1fr !important; }
-    .featured-right { display: none; }
-    .featured-event {
-      background: var(--ink) !important;
-      color: var(--paper) !important;
-    }
-    .featured-left {
-      display: flex;
-      flex-direction: column;
-      padding: 0 !important;
-      background: var(--ink) !important;
-      color: var(--paper) !important;
-    }
-    .featured-left > *:not(.featured-bg) {
-      padding-left: 24px;
-      padding-right: 24px;
-    }
-    .featured-left .featured-eyebrow { padding-top: 20px; }
-    .featured-left .featured-cta { margin-bottom: 24px; }
-    .featured-bg {
-      position: relative !important;
-      width: 100% !important;
-      aspect-ratio: 16/9 !important;
-      height: auto !important;
-      opacity: 1 !important;
-      top: 0 !important;
-      right: 0 !important;
-      border-radius: 0 !important;
-    }
-    .featured-title { color: var(--paper) !important; }
-    .featured-title span { color: var(--rust) !important; }
-    .featured-details, .featured-desc { color: rgba(245,242,236,0.7) !important; }
+    .featured-img-wrap { order: -1; padding: 0; }
+    .featured-bg { border-radius: 0 !important; aspect-ratio: 16/9 !important; }
+    .featured-left { padding: 24px !important; }
     .event-row { grid-template-columns: 56px 56px 1fr; }
     .event-img, .event-img-placeholder { width: 56px; height: 56px; }
     .event-action { display: none; }
@@ -1109,7 +1060,6 @@
   <!-- Featured: Workshop: Running OpenClaw on Nebius (Flagship) — shown when no nearby events -->
   <a class="featured-event featured-flagship" id="nebius-featured" href="https://luma.com/l88gofex" target="_blank" data-type="workshop" data-date="2026-04-14" data-city="online" style="display:none;">
     <div class="featured-left">
-      <img class="featured-bg" src="https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=500,height=500/event-covers/dc/b9f174e3-5aae-4271-82bb-740e52cec246.jpg" alt="">
       <div class="featured-eyebrow">&#9733; Flagship Workshop &middot; Online &middot; Free</div>
       <div class="featured-title">Running OpenClaw<br><span>on Nebius</span></div>
       <div class="featured-details">
@@ -1119,6 +1069,9 @@
       </div>
       <p class="featured-desc">Learn how to run OpenClaw on Nebius, connect to Token Factory for fast inference, and extend with custom models. From prototype to production.</p>
       <span class="featured-cta">RSVP &rarr;</span>
+    </div>
+    <div class="featured-img-wrap">
+      <img class="featured-bg" src="https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,background=white,quality=75,width=500,height=500/event-covers/dc/b9f174e3-5aae-4271-82bb-740e52cec246.jpg" alt="">
     </div>
   </a>
 
@@ -2666,14 +2619,6 @@ function renderFeaturedEvent(ev) {
   var left = document.createElement('div');
   left.className = 'featured-left';
 
-  if (ev.image_url) {
-    var bgImg = document.createElement('img');
-    bgImg.className = 'featured-bg';
-    bgImg.src = ev.image_url;
-    bgImg.alt = '';
-    left.appendChild(bgImg);
-  }
-
   var eyebrow = document.createElement('div');
   eyebrow.className = 'featured-eyebrow';
   eyebrow.textContent = 'Flagship Event \u00B7 ' + (ev.location || ev.city);
@@ -2734,6 +2679,16 @@ function renderFeaturedEvent(ev) {
   left.appendChild(cta);
 
   div.appendChild(left);
+  if (ev.image_url) {
+    var imgWrap = document.createElement('div');
+    imgWrap.className = 'featured-img-wrap';
+    var bgImg = document.createElement('img');
+    bgImg.className = 'featured-bg';
+    bgImg.src = ev.image_url;
+    bgImg.alt = '';
+    imgWrap.appendChild(bgImg);
+    div.appendChild(imgWrap);
+  }
   return div;
 }
 
@@ -3140,7 +3095,6 @@ function buildFeaturedCard(row) {
 
   var left = document.createElement('div');
   left.className = 'featured-left';
-  if (imgEl) { var bg = document.createElement('img'); bg.className = 'featured-bg'; bg.src = imgEl.src; left.appendChild(bg); }
   var eyebrow = document.createElement('div');
   eyebrow.className = 'featured-eyebrow';
   eyebrow.textContent = 'Flagship Event \u00B7 ' + cityLabel;
@@ -3161,6 +3115,15 @@ function buildFeaturedCard(row) {
   cta.textContent = 'View Details \u2192';
   left.appendChild(cta);
   card.appendChild(left);
+  if (imgEl) {
+    var imgWrap = document.createElement('div');
+    imgWrap.className = 'featured-img-wrap';
+    var bg = document.createElement('img');
+    bg.className = 'featured-bg';
+    bg.src = imgEl.src;
+    imgWrap.appendChild(bg);
+    card.appendChild(imgWrap);
+  }
   return card;
 }
 
