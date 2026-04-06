@@ -1119,13 +1119,6 @@
       <p class="featured-desc">Learn how to run OpenClaw on Nebius, connect to Token Factory for fast inference, and extend with custom models. From prototype to production.</p>
       <span class="featured-cta">RSVP &rarr;</span>
     </div>
-    <div class="featured-right">
-      <div>
-        <div class="featured-date-block">14</div>
-        <div class="featured-month">APRIL</div>
-        <div class="featured-year">2026 &middot; Tue</div>
-      </div>
-    </div>
   </a>
 
 
@@ -2739,36 +2732,7 @@ function renderFeaturedEvent(ev) {
   cta.textContent = 'View Details \u2192';
   left.appendChild(cta);
 
-  var right = document.createElement('div');
-  right.className = 'featured-right';
-
-  var dateBlock = document.createElement('div');
-  var dayNum = document.createElement('div');
-  dayNum.className = 'featured-date-block';
-  dayNum.textContent = day;
-  dateBlock.appendChild(dayNum);
-  var monthEl = document.createElement('div');
-  monthEl.className = 'featured-month';
-  monthEl.textContent = monthName;
-  dateBlock.appendChild(monthEl);
-  var yearEl = document.createElement('div');
-  yearEl.className = 'featured-year';
-  yearEl.textContent = year + ' \u00B7 ' + dow;
-  dateBlock.appendChild(yearEl);
-  right.appendChild(dateBlock);
-
-  var cap = document.createElement('div');
-  cap.className = 'featured-capacity';
-  cap.style.cssText = 'font-size:13px;font-weight:600;color:#0f0e0b;margin-bottom:6px';
-  cap.textContent = 'Tickets';
-  var capInfo = document.createElement('div');
-  capInfo.className = 'featured-capacity';
-  capInfo.textContent = 'Limited availability';
-  right.appendChild(cap);
-  right.appendChild(capInfo);
-
   div.appendChild(left);
-  div.appendChild(right);
   return div;
 }
 
@@ -3195,14 +3159,7 @@ function buildFeaturedCard(row) {
   cta.className = 'featured-cta';
   cta.textContent = 'View Details \u2192';
   left.appendChild(cta);
-  var right = document.createElement('div');
-  right.className = 'featured-right';
-  var dateBlock = document.createElement('div');
-  var dn = document.createElement('div'); dn.className = 'featured-date-block'; dn.textContent = dayNum; dateBlock.appendChild(dn);
-  var mn = document.createElement('div'); mn.className = 'featured-month'; mn.textContent = monName.toUpperCase(); dateBlock.appendChild(mn);
-  var yr = document.createElement('div'); yr.className = 'featured-year'; yr.textContent = yearNum + ' \u00B7 ' + dowName; dateBlock.appendChild(yr);
-  right.appendChild(dateBlock);
-  card.appendChild(left); card.appendChild(right);
+  card.appendChild(left);
   return card;
 }
 
