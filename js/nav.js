@@ -6,7 +6,7 @@
     <a href="/events" data-nav>Events</a>\
     <a href="/curriculum" data-nav>Tutorials</a>\
     <a href="/speakers" data-nav>Speakers</a>\
-    <a href="/sponsors" data-nav>Sponsors</a>\
+    <a href="/sponsors" data-nav>Sponsor</a>\
     <a href="/host" data-nav>Start a Camp</a>\
     <div class="nav-more">\
       <button class="nav-more-label">About <span class="chevron">&#9662;</span></button>\
