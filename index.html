@@ -502,7 +502,7 @@
   }
 
   /* Month section */
-  .month-section { padding-top: 48px; }
+  .month-section { padding-top: 16px; }
   .month-label {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
@@ -620,7 +620,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     background: var(--ink);
-    max-height: 400px;
   }
   .featured-event.featured-flagship {
     border: 2px solid var(--rust);
@@ -642,7 +641,7 @@
   }
   .featured-bg {
     width: 100%;
-    aspect-ratio: 1;
+    max-height: 360px;
     object-fit: cover;
     border-radius: 12px;
     display: block;
