@@ -859,7 +859,18 @@
     .filter-bar { padding: 16px 20px; }
     .featured-event { grid-template-columns: 1fr !important; }
     .featured-right { display: none; }
-    .featured-bg { width: 100% !important; opacity: 0.4 !important; mask-image: none !important; -webkit-mask-image: none !important; }
+    .featured-left {
+      display: flex;
+      flex-direction: column;
+    }
+    .featured-bg {
+      position: relative !important;
+      width: 100% !important;
+      height: 200px !important;
+      opacity: 1 !important;
+      mask-image: none !important;
+      -webkit-mask-image: none !important;
+    }
     .event-row { grid-template-columns: 56px 56px 1fr; }
     .event-img, .event-img-placeholder { width: 56px; height: 56px; }
     .event-action { display: none; }
