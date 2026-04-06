@@ -2815,7 +2815,7 @@ function promoteWithGeo(pos) {
   card.classList.add('geo-promoted');
   closestFlagship.style.display = 'none';
   closestFlagship.classList.add('promoted-featured');
-  eventsMain.insertBefore(card, eventsMain.firstChild);
+  eventsMain.prepend(card);
 }
 
 // Start geolocation early
@@ -2877,18 +2877,20 @@ function sortEventsByDistance() {
     }
   });
 
-  // Bucket sort: within 16km (~10mi) by date, within 161km (~100mi) by date, online, then rest by distance+date
-  function getBucket(dist, city) {
-    if (dist != null && dist <= 16) return 0;   // ~10 miles
-    if (dist != null && dist <= 161) return 1;  // ~100 miles
-    if (city === 'online') return 2;
+  // Bucket sort: geo-promoted first, then nearby by date, online, rest by distance
+  function getBucket(item) {
+    if (item.classList.contains('geo-promoted')) return -1;
+    var dist = item._distance;
+    if (dist != null && dist <= 16) return 0;
+    if (dist != null && dist <= 161) return 1;
+    if (item.dataset.city === 'online') return 2;
     return 3;
   }
   allItems.sort(function(a, b) {
     var da = a._distance != null ? a._distance : Infinity;
     var db = b._distance != null ? b._distance : Infinity;
-    var ba = getBucket(a._distance, a.dataset.city);
-    var bb = getBucket(b._distance, b.dataset.city);
+    var ba = getBucket(a);
+    var bb = getBucket(b);
     if (ba !== bb) return ba - bb;
     // Within same bucket: sort by date first, then distance
     if (ba <= 2) return (a.dataset.date || '').localeCompare(b.dataset.date || '') || (da - db);

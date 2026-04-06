@@ -3196,7 +3196,7 @@ function promoteWithGeo(pos) {
     card.classList.add('geo-promoted');
     closestFlagship.style.display = 'none';
     closestFlagship.classList.add('promoted-featured');
-    eventsMain.insertBefore(card, eventsMain.firstChild);
+    eventsMain.prepend(card);
   }
 }
 
@@ -3258,17 +3258,19 @@ function sortEventsByDistance() {
     }
   });
 
-  // Sort: within 100mi by date, online next by date, then rest by distance
-  function getBucket(dist, city) {
+  // Sort: geo-promoted featured first, then within 100mi by date, online next, rest by distance
+  function getBucket(item) {
+    if (item.classList.contains('geo-promoted')) return -1; // always first
+    var dist = item._distance;
     if (dist != null && dist <= 161) return 0;  // ~100 miles
-    if (city === 'online') return 1;
+    if (item.dataset.city === 'online') return 1;
     return 2;
   }
   allItems.sort(function(a, b) {
     var da = a._distance != null ? a._distance : Infinity;
     var db = b._distance != null ? b._distance : Infinity;
-    var ba = getBucket(a._distance, a.dataset.city);
-    var bb = getBucket(b._distance, b.dataset.city);
+    var ba = getBucket(a);
+    var bb = getBucket(b);
     if (ba !== bb) return ba - bb;
     // Within 100mi and online: sort by date
     if (ba <= 1) return (a.dataset.date || '').localeCompare(b.dataset.date || '');
