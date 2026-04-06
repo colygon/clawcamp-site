@@ -658,13 +658,12 @@
   }
   .featured-bg {
     position: absolute;
-    top: 0; right: 0;
-    width: 70%;
-    height: 100%;
+    top: 12px; right: 12px;
+    width: 45%;
+    height: calc(100% - 24px);
     object-fit: cover;
-    opacity: 0.9;
-    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 20%, black 50%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 20%, black 50%);
+    opacity: 1;
+    border-radius: 8px;
     pointer-events: none;
   }
   .featured-eyebrow {
@@ -882,11 +881,11 @@
     .featured-bg {
       position: relative !important;
       width: 100% !important;
-      aspect-ratio: 1 !important;
+      aspect-ratio: 16/9 !important;
       height: auto !important;
       opacity: 1 !important;
-      mask-image: none !important;
-      -webkit-mask-image: none !important;
+      top: 0 !important;
+      right: 0 !important;
       border-radius: 0 !important;
     }
     .featured-title { color: var(--paper) !important; }
