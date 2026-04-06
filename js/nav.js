@@ -5,7 +5,7 @@
   <div class="nav-links">\
     <a href="/events" data-nav>Events</a>\
     <a href="/curriculum" data-nav>Tutorials</a>\
-    <a href="/speakers" data-nav>Speak</a>\
+    <a href="/speakers" data-nav>Mentor</a>\
     <a href="/sponsors" data-nav>Sponsor</a>\
     <a href="/host" data-nav>Host</a>\
     <div class="nav-more">\
