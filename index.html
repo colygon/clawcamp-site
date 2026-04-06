@@ -614,8 +614,6 @@
     border: 1.5px solid var(--ink);
     border-radius: 8px;
     overflow: hidden;
-    display: grid;
-    grid-template-columns: 1fr 280px;
     margin-bottom: 8px;
     text-decoration: none;
     color: inherit;
@@ -627,8 +625,8 @@
     box-shadow: 0 8px 32px rgba(178, 80, 48, 0.12), 0 2px 8px rgba(15, 14, 11, 0.08);
     margin-top: 36px;
     position: relative;
-    grid-template-columns: 1fr 280px;
   }
+  .featured-right { display: none; }
   .featured-event.featured-flagship .featured-left {
     background: linear-gradient(135deg, var(--ink) 0%, #1a1815 100%);
     padding: 24px 28px;
@@ -661,12 +659,12 @@
   .featured-bg {
     position: absolute;
     top: 0; right: 0;
-    width: 60%;
+    width: 70%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.85;
-    mask-image: linear-gradient(to right, transparent 5%, rgba(0,0,0,0.4) 30%, black 60%);
-    -webkit-mask-image: linear-gradient(to right, transparent 5%, rgba(0,0,0,0.4) 30%, black 60%);
+    opacity: 0.9;
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 20%, black 50%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 20%, black 50%);
     pointer-events: none;
   }
   .featured-eyebrow {
