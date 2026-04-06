@@ -97,21 +97,15 @@
     if (sponsorForm) {
       sponsorForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        submitToSupabase({
-          form_type: 'sponsor',
-          name: sponsorForm.querySelector('[name="contact_name"]').value,
-          email: sponsorForm.querySelector('[name="email"]').value,
-          phone: sponsorForm.querySelector('[name="phone"]').value,
-          company: sponsorForm.querySelector('[name="company"]').value,
-          tier: sponsorForm.querySelector('[name="tier"]').value,
-          event: sponsorForm.querySelector('[name="event"]').value,
-          website: sponsorForm.querySelector('[name="website"]').value,
-          linkedin: sponsorForm.querySelector('[name="linkedin"]').value,
-          bio: sponsorForm.querySelector('[name="bio"]').value,
-          offers: sponsorForm.querySelector('[name="offers"]').value,
-          message: sponsorForm.querySelector('[name="message"]').value,
-          email_opt_in: sponsorForm.querySelector('[name="email_opt_in"]') ? sponsorForm.querySelector('[name="email_opt_in"]').checked : null
-        }, sponsorForm);
+        var data = { form_type: 'sponsor' };
+        var fields = ['contact_name','email','phone','company','tier','event','website','linkedin','bio','offers','message'];
+        fields.forEach(function(f) {
+          var el = sponsorForm.querySelector('[name="' + f + '"]');
+          if (el) data[f === 'contact_name' ? 'name' : f] = el.value;
+        });
+        var optIn = sponsorForm.querySelector('[name="email_opt_in"]');
+        if (optIn) data.email_opt_in = optIn.checked;
+        submitToSupabase(data, sponsorForm);
       });
     }
 
