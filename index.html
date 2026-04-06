@@ -3083,17 +3083,29 @@ function applyFilters() {
   });
 }
 
+function hideNebiusFeatured() {
+  var el = document.getElementById('nebius-featured');
+  if (el) el.style.display = 'none';
+}
+
 function showNebiusFeatured() {
+  // Remove any geo-promoted cards first
+  var eventsMain = document.getElementById('events-main');
+  if (eventsMain) {
+    eventsMain.querySelectorAll('.geo-promoted').forEach(function(el) { el.remove(); });
+    eventsMain.querySelectorAll('.promoted-featured').forEach(function(el) { el.style.display = ''; el.classList.remove('promoted-featured'); });
+  }
   var el = document.getElementById('nebius-featured');
   if (el) el.style.display = '';
 }
 
 function showOaklandFeatured() {
-  // Find Oakland flagship row and promote it as featured card
   var eventsMain = document.getElementById('events-main');
   if (!eventsMain) return;
+  hideNebiusFeatured();
+  if (eventsMain.querySelector('.geo-promoted')) return;
   var oaklandRow = eventsMain.querySelector('.event-row[data-city="oakland"][data-type="flagship"]');
-  if (!oaklandRow) return;
+  if (!oaklandRow || oaklandRow.classList.contains('promoted-featured')) return;
   var card = buildFeaturedCard(oaklandRow);
   card.classList.add('geo-promoted');
   oaklandRow.style.display = 'none';
