@@ -244,6 +244,11 @@ function initClawCampMap(containerId, opts) {
   if (autoScroll) {
     scrollInterval = setInterval(function() {
       map.panBy([0.5, 0], { animate: false });
+      // Reset longitude when drifted too far to keep dots visible
+      var center = map.getCenter();
+      if (center.lng > 540) {
+        map.setView([center.lat, center.lng - 360], map.getZoom(), { animate: false });
+      }
     }, 50);
   }
 
