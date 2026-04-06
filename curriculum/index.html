@@ -271,10 +271,20 @@
     return card;
   }
 
+  var typeOrder = { workshop: 0, guide: 1, tool: 2, thread: 3 };
+
   function render() {
     var grid = document.getElementById('tutorial-grid');
     grid.replaceChildren();
-    var filtered = currentFilter === 'all' ? tutorials : tutorials.filter(function(t) { return t.item_type === currentFilter; });
+    var filtered = currentFilter === 'all' ? tutorials.slice() : tutorials.filter(function(t) { return t.item_type === currentFilter; });
+    if (currentFilter === 'all') {
+      filtered.sort(function(a, b) {
+        var ta = typeOrder[a.item_type] || 9;
+        var tb = typeOrder[b.item_type] || 9;
+        if (ta !== tb) return ta - tb;
+        return (b.stars || 0) - (a.stars || 0);
+      });
+    }
     filtered.forEach(function(t) { grid.appendChild(buildCard(t)); });
   }
 
