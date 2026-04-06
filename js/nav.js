@@ -7,7 +7,7 @@
     <a href="/curriculum" data-nav>Tutorials</a>\
     <a href="/speakers" data-nav>Speak</a>\
     <a href="/sponsors" data-nav>Sponsor</a>\
-    <a href="/host" data-nav>Start a Camp</a>\
+    <a href="/host" data-nav>Host</a>\
     <div class="nav-more">\
       <button class="nav-more-label">About <span class="chevron">&#9662;</span></button>\
       <div class="nav-more-dropdown">\
