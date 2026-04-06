@@ -1118,7 +1118,7 @@
         <span class="featured-detail"><span class="meta-icon">&#9201;</span> 6:00 PM &ndash; 7:00 PM CET</span>
       </div>
       <p class="featured-desc">Learn how to run OpenClaw on Nebius, connect to Token Factory for fast inference, and extend with custom models. From prototype to production.</p>
-      <a href="https://luma.com/l88gofex" target="_blank" class="featured-cta">RSVP &rarr;</a>
+      <span class="featured-cta">RSVP &rarr;</span>
     </div>
     <div class="featured-right">
       <div>
@@ -2735,11 +2735,9 @@ function renderFeaturedEvent(ev) {
     left.appendChild(tagsDiv);
   }
 
-  var cta = document.createElement('a');
+  var cta = document.createElement('span');
   cta.className = 'featured-cta';
-  cta.href = ev.link || '#';
   cta.textContent = 'View Details \u2192';
-  if (ev.is_external) cta.target = '_blank';
   left.appendChild(cta);
 
   var right = document.createElement('div');
@@ -3194,9 +3192,9 @@ function buildFeaturedCard(row) {
   ['\uD83D\uDCC5 ' + dowName + ', ' + monName + ' ' + dayNum + ', ' + yearNum, '\uD83D\uDCCD ' + cityLabel, '\u23F1 Full Day'].forEach(function(txt) { var s = document.createElement('span'); s.className = 'featured-detail'; s.textContent = txt; details.appendChild(s); });
   left.appendChild(details);
   if (evDesc) { var desc = document.createElement('p'); desc.className = 'featured-desc'; desc.textContent = evDesc; left.appendChild(desc); }
-  var cta = document.createElement('a');
-  cta.className = 'featured-cta'; cta.href = evHref; cta.textContent = 'View Details \u2192';
-  if (evTarget) cta.target = evTarget;
+  var cta = document.createElement('span');
+  cta.className = 'featured-cta';
+  cta.textContent = 'View Details \u2192';
   left.appendChild(cta);
   var right = document.createElement('div');
   right.className = 'featured-right';
