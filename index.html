@@ -2888,8 +2888,7 @@ fetch(SUPABASE_URL + '/rest/v1/events?select=*&order=event_date.asc', {
   updateCounts();
   applyFilters();
   window._eventsRendered = true;
-  if (window._geoResult) promoteWithGeo(window._geoResult);
-  else showOaklandFeatured(); // Default to Oakland, geo callback will swap if needed
+  showOaklandFeatured();
   // Populate hero map dots from live event data
   if (heroMap) heroMap.addEventDots(events, ['oakland']);
   // Check for ?city= URL param from homepage map clicks
@@ -3239,16 +3238,11 @@ function promoteWithGeo(pos) {
 // Start geolocation immediately — store result for use after events render
 window._eventsRendered = false;
 window._geoResult = null;
+// Geolocation for distance badges only (Oakland always featured)
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(function(pos) {
     window._geoResult = pos;
-    if (window._eventsRendered) promoteWithGeo(pos);
-  }, function() {
-    if (window._eventsRendered) showOaklandFeatured();
-    else window._geoFailed = true;
-  }, { timeout: 5000 });
-} else {
-  window._geoFailed = true;
+  }, function() {}, { timeout: 5000 });
 }
 
 function sortEventsByDistance() {

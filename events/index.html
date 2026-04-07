@@ -2543,8 +2543,7 @@ fetch(SUPABASE_URL + '/rest/v1/events?select=*&order=event_date.asc', {
   updateCounts();
   applyFilters();
   window._eventsRendered = true;
-  if (window._geoResult) promoteWithGeo(window._geoResult);
-  else showOaklandFeatured();
+  showOaklandFeatured();
   // Populate map dots from live event data
   if (eventsMap) eventsMap.addEventDots(events, ['oakland']);
   // Check for ?city= URL param from homepage map clicks
@@ -2853,19 +2852,11 @@ function promoteWithGeo(pos) {
   eventsMain.prepend(card);
 }
 
-// Start geolocation early
-window._eventsRendered = false;
-window._geoResult = null;
+// Geolocation for distance badges only (Oakland always featured)
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(function(pos) {
     window._geoResult = pos;
-    if (window._eventsRendered) promoteWithGeo(pos);
-  }, function() {
-    if (window._eventsRendered) showOaklandFeatured();
-    else window._geoFailed = true;
-  }, { timeout: 5000 });
-} else {
-  window._geoFailed = true;
+  }, function() {}, { timeout: 5000 });
 }
 
 
