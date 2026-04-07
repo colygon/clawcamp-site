@@ -2767,6 +2767,36 @@ function showOaklandFeatured() {
   else eventsMain.appendChild(card);
 }
 
+function isInCaliforniaOrNewYork(lat, lon) {
+  if (lat >= 32.5 && lat <= 42.0 && lon >= -124.5 && lon <= -114.1) return true;
+  if (lat >= 40.5 && lat <= 45.0 && lon >= -79.8 && lon <= -71.8) return true;
+  return false;
+}
+
+function forceOaklandFeatured(eventsMain, lat, lon, PROMO_KM) {
+  var oaklandRow = eventsMain.querySelector('.event-row[data-city="oakland"][data-type="flagship"]');
+  if (!oaklandRow) { showOaklandFeatured(); return; }
+  var nearby = [];
+  eventsMain.querySelectorAll('.event-row[data-city]').forEach(function(row) {
+    var city = row.dataset.city;
+    if (!city || city === 'online' || !cityCoords[city] || row === oaklandRow) return;
+    if (haversine(lat, lon, cityCoords[city][0], cityCoords[city][1]) <= PROMO_KM) nearby.push(row);
+  });
+  if (nearby.length > 0) {
+    nearby.sort(function(a, b) {
+      return haversine(lat, lon, cityCoords[a.dataset.city][0], cityCoords[a.dataset.city][1]) -
+             haversine(lat, lon, cityCoords[b.dataset.city][0], cityCoords[b.dataset.city][1]);
+    });
+    var firstSection = eventsMain.querySelector('.month-section');
+    nearby.forEach(function(row) { if (firstSection) eventsMain.insertBefore(row, firstSection); });
+  }
+  var card = buildFeaturedCard(oaklandRow);
+  card.classList.add('geo-promoted');
+  oaklandRow.style.display = 'none';
+  oaklandRow.classList.add('promoted-featured');
+  eventsMain.prepend(card);
+}
+
 function promoteWithGeo(pos) {
   var lat = pos.coords.latitude;
   var lon = pos.coords.longitude;
@@ -2776,6 +2806,11 @@ function promoteWithGeo(pos) {
 
   eventsMain.querySelectorAll('.geo-promoted').forEach(function(el) { el.remove(); });
   eventsMain.querySelectorAll('.promoted-featured').forEach(function(el) { el.style.display = ''; el.classList.remove('promoted-featured'); });
+
+  if (isInCaliforniaOrNewYork(lat, lon)) {
+    forceOaklandFeatured(eventsMain, lat, lon, PROMO_KM);
+    return;
+  }
 
   var flagshipRows = eventsMain.querySelectorAll('.event-row[data-type="flagship"]');
   var closestFlagship = null;
