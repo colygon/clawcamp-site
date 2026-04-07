@@ -31,41 +31,50 @@ claw.camp/curriculum/agent-inference
 
 ---
 
-## SLIDE 3: The Solution
+## SLIDE 3: Liberate Your OpenClaw
 
-**OpenClaw + Token Factory on Nebius**
+**You don't need to use Claude or OpenAI.**
 
-| Component | What it does |
-|-----------|-------------|
-| **OpenClaw** | Agent orchestration + WebSocket gateway (runs on CPU) |
-| **Token Factory** | Managed inference API with 30+ models (runs on GPU) |
-| **Nebius Serverless** | Auto-scaling compute (pay only when active) |
+OpenClaw works with ANY OpenAI-compatible model provider. Today we'll use **Nebius Token Factory** — open-source models, pay-per-token, no GPU reservation.
 
-**Key insight:** Orchestration and inference are separate. Your agent logic runs on cheap CPU. The expensive GPU work goes through Token Factory's pay-per-token API.
+| Provider | Models | Pricing |
+|----------|--------|---------|
+| **Nebius Token Factory** | Llama 3.1 70B, GLM-5, DeepSeek-R1, Qwen, Mistral | Pay per token |
+| Hugging Face | GLM-5, thousands more | $2/mo free credits |
+| Local (llama.cpp) | Any GGUF model | Free (your hardware) |
 
----
-
-## SLIDE 4: Three Deployment Patterns
-
-| Pattern | Best For | Cost (10K msgs/day) | Cold Start |
-|---------|----------|-------------------|------------|
-| **Local + Token Factory** | Prototyping, dev | ~$15-30/mo | None |
-| **CPU Serverless + Token Factory** | Production, zero-ops | ~$20-40/mo | 2-5 sec |
-| **GPU Serverless + Local Model** | Low latency, high throughput | ~$200-800/mo | 30-60 sec |
-
-**Today we'll do Pattern 1 (fastest) and show how to upgrade to Pattern 2.**
+**Today's focus: Token Factory. Fast, cheap, production-ready.**
 
 ---
 
-## SLIDE 5: What You'll Build
+## SLIDE 4: The Architecture
 
-By the end of this workshop:
+**Orchestration and inference are separate.**
 
-1. A live OpenClaw agent connected to Token Factory
-2. Structured tool-calling with JSON mode
-3. A working deployment you can take home
+```
+Your Agent (OpenClaw)          Token Factory (Nebius)
+┌─────────────────────┐       ┌─────────────────────┐
+│  Agent logic (CPU)  │──────▶│  Model inference     │
+│  Tool calling       │  API  │  (GPU)               │
+│  WebSocket gateway  │◀──────│  Llama / GLM / Qwen  │
+└─────────────────────┘       └─────────────────────┘
+     Runs anywhere               Pay per token
+     $0.01/hr                    No GPU needed
+```
 
-**Let's do it.**
+Your agent runs on cheap CPU. The expensive GPU work goes through Token Factory's API.
+
+---
+
+## SLIDE 5: Three Ways to Deploy
+
+| Method | Time | Best For |
+|--------|------|----------|
+| **npm install** | 5 min | Local dev, fastest start |
+| **Docker** | 10 min | Isolated, repeatable, server deploys |
+| **Nebius Serverless** | 20 min | Production, auto-scaling, zero-ops |
+
+**We'll start with npm (fastest), then show Docker and Serverless.**
 
 ---
 
@@ -74,13 +83,13 @@ By the end of this workshop:
 1. Go to **console.nebius.com**
 2. Navigate to **Token Factory** in the sidebar
 3. Click **Create API Key**
-4. Copy the key (starts with `eyJ...`)
+4. Copy the key
 
-```
+```bash
 export NEBIUS_API_KEY="your-key-here"
 ```
 
-**This key gives you access to 30+ models including Llama 3.1 70B, DeepSeek-R1, and Mistral.**
+**This key gives you access to 30+ models including Llama 3.1 70B, GLM-5, DeepSeek-R1, and Qwen.**
 
 ---
 
@@ -95,58 +104,135 @@ Verify:
 openclaw --version
 ```
 
-That's it. OpenClaw is a Node.js package. No Docker, no containers, no VMs.
+That's it. No Docker, no containers, no VMs (yet).
 
 ---
 
-## SLIDE 8: Step 3 — Configure and Start (2 min)
+## SLIDE 8: Step 3 — Connect to Token Factory (2 min)
 
-Create your config:
+Point OpenClaw at Nebius Token Factory:
+
 ```bash
-openclaw init
+openclaw onboard --non-interactive \
+  --auth-choice custom-api-key \
+  --custom-base-url "https://api.tokenfactory.nebius.com/v1" \
+  --custom-model-id "meta-llama/Meta-Llama-3.1-70B-Instruct" \
+  --custom-api-key "$NEBIUS_API_KEY" \
+  --secret-input-mode plaintext \
+  --custom-compatibility openai
 ```
 
-Set your Token Factory endpoint:
-```bash
-export OPENCLAW_INFERENCE_URL="https://api.tokenfactory.nebius.com/v1"
-export OPENCLAW_INFERENCE_KEY="$NEBIUS_API_KEY"
-export OPENCLAW_MODEL="meta-llama/Meta-Llama-3.1-70B-Instruct"
+Or set it in your config:
+
+```json
+{
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "meta-llama/Meta-Llama-3.1-70B-Instruct"
+      }
+    }
+  }
+}
 ```
+
+---
+
+## SLIDE 9: Step 4 — Start and Connect (1 min)
 
 Start the gateway:
 ```bash
 openclaw start
 ```
 
-**Your agent is now live at `http://localhost:18789`**
-
----
-
-## SLIDE 9: Step 4 — Open the Dashboard (1 min)
-
-Open your browser to:
+Open your browser:
 
 **`http://localhost:18789`**
 
-You'll see the Control UI with:
-- Connected agents
-- Message history
-- Model selection
-- Token usage
-
-**This is your command center.**
+Your agent is live. Connected to Llama 3.1 70B on Nebius. No GPU on your machine.
 
 ---
 
-## SLIDE 10: Step 5 — Build a Tool-Calling Workflow (5 min)
+## SLIDE 10: Model Selection
 
-The real power of OpenClaw is **structured outputs**. Your agent can call tools reliably using JSON mode.
+Pick the right model for your use case:
 
-Example: A weather agent that:
-1. Receives a natural language query
-2. Extracts the city using structured output
-3. Calls a weather API
-4. Returns a formatted response
+| Model | Speed | Quality | Best For |
+|-------|-------|---------|----------|
+| **Llama 3.1 70B** | Fast | High | General agents, tool calling |
+| **GLM-5** | Very Fast | Good | High throughput, simple tasks |
+| **DeepSeek-R1** | Medium | Very High | Reasoning, complex chains |
+| **Qwen3.5-35B** | Fast | High | Code generation, multilingual |
+| **Mistral Large** | Fast | High | European languages, code |
+
+Switch models anytime:
+```bash
+openclaw config set agents.defaults.model.primary "zai-org/GLM-5"
+```
+
+---
+
+## SLIDE 11: Is Docker Right for Me?
+
+**Use Docker when:**
+- You want an isolated, throwaway environment
+- You're deploying to a server
+- You need repeatable builds
+
+**Skip Docker when:**
+- You want the fastest local dev cycle
+- You're just prototyping
+
+### Docker Quick Start
+
+```bash
+# Clone and build
+git clone https://github.com/openclaw/openclaw.git
+cd openclaw
+
+# Automated setup (handles everything)
+export OPENCLAW_IMAGE="ghcr.io/openclaw/openclaw:latest"
+./scripts/docker/setup.sh
+```
+
+Or manual:
+```bash
+docker build -t openclaw:local -f Dockerfile .
+docker compose up -d openclaw-gateway
+```
+
+Access at `http://127.0.0.1:18789/`
+
+Health check:
+```bash
+curl -fsS http://127.0.0.1:18789/healthz
+curl -fsS http://127.0.0.1:18789/readyz
+```
+
+---
+
+## SLIDE 12: Docker + Token Factory
+
+Connect your Docker container to Nebius:
+
+```bash
+# During onboard
+docker compose run --rm --no-deps --entrypoint node \
+  openclaw-gateway dist/index.js onboard \
+  --auth-choice custom-api-key \
+  --custom-base-url "https://api.tokenfactory.nebius.com/v1" \
+  --custom-model-id "meta-llama/Meta-Llama-3.1-70B-Instruct" \
+  --custom-api-key "$NEBIUS_API_KEY" \
+  --custom-compatibility openai
+```
+
+**Your agent runs in Docker. Inference runs on Nebius GPUs. Best of both worlds.**
+
+---
+
+## SLIDE 13: Structured Tool Calling
+
+The real power: **JSON mode for reliable tool calling.**
 
 ```json
 {
@@ -158,26 +244,32 @@ Example: A weather agent that:
 }
 ```
 
-**Token Factory supports JSON mode natively — no prompt engineering hacks needed.**
+Token Factory supports JSON mode natively — no prompt engineering hacks.
+
+Works with Llama 3.1, GLM-5, and DeepSeek-R1.
 
 ---
 
-## SLIDE 11: Model Selection
+## SLIDE 14: Going to Production (Nebius Serverless)
 
-| Model | Speed | Quality | Best For |
-|-------|-------|---------|----------|
-| **Llama 3.1 70B** | Fast | High | General agents, tool calling |
-| **DeepSeek-R1** | Medium | Very High | Reasoning, complex tasks |
-| **Mistral Large** | Fast | High | Code generation |
-| **GLM-5** | Very Fast | Good | Simple tasks, high throughput |
+When you're ready to deploy for real:
 
-**Tip:** Start with Llama 3.1 70B. It's the best balance of speed, quality, and cost for most agent workloads.
+```bash
+# Install Nebius CLI
+curl -sSL https://storage.ai.nebius.cloud/ncp/install.sh | bash
+
+# Deploy OpenClaw on Serverless
+nebius msp serverless v1alpha1 endpoint create \
+  --name openclaw-agent \
+  --image openclaw/gateway:latest \
+  --memory 512MB
+```
+
+**Auto-scales to zero when idle. Spins up on demand. No VM management.**
 
 ---
 
-## SLIDE 12: Cost Breakdown
-
-**What does this actually cost?**
+## SLIDE 15: Cost Breakdown
 
 | Usage | Tokens/day | Cost/day | Cost/month |
 |-------|-----------|----------|------------|
@@ -185,37 +277,13 @@ Example: A weather agent that:
 | Medium (1K msgs) | ~5M | $1.50 | $45 |
 | Heavy (10K msgs) | ~50M | $15 | $450 |
 
-Compare: A single H100 GPU costs **$2-3/hour** = **$1,500-2,200/month**
+Compare: A single H100 GPU = **$2-3/hour** = **$1,500-2,200/month**
 
-**Token Factory lets you pay per token, not per hour.**
-
----
-
-## SLIDE 13: Going to Production (Pattern 2)
-
-When you're ready to deploy:
-
-```bash
-# Install Nebius CLI
-curl -sSL https://storage.ai.nebius.cloud/ncp/install.sh | bash
-
-# Get your network IDs
-ncp vpc network list
-ncp vpc subnet list
-
-# Deploy OpenClaw on Nebius Serverless
-ncp serverless container create \
-  --name openclaw-agent \
-  --image openclaw/gateway:latest \
-  --memory 512MB \
-  --execution-timeout 300s
-```
-
-**Your agent now auto-scales to zero when idle and spins up on demand.**
+**Token Factory: pay per token, not per hour.**
 
 ---
 
-## SLIDE 14: Security Checklist
+## SLIDE 16: Security Checklist
 
 Before going live:
 
@@ -224,66 +292,71 @@ Before going live:
 - [ ] Enable HTTPS via reverse proxy (nginx/Caddy)
 - [ ] Set API budget caps in Token Factory
 - [ ] Use network security groups to restrict port access
+- [ ] For Docker: container runs as non-root user `node` (uid 1000)
 
 ---
 
-## SLIDE 15: Troubleshooting Quick Reference
+## SLIDE 17: Troubleshooting Quick Reference
 
 | Problem | Fix |
 |---------|-----|
-| Gateway won't start | Check port 18789 isn't in use: `lsof -i :18789` |
+| Gateway won't start | Check port 18789: `lsof -i :18789` |
 | Token Factory 401 | Verify API key: `curl -H "Authorization: Bearer $KEY" https://api.tokenfactory.nebius.com/v1/models` |
-| Slow responses | Switch to a faster model (GLM-5) or check network latency |
-| OOM crash | Increase memory limit or reduce concurrent agents |
+| Docker OOM (exit 137) | Increase memory to 2GB minimum |
+| Slow responses | Switch to GLM-5 (faster) or check network |
 | Connection refused | Check bind address and firewall rules |
+| Docker health check fails | `curl -fsS http://127.0.0.1:18789/healthz` |
 
 ---
 
-## SLIDE 16: What You Built Today
+## SLIDE 18: What You Built Today
 
-1. Installed OpenClaw locally
-2. Connected to Nebius Token Factory
-3. Selected a model and configured structured outputs
-4. Understood three deployment patterns
+1. Installed OpenClaw (npm or Docker)
+2. Connected to Nebius Token Factory (open-source models)
+3. Selected a model and configured tool calling
+4. Understand three deployment methods (npm, Docker, Serverless)
 5. Know how to go from prototype to production
 
-**Your agent is live. Take it home and build something.**
+**Your agent is live. No Claude API key needed. No OpenAI. Just open-source models on Nebius.**
 
 ---
 
-## SLIDE 17: Resources
+## SLIDE 19: Resources
 
 | Resource | Link |
 |----------|------|
 | OpenClaw Docs | docs.openclaw.ai |
+| Docker Install | docs.openclaw.ai/install/docker |
 | Token Factory | console.nebius.com |
 | ClawCamp Tutorials | claw.camp/curriculum |
 | Agent Inference Workshop | claw.camp/curriculum/agent-inference |
 | Deployment Patterns | claw.camp/curriculum/deploy-patterns |
-| Three Architectures | claw.camp/curriculum/deploy-architecture |
 | Discord | discord.gg/clawcamp |
 
 ---
 
-## SLIDE 18: Next Steps
+## SLIDE 20: Next Steps
 
-**Beginner:** Try the other deployment methods
+**Beginner:**
 - Deploy via Web Console (20 min) — claw.camp/curriculum/deploy-console
 - Deploy with Install Scripts (15 min) — claw.camp/curriculum/deploy-scripts
 
-**Intermediate:** Build a multi-agent system
-- Agent Lifecycle workshop (70 min) — claw.camp/curriculum/agent-lifecycle
+**Intermediate:**
+- Deployment Patterns & Troubleshooting (45 min) — claw.camp/curriculum/deploy-patterns
 - Private Agents for sensitive data (55 min) — claw.camp/curriculum/private-agents
 
-**Advanced:** Add hardware
+**Advanced:**
+- Agent Lifecycle & Fine-Tuning (70 min) — claw.camp/curriculum/agent-lifecycle
 - Robotics with Solo CLI (75 min) — claw.camp/curriculum/robotics
 
 ---
 
-## SLIDE 19: Thank You
+## SLIDE 21: Thank You
 
 **Running OpenClaw on Nebius**
 From zero to a live AI agent in 15 minutes
+
+Open-source models. Pay-per-token. No vendor lock-in.
 
 Questions? Find us at:
 - claw.camp
