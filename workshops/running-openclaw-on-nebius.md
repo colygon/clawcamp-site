@@ -85,11 +85,18 @@ Your agent runs on cheap CPU. The expensive GPU work goes through Token Factory'
 3. Click **Create API Key**
 4. Copy the key
 
+Set it in your terminal:
 ```bash
 export NEBIUS_API_KEY="your-key-here"
 ```
 
-**This key gives you access to 30+ models including Llama 3.1 70B, GLM-5, DeepSeek-R1, and Qwen.**
+To persist across sessions, add it to your shell profile:
+```bash
+echo 'export NEBIUS_API_KEY="your-key-here"' >> ~/.zshrc  # macOS
+echo 'export NEBIUS_API_KEY="your-key-here"' >> ~/.bashrc  # Linux
+```
+
+**This key gives you access to 30+ models including Llama 3.1 70B, GLM-5, DeepSeek-R1, and Qwen. Never commit this key to git.**
 
 ---
 
