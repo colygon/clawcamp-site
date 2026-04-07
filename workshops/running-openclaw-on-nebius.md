@@ -110,7 +110,7 @@ That's it. No Docker, no containers, no VMs (yet).
 
 ## SLIDE 8: Step 3 — Connect to Token Factory (2 min)
 
-Point OpenClaw at Nebius Token Factory:
+**Option A: Quick onboard (CLI)**
 
 ```bash
 openclaw onboard --non-interactive \
@@ -122,32 +122,89 @@ openclaw onboard --non-interactive \
   --custom-compatibility openai
 ```
 
-Or set it in your config:
+**Option B: Config file (recommended for production)**
 
-```json
+Edit `~/.openclaw/openclaw.json`:
+
+```json5
 {
-  "agents": {
-    "defaults": {
-      "model": {
-        "primary": "meta-llama/Meta-Llama-3.1-70B-Instruct"
+  models: {
+    mode: "merge",
+    providers: {
+      nebius: {
+        baseUrl: "https://api.tokenfactory.nebius.com/v1",
+        apiKey: "${NEBIUS_API_KEY}",
+        api: "openai-completions",
+        models: [
+          {
+            id: "meta-llama/Meta-Llama-3.1-70B-Instruct",
+            name: "Llama 3.1 70B",
+            contextWindow: 128000,
+            maxTokens: 32000,
+            input: ["text"],
+            cost: { input: 0.01, output: 0.03 }
+          },
+          {
+            id: "zai-org/GLM-5",
+            name: "GLM-5",
+            contextWindow: 128000,
+            maxTokens: 32000,
+            cost: { input: 0.005, output: 0.015 }
+          },
+          {
+            id: "deepseek-ai/DeepSeek-R1",
+            name: "DeepSeek R1",
+            reasoning: true,
+            contextWindow: 128000,
+            maxTokens: 32000,
+            cost: { input: 0.02, output: 0.06 }
+          }
+        ]
+      }
+    }
+  },
+  agents: {
+    defaults: {
+      model: { primary: "nebius/meta-llama/Meta-Llama-3.1-70B-Instruct" },
+      models: {
+        "nebius/meta-llama/Meta-Llama-3.1-70B-Instruct": { alias: "llama70b" },
+        "nebius/zai-org/GLM-5": { alias: "glm5" },
+        "nebius/deepseek-ai/DeepSeek-R1": { alias: "deepseek" }
       }
     }
   }
 }
 ```
 
+**Key details:**
+- `mode: "merge"` keeps built-in providers while adding Nebius
+- `apiKey: "${NEBIUS_API_KEY}"` reads from your environment variable
+- `api: "openai-completions"` — Token Factory is OpenAI-compatible
+- Model aliases let you switch fast: `/model llama70b` or `/model glm5`
+
 ---
 
-## SLIDE 9: Step 4 — Start and Connect (1 min)
+## SLIDE 9: Step 4 — Start and Verify (1 min)
 
 Start the gateway:
 ```bash
 openclaw start
 ```
 
-Open your browser:
+Open your browser: **`http://localhost:18789`**
 
-**`http://localhost:18789`**
+Verify models are loaded:
+```
+/models          # List all available models
+/model llama70b  # Switch to Llama 3.1 70B
+/status          # Check current model and connection
+```
+
+Test the connection directly:
+```bash
+curl -H "Authorization: Bearer $NEBIUS_API_KEY" \
+  https://api.tokenfactory.nebius.com/v1/models
+```
 
 Your agent is live. Connected to Llama 3.1 70B on Nebius. No GPU on your machine.
 
@@ -213,10 +270,13 @@ curl -fsS http://127.0.0.1:18789/readyz
 
 ## SLIDE 12: Docker + Token Factory
 
-Connect your Docker container to Nebius:
+Connect your Docker container to Nebius. Two options:
 
+**Option A: Mount your config file**
+If you already have `~/.openclaw/openclaw.json` configured (from Slide 8), Docker picks it up automatically via the volume mount.
+
+**Option B: Onboard inside the container**
 ```bash
-# During onboard
 docker compose run --rm --no-deps --entrypoint node \
   openclaw-gateway dist/index.js onboard \
   --auth-choice custom-api-key \
@@ -302,10 +362,12 @@ Before going live:
 |---------|-----|
 | Gateway won't start | Check port 18789: `lsof -i :18789` |
 | Token Factory 401 | Verify API key: `curl -H "Authorization: Bearer $KEY" https://api.tokenfactory.nebius.com/v1/models` |
+| "model not allowed" | Add model to `agents.defaults.models` allowlist (see Slide 8) |
+| Model not in `/models` | Verify model exists in BOTH `models.providers[].models[]` AND the allowlist |
+| Wrong model called | Check `id` field matches Token Factory exactly (e.g., `meta-llama/Meta-Llama-3.1-70B-Instruct`) |
 | Docker OOM (exit 137) | Increase memory to 2GB minimum |
-| Slow responses | Switch to GLM-5 (faster) or check network |
+| Slow responses | Switch to GLM-5: `/model glm5` |
 | Connection refused | Check bind address and firewall rules |
-| Docker health check fails | `curl -fsS http://127.0.0.1:18789/healthz` |
 
 ---
 
