@@ -39,7 +39,7 @@ OpenClaw works with ANY OpenAI-compatible model provider. Today we'll use **Nebi
 
 | Provider | Models | Pricing |
 |----------|--------|---------|
-| **Nebius Token Factory** | Llama 3.1 70B, GLM-5, DeepSeek-R1, Qwen, Mistral | Pay per token |
+| **Nebius Token Factory** | Kimi K2.5, Llama 3.3 70B, DeepSeek-R1, Qwen3, GLM-5 | Pay per token |
 | Hugging Face | GLM-5, thousands more | $2/mo free credits |
 | Local (llama.cpp) | Any GGUF model | Free (your hardware) |
 
@@ -96,7 +96,7 @@ echo 'export NEBIUS_API_KEY="your-key-here"' >> ~/.zshrc  # macOS
 echo 'export NEBIUS_API_KEY="your-key-here"' >> ~/.bashrc  # Linux
 ```
 
-**This key gives you access to 30+ models including Llama 3.1 70B, GLM-5, DeepSeek-R1, and Qwen. Never commit this key to git.**
+**This key gives you access to models including Kimi K2.5, Llama 3.3 70B, DeepSeek-R1, and Qwen3. Never commit this key to git.**
 
 ---
 
@@ -122,8 +122,8 @@ That's it. No Docker, no containers, no VMs (yet).
 ```bash
 openclaw onboard --non-interactive \
   --auth-choice custom-api-key \
-  --custom-base-url "https://api.tokenfactory.nebius.com/v1" \
-  --custom-model-id "meta-llama/Meta-Llama-3.1-70B-Instruct" \
+  --custom-base-url "https://api.tokenfactory.nebius.com/v1/" \
+  --custom-model-id "meta-llama/Llama-3.3-70B-Instruct-fast" \
   --custom-api-key "$NEBIUS_API_KEY" \
   --secret-input-mode plaintext \
   --custom-compatibility openai
@@ -139,32 +139,28 @@ Edit `~/.openclaw/openclaw.json`:
     mode: "merge",
     providers: {
       nebius: {
-        baseUrl: "https://api.tokenfactory.nebius.com/v1",
+        baseUrl: "https://api.tokenfactory.nebius.com/v1/",
         apiKey: "${NEBIUS_API_KEY}",
         api: "openai-completions",
         models: [
           {
-            id: "meta-llama/Meta-Llama-3.1-70B-Instruct",
-            name: "Llama 3.1 70B",
+            id: "moonshotai/Kimi-K2.5",
+            name: "Kimi K2.5",
             contextWindow: 128000,
-            maxTokens: 32000,
-            input: ["text"],
-            cost: { input: 0.01, output: 0.03 }
+            maxTokens: 32000
           },
           {
-            id: "zai-org/GLM-5",
-            name: "GLM-5",
+            id: "meta-llama/Llama-3.3-70B-Instruct-fast",
+            name: "Llama 3.3 70B",
             contextWindow: 128000,
-            maxTokens: 32000,
-            cost: { input: 0.005, output: 0.015 }
+            maxTokens: 32000
           },
           {
-            id: "deepseek-ai/DeepSeek-R1",
+            id: "deepseek-ai/DeepSeek-R1-0528",
             name: "DeepSeek R1",
             reasoning: true,
             contextWindow: 128000,
-            maxTokens: 32000,
-            cost: { input: 0.02, output: 0.06 }
+            maxTokens: 32000
           }
         ]
       }
@@ -172,11 +168,11 @@ Edit `~/.openclaw/openclaw.json`:
   },
   agents: {
     defaults: {
-      model: { primary: "nebius/meta-llama/Meta-Llama-3.1-70B-Instruct" },
+      model: { primary: "nebius/moonshotai/Kimi-K2.5" },
       models: {
-        "nebius/meta-llama/Meta-Llama-3.1-70B-Instruct": { alias: "llama70b" },
-        "nebius/zai-org/GLM-5": { alias: "glm5" },
-        "nebius/deepseek-ai/DeepSeek-R1": { alias: "deepseek" }
+        "nebius/moonshotai/Kimi-K2.5": { alias: "kimi" },
+        "nebius/meta-llama/Llama-3.3-70B-Instruct-fast": { alias: "llama70b" },
+        "nebius/deepseek-ai/DeepSeek-R1-0528": { alias: "deepseek" }
       }
     }
   }
@@ -187,7 +183,7 @@ Edit `~/.openclaw/openclaw.json`:
 - `mode: "merge"` keeps built-in providers while adding Nebius
 - `apiKey: "${NEBIUS_API_KEY}"` reads from your environment variable
 - `api: "openai-completions"` — Token Factory is OpenAI-compatible
-- Model aliases let you switch fast: `/model llama70b` or `/model glm5`
+- Model aliases let you switch fast: `/model kimi` or `/model llama70b`
 
 ---
 
@@ -202,9 +198,9 @@ Open your browser: **`http://localhost:18789`**
 
 Verify models are loaded:
 ```
-/models          # List all available models
-/model llama70b  # Switch to Llama 3.1 70B
-/status          # Check current model and connection
+/models        # List all available models
+/model kimi    # Switch to Kimi K2.5
+/status        # Check current model and connection
 ```
 
 Test the connection directly:
@@ -213,7 +209,7 @@ curl -H "Authorization: Bearer $NEBIUS_API_KEY" \
   https://api.tokenfactory.nebius.com/v1/models
 ```
 
-Your agent is live. Connected to Llama 3.1 70B on Nebius. No GPU on your machine.
+Your agent is live. Connected to Kimi K2.5 on Nebius. No GPU on your machine.
 
 ---
 
@@ -221,17 +217,17 @@ Your agent is live. Connected to Llama 3.1 70B on Nebius. No GPU on your machine
 
 Pick the right model for your use case:
 
-| Model | Speed | Quality | Best For |
-|-------|-------|---------|----------|
-| **Llama 3.1 70B** | Fast | High | General agents, tool calling |
-| **GLM-5** | Very Fast | Good | High throughput, simple tasks |
-| **DeepSeek-R1** | Medium | Very High | Reasoning, complex chains |
-| **Qwen3.5-35B** | Fast | High | Code generation, multilingual |
-| **Mistral Large** | Fast | High | European languages, code |
+| Model | ID | Speed | Best For |
+|-------|----|-------|----------|
+| **Llama 3.3 70B** | `meta-llama/Llama-3.3-70B-Instruct-fast` | Fast | General agents, tool calling |
+| **Kimi K2.5** | `moonshotai/Kimi-K2.5` | Fast | Great all-rounder, recommended |
+| **DeepSeek-R1** | `deepseek-ai/DeepSeek-R1-0528` | Medium | Reasoning, complex chains |
+| **GLM-5** | `zai-org/GLM-5` | Very Fast | High throughput, simple tasks |
+| **Qwen3** | `Qwen/Qwen3-30B-A3B` | Fast | Code generation, multilingual |
 
 Switch models anytime:
 ```bash
-openclaw config set agents.defaults.model.primary "zai-org/GLM-5"
+openclaw config set agents.defaults.model.primary "moonshotai/Kimi-K2.5"
 ```
 
 ---
@@ -287,8 +283,8 @@ If you already have `~/.openclaw/openclaw.json` configured (from Slide 8), Docke
 docker compose run --rm --no-deps --entrypoint node \
   openclaw-gateway dist/index.js onboard \
   --auth-choice custom-api-key \
-  --custom-base-url "https://api.tokenfactory.nebius.com/v1" \
-  --custom-model-id "meta-llama/Meta-Llama-3.1-70B-Instruct" \
+  --custom-base-url "https://api.tokenfactory.nebius.com/v1/" \
+  --custom-model-id "meta-llama/Llama-3.3-70B-Instruct-fast" \
   --custom-api-key "$NEBIUS_API_KEY" \
   --custom-compatibility openai
 ```
@@ -313,7 +309,7 @@ The real power: **JSON mode for reliable tool calling.**
 
 Token Factory supports JSON mode natively — no prompt engineering hacks.
 
-Works with Llama 3.1, GLM-5, and DeepSeek-R1.
+Works with Kimi K2.5, Llama 3.3, and DeepSeek-R1.
 
 ---
 
@@ -371,9 +367,9 @@ Before going live:
 | Token Factory 401 | Verify API key: `curl -H "Authorization: Bearer $KEY" https://api.tokenfactory.nebius.com/v1/models` |
 | "model not allowed" | Add model to `agents.defaults.models` allowlist (see Slide 8) |
 | Model not in `/models` | Verify model exists in BOTH `models.providers[].models[]` AND the allowlist |
-| Wrong model called | Check `id` field matches Token Factory exactly (e.g., `meta-llama/Meta-Llama-3.1-70B-Instruct`) |
+| Wrong model called | Check `id` matches Token Factory exactly (e.g., `moonshotai/Kimi-K2.5`) |
 | Docker OOM (exit 137) | Increase memory to 2GB minimum |
-| Slow responses | Switch to GLM-5: `/model glm5` |
+| Slow responses | Try Kimi K2.5: `/model kimi` |
 | Connection refused | Check bind address and firewall rules |
 
 ---
@@ -396,10 +392,10 @@ Before going live:
 |----------|------|
 | OpenClaw Docs | docs.openclaw.ai |
 | Docker Install | docs.openclaw.ai/install/docker |
-| Token Factory | console.nebius.com |
+| Token Factory Docs | docs.tokenfactory.nebius.com |
+| Token Factory Cookbook | github.com/nebius/token-factory-cookbook |
 | ClawCamp Tutorials | claw.camp/curriculum |
 | Agent Inference Workshop | claw.camp/curriculum/agent-inference |
-| Deployment Patterns | claw.camp/curriculum/deploy-patterns |
 | Discord | discord.gg/clawcamp |
 
 ---
