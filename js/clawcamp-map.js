@@ -256,6 +256,7 @@ function initClawCampMap(containerId, opts) {
   function makeDotIcon(isFlagship) {
     var size = isFlagship ? 12 : 8;
     var cls = 'clawcamp-dot' + (isFlagship ? ' flagship' : '');
+    var delay = (Math.random() * 4).toFixed(1);
     return L.divIcon({
       className: cls,
       iconSize: [size, size],
@@ -347,6 +348,10 @@ function initClawCampMap(containerId, opts) {
             marker.on('click', function() { onDotClick(c, coords, label); });
           }
 
+          marker.on('add', function() {
+            var el = this.getElement();
+            if (el) el.style.setProperty('--breathe-delay', (Math.random() * 4).toFixed(1) + 's');
+          });
           markersGroup.addLayer(marker);
 
           // Track markers for cycling — all copies for autoScroll, primary only otherwise
