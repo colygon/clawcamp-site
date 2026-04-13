@@ -2612,6 +2612,7 @@
 <script src="/js/supabase.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="/js/clawcamp-map.js"></script>
+<script src="/js/event-images.js"></script>
 <script>
 var SUPABASE_URL = 'https://mrnccntqmkxjazznejfc.supabase.co';
 var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ybmNjbnRxbWt4amF6em5lamZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyMDA3NTksImV4cCI6MjA5MDc3Njc1OX0.T6oFTtYiFTsx6ojuogpZFXAS7tN5-dPzwvmY5V2xFGI';
@@ -2890,6 +2891,15 @@ fetch(SUPABASE_URL + '/rest/v1/events?select=*&order=event_date.asc', {
 })
 .then(function(res) { return res.json(); })
 .then(function(events) {
+  // Enrich events missing image_url using Luma image map
+  if (typeof getLumaImageUrl === 'function') {
+    events.forEach(function(ev) {
+      if (!ev.image_url && ev.link) {
+        var img = getLumaImageUrl(ev.link);
+        if (img) ev.image_url = img;
+      }
+    });
+  }
   renderEvents(events);
   updateCounts();
   applyFilters();
